@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 9 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-memo-anatomy { background: #f0f4ff; border: 1px solid #93c5fd; padding: var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-memo-anatomy h4 { color: var(--info); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-smart-table { font-size: 0.8rem; }
+  .tg-smart-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); }
+  .tg-smart-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); }
+  .tg-role-card { background: #f3e8ff; border: 1px solid #c4b5fd; border-left: 4px solid #6c3a9e; padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-role-card h4 { color: #6c3a9e; margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-role-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 9 · Memo de decision y plan de mejora</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra3">RA3</span>
+      <span class="tg-badge-gold">3.5 h</span>
+      <span>Clase presencial · Toma de decisiones</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Convierte los hallazgos extraidos la semana anterior en un memo de decision estructurado con problema, hallazgos, opciones, recomendacion y proximos pasos <cite>(GTC 185:2009)</cite>.</li>
+      <li>Compara al menos 2 opciones de solucion usando criterios de costo y tiempo.</li>
+      <li>Formula un plan de mejora con 3 acciones SMART (Specific, Measurable, Achievable, Relevant, Time-bound) <cite>(ISO 9001:2015, §7.5)</cite>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>Tabla de hallazgos de la semana 8</strong> — foto del papelografo o archivo. Cada grupo debe tener acceso a su tabla.</li>
+      <li><strong>Google Docs compartido</strong> (1 doc por grupo) para redactar el memo colaborativamente.</li>
+      <li><strong>Checklist de memo</strong> impresa (1 por estudiante): estructura obligatoria y criterios de calidad.</li>
+      <li><strong>Rubrica PI3 simplificada</strong> impresa (1 por grupo) — version reducida para peer review.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td><strong>Entrada:</strong> ¿memo vs carta vs informe?</td>
+        <td>
+          <span class="tg-note">ENGANCHE</span> Proyectar 3 documentos breves: 1 memo, 1 carta, 1 informe. Preguntar: "¿Cual de estos usarias para proponerle una decision urgente a tu jefe?"<br>
+          Discusion breve: el memo es Ejecutivo (va directo al punto), Interno (no sale de la empresa), Accionable (termina con "proximos pasos").<br>
+          <span class="tg-note">TRANSICION</span> "Hoy van a tomar los hallazgos que descubrieron la semana pasada y convertirlos en un memo de decision. Es exactamente lo que haran en el Parcial 2."
+        </td>
+      </tr>
+      <tr>
+        <td>15–35</td>
+        <td><strong>Input:</strong> anatomia del memo</td>
+        <td>
+          Proyectar la estructura completa y modelar cada seccion con un ejemplo de otro caso:<br><br>
+          <strong>PARA / DE / FECHA / ASUNTO:</strong> Formato estandar <cite>(GTC 185:2009)</cite>. Asunto debe resumir el problema en ≤10 palabras.<br>
+          <strong>1. PROBLEMA:</strong> 1 parrafo, maximo 5 lineas, con al menos 1 dato numerico. "En julio 2026, 47 paquetes de LatamBox se retrasaron (68% en ruta Miami) generando 12 quejas formales y un costo extra de $3,200 USD" <cite>(La República, 2025; Valora Analitik, 2025)</cite>.<br>
+          <strong>2. HALLAZGOS:</strong> 3-5 bullets. Cada uno cita fuente documental <cite>(ISO 15489-1:2016, §8)</cite>. Solo HECHOS, no opiniones.<br>
+          <strong>3. OPCIONES:</strong> ≥2 opciones comparadas por costo y tiempo. Opcion A vs Opcion B.<br>
+          <strong>4. RECOMENDACION:</strong> 1 parrafo eligiendo UNA opcion con justificacion.<br>
+          <strong>5. PROXIMOS PASOS:</strong> Tabla con Accion + Responsable + Plazo + Indicador de exito.<br>
+          <span class="tg-note">MODELAR</span> Mostrar un memo real (anonimizado) de 1 pagina.<br>
+          <span class="tg-note">ENTREGAR CHECKLIST</span> y rubrica PI3 simplificada.
+        </td>
+      </tr>
+      <tr>
+        <td>35–45</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso. Preparar los Google Docs compartidos (1 por grupo).</td>
+      </tr>
+      <tr>
+        <td>45–95</td>
+        <td><strong>Redaccion del memo:</strong> roles A/B/C</td>
+        <td>
+          <strong>Roles en cada grupo de 4:</strong><br>
+          • <strong>Rol A — Problema + Hallazgos:</strong> Redacta las secciones 1 y 2 usando la tabla de hallazgos de la semana 8.<br>
+          • <strong>Rol B — Opciones + Recomendacion:</strong> Redacta las secciones 3 y 4. Debe proponer ≥2 opciones con comparacion.<br>
+          • <strong>Rol C — Proximos pasos:</strong> Redacta la seccion 5 con 3 acciones SMART. Llena la tabla.<br>
+          • <strong>Rol D — Editor:</strong> Revisa tono, ortografia, coherencia. Verifica la checklist completa.<br><br>
+          <strong>Fase 1 — Individual (20 min):</strong> <span class="tg-note">SILENCIO</span> Cada rol redacta sus secciones en el Google Docs compartido usando colores distintos.<br>
+          <strong>Fase 2 — Integracion (15 min):</strong> El grupo lee el memo completo. Discuten coherencia. El editor propone ajustes. Todos modifican.
+        </td>
+      </tr>
+      <tr>
+        <td>95–115</td>
+        <td><strong>Peer review:</strong> con rubrica PI3 simplificada</td>
+        <td>
+          Intercambiar memos entre grupos. Cada grupo evalua el memo de otro grupo usando la rubrica PI3 simplificada (version de 3 criterios con escala Si/No/Parcial).<br>
+          Marcar en la checklist:<br>
+          - ¿El problema tiene ≤5 lineas y un dato numerico?<br>
+          - ¿Los hallazgos citan fuente documental?<br>
+          - ¿Hay ≥2 opciones comparadas?<br>
+          - ¿La recomendacion es concreta?<br>
+          - ¿Los proximos pasos tienen responsable + plazo + indicador?<br>
+          Devolver con feedback escrito: 1 fortaleza + 1 area de mejora.
+        </td>
+      </tr>
+      <tr>
+        <td>115–125</td>
+        <td><strong>Plan de mejora:</strong> 3 acciones SMART</td>
+        <td>
+          <span class="tg-note">REFINAR</span> Cada grupo toma el feedback del peer review y mejora su plan de accion. Las 3 acciones deben ser SMART:<br>
+          <strong>S</strong>pecific (¿que exactamente?)<br>
+          <strong>M</strong>easurable (¿como sabremos que funciono?)<br>
+          <strong>A</strong>chievable (¿es posible con nuestros recursos?)<br>
+          <strong>R</strong>elevant (¿resuelve el problema principal?)<br>
+          <strong>T</strong>ime-bound (¿cuando se completa?)<br>
+          <span class="tg-note">CIRCULAR</span> verificando que las acciones no sean genericas. "Reducir retrasos" no es SMART. "Implementar protocolo de comunicacion en 72h para reducir quejas en un 50% en 30 dias" SI es SMART.
+        </td>
+      </tr>
+      <tr>
+        <td>125–135</td>
+        <td><strong>Cierre + anuncio Parcial 2</strong></td>
+        <td>
+          <span class="tg-note">RECAP</span> "Hoy construyeron el puente entre datos y decisiones. El memo es su herramienta."<br>
+          <span class="tg-note">ANUNCIO PARCIAL</span> "Semana 10: Parcial 2. Nuevo caso — AndesBox (Colombia-Chile-Peru) <cite>(Astute Analytica, 2024)</cite>. Mismas habilidades: extraer hallazgos (como semana 8) y redactar memo (como hoy). 90 minutos. 3 secciones. Sin contenido nuevo."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- ANATOMIA DEL MEMO -->
+  <div class="tg-section">
+    <h2>📝 Anatomia del memo — Estructura obligatoria</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Proyectar durante el input. Los estudiantes deben seguir esta estructura exacta. <strong>No se aceptan formatos alternativos.</strong></p>
+
+    <div class="tg-memo-anatomy">
+      <pre style="font-family: 'Open Sans', sans-serif; white-space: pre-wrap; font-size:0.85rem; margin:0; line-height:1.7;">
+<strong>MEMO DE DECISION</strong>
+
+<strong>PARA:</strong>      [Nombre y cargo del destinatario]
+<strong>DE:</strong>        [Nombre y cargo de quien lo envia]
+<strong>FECHA:</strong>     [Fecha de emision]
+<strong>ASUNTO:</strong>    [Una frase ≤10 palabras que resuma el problema principal]
+
+<strong>1. PROBLEMA</strong> (1 parrafo, maximo 5 lineas)
+   Describa el problema principal con al menos 1 dato numerico.
+
+<strong>2. HALLAZGOS</strong> (3-5 bullets)
+   • Cada hallazgo debe citar fuente documental.
+   • Solo HECHOS, no opiniones.
+   • Ordene por impacto (el mas critico primero).
+
+<strong>3. OPCIONES CONSIDERADAS</strong> (≥2 opciones, comparar por costo y tiempo)
+   Opcion A: [describir] — Costo estimado: $____ | Tiempo: ____
+   Opcion B: [describir] — Costo estimado: $____ | Tiempo: ____
+   Opcion C: [describir, opcional] — Costo estimado: $____ | Tiempo: ____
+
+<strong>4. RECOMENDACION</strong> (1 parrafo)
+   Elija UNA opcion. Justifique con criterios de costo, tiempo y riesgo.
+
+<strong>5. PROXIMOS PASOS</strong> (3 acciones SMART)
+
+   | Accion | Responsable | Plazo | Indicador de exito |
+   |--------|------------|-------|-------------------|
+   | 1.     |            |       |                    |
+   | 2.     |            |       |                    |
+   | 3.     |            |       |                    |
+      </pre>
+    </div>
+  </div>
+
+  <!-- ROLES A/B/C/D -->
+  <div class="tg-section">
+    <h2>🎭 Roles de redaccion — Instrucciones detalladas</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Entregar a cada grupo las 4 tarjetas de rol. Cada miembro elige UNA.</p>
+
+    <div class="tg-role-card">
+      <h4>Rol A — Problema + Hallazgos</h4>
+      <p><strong>Tus secciones:</strong> 1 (Problema) y 2 (Hallazgos).</p>
+      <p><strong>Checklist:</strong> □ El problema tiene ≤5 lineas. □ Incluye al menos 1 dato numerico. □ Los hallazgos citan fuente. □ Solo hay hechos, no opiniones. □ Los hallazgos estan ordenados por impacto.</p>
+    </div>
+
+    <div class="tg-role-card">
+      <h4>Rol B — Opciones + Recomendacion</h4>
+      <p><strong>Tus secciones:</strong> 3 (Opciones) y 4 (Recomendacion).</p>
+      <p><strong>Checklist:</strong> □ Hay ≥2 opciones distintas. □ Cada opcion tiene costo y tiempo estimados. □ La recomendacion elige UNA opcion. □ La justificacion menciona costo, tiempo y riesgo. □ La recomendacion es concreta, no vaga.</p>
+    </div>
+
+    <div class="tg-role-card">
+      <h4>Rol C — Proximos pasos</h4>
+      <p><strong>Tu seccion:</strong> 5 (Proximos pasos).</p>
+      <p><strong>Checklist:</strong> □ Hay 3 acciones. □ Cada accion tiene responsable. □ Cada accion tiene plazo concreto (dias/semanas). □ Cada accion tiene indicador de exito medible. □ Las acciones son SMART, no genericas. □ Las acciones se derivan de la recomendacion.</p>
+    </div>
+
+    <div class="tg-role-card">
+      <h4>Rol D — Editor</h4>
+      <p><strong>Tu responsabilidad:</strong> Revisar el memo completo.</p>
+      <p><strong>Checklist:</strong> □ El tono es profesional (sin coloquialismos). □ Sin errores de ortografia. □ Las secciones son coherentes entre si. □ Todas las secciones de la anatomia estan presentes. □ El memo no excede 2 paginas. □ La version final tiene un solo color de fuente.</p>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 3 preguntas sobre anatomia del memo y SMART.</p>
+
+    <div class="tg-answer"><strong>1.</strong> ¿Que significan las siglas PARA/DE/FECHA/ASUNTO en el encabezado de un memo?<br>→ <strong>PARA: destinatario (nombre + cargo). DE: remitente (nombre + cargo). FECHA: fecha de emision (dd/mm/aaaa). ASUNTO: resumen del problema en ≤10 palabras. Este encabezado debe estar en todo memo ejecutivo <cite>(GTC 185:2009)</cite>.</strong></div>
+    <div class="tg-answer"><strong>2.</strong> ¿Cual es la diferencia entre problema, hallazgo y recomendacion?<br>→ <strong>Problema: ¿que esta pasando? (1 parrafo que describe la situacion). Hallazgo: ¿que encontre en los documentos? (hechos con fuente) <cite>(ISO 15489-1:2016)</cite>. Recomendacion: ¿que deberiamos hacer? (1 opcion elegida y justificada). Son 3 secciones distintas — no se mezclan.</strong></div>
+    <div class="tg-answer"><strong>3.</strong> ¿Que significa el acronimo SMART para un plan de accion?<br>→ <strong>S — Specific (especifico, que exactamente). M — Measurable (medible, con indicador). A — Achievable (alcanzable con los recursos disponibles). R — Relevant (relevante para el problema). T — Time-bound (con plazo definido). Ej: "Reducir quejas en 50% en 30 dias" es SMART. "Mejorar comunicacion" NO es SMART.</strong></div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa. Productos: memo grupal + plan de mejora.</p>
+    <p><strong>Que se evalua:</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>Memo grupal en Google Docs — revisado por pares con rubrica PI3 simplificada.</li>
+      <li>Plan de mejora con 3 acciones SMART.</li>
+      <li><strong>Rubrica PI3 formativa:</strong> misma rubrica del parcial, aplicada aqui como practica <cite>(ISO 9001:2015, §7.5)</cite>. El estudiante llega al parcial sabiendo exactamente que se espera.</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar teoria estrategica amplia.</strong> Nada de las 5 fuerzas de Porter, FODA, PESTEL, Balanced Scorecard ni modelos de planeacion estrategica. El memo es formato ejecutivo — va directo al punto.</li>
+      <li>No preparar teoria de modelos de decision (arbol de decision, matriz de priorizacion, analisis costo-beneficio avanzado). Los estudiantes solo comparan opciones por costo y tiempo — criterios simples.</li>
+      <li>No dedicar mas de 20 min al input. La anatomia del memo se explica en 20 min. El aprendizaje real ocurre redactando y recibiendo feedback de pares.</li>
+      <li>Si un estudiante pregunta "¿cuantas opciones debo proponer?", responder: "Minimo 2. Maximo 3. El parcial evalua que puedas comparar alternativas."</li>
+    </ul>
+  </div>
+
+</div>
+
+  <div class="tg-section" style="margin-top:var(--space-md);">
+    <h2>📚 Bibliografía</h2>
+    <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Fuentes que respaldan los contenidos de la Semana 9.</p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);line-height:1.9;">
+      <li>ICONTEC. (2009). <em>GTC 185: Documentación organizacional</em>. Instituto Colombiano de Normas Técnicas y Certificación. [Norma]</li>
+      <li>ISO. (2016). <em>ISO 15489-1: Information and documentation — Records management — Part 1: Concepts and principles</em>. International Organization for Standardization. [Norma]</li>
+      <li>ISO. (2015). <em>ISO 9001:2015 — Sistemas de gestión de la calidad — Requisitos</em> (§7.5 Información documentada). International Organization for Standardization. [Norma]</li>
+      <li>La República. (2025). <em>Cifras del sector mensajería y paquetería en Colombia</em>. La República. [Reporte]</li>
+      <li>Valora Analitik. (2025). <em>Ranking y tendencias del sector logístico en Colombia</em>. Valora Analitik. [Reporte]</li>
+      <li>Astute Analytica. (2024). <em>Global Parcel Forwarding and Casilleros Market Report</em>. Astute Analytica. [Reporte]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

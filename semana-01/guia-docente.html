@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 1 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  /* Teacher guide overrides: gold accents, distinct from student pages */
+  :root {
+    --tg-gold: #B8860B;
+    --tg-gold-light: #FFF8E1;
+    --tg-border-gold: #D4A017;
+  }
+  body { background: #fdfaf3; }
+  .tg-guide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: var(--space-md);
+  }
+  .tg-header-card {
+    background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%);
+    color: var(--text-on-dark);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-left: 6px solid var(--gold);
+  }
+  .tg-header-card .tg-guide-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .tg-header-card h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin: var(--space-xs) 0;
+    color: white;
+  }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section {
+    background: var(--bg-card);
+    border-left: 4px solid var(--tg-border-gold);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .tg-section h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--tg-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--gold);
+  }
+  .tg-section h3 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin: var(--space-md) 0 var(--space-sm);
+  }
+  .tg-timeline table { font-size: 0.8rem; }
+  .tg-timeline th:first-child { width: 70px; }
+  .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note {
+    display: inline-block;
+    font-size: 0.7rem;
+    background: #FFF8E1;
+    color: #7A6000;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 700;
+    margin-top: 2px;
+  }
+  .tg-answer {
+    background: #e6f4ea;
+    border: 1px solid #86efac;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin: var(--space-xs) 0;
+  }
+  .tg-answer strong { color: var(--success); }
+  .tg-warning-box {
+    background: #fff3e0;
+    border-left: 4px solid #e65100;
+    padding: var(--space-md);
+    margin-top: var(--space-md);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    font-size: 0.85rem;
+  }
+  .tg-warning-box h3 {
+    color: #e65100;
+    margin: 0 0 var(--space-sm);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li {
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px dotted var(--border);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    font-size: 0.85rem;
+  }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: var(--gold);
+    color: var(--text-on-gold);
+  }
+  .tg-cite {
+    font-size: 0.78em;
+    color: #7A6000;
+    font-style: italic;
+    white-space: nowrap;
+  }
+  .tg-biblio {
+    background: var(--bg-card);
+    border-left: 4px solid var(--tg-border-gold);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .tg-biblio h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--tg-gold);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--gold);
+  }
+  .tg-biblio ol {
+    padding-left: var(--space-lg);
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  .tg-biblio li { margin-bottom: var(--space-xs); }
+  .tg-biblio .bib-type {
+    font-size: 0.7em;
+    font-weight: 700;
+    background: #FFF8E1;
+    color: #7A6000;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+  @media print {
+    body { background: white; font-size: 11px; }
+    .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; }
+    .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tg-header-card h1 { color: black !important; }
+    .tg-header-card .tg-guide-label { color: #666 !important; }
+    .tg-section h2 { color: #666; }
+    .tg-note { background: #eee; color: #333; }
+    .tg-warning-box { background: #eee; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <!-- HEADER CARD -->
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 1 · Cerebro, informacion y decisiones</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="tg-badge-gold">3.5 h</span>
+      <span>Clase presencial · Metacognicion aplicada</span>
+    </div>
+  </div>
+
+  <!-- OBJETIVOS -->
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Reconoce como su cerebro atiende, filtra y recuerda informacion (metacognicion) <span class="tg-cite">(Posner &amp; Rothbart, 2023)</span>.</li>
+      <li>Conecta esto con la funcion de los documentos como "memoria externa" organizacional <span class="tg-cite">(ISO 15489-1:2016, §4)</span>.</li>
+      <li>Conoce el caso LatamBox: empresa casillero Miami-Colombia que servira como hilo conductor del modulo.</li>
+    </ul>
+  </div>
+
+  <!-- MATERIALES -->
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li>5 documentos LatamBox impresos (1 juego por grupo): 01_correo_bienvenida, 02_formulario_registro, 03_factura_amazon, 04_notificacion_llegada, 10_guia_entrega_local</li>
+      <li>Post-its (1 por estudiante) — para ticket de salida</li>
+      <li>Quiz diagnostico en Quizizz o Google Forms (10 preguntas, no calificable). Preparar enlace/link antes de clase.</li>
+      <li>Proyector con: 4 ideas del cerebro + pedido real de Amazon</li>
+      <li>Sobres (1 por grupo) con los 5 documentos dentro</li>
+      <li>Tabla de analisis impresa (1 por grupo): nombre del doc | ¿para que sirve? | ¿quien lo emite? | ¿que decision permite?</li>
+    </ul>
+  </div>
+
+  <!-- TIMELINE CON NOTAS DOCENTES -->
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td><strong>Entrada:</strong> presentacion del modulo</td>
+        <td>
+          Presentar el programa, los RA, la metodologia de grupos y el caso LatamBox. <span class="tg-note">CLAVE</span> Mostrar pedido real de Amazon entregado via casillero para anclar el proposito.<br>
+          <span class="tg-note">TIP</span> Si no tienes pedido fisico, mostrar captura de pantalla de un tracking real.
+        </td>
+      </tr>
+      <tr>
+        <td>15–35</td>
+        <td><strong>Quiz diagnostico</strong> (individual)</td>
+        <td>
+          <span class="tg-note">NO CALIFICAR</span> Es para que el estudiante se conozca. Autopercepcion, memoria, atencion, estrategias de estudio. 10 preguntas.<br>
+          <span class="tg-note">IMPORTANTE</span> Aclarar antes de empezar: "Esto no tiene nota. Es un espejo para ustedes."
+        </td>
+      </tr>
+      <tr>
+        <td>35–55</td>
+        <td><strong>Discusion guiada:</strong> 4 ideas del cerebro</td>
+        <td>
+          Proyectar y explicar: 1) Atencion selectiva <span class="tg-cite">(Posner &amp; Rothbart, 2023)</span>, 2) Memoria de trabajo limitada <span class="tg-cite">(Cowan, 2022; Sweller et al., 2022)</span>, 3) Comprension ≠ Recuerdo, 4) Documentos = Memoria externa <span class="tg-cite">(ISO 15489-1:2016, §4)</span>.<br>
+          <span class="tg-note">DINAMICA 2-2-2</span> En parejas: 2 min leer → 2 min discutir → 2 min compartir al grupo. Hacer para cada idea o agruparlas.
+        </td>
+      </tr>
+      <tr>
+        <td>55–65</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso. Los estudiantes pueden salir del salon.</td>
+      </tr>
+      <tr>
+        <td>65–95</td>
+        <td><strong>Actividad grupal:</strong> LatamBox — el primer contacto</td>
+        <td>
+          <span class="tg-note">GRUPOS ALEATORIOS</span> Formar grupos de 4 al azar (contar 1-2-3-4, no dejar que se agrupen por amistad).<br>
+          Entregar sobre con 5 documentos. Pasos:<br>
+          1) <strong>Leer en silencio</strong> (5 min) — cada estudiante lee los 5 docs sin hablar.<br>
+          2) <strong>Discutir</strong> (8 min) — comparten impresiones, identifican que hace cada doc.<br>
+          3) <strong>Completar tabla</strong> grupal (12 min) — nombre → ¿para que sirve? → ¿quien lo emite? → ¿que decision permite?<br>
+          <span class="tg-note">CIRCULAR</span> entre grupos para verificar que avanzan y aclarar dudas.
+        </td>
+      </tr>
+      <tr>
+        <td>95–120</td>
+        <td><strong>Plenaria:</strong> cierre y reflexion</td>
+        <td>
+          <span class="tg-note">REPORTERO ALEATORIO</span> El docente elige quien reporta (no el grupo). Asi todos deben estar preparados.<br>
+          1 hallazgo por grupo. Conectar explicitamente con las 4 ideas del cerebro.<br>
+          <span class="tg-note">CIERRE</span> "Los documentos son la memoria externa de LatamBox. Ustedes acaban de reconstruir su historia." <span class="tg-cite">(Baddeley et al., 2020)</span>
+        </td>
+      </tr>
+      <tr>
+        <td>120–135</td>
+        <td><strong>Ticket de salida</strong></td>
+        <td>
+          Cada estudiante escribe en un post-it:<br>
+          - "Algo que aprendi sobre como proceso informacion"<br>
+          - "Una pregunta que me llevo"<br>
+          <span class="tg-note">PEGAR EN LA PUERTA</span> al salir. Leer en frio para ajustar semana 2 si es necesario.
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- QUIZ RESPUESTAS -->
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz diagnostico de 5 preguntas. No calificable. Respuestas correctas:</p>
+
+    <div class="tg-answer"><strong>1.</strong> ¿Cual es la funcion principal de un correo de bienvenida en LatamBox?<br>
+    → <strong>B — Confirmar el registro y explicar el servicio</strong></div>
+
+    <div class="tg-answer"><strong>2.</strong> ¿Que tipo de documento es una factura de Amazon en el ciclo de LatamBox?<br>
+    → <strong>B — Soporte de valor para aduana</strong></div>
+
+    <div class="tg-answer"><strong>3.</strong> Segun la teoria de la atencion selectiva <span class="tg-cite">(Kahneman, 2011)</span>, ¿que sucede cuando procesamos demasiada informacion?<br>
+    → <strong>B — Filtramos y solo procesamos una parte</strong></div>
+
+    <div class="tg-answer"><strong>4.</strong> ¿Que representan los documentos organizacionales segun la metafora de "memoria externa"?<br>
+    → <strong>B — Una extension de la memoria humana que persiste en el tiempo</strong> <span class="tg-cite">(ISO 15489-1:2016, §4)</span></div>
+
+    <div class="tg-answer"><strong>5.</strong> En la actividad grupal, ¿cual es el primer paso con los 5 documentos?<br>
+    → <strong>C — Leer en silencio cada documento (5 min)</strong></div>
+  </div>
+
+  <!-- EVALUACION -->
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa. No calificable.</p>
+    <p><strong>Que observar:</strong> Participacion en discusion de parejas, involucramiento en actividad grupal, calidad de discusion (no tanto la tabla — es su primer contacto).</p>
+    <p><strong>Evidencia que queda:</strong> Tabla grupal (foto) + post-its de salida. Todo se queda en el salon.</p>
+    <p><strong>No calificar:</strong> Ni quiz ni tabla. Esta semana es 100% diagnostica y metacognitiva <span class="tg-cite">(Manes &amp; Roca, 2022)</span>.</p>
+  </div>
+
+  <!-- NO PREPARAR -->
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li>Neurociencia profunda. No necesitas explicar corteza prefrontal, hipocampo, ni modelos cognitivos complejos.</li>
+      <li>Enfoque <strong>metacognitivo, no clinico</strong>. Las 4 ideas son herramientas practicas, no teoria neurocientifica.</li>
+      <li>No preparar teoria de procesamiento de informacion organizacional todavia — eso viene en semanas 6+.</li>
+    </ul>
+  </div>
+
+  <!-- BIBLIOGRAFÍA -->
+  <div class="tg-biblio">
+    <h2>📚 Bibliografía</h2>
+    <ol>
+      <li>Baddeley, A., Eysenck, M.W. &amp; Anderson, M.C. (2020). <em>Memory</em> (3rd ed.). Routledge. <span class="bib-type">Libro</span></li>
+      <li>Cowan, N. (2022). Working memory capacity: Limits on the ability to hold information in mind. <em>Annual Review of Psychology, 73</em>, 85–108. <span class="bib-type">Paper</span></li>
+      <li>ISO 15489-1:2016. <em>Information and documentation — Records management — Part 1: Concepts and principles</em>. International Organization for Standardization. <span class="bib-type">Norma</span></li>
+      <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux. <span class="bib-type">Libro</span></li>
+      <li>Manes, F. &amp; Roca, M. (2022). <em>Procesamiento de la informacion en el aprendizaje: aportes de la neurociencia cognitiva</em>. Editorial Planeta. <span class="bib-type">Libro</span></li>
+      <li>Posner, M.I. &amp; Rothbart, M.K. (2023). Attention and information processing in cognitive development. <em>Annual Review of Developmental Psychology, 5</em>, 1–22. <span class="bib-type">Paper</span></li>
+      <li>Sweller, J., van Merriënboer, J.J.G. &amp; Paas, F. (2022). <em>Cognitive Load Theory</em> (2nd ed.). Springer. <span class="bib-type">Libro</span></li>
+    </ol>
+  </div>
+
+</div>
+
+</body>
+</html>

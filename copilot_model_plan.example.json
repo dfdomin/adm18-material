@@ -1,0 +1,66 @@
+{
+  "project": "ADM18 - Study Material",
+  "global_context": "Improve week-by-week study content with low cognitive load and bibliography alignment.",
+  "constraints": "Do not invent references; keep outputs concise and structured.",
+  "tasks": [
+    {
+      "id": "design-week-1-2",
+      "title": "Design weeks 1-2 learning flow",
+      "objective": "Create a coherent weekly flow with objectives, core concepts, and formative checks.",
+      "task_type": "architecture",
+      "complexity": "high",
+      "risk": "medium",
+      "latency_priority": "low",
+      "quality_priority": "high",
+      "files": [
+        "semana-01/",
+        "semana-02/",
+        "BIBLIOGRAFIA_ACTUALIZADA_ADM18.md"
+      ],
+      "done_definition": [
+        "Learning objectives are explicit and measurable.",
+        "Each week includes one guided activity and one formative check.",
+        "Bibliography references remain consistent with project files."
+      ]
+    },
+    {
+      "id": "implement-week-3-4",
+      "title": "Implement content updates for weeks 3-4",
+      "objective": "Apply the designed structure into existing materials and maintain folder conventions.",
+      "task_type": "implementation",
+      "complexity": "medium",
+      "risk": "high",
+      "latency_priority": "medium",
+      "quality_priority": "high",
+      "files": [
+        "semana-03/",
+        "semana-04/",
+        "ADM18_Procesamiento_Informacion.md"
+      ],
+      "done_definition": [
+        "Updated content remains aligned to bibliography.",
+        "No unrelated files are modified.",
+        "Week outputs are concise and actionable."
+      ]
+    },
+    {
+      "id": "polish-week-5-6",
+      "title": "Polish and simplify weeks 5-6",
+      "objective": "Reduce overload and improve clarity for student-facing material.",
+      "task_type": "docs",
+      "complexity": "low",
+      "risk": "low",
+      "latency_priority": "high",
+      "quality_priority": "medium",
+      "files": [
+        "semana-05/",
+        "semana-06/"
+      ],
+      "done_definition": [
+        "Text is chunked and short-first.",
+        "No content drift from bibliography."
+      ]
+    }
+  ]
+}
+

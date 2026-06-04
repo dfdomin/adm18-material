@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADM18 — Plan de Clases 2026 | LatamBox</title>
+<style>
+  :root {
+    --navy: #1a2744;
+    --blue: #2c5ea8;
+    --light-blue: #e8f0fe;
+    --green: #1e7a3e;
+    --light-green: #e6f4ea;
+    --gold: #b8860b;
+    --light-gold: #fef7e0;
+    --red: #c62828;
+    --light-red: #fdecea;
+    --gray: #5f6368;
+    --light-gray: #f1f3f4;
+    --white: #ffffff;
+    --border: #dadce0;
+    --text: #202124;
+    --text-light: #5f6368;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+    color: var(--text);
+    background: var(--light-gray);
+    line-height: 1.5;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--navy);
+    color: white;
+    padding: 2rem 2rem 1.5rem;
+  }
+  .header h1 { font-size: 1.6rem; font-weight: 700; margin-bottom: .25rem; }
+  .header .subtitle { font-size: .95rem; opacity: .85; }
+  .header .meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1rem;
+    font-size: .85rem; opacity: .9;
+  }
+  .header .meta span { display: flex; align-items: center; gap: .35rem; }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: .75rem;
+    padding: .75rem 2rem; background: white; border-bottom: 1px solid var(--border);
+    font-size: .78rem;
+  }
+  .legend .dot { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 4px; vertical-align: middle; }
+
+  /* ── WEEK GRID ── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem 1rem; }
+
+  .week-card {
+    background: white; border-radius: 8px; margin-bottom: 1.25rem;
+    border: 1px solid var(--border); overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+    transition: box-shadow .2s;
+  }
+  .week-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+
+  .week-card.evaluation { border-left: 4px solid var(--red); }
+  .week-card.ra1 { border-left: 4px solid var(--blue); }
+  .week-card.ra2 { border-left: 4px solid #6c3a9e; }
+  .week-card.ra3 { border-left: 4px solid var(--green); }
+  .week-card.ra4 { border-left: 4px solid var(--gold); }
+
+  .week-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: .9rem 1.25rem; cursor: pointer; user-select: none;
+    background: #fafafa; border-bottom: 1px solid var(--border);
+  }
+  .week-header:hover { background: #f5f5f5; }
+  .week-header .left { display: flex; align-items: center; gap: .75rem; }
+  .week-num {
+    font-weight: 800; font-size: 1.1rem; min-width: 3.5rem;
+  }
+  .week-title { font-weight: 600; font-size: 1rem; }
+  .week-badges { display: flex; gap: .4rem; align-items: center; }
+  .badge {
+    font-size: .7rem; font-weight: 700; padding: .2rem .5rem; border-radius: 4px;
+    text-transform: uppercase; letter-spacing: .5px;
+  }
+  .badge-ra1 { background: var(--light-blue); color: var(--blue); }
+  .badge-ra2 { background: #f3e8ff; color: #6c3a9e; }
+  .badge-ra3 { background: var(--light-green); color: var(--green); }
+  .badge-ra4 { background: var(--light-gold); color: var(--gold); }
+  .badge-eval { background: var(--light-red); color: var(--red); }
+  .badge-time { background: #e8eaed; color: var(--gray); font-weight: 600; }
+
+  /* ── WEEK BODY ── */
+  .week-body { padding: 1.25rem; display: block; }
+
+  .section-label {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: 1px;
+    font-weight: 700; color: var(--gray); margin: .75rem 0 .4rem;
+  }
+  .section-label:first-child { margin-top: 0; }
+
+  .activity-table { width: 100%; border-collapse: collapse; font-size: .85rem; margin-bottom: .75rem; }
+  .activity-table th {
+    background: var(--navy); color: white; font-size: .73rem; padding: .4rem .5rem;
+    text-align: left; font-weight: 600;
+  }
+  .activity-table td {
+    padding: .45rem .5rem; border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .activity-table tr:nth-child(even) td { background: #fafafa; }
+
+  .evidencia-box {
+    background: var(--light-gold); border: 1px solid #f0d060;
+    padding: .5rem .75rem; border-radius: 6px; font-size: .82rem; margin-top: .5rem;
+  }
+  .evidencia-box strong { color: var(--gold); }
+
+  .no-preparar {
+    background: var(--light-red); border: 1px solid #f5c6cb;
+    padding: .4rem .75rem; border-radius: 6px; font-size: .78rem; margin-top: .4rem;
+  }
+  .no-preparar strong { color: var(--red); }
+
+  .info-row {
+    display: flex; flex-wrap: wrap; gap: 1rem; font-size: .82rem;
+    margin: .5rem 0;
+  }
+  .info-item { display: flex; align-items: center; gap: .35rem; }
+  .info-item .icon { font-size: 1rem; }
+
+  /* ── GROUP STRATEGIES SECTION ── */
+  .strategies {
+    background: white; border-radius: 8px; margin: 2rem auto 1rem;
+    border: 1px solid var(--border); padding: 1.5rem; max-width: 1200px;
+  }
+  .strategies h2 { color: var(--navy); margin-bottom: 1rem; font-size: 1.3rem; }
+  .strategy-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1rem;
+  }
+  .strategy-card {
+    background: #fafafa; border: 1px solid var(--border); border-radius: 6px;
+    padding: 1rem;
+  }
+  .strategy-card h4 { color: var(--blue); margin-bottom: .35rem; font-size: .95rem; }
+  .strategy-card p { font-size: .82rem; color: var(--text-light); line-height: 1.45; }
+  .strategy-card .tag {
+    display: inline-block; font-size: .68rem; background: var(--light-blue);
+    color: var(--blue); padding: .15rem .45rem; border-radius: 3px; margin-top: .4rem;
+    font-weight: 600;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .header { padding: 1.25rem; }
+    .header h1 { font-size: 1.3rem; }
+    .week-header { flex-direction: column; align-items: flex-start; gap: .4rem; }
+    .activity-table { font-size: .75rem; }
+    .strategy-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .week-body { display: block !important; }
+    .week-card { break-inside: avoid; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<div class="header">
+  <h1>ADM18 · Procesamiento de la Información en la Organización</h1>
+  <div class="subtitle">Plan de clases 2026 · 13 semanas + evaluación final · 3.0–3.5 h efectivas por sesión</div>
+  <div class="meta">
+    <span>🏢 Caso integrador: <strong>LatamBox</strong> — casillero virtual para compras en USA</span>
+    <span>📋 Programas: Téc. Operaciones del Comercio Exterior / Téc. Operación de Procesos Empresariales</span>
+    <span>👥 Trabajo en grupos · Actividades con cierre en clase</span>
+  </div>
+</div>
+
+<div class="legend">
+  <span><span class="dot" style="background:var(--blue)"></span> RA1 · Identificar documentos</span>
+  <span><span class="dot" style="background:#6c3a9e"></span> RA2 · Construir documentos</span>
+  <span><span class="dot" style="background:var(--green)"></span> RA3 · Analizar para decidir</span>
+  <span><span class="dot" style="background:var(--gold)"></span> RA4 · TIC en gestión documental</span>
+  <span><span class="dot" style="background:var(--red)"></span> Evaluación parcial</span>
+</div>
+
+<!-- ═══════════════ WEEK CARDS ═══════════════ -->
+<div class="container">
+
+<!-- ── SEMANA 1 ── -->
+<div class="week-card ra1">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 1</div>
+      <div class="week-title">Cerebro, información y decisiones</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">Antes de procesar información en una empresa, el estudiante reconoce cómo su propio cerebro atiende, filtra, recuerda y comunica. No es una clase de neurociencia: es metacognición aplicada al módulo. Se presenta LatamBox como el caso que atravesará todo el semestre.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td>Entrada: presentación del módulo</td>
+        <td>El docente presenta el programa, los RA, la metodología de grupos y el caso LatamBox. Muestra un pedido real de Amazon entregado vía casillero.</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>15–35</td>
+        <td>🧠 Quiz diagnóstico: ¿Cómo procesas información?</td>
+        <td>Quiz individual de 10 preguntas (Google Forms o Quizizz). Autopercepción, memoria, atención, estrategias. <strong>No calificable.</strong></td>
+        <td>Automático (Quizizz)</td>
+      </tr>
+      <tr>
+        <td>35–55</td>
+        <td>💬 Discusión guiada: 4 ideas</td>
+        <td>El docente proyecta las 4 ideas del cerebro (atención selectiva, memoria de trabajo limitada, comprensión ≠ recuerdo, documentos = memoria externa). Los estudiantes en parejas discuten 1 idea cada uno (2 min c/u) y comparten.</td>
+        <td>Plenaria (docente modera)</td>
+      </tr>
+      <tr>
+        <td>55–65</td>
+        <td>🫖 Pausa</td>
+        <td>Descanso de 10 minutos.</td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>65–95</td>
+        <td>🏢 Actividad grupal: LatamBox — el primer contacto</td>
+        <td><strong>Formación de grupos (4 personas, aleatorios).</strong> Reciben un sobre con: (a) correo de bienvenida de LatamBox, (b) formulario de registro, (c) notificación de llegada de un paquete, (d) factura de Amazon, (e) guía de envío. Deben: (1) leer en silencio (5 min), (2) discutir qué hace cada documento (8 min), (3) completar una tabla: nombre del documento → ¿para qué sirve? → ¿quién lo emite? → ¿qué decisión permite tomar? (12 min).</td>
+        <td>Entrega en clase + discusión plenaria</td>
+      </tr>
+      <tr>
+        <td>95–120</td>
+        <td>🎤 Plenaria: cierre y reflexión</td>
+        <td>Cada grupo comparte 1 hallazgo (1 min por grupo, reportero aleatorio). El docente conecta con las 4 ideas del cerebro. Cierre: "La próxima clase vamos a clasificar estos documentos según su función".</td>
+        <td>Docente (oral, sin nota)</td>
+      </tr>
+      <tr>
+        <td>120–135</td>
+        <td>📝 Ticket de salida</td>
+        <td>Cada estudiante escribe en un post-it: "Algo que aprendí sobre cómo proceso información" + "Una pregunta que me llevo". Lo pegan al salir.</td>
+        <td>Docente (lectura rápida, no califica)</td>
+      </tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Tabla grupal de 5 documentos + post-it de salida. Todo queda en el salón.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Neurociencia profunda. El enfoque es metacognitivo, no clínico.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 2 ── -->
+<div class="week-card ra1">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 2</div>
+      <div class="week-title">Ciclo de vida documental en LatamBox</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante identifica el ciclo de vida de un documento dentro de LatamBox: desde que un cliente se registra hasta que su paquete llega a Colombia. Distingue documentos de entrada, proceso, salida y archivo.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Activación: recuperación de la semana 1</td><td>El docente proyecta los 5 documentos de la semana pasada. Pregunta: "¿Qué documento usarían para reclamar un paquete dañado? ¿Y para saber cuánto pagar de impuestos?" Los estudiantes responden levantando tarjetas de colores.</td><td>Docente (sin nota, activación)</td></tr>
+      <tr><td>15–35</td><td>📖 Input: ciclo de vida documental</td><td>El docente presenta las 4 etapas del ciclo documental (creación → uso → archivo → disposición) con ejemplos de LatamBox. Muestra una línea de tiempo con 12 documentos que aparecen en un envío típico.</td><td>—</td></tr>
+      <tr><td>35–45</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>45–85</td><td>👥 Actividad grupal: línea de tiempo documental</td><td><strong>Grupos nuevos (rotación aleatoria).</strong> Reciben 12 tarjetas con documentos de LatamBox (registro, factura Amazon, notificación de llegada, declaración de valor, guía aérea, factura de flete, correo de nacionalización, comprobante de pago de impuestos, guía de entrega local, correo de confirmación de entrega, encuesta de satisfacción, reporte de queja). Deben: (1) ordenarlos cronológicamente en una línea de tiempo sobre la mesa (10 min), (2) clasificar cada uno según etapa del ciclo (creación / uso / archivo / disposición) y según función (comunicación / soporte operativo / decisión) (15 min), (3) rotar a otro grupo y verificar (10 min).</td><td>Peer review (los grupos se corrigen entre sí)</td></tr>
+      <tr><td>85–110</td><td>📋 Quiz rápido: clasificación documental</td><td>Quiz individual de 8 preguntas en Quizizz. Aparece un documento → el estudiante selecciona su etapa y función. <strong>Autoevaluable. Nota visible inmediata.</strong></td><td>Automático (Quizizz)</td></tr>
+      <tr><td>110–120</td><td>🧹 Cierre y orden</td><td>El docente recoge las líneas de tiempo (les toma foto). Anuncia: "Próxima clase veremos las partes internas de estos documentos — lo que la GTC 185 llama componentes".</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Línea de tiempo documental (foto) + puntaje del quiz. Ambas quedan resueltas en clase.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Clase grabada larga. Si alguien falta, compartir el mazo de 12 tarjetas por Teams.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 3 ── -->
+<div class="week-card ra1">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 3</div>
+      <div class="week-title">Clases, usos y componentes de documentos</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante distingue tipos de documentos por su clase (comercial, administrativo, legal, técnico), identifica sus componentes internos (membrete, destinatario, asunto, cuerpo, firma, anexos) y los vincula con decisiones empresariales concretas en LatamBox.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Entrada: emparejamiento rápido</td><td>Cada estudiante recibe una tarjeta al entrar: mitad tiene nombres de documentos, mitad tiene funciones. Deben encontrar a su pareja en 3 minutos. Ej: "Factura comercial" → "Soporte de valor para aduana".</td><td>Parejas (autocorrección)</td></tr>
+      <tr><td>15–40</td><td>📖 Input: anatomía del documento</td><td>El docente presenta la estructura de un documento según GTC 185: membrete, fecha, destinatario, asunto, cuerpo, despedida, firma, anexos, copia. Proyecta un correo de LatamBox y lo "disecciona" con códigos de color. Luego proyecta una factura y repite.</td><td>—</td></tr>
+      <tr><td>40–50</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>50–90</td><td>👥 Actividad grupal: disección documental</td><td><strong>Grupos nuevos.</strong> Cada grupo recibe 4 documentos de LatamBox sin marcar: (a) correo de confirmación de registro, (b) factura de servicio de casillero, (c) acta de reunión interna sobre retrasos, (d) circular sobre cambio de política de reempaque. Con marcadores de 4 colores, deben señalar: azul → componentes del documento, verde → clase del documento, naranja → función, rosa → decisión que habilita. <strong>20 min.</strong> Luego intercambian con otro grupo y verifican con checklist (15 min).</td><td>Peer review con checklist</td></tr>
+      <tr><td>90–120</td><td>🎯 Matriz documento-función</td><td>Cada grupo completa una matriz en papelógrafo: columnas = clase, filas = función. Ubican los 4 documentos + 4 adicionales que el docente entrega. Pegan los papelógrafos en la pared.</td><td>Docente (revisión visual en clase)</td></tr>
+      <tr><td>120–130</td><td>🏃 Gallery walk silencioso</td><td>Todos caminan 5 minutos viendo las matrices de los otros grupos. Pueden dejar post-its con correcciones. Vuelven a su matriz y ajustan si es necesario.</td><td>Estudiantes (coevaluación anónima)</td></tr>
+      <tr><td>130–135</td><td>📸 Cierre</td><td>El docente toma foto de cada papelógrafo. "Semana que viene empezamos a construir documentos — van a necesitar todo lo que clasificaron hoy".</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Documentos diseccionados (foto) + matriz documento-función (foto).</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Normas completas. Solo usar GTC 185 como referencia de estructura, no el texto íntegro.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 4 ── -->
+<div class="week-card ra2">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 4</div>
+      <div class="week-title">GTC 185 como checklist: formato, redacción y tono</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra2">RA2</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante usa la GTC 185 como lista de verificación práctica — no como lectura teórica — para detectar errores en documentos reales de LatamBox y corregirlos. Primer contacto con la construcción documental.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Apertura: el costo de un documento mal escrito</td><td>El docente cuenta una anécdota real: "Un correo sin asunto retrasó 3 días un despacho en LatamBox. El cliente perdió un descuento del 20% en Amazon." Pregunta: ¿qué faltó en ese correo?</td><td>—</td></tr>
+      <tr><td>10–30</td><td>📋 Taller intro: checklist GTC 185</td><td>El docente entrega una checklist simplificada de 10 criterios basados en GTC 185 (¿tiene membrete? ¿fecha completa? ¿asunto claro? ¿párrafos breves? ¿firma con cargo? ¿anexos listados?). Proyecta un correo de LatamBox con 7 errores. En conjunto, aplican la checklist y los marcan.</td><td>Colectivo (docente guía)</td></tr>
+      <tr><td>30–40</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>40–90</td><td>👥 Actividad grupal: clínica documental</td><td><strong>Grupos nuevos.</strong> Cada grupo recibe un "paciente" (sobre con 3 documentos de LatamBox con errores): (a) correo a cliente sin asunto y con tono agresivo, (b) memo interno sin fecha ni firma, (c) carta de respuesta a queja con lenguaje informal. Con la checklist GTC 185 en mano: (1) diagnostican todos los errores (15 min), (2) reescriben los documentos corrigiéndolos (20 min), (3) intercambian con otro grupo y evalúan con la misma checklist (10 min).</td><td>Peer review con checklist</td></tr>
+      <tr><td>90–110</td><td>🎤 Micrófono abierto: mejores correcciones</td><td>2 grupos (voluntarios o sorteados) proyectan su versión corregida. La clase vota con manos: ¿cumple la checklist? El docente señala aciertos y 1 mejora posible.</td><td>Docente + clase</td></tr>
+      <tr><td>110–125</td><td>🧪 Quiz: ¿está bien este documento?</td><td>Quizizz de 6 preguntas: se muestra un fragmento de documento → el estudiante dice si cumple o no la GTC 185 y por qué.</td><td>Automático (Quizizz)</td></tr>
+      <tr><td>125–135</td><td>Cierre y anticipo del parcial</td><td>El docente anuncia: "Semana que viene es parcial 1. Van a recibir documentos de otra empresa de casilleros. Misma lógica, datos distintos. No hay tema nuevo."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Documentos corregidos (foto) + puntaje Quizizz.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Historia de ICONTEC. La GTC 185 se usa como herramienta, no como objeto de estudio.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 5 - PARCIAL 1 ── -->
+<div class="week-card evaluation">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 5</div>
+      <div class="week-title">Parcial 1 — Sin tema nuevo</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-eval">Parcial 1</span>
+      <span class="badge badge-time">3.0 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">Evaluación de RA1 y RA2 mediante caso espejo. No se introduce contenido nuevo. El estudiante demuestra que puede transferir las competencias a un contexto distinto.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Instrucciones</td><td>El docente entrega el instrumento y lee las instrucciones en voz alta. Resuelve dudas.</td><td>—</td></tr>
+      <tr><td>10–100</td><td>✍️ Parcial escrito</td><td><strong>Caso espejo: "Envíos del Pacífico"</strong> — otra empresa de casilleros. El estudiante recibe 6 documentos mezclados y debe: (a) clasificarlos por clase y función (RA1), (b) identificar 5 errores en 2 documentos usando checklist GTC 185 (RA2), (c) corregir 1 documento completo (RA2). <strong>90 minutos.</strong></td><td>Docente (rúbrica PI1+PI2)</td></tr>
+      <tr><td>100–110</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>110–130</td><td>🔍 Revisión colectiva del parcial</td><td>El docente proyecta las respuestas esperadas en pantalla. Los estudiantes comparan con su propio examen (sin cambiar respuestas). Esto reduce la ansiedad post-parcial y da feedback inmediato.</td><td>Autoevaluación (el estudiante contrasta)</td></tr>
+      <tr><td>130–135</td><td>Cierre</td><td>"La semana que viene empezamos a producir documentos desde cero. Ustedes van a ser el equipo de atención al cliente de LatamBox."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Parcial escrito. Rúbrica PI1 (clasificación) y PI2 (producción).</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Contenido nuevo. La sesión es solo evaluación + feedback.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 6 ── -->
+<div class="week-card ra2">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 6</div>
+      <div class="week-title">Responder al cliente: cartas, correos y tono profesional</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra2">RA2</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante produce comunicaciones externas de LatamBox respondiendo a clientes reales simulados. Practica tono profesional, claridad, empatía y formato correcto.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Entrada: peor correo que he recibido</td><td>Cada estudiante piensa en el peor correo que ha recibido de una empresa. Comparte con un compañero: ¿qué lo hizo malo? El docente anota las razones en el tablero (lenguaje robótico, no responde la pregunta, tono grosero, faltas de ortografía).</td><td>Parejas</td></tr>
+      <tr><td>15–35</td><td>📖 Input: la receta del correo profesional</td><td>El docente presenta una estructura de 5 partes: (1) saludo con nombre, (2) reconocimiento del problema del cliente, (3) explicación clara de lo que pasó, (4) solución concreta con plazos, (5) despedida con canal de contacto. Muestra un ejemplo bueno y uno malo de LatamBox.</td><td>—</td></tr>
+      <tr><td>35–45</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>45–95</td><td>👥 Actividad grupal: central de respuestas LatamBox</td><td><strong>Grupos nuevos.</strong> Cada grupo recibe 3 reclamos reales simulados de clientes: (a) "Mi paquete lleva 3 semanas en Miami, ¿qué pasa?", (b) "Me cobraron impuestos que no corresponden, exijo devolución", (c) "La caja llegó rota y el producto está dañado". Cada miembro elige 1 reclamo (no pueden repetir). <strong>Fase individual (10 min):</strong> cada uno redacta su respuesta. <strong>Fase grupal (20 min):</strong> leen en voz alta sus respuestas al grupo. Los compañeros aplican checklist de 5 criterios (¿saluda con nombre? ¿reconoce el problema? ¿explica? ¿ofrece solución concreta? ¿tono profesional?). <strong>Fase final (10 min):</strong> cada uno corrige con el feedback.</td><td>Peer review + autocorrección</td></tr>
+      <tr><td>95–115</td><td>🎯 Competencia: la mejor respuesta</td><td>Cada grupo elige su mejor respuesta (votación interna, 3 min). El docente lee 2 o 3 en voz alta (sin decir de quién es). La clase aplica la checklist con pulgar arriba/abajo en cada criterio.</td><td>Clase (coevaluación)</td></tr>
+      <tr><td>115–130</td><td>📤 Envío</td><td>Cada estudiante sube sus 3 respuestas corregidas a Teams (o la plataforma que usen). El docente las revisa durante la semana siguiente con rúbrica PI2.</td><td>Docente (rúbrica PI2)</td></tr>
+      <tr><td>130–135</td><td>Cierre</td><td>"Próxima clase: reunión de emergencia en LatamBox. Hay retrasos graves y hay que documentarlo todo."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> 3 respuestas a clientes corregidas (subidas a Teams). Rúbrica PI2. El docente solo califica 1 producto final, no 3 borradores.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Feedback extenso. Usar rúbrica de 4 criterios. Máximo 1 fortaleza + 1 corrección por estudiante.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 7 ── -->
+<div class="week-card ra2">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 7</div>
+      <div class="week-title">Actas, circulares y comunicaciones internas</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra2">RA2</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante participa en una reunión simulada del equipo de LatamBox y produce los documentos internos que se derivan: acta de reunión y circular informativa. Diferencia comunicación externa de comunicación interna.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Contexto: caos en LatamBox</td><td>El docente lee un escenario: "Hay 47 paquetes retrasados en Miami, el vuelo del viernes se canceló, 12 clientes han llamado furiosos. La gerente cita a reunión urgente." Cada grupo es un equipo de LatamBox.</td><td>—</td></tr>
+      <tr><td>10–30</td><td>📖 Input: cómo se documenta una reunión</td><td>El docente proyecta la anatomía de un acta: fecha, hora, asistentes, agenda, desarrollo por puntos, decisiones, tareas asignadas (responsable + plazo). Luego la de una circular: membrete, asunto, destinatarios, cuerpo informativo, instrucciones, firma.</td><td>—</td></tr>
+      <tr><td>30–40</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>40–75</td><td>👥 Simulación: reunión de emergencia</td><td><strong>Roles asignados por sorteo dentro del grupo:</strong> Gerente (modera), Operaciones (datos de retrasos), Atención al cliente (quejas recibidas), Financiero (costos extra). La reunión tiene 3 puntos de agenda predefinidos. <strong>15 minutos de reunión real.</strong> Todos toman notas individuales. Luego, en 15 minutos, <strong>cada estudiante redacta el acta completo</strong> usando sus notas. No hay un acta grupal — cada uno produce la suya. Esto asegura que todos trabajen.</td><td>Cada estudiante produce su acta (individual)</td></tr>
+      <tr><td>75–105</td><td>🔍 Peer review de actas</td><td>Intercambian actas con un compañero de otro grupo. Aplican checklist de acta: ¿están los asistentes? ¿la agenda? ¿decisiones numeradas? ¿tareas con responsable y plazo? Devuelven con 2 correcciones escritas (no tachan el original, escriben en post-it).</td><td>Peer review entre grupos</td></tr>
+      <tr><td>105–120</td><td>📢 De la reunión a la circular</td><td><strong>Actividad grupal:</strong> con las decisiones de la reunión, el grupo redacta una circular que será enviada a "todo el personal de LatamBox" informando las nuevas medidas para evitar retrasos futuros. <strong>Un solo documento por grupo.</strong> Usan Google Docs con colores (cada miembro escribe en su color).</td><td>Docente revisa en pantalla (proyección en vivo)</td></tr>
+      <tr><td>120–130</td><td>🏆 Votación: mejor circular</td><td>Se proyectan 3 circulares (voluntarias). La clase vota: ¿cuál es más clara? ¿más accionable? ¿mejor estructurada?</td><td>Clase</td></tr>
+      <tr><td>130–135</td><td>Cierre</td><td>"La próxima clase dejamos de hacer documentos para empezar a usarlos. Vamos a tomar decisiones."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Acta individual (peer-reviewed) + circular grupal. Rúbrica PI2.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Más de 2 tipos de documentos internos. Acta y circular son suficientes.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 8 ── -->
+<div class="week-card ra3">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 8</div>
+      <div class="week-title">De los datos a la decisión: extrayendo hallazgos</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra3">RA3</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante aprende a leer documentos no para producirlos, sino para extraer información relevante que sirva para tomar una decisión. Diferencia dato, información e insight.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Entrada: ¿qué harías con esta información?</td><td>El docente proyecta 3 datos sueltos de LatamBox: "12% de paquetes llegan con más de 5 días de retraso", "el 40% de las quejas son por falta de comunicación", "Miami tiene 3 vuelos semanales, Medellín tiene 5". En parejas discuten: ¿qué decisión tomarían?</td><td>Parejas</td></tr>
+      <tr><td>15–40</td><td>📖 Input: leer para decidir</td><td>El docente enseña 3 técnicas: (1) subrayado estratégico (solo lo que afecta una decisión), (2) tabla de hallazgos (hecho → fuente → implicación), (3) separar hecho de opinión. Practican con un informe de quejas de LatamBox proyectado.</td><td>—</td></tr>
+      <tr><td>40–50</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>50–95</td><td>👥 Actividad grupal: gabinete de crisis LatamBox</td><td><strong>Grupos nuevos.</strong> Cada grupo recibe un dossier con 8 documentos: quejas de clientes (3), reportes de operaciones (2), facturas de flete (2), un acta de reunión anterior (1). <strong>Fase individual (10 min):</strong> cada miembro toma 2 documentos y aplica subrayado estratégico. <strong>Fase grupal (25 min):</strong> comparten hallazgos y completan una tabla conjunta: hecho detectado → en qué documento aparece → qué implicación tiene para LatamBox → qué decisión sugiere. Usan papelógrafo.</td><td>Docente (revisa papelógrafo en clase)</td></tr>
+      <tr><td>95–120</td><td>🎤 Presentación de gabinetes</td><td>2 grupos presentan su tabla (5 min c/u). El docente pregunta: "¿Eso es un hecho o una opinión?" para reforzar la distinción.</td><td>Docente + clase</td></tr>
+      <tr><td>120–130</td><td>📝 Ticket de salida</td><td>Cada estudiante escribe en una tarjeta: "La decisión más urgente que tomaría hoy en LatamBox es ___ porque ___".</td><td>Docente (lectura rápida)</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Tabla de hallazgos (papelógrafo, foto).</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Análisis financiero complejo. No se requieren cálculos de rentabilidad.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 9 ── -->
+<div class="week-card ra3">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 9</div>
+      <div class="week-title">Memo de decisión y plan de mejora</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra3">RA3</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante convierte hallazgos en un memo de decisión estructurado y un plan de mejora de 3 acciones. Practica el formato de memo (más breve que un informe) y aprende a priorizar.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Entrada: ¿qué es un memo?</td><td>El docente proyecta 3 memos reales (anónimos) de empresas. Pregunta: ¿en qué se diferencia de una carta? ¿de un informe? Los estudiantes infieren las características: breve (< 2 páginas), va al grano, tiene recomendación clara, va dirigido a un tomador de decisión.</td><td>Discusión colectiva</td></tr>
+      <tr><td>15–35</td><td>📖 Input: anatomía del memo de decisión</td><td>El docente presenta la estructura: (1) PARA / DE / FECHA / ASUNTO, (2) Problema (1 párrafo), (3) Hallazgos (3-5 bullets con fuente), (4) Opciones consideradas (2-3), (5) Recomendación (1 sola, clara), (6) Próximos pasos. Muestra un ejemplo de LatamBox.</td><td>—</td></tr>
+      <tr><td>35–45</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>45–95</td><td>👥 Actividad grupal: redacción del memo</td><td>Usando la tabla de hallazgos de la semana 8, cada grupo debe redactar un memo de decisión sobre LatamBox. <strong>Estructura obligatoria:</strong> escriben en Google Docs compartido. Cada miembro es responsable de 1 sección (se asignan al inicio): (A) Problema + Hallazgos, (B) Opciones, (C) Recomendación + Próximos pasos. <strong>20 min individual, 15 min de integración grupal.</strong> El grupo revisa que todo conecte.</td><td>Grupo (autocorrección en la integración)</td></tr>
+      <tr><td>95–115</td><td>🔍 Intercambio y verificación</td><td>Los grupos intercambian memos con otro equipo. Aplican rúbrica PI3 simplificada: ¿el problema está claro? ¿los hallazgos citan fuentes? ¿hay más de 1 opción? ¿la recomendación es concreta? Escriben feedback en comentarios del Doc.</td><td>Peer review con rúbrica PI3</td></tr>
+      <tr><td>115–125</td><td>📋 Plan de mejora (3 acciones)</td><td>De la recomendación del memo, el grupo extrae 3 acciones concretas para el plan de mejora de LatamBox. Cada acción debe tener: qué, quién, cuándo, cómo se mide. Lo escriben en la misma hoja del memo como sección final.</td><td>Docente (revisa en clase proyectando 2 ejemplos)</td></tr>
+      <tr><td>125–135</td><td>Cierre y anticipo del parcial 2</td><td>"Semana que viene es parcial 2. Van a recibir un dossier de otra empresa de casilleros. Misma lógica de extraer hallazgos y escribir un memo. Sin tema nuevo."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Memo de decisión + plan de mejora (Google Docs). Rúbrica PI3.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Teoría estratégica amplia. El memo es un formato ejecutivo, no una tesis.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 10 - PARCIAL 2 ── -->
+<div class="week-card evaluation">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 10</div>
+      <div class="week-title">Parcial 2 — Sin tema nuevo</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-eval">Parcial 2</span>
+      <span class="badge badge-time">3.0 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">Evaluación de RA2 y RA3 mediante caso espejo. Sin contenido nuevo. Transferencia de competencias de análisis y decisión documental.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Instrucciones</td><td>Entrega del instrumento. Lectura en voz alta. Dudas.</td><td>—</td></tr>
+      <tr><td>10–100</td><td>✍️ Parcial escrito</td><td><strong>Caso espejo: "AndesBox"</strong> — casillero virtual con operación en Chile y Perú. El estudiante recibe un dossier de 5 documentos (quejas, reportes, facturas) y debe: (a) extraer hallazgos en tabla estructurada (RA3), (b) redactar un memo de decisión con problema, opciones y recomendación (RA3), (c) redactar una comunicación a clientes afectados (RA2).</td><td>Docente (rúbrica PI2+PI3)</td></tr>
+      <tr><td>100–110</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>110–130</td><td>🔍 Revisión colectiva</td><td>El docente proyecta los hallazgos esperados y un memo modelo. Los estudiantes contrastan con su examen.</td><td>Autoevaluación</td></tr>
+      <tr><td>130–135</td><td>Cierre</td><td>"Las próximas 3 semanas nos concentramos en tecnología: ¿cómo usar herramientas digitales para que todo esto que hicieron a mano sea más rápido, más trazable y más profesional?"</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Parcial escrito. Rúbrica PI2 y PI3.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Tema nuevo.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 11 ── -->
+<div class="week-card ra4">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 11</div>
+      <div class="week-title">Carpetas, metadatos y versionamiento</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="badge badge-time">3.0 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante organiza digitalmente los documentos que ha creado durante el curso aplicando una estructura de carpetas, nombres de archivo normalizados y control de versiones. Descubre que la trazabilidad empieza por el nombre del archivo.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–15</td><td>Entrada: el detective de archivos</td><td>El docente proyecta 8 nombres de archivo reales: "Doc1_final.docx", "Carta (2).pdf", "image001.png", "DOCUMENTO OFICIAL URGENTE REVISADO V3 (1).docx". Pregunta: ¿de qué trata cada archivo? ¿cuál es la versión más reciente? Los estudiantes ven el caos.</td><td>Discusión colectiva</td></tr>
+      <tr><td>15–35</td><td>📖 Input: la receta del nombre de archivo</td><td>El docente presenta una convención simple: TIPO_DESTINATARIO_ASUNTO_FECHA_VERSION.ext. Ej: "CORREO_ClienteMolina_RetrasoPaquete_20260711_v02.docx". Explica carpetas: 01_Comunicaciones, 02_Operaciones, 03_Decisiones, 04_Archivo. Muestra el antes/después en LatamBox.</td><td>—</td></tr>
+      <tr><td>35–45</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>45–90</td><td>👥 Actividad grupal: organización del archivo LatamBox</td><td><strong>Grupos nuevos.</strong> Cada grupo recibe un USB (o carpeta compartida) con 20 archivos desordenados de LatamBox: correos, actas, facturas, memos, circulares, todos con nombres caóticos. Deben: (a) renombrar cada archivo usando la convención (25 min), (b) crear la estructura de carpetas y clasificar los archivos (15 min). <strong>Regla:</strong> el grupo no avanza al siguiente archivo hasta que los 4 miembros están de acuerdo con el nombre. Esto fuerza la discusión y el consenso.</td><td>Docente (verifica 2 carpetas al azar por grupo)</td></tr>
+      <tr><td>90–110</td><td>🎮 Competencia: búsqueda del tesoro</td><td>El docente pide: "Busquen el acta de reunión del 3 de julio". El grupo que encuentra el archivo más rápido (usando su nueva estructura) gana. Luego: "Busquen la respuesta a la queja del cliente Ramírez". Esto demuestra que la organización sirve para algo real.</td><td>Competencia (gamificación)</td></tr>
+      <tr><td>110–120</td><td>📸 Cierre</td><td>Cada grupo toma screenshot de su estructura de carpetas. La suben a Teams. "Próxima clase: ¿y si una IA nos ayuda a escribir todo esto más rápido?"</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Screenshot de estructura de carpetas con archivos renombrados. Checklist de verificación.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Herramientas nuevas. Solo se usa el explorador de archivos del sistema operativo.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 12 ── -->
+<div class="week-card ra4">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 12</div>
+      <div class="week-title">IA asistida y ética documental</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="badge badge-time">3.0 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante usa IA generativa para mejorar la redacción de documentos — sin delegar hechos, sin inventar datos, y manteniendo trazabilidad de lo que la IA modificó. Desarrolla criterio ético: la IA asiste, el humano decide.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–20</td><td>Entrada: la IA no sabe todo</td><td>El docente hace una demo en vivo: le pide a ChatGPT que "redacte una respuesta a un cliente de LatamBox sobre un paquete perdido". La IA inventa un número de guía que no existe y un plazo de entrega falso. La clase discute: ¿es confiable este documento? ¿qué faltó verificar?</td><td>Discusión colectiva</td></tr>
+      <tr><td>20–40</td><td>📖 Input: los 4 principios de IA asistida</td><td>El docente presenta el marco ético simplificado basado en UNESCO (2021): (1) La IA sugiere, el humano decide. (2) Los hechos siempre vienen de una fuente verificable, no de la IA. (3) Toda modificación de IA se registra en una bitácora. (4) El documento final es responsabilidad de quien lo firma. Proyecta una bitácora simple de 4 columnas: prompt usado → qué modificó la IA → qué corrigió el humano → fuente del dato.</td><td>—</td></tr>
+      <tr><td>40–50</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>50–95</td><td>👥 Actividad grupal: taller de IA con bitácora</td><td><strong>Grupos nuevos.</strong> Reciben un correo mal redactado de LatamBox (errores de tono, formato, claridad — pero con datos reales correctos). <strong>Fase 1 (15 min):</strong> cada miembro usa una IA (ChatGPT, Claude, Copilot) para mejorar el correo. Debe guardar: prompt usado, respuesta de la IA, y marcar qué modificó. <strong>Fase 2 (15 min):</strong> comparten sus resultados. Detectan alucinaciones (datos inventados por la IA). <strong>Fase 3 (10 min):</strong> cada uno produce una versión final híbrida: toma lo mejor de la IA pero corrige los hechos y completa la bitácora.</td><td>Grupo (discusión) + individual (producto final)</td></tr>
+      <tr><td>95–115</td><td>🎤 Plenaria: ¿cuándo sí y cuándo no usar IA?</td><td>El docente lanza 5 escenarios. Los estudiantes votan con tarjetas verde (usar IA) / roja (no usar IA): (1) corregir ortografía de un memo, (2) escribir una queja de un cliente que no existe, (3) mejorar el tono de una circular, (4) generar una factura con valores ficticios, (5) resumir un acta de 5 páginas.</td><td>Clase (votación + debate)</td></tr>
+      <tr><td>115–120</td><td>Cierre</td><td>"La próxima clase cerramos el semestre. Traigan todos los documentos que han creado. Vamos a armar su portafolio profesional."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Documento mejorado + bitácora de uso de IA. Rúbrica PI4.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Debate teórico largo sobre IA. El taller es práctico: probar, comparar, decidir.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 13 ── -->
+<div class="week-card ra4">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 13</div>
+      <div class="week-title">Portafolio documental y cierre del caso LatamBox</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="badge badge-time">3.5 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">El estudiante integra todas las competencias del semestre en un portafolio documental de LatamBox: selecciona sus mejores evidencias, las organiza digitalmente, y presenta una defensa breve ante el grupo. La actividad tiene cierre completo en el aula.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Instrucciones del portafolio</td><td>El docente entrega la checklist del portafolio final: (a) 1 evidencia de RA1 (matriz de clasificación), (b) 1 evidencia de RA2 (documento construido), (c) 1 evidencia de RA3 (memo de decisión), (d) 1 evidencia de RA4 (bitácora de IA), (e) todos los archivos con nombre normalizado, (f) estructura de carpetas correcta, (g) reflexión de 1 párrafo: "¿Qué aprendí sobre procesamiento de información?"</td><td>—</td></tr>
+      <tr><td>10–60</td><td>👤 Armado individual del portafolio</td><td><strong>Trabajo individual.</strong> Cada estudiante organiza su portafolio digital: selecciona sus 4 evidencias (pueden ser las trabajadas en grupo, pero la selección y organización es individual), nombra archivos, crea carpetas, escribe la reflexión. <strong>50 minutos. Cierre en clase.</strong> Si alguien no termina, entrega lo que tenga — no hay tarea para la casa.</td><td>Estudiante (autogestión)</td></tr>
+      <tr><td>60–70</td><td>🫖 Pausa</td><td>Descanso.</td><td>—</td></tr>
+      <tr><td>70–115</td><td>🎤 Defensa del portafolio</td><td><strong>Formato speed-dating:</strong> cada estudiante se empareja con 3 compañeros distintos (5 min cada ronda). En cada ronda, presenta su portafolio en 2 minutos y recibe 2 minutos de feedback del compañero. Cambian de pareja al sonar la alarma. Esto asegura que todos presenten y todos evalúen.</td><td>Pares (coevaluación)</td></tr>
+      <tr><td>115–130</td><td>🏆 Cierre: LatamBox Awards</td><td>El docente entrega reconocimientos simbólicos: "Mejor portafolio documental", "Mejor memo de decisión", "Mejor uso ético de IA", "Mejor estructura de carpetas". Votación de la clase con post-its.</td><td>Clase</td></tr>
+      <tr><td>130–135</td><td>Despedida</td><td>El docente recoge los portafolios (USB o Teams). "La semana 14 es la evaluación final. Misma lógica de los parciales: caso nuevo, mismas competencias. No hay tema nuevo."</td><td>—</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Portafolio digital completo (4 carpetas + reflexión). Rúbrica PI4.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Finalizar en casa. El portafolio se cierra en clase. El que no alcance entrega lo que tenga.</div>
+  </div>
+</div>
+
+<!-- ── SEMANA 14 - EVALUACIÓN FINAL ── -->
+<div class="week-card evaluation">
+  <div class="week-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+    <div class="left">
+      <div class="week-num">Semana 14</div>
+      <div class="week-title">Evaluación final integradora</div>
+    </div>
+    <div class="week-badges">
+      <span class="badge badge-eval">Final</span>
+      <span class="badge badge-time">3.0 h</span>
+    </div>
+  </div>
+  <div class="week-body">
+    <div class="section-label">📌 Propósito</div>
+    <p style="font-size:.85rem;margin-bottom:.75rem">Evaluación integradora de RA1-RA4 mediante un caso nuevo del sector. El estudiante demuestra todas las competencias del semestre en un solo instrumento. Sin tema nuevo.</p>
+
+    <div class="section-label">⏱️ Actividades</div>
+    <table class="activity-table">
+      <tr><th style="width:8%">Min</th><th style="width:28%">Actividad</th><th style="width:40%">Descripción</th><th style="width:24%">¿Quién revisa?</th></tr>
+      <tr><td>0–10</td><td>Instrucciones</td><td>Entrega del instrumento final. Lectura y dudas.</td><td>—</td></tr>
+      <tr><td>10–120</td><td>✍️ Evaluación final</td><td><strong>Caso "GlobalBox Connect"</strong> — casillero internacional con operación en Colombia, Panamá y México. El estudiante recibe un dossier de 8 documentos y debe: (a) clasificar todos los documentos del dossier (RA1), (b) redactar una respuesta a un cliente insatisfecho (RA2), (c) extraer hallazgos de 3 reportes y escribir un memo de decisión (RA3), (d) proponer una estructura de carpetas digitales con nombres normalizados para el nuevo caso (RA4).</td><td>Docente (rúbrica PI1-PI4)</td></tr>
+    </table>
+
+    <div class="evidencia-box"><strong>📎 Evidencia:</strong> Evaluación final integradora. Cubre los 4 RA.</div>
+    <div class="no-preparar"><strong>🚫 No preparar:</strong> Tema nuevo. Todo fue practicado durante el semestre.</div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ═══════════════ GROUP WORK STRATEGIES ═══════════════ -->
+<div class="strategies">
+  <h2>🔧 Estrategias para asegurar que todos trabajen en los grupos</h2>
+  <p style="color:var(--gray);font-size:.85rem;margin-bottom:1rem">
+    Estas estrategias están integradas en las actividades semanales. Se aplican de forma rotativa para evitar que los estudiantes se adapten a una sola y encuentren cómo evadirla.
+  </p>
+
+  <div class="strategy-grid">
+
+    <div class="strategy-card">
+      <h4>1. Rotación aleatoria de grupos</h4>
+      <p>Cada semana se forman grupos nuevos al azar (el docente usa una app o tarjetas). Nadie se sienta con los mismos 2 semanas seguidas. Esto rompe la zona de confort y evita que un mismo estudiante cargue al grupo todo el semestre.</p>
+      <span class="tag">Semanal · Todas las semanas</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>2. Reportero aleatorio</h4>
+      <p>Cuando un grupo presenta, el docente <strong>elige al azar</strong> quién habla (no el grupo). Como nadie sabe a quién le tocará, todos deben estar preparados. Se anuncia al inicio: "Hoy el reportero será quien tenga el cumpleaños más cercano".</p>
+      <span class="tag">Presentaciones · Semanas 1, 3, 6, 8, 12</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>3. Producto individual previo obligatorio</h4>
+      <p>Antes de la discusión grupal, cada miembro produce algo individual (5-10 min). Luego comparten. Sin producto individual no se participa en la fase grupal. Ejemplo: Semana 6 — cada uno redacta su respuesta antes de revisar la de los demás.</p>
+      <span class="tag">Individual → Grupal · Semanas 6, 7, 8, 9, 12</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>4. Roles rotativos con funciones concretas</h4>
+      <p>Cada miembro tiene un rol explícito que cambia cada actividad: <strong>Redactor</strong> (escribe el producto final), <strong>Verificador</strong> (aplica checklist), <strong>Vocero</strong> (presenta), <strong>Cronometrista</strong> (controla tiempos). Sin rol, no hay excusa para no contribuir.</p>
+      <span class="tag">Roles · Semanas 7, 9</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>5. Documento colaborativo con colores</h4>
+      <p>Cuando usan Google Docs, cada miembro escribe en un color de fuente distinto. El docente proyecta el documento en vivo y ve exactamente quién escribió qué. La transparencia elimina el "free riding".</p>
+      <span class="tag">Digital · Semanas 7, 9</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>6. Coevaluación anónima (exit ticket)</h4>
+      <p>Al final de sesiones con trabajo grupal intenso, cada estudiante responde en un papel anónimo: "En una escala de 1-5, ¿qué tanto contribuyó cada miembro de tu grupo (sin contarte a ti)?" Esto revela patrones sin exponer a nadie en público.</p>
+      <span class="tag">Cada 3 semanas · Semanas 3, 6, 9, 12</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>7. Tiempos estructurados con turnos</h4>
+      <p>En discusiones grupales se usa la regla 2-2-2: 2 minutos habla el miembro A (sin interrupciones), 2 minutos B, 2 minutos todos juntos. Esto evita que los extrovertidos monopolicen y que los introvertidos no participen.</p>
+      <span class="tag">Discusiones · Semanas 1, 3, 7</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>8. "Todos escriben, uno entrega"</h4>
+      <p>Cada miembro escribe su propia versión del producto (acta, correo, hallazgo). Luego el grupo elige cuál entregar o integra lo mejor de cada uno. Nadie puede delegar su escritura en otro. El docente puede pedir ver las versiones individuales.</p>
+      <span class="tag">Escritura · Semanas 6, 7, 12</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>9. Rompecabezas (Jigsaw)</h4>
+      <p>Cada miembro del grupo se vuelve "experto" en 1 documento del dossier. Lee el suyo en profundidad y luego lo explica a los demás. Todos dependen de todos para completar el análisis. Si alguien no prepara su parte, el grupo no puede terminar — y eso se nota.</p>
+      <span class="tag">Análisis · Semanas 8, 11</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>10. Regla de consenso: no se avanza hasta que todos estén de acuerdo</h4>
+      <p>En tareas de clasificación (renombrar archivos, ubicar documentos en la matriz), el grupo no pasa al siguiente ítem hasta que los 4 miembros confirman que están de acuerdo. Si alguien discrepa, debe explicar por qué — y el grupo debate hasta resolver.</p>
+      <span class="tag">Clasificación · Semanas 3, 11</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>11. Competencia entre grupos con criterios objetivos</h4>
+      <p>Gamificación ligera: el grupo que complete correctamente primero gana un punto simbólico. Pero solo gana si <strong>todos</strong> los miembros pueden explicar la respuesta. Esto evita que uno solo corra y los demás miren.</p>
+      <span class="tag">Gamificación · Semanas 4, 11</span>
+    </div>
+
+    <div class="strategy-card">
+      <h4>12. Gallery walk con post-its de corrección</h4>
+      <p>Los grupos pegan su trabajo en la pared. Todos los estudiantes caminan en silencio y dejan post-its con correcciones en los trabajos de otros grupos. Como las correcciones son anónimas, hay libertad para señalar errores sin pena social.</p>
+      <span class="tag">Coevaluación · Semanas 3, 8</span>
+    </div>
+
+  </div>
+
+  <div style="margin-top:1.5rem;padding:1rem;background:var(--light-gold);border-radius:6px;font-size:.85rem">
+    <strong>💡 Principio fundamental:</strong> Estas estrategias no se usan todas cada semana. Se rotan 2-3 por sesión según el tipo de actividad. El objetivo no es castigar al que no trabaja, sino <strong>diseñar actividades donde sea más fácil trabajar que no trabajar</strong>. Si la actividad está bien diseñada, la participación es el camino de menor resistencia.
+  </div>
+</div>
+
+</body>
+</html>

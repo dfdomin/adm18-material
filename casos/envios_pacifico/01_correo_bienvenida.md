@@ -1,0 +1,40 @@
+# Caso Envíos del Pacífico — Documento 1 de 6
+## Correo de Confirmación de Registro
+
+---
+
+**ENVÍOS DEL PACÍFICO S.A.S.**
+Casillero Virtual Colombia-Asia-Pacífico
+NIT: 901.456.789-0
+Carrera 43A #19-25, Medellín, Colombia
+www.enviosdelpacifico.com
+
+---
+
+**ASUNTO:** Tu casillero está activo — Bienvenido a Envíos del Pacífico
+
+**FECHA:** 5 de marzo de 2026
+
+**PARA:** [Nombre del estudiante evaluado]
+
+---
+
+Estimado/a cliente:
+
+Tu casillero virtual en **Shenzhen, China**, y en **Tokio, Japón**, ha sido activado. Con Envíos del Pacífico puedes comprar en plataformas asiáticas (Alibaba, AliExpress, Rakuten, Yahoo Shopping) y recibir tus productos en Colombia.
+
+**Tus direcciones de casillero:**
+
+| Sede | Dirección |
+|------|-----------|
+| Shenzhen, China | Room 1208, Building A, Huaqiang North Road, Futian District, Shenzhen, China. Código: EPSZ-[Número] |
+| Tokio, Japón | 3-14-8 Minami-Ikebukuro, Toshima-ku, Tokyo 171-0022, Japan. Código: EPTK-[Número] |
+
+Atentamente,
+
+**Laura Sánchez**
+Coordinadora de Atención al Cliente
+
+---
+
+*Caso Envíos del Pacífico — Parcial 1 ADM18. IUB/Unibarranquilla, 2026.*

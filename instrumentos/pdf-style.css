@@ -1,0 +1,11 @@
+body { font-family: system-ui, sans-serif; font-size: 11pt; line-height: 1.5; color: #202124; max-width: 800px; margin: auto; padding: 20px; }
+h1 { color: #1a2744; font-size: 18pt; }
+h2 { color: #2c5ea8; font-size: 14pt; border-bottom: 1px solid #dadce0; padding-bottom: 3px; }
+h3 { color: #1e7a3e; font-size: 12pt; }
+table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 10px 0; }
+th { background: #1a2744; color: white; padding: 6px 8px; text-align: left; }
+td { padding: 4px 8px; border-bottom: 1px solid #dadce0; }
+tr:nth-child(even) td { background: #fafafa; }
+code { background: #f1f3f4; padding: 2px 4px; border-radius: 3px; font-size: 9pt; }
+blockquote { border-left: 3px solid #b8860b; margin: 10px 0; padding: 5px 15px; background: #fef7e0; }
+@page { size: A4; margin: 20mm; }

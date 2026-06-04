@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 11 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-example-card { background: #f0f4ff; border: 1px solid #93c5fd; border-left: 4px solid var(--info); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-example-card h4 { color: var(--info); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  .tg-convention-table { font-size: 0.8rem; }
+  .tg-convention-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); text-align: left; }
+  .tg-convention-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); vertical-align: top; font-family: var(--font-mono); }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-example-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 11 · Carpetas, metadatos y versionamiento</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="tg-badge-gold">3.0 h</span>
+      <span>Clase presencial · Organizacion documental digital</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Organiza digitalmente 20 archivos de LatamBox usando una convencion de nombres estandarizada y una estructura de carpetas funcional.</li>
+      <li>Aplica la convencion TIPO_Destinatario_Asunto_FECHA_VERSION.ext para renombrar archivos de forma consistente y buscable <em>(ISO 15489-1:2016, §9.3)</em>.</li>
+      <li>Clasifica documentos en 4 carpetas estrategicas (Comunicaciones, Operaciones, Decisiones, Archivo) segun su funcion en el negocio.</li>
+      <li>Valora el versionamiento como practica de trazabilidad documental (v01 → v02 → ...) <em>(ISO 30301:2019)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>20 archivos digitales desordenados</strong> de LatamBox en USB o carpeta compartida (1 juego por grupo). Verificar que los nombres originales sean caoticos: "doc1_final.pdf", "factura marzo.xlsx", "acta_reunion.docx", "correo juan.pdf", "real_final_v2_este_si.pdf".</li>
+      <li>Checklist de verificacion impresa (1 por estudiante): convencion de nombres + estructura de carpetas.</li>
+      <li>Proyector para modelar la convencion con 3 ejemplos.</li>
+      <li>Carpeta digital vacia en cada computador con la estructura madre (01_Comunicaciones, 02_Operaciones, 03_Decisiones, 04_Archivo).</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📐 Convencion de nombres — Referencia para el docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Explicar detalladamente en los minutos 15-35. La convencion tiene 5 partes separadas por guion bajo (_).</p>
+
+    <div class="table-responsive">
+    <table class="tg-convention-table">
+      <tr>
+        <th>Componente</th>
+        <th>Descripcion</th>
+        <th>Ejemplo</th>
+        <th>Regla</th>
+      </tr>
+      <tr>
+        <td><strong>TIPO</strong></td>
+        <td>Clase documental abreviada</td>
+        <td>CORREO, ACTA, FACTURA, CIRCULAR, MEMO, INFORME, GUIA, FORMULARIO</td>
+        <td>MAYUSCULAS, sin espacios, una palabra</td>
+      </tr>
+      <tr>
+        <td><strong>Destinatario</strong></td>
+        <td>Persona o area que recibe/emite</td>
+        <td>JuanPerez, Operaciones, GerenciaGeneral</td>
+        <td>PascalCase, sin espacios, sin articulos</td>
+      </tr>
+      <tr>
+        <td><strong>Asunto</strong></td>
+        <td>Tema breve del documento</td>
+        <td>CotizacionFlete, QuejaRetraso, CambioProveedor</td>
+        <td>Breve (2-4 palabras), sin articulos, PascalCase</td>
+      </tr>
+      <tr>
+        <td><strong>FECHA</strong></td>
+        <td>Fecha del documento en formato AAAAMMDD</td>
+        <td>20260715</td>
+        <td>8 digitos. AAAA=ano, MM=mes (01-12), DD=dia (01-31). SIN guiones.</td>
+      </tr>
+      <tr>
+        <td><strong>VERSION</strong></td>
+        <td>Numero de version secuencial</td>
+        <td>v01, v02, v03</td>
+        <td>"v" + numero de 2 digitos. v01 = primera version, v02 = segunda.</td>
+      </tr>
+      <tr>
+        <td><strong>Extension</strong></td>
+        <td>Formato nativo del archivo (.ext)</td>
+        <td>.pdf, .docx, .xlsx</td>
+        <td>La que trae el archivo. NO renombrar la extension.</td>
+      </tr>
+    </table>
+    </div>
+
+    <div style="margin-top:var(--space-md);">
+      <h3>Ejemplos completos modelados</h3>
+      <div class="tg-answer"><strong>Antes:</strong> <code>doc1_final.pdf</code><br><strong>Despues:</strong> <code>CORREO_JuanPerez_RespuestaCotizacionFlete_20260710_v01.pdf</code></div>
+      <div class="tg-answer"><strong>Antes:</strong> <code>acta marzo.docx</code><br><strong>Despues:</strong> <code>ACTA_JuntaDirectiva_EvaluacionTrimestral_20260325_v03.docx</code></div>
+      <div class="tg-answer"><strong>Antes:</strong> <code>factura.xlsx</code><br><strong>Despues:</strong> <code>FACTURA_ClienteCorporativo_CobroImpuestosMiami_20260701_v01.xlsx</code></div>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📁 Estructura de carpetas — Referencia para el docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Los estudiantes deben crear 4 carpetas principales y clasificar los 20 archivos dentro de ellas segun su funcion.</p>
+
+    <div class="tg-example-card">
+      <h4>01_Comunicaciones</h4>
+      <p><strong>Que va aqui:</strong> Correos externos, cartas a clientes, notificaciones, respuestas a quejas, comunicaciones con proveedores, correspondencia entrada/salida.</p>
+      <p><strong>Logica:</strong> Todo lo que entra o sale de la empresa hacia afuera.</p>
+    </div>
+
+    <div class="tg-example-card">
+      <h4>02_Operaciones</h4>
+      <p><strong>Que va aqui:</strong> Facturas, guias de envio, documentos de embarque/logistica, ordenes de compra, cotizaciones, comprobantes de pago.</p>
+      <p><strong>Logica:</strong> Documentos que mueven el negocio — dinero, envios, logistica.</p>
+    </div>
+
+    <div class="tg-example-card">
+      <h4>03_Decisiones</h4>
+      <p><strong>Que va aqui:</strong> Actas de reunion, memos internos, planes de mejora, informes de gestion, evaluaciones, circulares.</p>
+      <p><strong>Logica:</strong> Documentos que registran decisiones, analisis o instrucciones — la "memoria" de la empresa.</p>
+    </div>
+
+    <div class="tg-example-card">
+      <h4>04_Archivo</h4>
+      <p><strong>Que va aqui:</strong> Documentos cerrados, historicos, versiones finales que ya no se modifican, documentos de periodos anteriores.</p>
+      <p><strong>Logica:</strong> Lo que se guarda para referencia pero ya no esta activo — el "sotano" ordenado <em>(AGN Acuerdo 003, 2023)</em>.</p>
+    </div>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (120 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td><strong>Entrada: "detective de archivos"</strong></td>
+        <td>
+          <span class="tg-note">ENGANCHE</span> Proyectar 8 nombres de archivos caoticos:<br>
+          <code>doc_final.pdf</code>, <code>acta (1).docx</code>, <code>factura marzo.xlsx</code>, <code>correo juan.pdf</code>, <code>real_final_v2_este_si.pdf</code>, <code>IMPORTANTE LEER.docx</code>, <code>sin nombre.pdf</code>, <code>copia de copia de acta.docx</code><br>
+          Preguntar: "¿En cual de estos esta el acta del 3 de julio? ¿Cuanto tardarian en encontrarla?"<br>
+          <span class="tg-note">TRANSICION</span> "Hoy van a dejar de ser detectives. Van a ser arquitectos de informacion. Cuando terminen, cualquier persona encuentra cualquier archivo en menos de 10 segundos."
+        </td>
+      </tr>
+      <tr>
+        <td>15–35</td>
+        <td><strong>Input:</strong> convencion de nombres + estructura carpetas</td>
+        <td>
+          <span class="tg-note">MODELAR</span> Explicar cada componente de la convencion usando los ejemplos de la seccion de referencia. Escribir en el tablero/proyector:<br>
+          <strong>TIPO_Destinatario_Asunto_FECHA_VERSION.ext</strong><br>
+          Mostrar 3 transformaciones completas en vivo.<br>
+          Explicar las 4 carpetas y su logica de clasificacion.<br>
+          <span class="tg-note">ENTREGAR</span> Checklist impresa con la convencion y las 4 carpetas <em>(NTC-ISO 30300:2020)</em>.<br>
+          <span class="tg-note">NO DICTE</span> — que sigan la checklist. El que no entiende, levanta la mano.
+        </td>
+      </tr>
+      <tr>
+        <td>35–45</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso.</td>
+      </tr>
+      <tr>
+        <td>45–90</td>
+        <td><strong>Organizacion:</strong> actividad practica en grupos</td>
+        <td>
+          <strong>Fase 1 — Renombrar (25 min):</strong> Cada grupo recibe los 20 archivos con nombres caoticos. Usando la checklist, renombran todos los archivos aplicando la convencion completa.<br>
+          <span class="tg-note-critico">REGLA DE CONSENSO</span> Los 4 integrantes del grupo deben estar de acuerdo con cada nombre antes de avanzar. Si uno no esta de acuerdo, discuten hasta consensuar. Esto evita que uno solo haga todo.<br>
+          <strong>Fase 2 — Clasificar (15 min):</strong> Crean las 4 carpetas y mueven cada archivo a la carpeta que corresponde. Verifican entre todos que la clasificacion sea correcta.<br>
+          <span class="tg-note">CIRCULAR</span> verificando que usen AAAAMMDD (no otros formatos), que las extensiones queden intactas, que los archivos esten en la carpeta correcta.
+        </td>
+      </tr>
+      <tr>
+        <td>90–110</td>
+        <td><strong>Busqueda del tesoro:</strong> competencia</td>
+        <td>
+          <span class="tg-note">DINAMICA</span> El docente anuncia: "Encuentren el acta del 3 de julio" (o cualquier archivo especifico). Gana el grupo que lo encuentra mas rapido y lo muestra en pantalla.<br>
+          Hacer 3 rondas con diferentes archivos.<br>
+          <span class="tg-note">REFLEXION</span> "¿Cuanto tardaron? ¿Habrian podido encontrarlo con los nombres originales?" Conectar la velocidad de busqueda con la calidad de la convencion.<br>
+          <span class="tg-note">PREMIAR</span> al grupo mas rapido con un reconocimiento simbolico.
+        </td>
+      </tr>
+      <tr>
+        <td>110–120</td>
+        <td><strong>Screenshot + cierre</strong></td>
+        <td>
+          Cada estudiante toma screenshot de su estructura de carpetas con los archivos renombrados visibles. Esa es la evidencia de la sesion.<br>
+          <span class="tg-note">CIERRE</span> "La organizacion digital no es opcional — es lo que hace que una empresa funcione cuando crece. La convencion que aprendieron hoy la van a usar en su portafolio final."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 5 preguntas sobre la convencion de nombres y estructura de carpetas.</p>
+
+    <div class="tg-answer"><strong>1.</strong> Nombra las 5 partes de la convencion de nombres en orden:<br>→ <strong>TIPO, Destinatario, Asunto, FECHA, VERSION (mas la extension)</strong></div>
+    <div class="tg-answer"><strong>2.</strong> ¿Cuantas carpetas tiene la estructura principal y como se llaman?<br>→ <strong>4 carpetas: 01_Comunicaciones, 02_Operaciones, 03_Decisiones, 04_Archivo</strong></div>
+    <div class="tg-answer"><strong>3.</strong> ¿Que significa el formato AAAAMMDD y por que se usa sin guiones?<br>→ <strong>AAAA = ano (4 digitos), MM = mes (2 digitos, 01-12), DD = dia (2 digitos, 01-31). Sin guiones para que el sistema operativo ordene correctamente por fecha al ordenar alfabeticamente.</strong> <em>(ISO 15489-1:2016, §9.3)</em></div>
+    <div class="tg-answer"><strong>4.</strong> ¿Cuando se debe usar v02 en lugar de v01?<br>→ <strong>Cuando se modifica un documento ya existente. v01 es la primera version. Cada modificacion significativa incrementa el numero: v02, v03... La version anterior se conserva en 04_Archivo.</strong> <em>(Echavarría, 2023)</em></div>
+    <div class="tg-answer"><strong>5.</strong> ¿En que carpeta va una factura de flete maritimo y por que?<br>→ <strong>02_Operaciones — porque es un documento que mueve el negocio (logistica y pagos).</strong></div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa. Evidencia para PI4 (portafolio documental digital) <em>(AGN, 2022)</em>.</p>
+    <p><strong>Que se evalua:</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>Screenshot de la estructura de carpetas con los 20 archivos renombrados visibles.</li>
+      <li>Checklist de verificacion completada (convencion + carpetas correctas).</li>
+      <li><strong>Rubrica PI4 formativa:</strong> se evalua que los nombres sigan la convencion, que las carpetas contengan los documentos correctos, y que las versiones esten numeradas apropiadamente <em>(MoReq2020)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar herramientas nuevas.</strong> Los estudiantes usan exclusivamente el explorador de archivos del sistema operativo (Windows Explorer / Finder). Nada de software especializado, Dropbox, Google Drive ni plataformas de gestion documental. La habilidad es independiente de la herramienta.</li>
+      <li>No preparar teoria de archivonomia o bibliotecologia. La clase es practica: renombrar y clasificar. La teoria la da la convencion misma.</li>
+      <li>No preparar otros formatos de fecha (DDMMAAAA, MM-DD-AAAA). Solo AAAAMMDD. Mantenerlo simple y unificado.</li>
+      <li>No permitir que un solo estudiante haga todo el trabajo del grupo. La regla de consenso (los 4 de acuerdo) es obligatoria. Si un estudiante se aísla, intervenir: "¿tu compañero ya te mostro como quedo ese nombre? ¿Estas de acuerdo?"</li>
+      <li>No dejar que los estudiantes usen nombres descriptivos largos en lugar de la convencion. "Factura del cliente Juan Perez de marzo 2026.pdf" no es valido. Debe ser <code>FACTURA_JuanPerez_CobroMarzo_20260315_v01.pdf</code>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📚 Bibliografía</h2>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);line-height:1.8;">
+      <li>ISO (2016). <em>ISO 15489-1:2016 — Información y documentación. Gestión de documentos. Parte 1: Conceptos y principios.</em> ISO. [Norma]</li>
+      <li>ISO (2019). <em>ISO 30301:2019 — Información y documentación. Sistemas de gestión para documentos. Requisitos.</em> ISO. [Norma]</li>
+      <li>ICONTEC (2020). <em>NTC-ISO 30300:2020 — Información y documentación. Sistemas de gestión para documentos. Fundamentos y vocabulario.</em> ICONTEC. [Norma]</li>
+      <li>DLM Forum (2020). <em>MoReq2020 — Requisitos modulares para sistemas de gestión de registros electrónicos (draft).</em> DLM Forum. [Estándar]</li>
+      <li>Archivo General de la Nación (2022). <em>Guía para la implementación de un Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA).</em> AGN Colombia. [Guía oficial]</li>
+      <li>Archivo General de la Nación (2023). <em>Acuerdo 003 de 2023 — Lineamientos para la preservación digital.</em> AGN Colombia. [Norma]</li>
+      <li>NIST (2023). <em>NIST SP 800-207 — Zero Trust Architecture.</em> National Institute of Standards and Technology. [Reporte]</li>
+      <li>IDC Latin America (2024). <em>Adopción de soluciones cloud en gestión documental en América Latina.</em> IDC. [Reporte]</li>
+      <li>Echavarría, A.F. (2023). <em>Blockchain para trazabilidad documental en organizaciones colombianas.</em> Universidad Nacional de Colombia. [Paper]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

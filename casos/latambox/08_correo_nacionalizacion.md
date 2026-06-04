@@ -1,0 +1,68 @@
+# Caso LatamBox — Documento 8 de 12
+## Correo de Nacionalización — Aviso de Trámite Aduanero
+
+---
+
+**LATAMBOX S.A.S.**
+Departamento de Comercio Exterior
+
+---
+
+**ASUNTO:** 🛃 Tu paquete está en proceso de nacionalización — LBX-2026-00478
+
+**FECHA:** 16 de febrero de 2026
+
+**PARA:** [Nombre del cliente] — LBX-1029
+
+---
+
+Estimado/a [Nombre]:
+
+Tu paquete llegó a Bogotá en el vuelo AV-0097 del 13 de febrero y ya ingresó al proceso de nacionalización ante la DIAN.
+
+**Estado actual del trámite:**
+
+| Etapa | Estado | Fecha |
+|-------|--------|-------|
+| Recepción en depósito aduanero | ✅ Completado | 14 feb 2026 |
+| Verificación documental (factura + AWB) | ✅ Completado | 15 feb 2026 |
+| Liquidación de tributos | ⏳ En proceso | Pendiente |
+| Pago de impuestos | ⬜ Pendiente | — |
+| Levante / autorización de salida | ⬜ Pendiente | — |
+
+**Documentos presentados ante la DIAN:**
+
+- [x] Factura comercial de Amazon (#114-8395627-0123456)
+- [x] Guía aérea AWB 420-87654321
+- [x] Declaración de Valor DV-2026
+- [x] Certificado TLC (los productos califican para 0% de arancel bajo el TLC Colombia-USA)
+
+**Próximos pasos:**
+
+1. La DIAN liquidará los impuestos en los próximos **2 a 4 días hábiles**.
+2. Recibirás un correo con el comprobante de pago de impuestos y el monto exacto a pagar.
+3. Una vez realizado el pago, la DIAN emitirá el levante y tu paquete quedará libre para entrega.
+
+**Impuestos estimados (sujetos a verificación de la DIAN):**
+
+| Concepto | Base (USD) | Tarifa | Estimado (USD) |
+|----------|:----------:|:------:|:--------------:|
+| Arancel (TLC) | $435.97 | 0% | $0.00 |
+| IVA (19% sobre CIF) | $446.08 | 19% | $84.75 |
+| **Total estimado** | — | — | **≈ $84.75** |
+
+**Importante:** El valor final depende de la TRM del día de liquidación y de la verificación de la DIAN sobre los valores declarados. Cualquier diferencia será notificada de inmediato.
+
+Si tienes preguntas sobre el proceso aduanero, responde a este correo.
+
+Atentamente,
+
+**Diana Ramírez**
+Analista de Comercio Exterior
+LatamBox S.A.S.
+comercioexterior@latambox.com
++57 300 555 0200
+
+---
+
+*Este documento es parte del caso de estudio LatamBox para el módulo ADM18 — Procesamiento de la Información en la Organización. IUB/Unibarranquilla, 2026.*

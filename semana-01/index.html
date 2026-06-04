@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 1 — Cerebro, informacion y decisiones | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 70px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(255, 255, 255, 0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255, 255, 255, 0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+ }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .week-progress-widget__header {
+     display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800;
+   }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255, 255, 255, 0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+   .week-progress-widget__name {
+     margin-bottom: 0.7rem;
+     border: 1px solid rgba(255, 255, 255, 0.24);
+     border-radius: 12px;
+     padding: 0.45rem 0.7rem;
+   }
+   .week-progress-widget__meta {
+     display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm);
+   }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 1 · RA1</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../progreso.html">Mi Progreso</a>
+   <a href="../semana-01/" class="active">Semana 1</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 1 de 14</div>
+    <h1 class="week-hero__title">🧱 Estructuras de Información Fundamentales</h1>
+    <p class="week-hero__subtitle">Atención · Memoria · Documentos · Contexto LatamBox</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra1">RA1</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 1 — Cerebro, informacion y decisiones</h1>
+
+ <!-- Memo LatamBox -->
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:1.25rem 1.5rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-size:0.93rem;line-height:1.75">
+   <div style="font-weight:700;color:#1a73e8;font-size:0.95rem;margin-bottom:0.85rem;letter-spacing:0.04em;text-transform:uppercase">📄 Memorando Interno — LatamBox S.A.</div>
+   <table style="border:none;background:transparent;width:100%;font-size:0.88rem;margin-bottom:0.85rem;border-collapse:collapse">
+     <tr><td style="width:90px;font-weight:600;color:#555;padding:3px 0;vertical-align:top">De:</td><td style="color:#222;padding:3px 0">Carlos Mendoza, Gerente General — LatamBox S.A.</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Para:</td><td style="color:#222;padding:3px 0">Nuevos colaboradores del equipo LatamBox</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Asunto:</td><td style="color:#222;padding:3px 0">Bienvenida al equipo — Por qué empezamos por el cerebro, no por los documentos</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Fecha:</td><td style="color:#222;padding:3px 0">Barranquilla, 10 de enero de 2026</td></tr>
+   </table>
+   <hr style="border:none;border-top:1px solid #c8d3dd;margin:0.75rem 0">
+   <p style="margin:0.6rem 0">Bienvenidos al equipo de LatamBox. Me complace tenerlos aquí en un momento de crecimiento importante para nuestra operación.</p>
+   <p style="margin:0.6rem 0">Antes de explicarles cómo procesamos un pedido, una guía de entrega o una factura de aduana, necesito que comprendan algo fundamental: <strong>todo documento que circula en esta empresa pasa primero por el cerebro humano</strong>. Un colaborador que no entiende cómo funciona su propia atención, su memoria y su comprensión cometerá errores costosos, sin importar cuán bien diseñado esté el sistema.</p>
+   <p style="margin:0.6rem 0">Por eso, su primera semana no comienza con manuales de procedimiento. Comienza con una pregunta más honesta: <em>¿cómo procesa información usted?</em> ¿Qué filtra su atención? ¿Cuánto puede retener su memoria de trabajo en un momento dado? ¿Qué diferencia hay entre entender algo en el momento y recordarlo una semana después?</p>
+   <p style="margin:0.6rem 0">Solo cuando tengan claridad sobre esas preguntas estarán listos para procesar los documentos reales de LatamBox con criterio, precisión y responsabilidad.</p>
+   <p style="margin:0.75rem 0 0 0;font-weight:700;color:#1a73e8">Carlos Mendoza</p>
+   <p style="margin:0.1rem 0 0 0;font-size:0.85rem;color:#555">Gerente General · LatamBox S.A.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Proposito:</strong> Antes de procesar informacion en una empresa, el estudiante reconoce como su propio cerebro atiende, filtra, recuerda y comunica. Metacognicion aplicada al modulo. Se presenta LatamBox como el caso que atravesara todo el semestre.
+ </div>
+
+ <!-- ═══════════ CONTENIDO: LAS 4 IDEAS DEL CEREBRO ═══════════ -->
+ <h2 id="contenido" style="margin-top:var(--space-lg)">🧠 Contenido — Las 4 ideas del cerebro que todo procesador de información debe conocer</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-lg)">Antes de tocar un solo documento de LatamBox, necesitas entender cómo tu propio cerebro procesa (y no procesa) la información. Estas cuatro ideas vienen de décadas de investigación en psicología cognitiva y neurociencia. No son teoría abstracta: cada una tiene consecuencias directas sobre cómo trabajarás con documentos este semestre.</p>
+
+ <div style="background:var(--bg-card);border-left:5px solid #2c5ea8;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#2c5ea8;margin-top:0;font-size:1.05rem">🔦 Idea 1 — Atención selectiva: no vemos todo, filtramos</h3>
+   <p>Tu cerebro no es una cámara que graba todo lo que pasa frente a tus ojos. Es más bien un faro en la oscuridad: ilumina una zona pequeña y deja el resto en penumbra. Los psicólogos llaman a esto <strong>atención selectiva</strong> (Kahneman, 2011; Posner &amp; Rothbart, 2023). De toda la información disponible en tu entorno, tu cerebro elige una fracción mínima para procesar en detalle. El resto… simplemente no existe para tu conciencia.</p>
+   <p>Piensa en un empleado de LatamBox que abre su bandeja de entrada un lunes en la mañana y encuentra 50 correos. No puede leerlos todos con el mismo nivel de atención. Su cerebro filtra automáticamente: los que dicen "URGENTE" en el asunto, los que vienen de su jefe directo, los que mencionan "aduana" o "cliente furioso". El resto puede esperar. Esto no es pereza: es un mecanismo de supervivencia cognitiva. Si procesáramos cada estímulo con igual profundidad, colapsaríamos en minutos.</p>
+   <p>En la gestión documental esto tiene una consecuencia práctica enorme: <strong>el diseño del documento importa</strong>. Un asunto de correo ambiguo ("Actualización") compite en desventaja contra uno específico ("Paquete #447 retenido en aduana — requiere acción hoy"). La atención de quien lee es un recurso escaso. Los documentos bien diseñados respetan ese hecho; los mal diseñados lo ignoran. Por eso normas como la GTC 185 existen: para estandarizar la forma en que presentamos información de manera que el cerebro humano pueda procesarla eficientemente.</p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #1e7a3e;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#1e7a3e;margin-top:0;font-size:1.05rem">🧩 Idea 2 — Memoria de trabajo limitada: la pizarra que se borra sola</h3>
+   <p>Imagina que tienes una pizarra pequeña frente a ti. Puedes escribir en ella, pero cada cosa nueva que anotas obliga a borrar algo de lo anterior. Esa pizarra es tu <strong>memoria de trabajo</strong> (Baddeley et al., 2020). Durante más de 50 años, la investigación ha mostrado que un adulto promedio puede mantener aproximadamente 4±1 ítems activos en su memoria de trabajo en un momento dado (Cowan, 2022). No 20. No 50. Cuatro, más o menos uno.</p>
+   <p>Esto explica por qué un agente de servicio al cliente de LatamBox que atiende 5 chats simultáneos empieza a confundir los detalles del tercer cliente con los del quinto. No es distraído: está operando por encima del límite de su memoria de trabajo. Cuando la carga de información excede la capacidad de la pizarra, el sistema colapsa: se olvidan datos, se cometen errores, se mezclan casos. La teoría de carga cognitiva (Sweller et al., 2022) distingue tres tipos de carga: la <strong>intrínseca</strong> (qué tan complejo es el material en sí), la <strong>extrínseca</strong> (cómo está presentado) y la <strong>pertinente</strong> (el esfuerzo productivo de aprender). Un buen procesador de información reduce la carga extrínseca —presenta la información de forma limpia y organizada— para liberar recursos mentales para lo que realmente importa.</p>
+   <p>En la práctica documental, esto significa que un acta de reunión de 12 páginas con párrafos interminables no solo es molesta: es <strong>cognitivamente inaccesible</strong>. Nadie puede procesarla. Por eso aprendemos a usar tablas, listas numeradas, párrafos breves y jerarquías visuales. No es decoración: es ingeniería cognitiva aplicada a documentos.</p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #e67e22;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#e67e22;margin-top:0;font-size:1.05rem">🔄 Idea 3 — Comprender no es recordar: la ilusión del aprendizaje</h3>
+   <p>Has tenido esta experiencia: el profesor explica algo en clase, tú asientes porque lo entiendes perfectamente, y una semana después… no puedes explicarlo con tus propias palabras. Esto no es un fallo tuyo: es una propiedad del cerebro humano. <strong>Comprender en el momento y recordar después son procesos diferentes</strong> (Mayer, 2024; Manes &amp; Roca, 2022).</p>
+   <p>La comprensión inmediata ocurre en la memoria de trabajo: la información entra, la procesas, conectas con lo que ya sabes y sientes que "ya le cogiste". Pero esa comprensión es frágil. Para que pase a la memoria de largo plazo, el cerebro necesita <strong>consolidación</strong>: tiempo, repetición espaciada, aplicación práctica, sueño. Si solo escuchas una explicación una vez y nunca vuelves a usar ese conocimiento, tu cerebro asume que no es importante y lo descarta. Es un mecanismo de eficiencia: ¿para qué guardar algo que no se usa?</p>
+   <p>En el contexto de LatamBox, piensa en un estudiante que en la semana 4 aprende los 10 criterios de la checklist GTC 185. En clase los entiende todos. Pero si no los aplica repetidamente —diagnosticando documentos reales, corrigiendo errores, revisando el trabajo de otros—, para la semana 7 habrá olvidado la mitad. Por eso este curso está diseñado para que <strong>cada concepto se use, no solo se escuche</strong>. Las actividades no son un complemento de la teoría: son el mecanismo mediante el cual la teoría se consolida en tu memoria.</p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #b8860b;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#b8860b;margin-top:0;font-size:1.05rem">📄 Idea 4 — Documentos = memoria externa: por qué existen los papeles</h3>
+   <p>Si el cerebro humano tuviera memoria ilimitada e infalible, las organizaciones no necesitarían documentos. Pero no la tiene. Los documentos existen precisamente porque <strong>el cerebro no puede almacenar todo</strong>. Son una extensión de nuestra memoria: una memoria externa, confiable, que no se degrada con el tiempo y que puede ser consultada por cualquier persona, no solo por quien la creó (ISO 15489-1:2016).</p>
+   <p>Imagina LatamBox sin documentos. Un cliente llama para reclamar que su paquete no ha llegado. El agente que lo atendió la semana pasada está de vacaciones. Nadie más sabe qué pasó. Sin un registro —un correo, una guía, un acta—, esa información se perdió para siempre. Ahora multiplica eso por 47 paquetes retrasados y 12 clientes furiosos. El caos no es logístico: es documental. La guía aérea (AWB), la factura de flete, el correo de nacionalización, el comprobante de impuestos… cada uno de los 12 documentos del ecosistema LatamBox existe para resolver un problema de memoria. Si el documento no está, la información no existe para la organización.</p>
+   <p>Por eso la gestión documental no es "poner papeles en orden". Es <strong>diseñar la memoria de una organización</strong>. Un documento bien hecho —con fecha, autor, destinatario, asunto claro y contenido verificable (GTC 185:2009)— es un acto de responsabilidad profesional. Estás construyendo un pedazo de la memoria institucional. Cuando dentro de tres años alguien necesite saber qué se decidió en la reunión del 28 de mayo de 2026, tu documento será lo único que quede.</p>
+ </div>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripcion</th></tr>
+   <tr>
+     <td>0–15</td>
+     <td>Entrada: presentacion del modulo</td>
+     <td>El docente presenta el programa, los RA, la metodologia de grupos y el caso LatamBox. Muestra un pedido real de Amazon entregado via casillero.</td>
+   </tr>
+   <tr>
+     <td>15–35</td>
+     <td>Quiz diagnostico</td>
+     <td>Quiz individual de 10 preguntas (autopercepcion, memoria, atencion, estrategias; Manes &amp; Roca, 2022). No calificable.</td>
+   </tr>
+   <tr>
+     <td>35–55</td>
+     <td>Discusion guiada: 4 ideas del cerebro</td>
+     <td>Atencion selectiva (Kahneman, 2011), memoria de trabajo limitada (Baddeley et al., 2020; Cowan, 2022), comprension ≠ recuerdo, documentos = memoria externa (ISO 15489-1:2016). Parejas discuten 2-2-2.</td>
+   </tr>
+   <tr>
+     <td>65–95</td>
+     <td>Actividad grupal: LatamBox — el primer contacto</td>
+     <td>Grupos de 4 (aleatorios). Reciben sobre con 5 documentos de LatamBox. Leer, discutir, completar tabla: nombre → ¿para que sirve? → ¿quien lo emite? → ¿que decision permite? (Mayer, 2024)</td>
+   </tr>
+   <tr>
+     <td>95–120</td>
+     <td>Plenaria: cierre y reflexion</td>
+     <td>Cada grupo comparte 1 hallazgo (reportero aleatorio). Docente conecta con las 4 ideas del cerebro (Sweller et al., 2022).</td>
+   </tr>
+   <tr>
+     <td>120–135</td>
+     <td>Ticket de salida</td>
+     <td>Post-it: "Algo que aprendi sobre como proceso informacion" + "Una pregunta que me llevo".</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> Tabla grupal de 5 documentos + post-it de salida. Todo queda en el salon.
+ </div>
+
+ <h2 style="margin-top:var(--space-lg)">Documentos del caso — LatamBox</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">5 documentos usados en la actividad grupal. Formatos nativos (.eml, .docx, .xlsx) para abrir en clase y .pdf para referencia.</p>
+ <ul class="doc-list">
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">01 — Correo de bienvenida / registro</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/01_correo_bienvenida.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📝</span>
+     <span class="doc-name">02 — Formulario de registro</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/02_formulario_registro.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">03 — Factura de Amazon</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/03_factura_amazon.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">04 — Notificacion de llegada a Miami</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/04_notificacion_llegada.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📋</span>
+     <span class="doc-name">10 — Guia de entrega local</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/10_guia_entrega_local.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+ </ul>
+
+ <!-- Quiz -->
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-02/index.html" class="btn btn-primary">Siguiente: Semana 2 →</a>
+</div>
+
+<!-- Bibliografía -->
+<div class="card" id="bibliografia" style="margin-top:var(--space-lg)">
+ <h2>📚 Bibliografía</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">Fuentes que fundamentan el diseño didáctico de esta semana.</p>
+ <ol style="line-height:1.95;font-size:0.92rem;color:var(--text-secondary);padding-left:1.4rem">
+   <li id="ref-baddeley">Baddeley, A., Eysenck, M. W., &amp; Anderson, M. C. (2020). <em>Memory</em> (3rd ed.). Routledge. <span style="color:#888;font-size:0.85em">→ Memoria de trabajo y sus componentes.</span></li>
+   <li id="ref-kahneman">Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux. <span style="color:#888;font-size:0.85em">→ Sistema 1 (automático) y Sistema 2 (deliberado); atención y sesgos cognitivos.</span></li>
+   <li id="ref-cowan">Cowan, N. (2022). <em>Working memory capacity</em> (2nd ed.). Psychology Press. <span style="color:#888;font-size:0.85em">→ Capacidad de la memoria de trabajo: aprox. 4 ± 1 ítems.</span></li>
+   <li id="ref-sweller">Sweller, J., van Merriënboer, J. J. G., &amp; Paas, F. (2022). <em>Cognitive Load Theory</em> (2nd ed.). Springer. (Trabajo original publicado en 2011.) <span style="color:#888;font-size:0.85em">→ Carga cognitiva intrínseca, extrínseca y pertinente en el aprendizaje.</span></li>
+   <li id="ref-mayer">Mayer, R. E. (2024). <em>Multimedia Learning</em> (4th ed.). Cambridge University Press. <span style="color:#888;font-size:0.85em">→ Procesamiento dual de la información; principios del aprendizaje multimedia.</span></li>
+   <li id="ref-manes">Manes, F., &amp; Roca, M. (2022). <em>Usar el cerebro: Conocer nuestra mente para vivir mejor</em>. Paidós. <span style="color:#888;font-size:0.85em">→ Neurociencia aplicada en español; divulgación accesible sobre cognición y decisión.</span></li>
+   <li id="ref-iso">International Organization for Standardization. (2016). <em>Information and documentation — Records management — Part 1: Concepts and principles</em> (ISO 15489-1:2016). ISO. <span style="color:#888;font-size:0.85em">→ El documento como memoria externa organizacional; gestión de registros.</span></li>
+ </ol>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<aside class="week-progress-widget" aria-label="Mi progreso ADM18">
+  <div class="week-progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>
+  <div class="week-progress-widget__name" id="week-widget-name">Estudiante ADM18</div>
+  <div class="progress-bar"><div class="progress-fill" id="week-widget-fill" style="width:0%"></div></div>
+  <div class="week-progress-widget__meta"><span>Semana 1</span><strong id="week-widget-xp">0 XP</strong></div>
+</aside>
+
+<script src="../js/app.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+ const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+ const userName = localStorage.getItem('adm18_user') || 'Estudiante ADM18';
+ const completed = Object.values(progress).filter(function(item) { return item && item.completed; }).length;
+ const pct = Math.round((completed / 14) * 100);
+ const sessionScore = scores.week_1 && typeof scores.week_1.percent === 'number'
+   ? scores.week_1.percent
+   : Math.min(100, completed * 25);
+ const heroFill = document.getElementById('week-hero-fill');
+ const widgetFill = document.getElementById('week-widget-fill');
+ const heroXp = document.getElementById('week-hero-xp');
+ const widgetXp = document.getElementById('week-widget-xp');
+ const widgetName = document.getElementById('week-widget-name');
+ if (heroFill) heroFill.style.width = pct + '%';
+ if (widgetFill) widgetFill.style.width = pct + '%';
+ if (heroXp) heroXp.textContent = sessionScore + ' / 100 pts';
+ if (widgetXp) widgetXp.textContent = sessionScore + ' XP';
+ if (widgetName) widgetName.textContent = userName;
+
+ QuizEngine.init(1, [
+   {
+     question: '¿Cual es la funcion principal de un correo de bienvenida en LatamBox?',
+     options: ['Cobrar al cliente', 'Confirmar el registro y explicar el servicio', 'Enviar el paquete a Miami', 'Declarar impuestos en aduana'],
+     correct: 1
+   },
+   {
+     question: '¿Que tipo de documento es una factura de Amazon en el ciclo de LatamBox?',
+     options: ['Comunicacion externa', 'Soporte de valor para aduana', 'Documento de archivo', 'Formulario de queja'],
+     correct: 1
+   },
+   {
+     question: 'Segun la teoria de la atencion selectiva, ¿que sucede cuando intentamos procesar demasiada informacion a la vez?',
+     options: ['Aprendemos mas rapido', 'Filtramos y solo procesamos una parte', 'Recordamos todo perfectamente', 'El cerebro duplica su capacidad'],
+     correct: 1
+   },
+   {
+     question: '¿Que representan los documentos organizacionales segun la metafora de "memoria externa"?',
+     options: ['Entretenimiento para empleados', 'Una extension de la memoria humana que persiste en el tiempo', 'Decoracion de oficina', 'Tramites burocraticos sin valor'],
+     correct: 1
+   },
+   {
+     question: 'En la actividad grupal, ¿cual es el primer paso con los 5 documentos de LatamBox?',
+     options: ['Escribir un informe inmediatamente', 'Clasificarlos por color', 'Leer en silencio cada documento (5 min)', 'Botar los que no sirven'],
+     correct: 2
+   }
+ ]);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 12 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-principle-card { background: #f0f4ff; border: 1px solid #93c5fd; border-left: 4px solid var(--info); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-principle-card h4 { color: var(--info); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-vote-green { background: #e6f4ea; border-left: 4px solid var(--success); padding: var(--space-sm) var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-vote-red { background: #fff5f5; border-left: 4px solid var(--error); padding: var(--space-sm) var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-vote-green strong { color: var(--success); }
+  .tg-vote-red strong { color: var(--error); }
+  .tg-log-table { font-size: 0.78rem; }
+  .tg-log-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); text-align: left; }
+  .tg-log-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-principle-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 12 · IA asistida y etica documental</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="tg-badge-gold">3.0 h</span>
+      <span>Clase presencial · Inteligencia artificial aplicada a documentos</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Usa IA generativa (ChatGPT, Claude, Copilot) como herramienta de apoyo para mejorar la redaccion de documentos empresariales <em>(Hajishirzi et al., 2023)</em>.</li>
+      <li>Identifica alucinaciones y datos inventados por la IA, distinguiendo entre mejora de estilo y delegacion de hechos <em>(Rawte et al., 2024)</em>.</li>
+      <li>Mantiene trazabilidad completa de las modificaciones en una bitacora de 4 columnas (prompt, modificacion IA, correccion humana, fuente del dato) <em>(AENOR/SEDIC, 2024)</em>.</li>
+      <li>Aplica los 4 principios UNESCO de etica en IA al contexto documental empresarial <em>(UNESCO, 2021)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>Acceso a ChatGPT/Claude/Copilot</strong> — verificar que cada estudiante (o pareja) tenga acceso. Tener 2-3 cuentas de respaldo por si alguien no tiene.</li>
+      <li>Correo mal redactado de LatamBox impreso (1 por estudiante): correo con tono agresivo, sin estructura, datos reales mezclados con informacion ambigua. Debe ser el mismo para todos para poder comparar resultados.</li>
+      <li>Formato de bitacora impreso (1 por estudiante): tabla de 4 columnas (Prompt usado | ¿Que modifico la IA? | ¿Que corrigio el humano? | Fuente del dato).</li>
+      <li>Tarjetas verde/rojo (1 juego por estudiante) para la votacion en plenaria.</li>
+      <li>Proyector para la demo en vivo donde la IA inventa datos.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>🧠 4 principios UNESCO de etica en IA — Referencia docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Adaptados al contexto documental empresarial. Explicar en minutos 20-40.</p>
+
+    <div class="tg-principle-card">
+      <h4>Principio 1 — La IA sugiere, el humano decide</h4>
+      <p>La IA puede proponer redacciones, mejoras de estilo, correcciones de tono — pero la decision final de que se incluye y que no la toma el humano. Nadie firma un documento que no reviso.</p>
+    </div>
+
+    <div class="tg-principle-card">
+      <h4>Principio 2 — Los hechos vienen de fuente verificable</h4>
+      <p>La IA no es fuente de verdad. Cualquier dato, cifra, nombre, fecha o valor que aparezca en el documento final debe ser rastreable a una fuente real: un sistema, una factura, un acta, una persona verificable <em>(Bender et al., 2021)</em>.</p>
+    </div>
+
+    <div class="tg-principle-card">
+      <h4>Principio 3 — Toda modificacion queda en bitacora</h4>
+      <p>Si la IA mejora un parrafo, se registra. Si el humano corrige un dato que la IA invento, se registra. La bitacora es el "historial clinico" del documento — permite auditar que paso, cuando y quien lo decidio.</p>
+    </div>
+
+    <div class="tg-principle-card">
+      <h4>Principio 4 — La responsabilidad es de quien firma</h4>
+      <p>La IA no tiene responsabilidad legal, etica ni profesional. Si un documento contiene un error — aunque lo haya escrito la IA — el responsable es el humano que lo firmo y envio <em>(EU AI Act, 2024)</em>.</p>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📋 Bitacora de 4 columnas — Formato de referencia</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Asi debe verse la bitacora que el estudiante completa durante el taller. Mostrar este ejemplo en el proyector.</p>
+
+    <div class="table-responsive">
+    <table class="tg-log-table">
+      <tr>
+        <th>Prompt usado</th>
+        <th>¿Que modifico la IA?</th>
+        <th>¿Que corrigio el humano?</th>
+        <th>Fuente del dato</th>
+      </tr>
+      <tr>
+        <td>"Mejora el tono de este correo manteniendo los datos exactos"</td>
+        <td>Cambio "usted no entiende" por "comprendemos su preocupacion". Agrego saludo formal. Estructuro en parrafos.</td>
+        <td>La IA invento un numero de guia (GR-78412) que no existe. Lo elimine y deje el campo vacio para verificar el numero real.</td>
+        <td>Sistema de tracking de LatamBox (pendiente de verificacion)</td>
+      </tr>
+      <tr>
+        <td>"Reescribe este parrafo en tono profesional"</td>
+        <td>Convirtio 3 oraciones coloquiales en 1 parrafo formal con datos estructurados.</td>
+        <td>La IA cambio "$50" por "$55" — restaure el valor original de la factura.</td>
+        <td>Factura original #F-2026-0315</td>
+      </tr>
+      <tr>
+        <td>"Sugiere un cierre para este correo de respuesta a queja"</td>
+        <td>Agrego: "Lamentamos las molestias. Su caso ha sido escalado y recibira respuesta en 24 horas."</td>
+        <td>Verifique que el plazo de 24 horas es realista segun el protocolo de LatamBox. Agregue nombre y cargo de quien responde.</td>
+        <td>Protocolo de atencion al cliente LatamBox v03</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (120 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–20</td>
+        <td><strong>Demo en vivo:</strong> la IA miente</td>
+        <td>
+          <span class="tg-note-critico">PREPARAR ANTES</span> Tener abierto ChatGPT/Claude en el proyector.<br>
+          <strong>Paso 1:</strong> Escribir en vivo: "Redacta una respuesta a un cliente de LatamBox sobre un paquete perdido en la ruta Miami-Bogota."<br>
+          <strong>Paso 2:</strong> Mostrar el resultado. La IA probablemente inventara: un numero de guia ficticio, un plazo que no existe, un nombre de agente que no es real.<br>
+          <strong>Paso 3:</strong> Senalar cada invencion con marcador rojo en el proyector. "¿De donde saco la IA ese numero de guia? ¿Ese plazo de 72 horas existe en LatamBox? ¿Quien es 'Carlos Mendez'?"<br>
+          <span class="tg-note">ENGANCHE</span> "La IA no es un oraculo. Es un pasante muy educado que a veces inventa cosas para quedar bien. Ustedes son los supervisores de ese pasante."<br>
+          <span class="tg-note">TRANSICION</span> "Hoy van a aprender a usar la IA sin que los engane."
+        </td>
+      </tr>
+      <tr>
+        <td>20–40</td>
+        <td><strong>Input:</strong> 4 principios + bitacora</td>
+        <td>
+          Explicar los 4 principios uno por uno, conectando con la demo <em>(UNESCO, 2021)</em>. "El principio 2 es exactamente lo que acaba de fallar: la IA invento datos sin fuente."<br>
+          Entregar y explicar el formato de bitacora de 4 columnas. Mostrar el ejemplo completo en proyector.<br>
+          <span class="tg-note">CHECKLIST MENTAL</span> Antes de aceptar lo que dice la IA: ¿De donde salio ese dato? ¿Puedo verificarlo? ¿Esta en la bitacora?<br>
+          <span class="tg-note">ENTREGAR</span> Correo mal redactado impreso a cada estudiante.
+        </td>
+      </tr>
+      <tr>
+        <td>40–50</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso.</td>
+      </tr>
+      <tr>
+        <td>50–95</td>
+        <td><strong>Taller IA:</strong> actividad practica en 3 fases</td>
+        <td>
+          <strong>Fase 1 — Individual (15 min):</strong> Cada estudiante usa IA para mejorar el correo mal redactado. Debe guardar el prompt, el resultado de la IA y llenar las primeras 2 columnas de la bitacora.<br>
+          <strong>Fase 2 — Grupal (15 min):</strong> En grupos de 4, comparten sus resultados. Cada grupo detecta alucinaciones en los resultados de sus compañeros (datos inventados, plazos ficticios, nombres falsos). Marcan en rojo lo que la IA invento.<br>
+          <span class="tg-note">DETECTIVES DE ALUCINACIONES</span> "Busquen cualquier cosa que la IA haya agregado y que no este en el correo original."<br>
+          <strong>Fase 3 — Individual (10 min):</strong> Cada estudiante produce su version final hibrida: toma lo mejor de la IA (tono, estructura), corrige las alucinaciones, verifica los datos, y completa la bitacora entera (4 columnas).<br>
+          <span class="tg-note-critico">BITACORA OBLIGATORIA</span> No se recibe el documento mejorado sin la bitacora completa. Es parte de la evidencia.
+        </td>
+      </tr>
+      <tr>
+        <td>95–115</td>
+        <td><strong>Plenaria:</strong> votacion de escenarios</td>
+        <td>
+          <span class="tg-note">DINAMICA</span> El docente lee 5 escenarios uno por uno. Los estudiantes levantan tarjeta VERDE (uso etico de IA) o ROJA (uso no etico). Discutir brevemente cada caso.<br><br>
+          <strong>Escenarios:</strong><br>
+          <div class="tg-vote-green"><strong>🟢 VERDE</strong> — (1) Corregir ortografia y gramatica de un memo interno.</div>
+          <div class="tg-vote-red"><strong>🔴 ROJO</strong> — (2) Pedirle a la IA que escriba una queja de un cliente que no existe para justificar un cambio de proveedor.</div>
+          <div class="tg-vote-green"><strong>🟢 VERDE</strong> — (3) Usar IA para mejorar el tono de una circular haciendola mas clara y profesional.</div>
+          <div class="tg-vote-red"><strong>🔴 ROJO</strong> — (4) Generar una factura con valores ficticios para cumplir una meta mensual.</div>
+          <div class="tg-vote-green"><strong>🟢 VERDE</strong> — (5) Pedirle a la IA que resuma un acta de 5 paginas en 1 parrafo ejecutivo, verificando que no invente decisiones que no estan en el acta.</div>
+          <br>
+          <span class="tg-note">CIERRE PLENARIA</span> "El patron es claro: IA para mejorar forma (tono, estructura, claridad) = VERDE. IA para inventar contenido (datos, hechos, personas) = ROJO."
+        </td>
+      </tr>
+      <tr>
+        <td>115–120</td>
+        <td><strong>Cierre</strong></td>
+        <td>
+          Recoger documento mejorado + bitacora.<br>
+          <span class="tg-note">REFLEXION FINAL</span> "La IA es la herramienta mas poderosa que tienen como profesionales. Pero una herramienta sin criterio es un arma. Ustedes son el criterio."<br>
+          <span class="tg-note">SEMANA 13</span> "La proxima semana cierran el semestre con su portafolio documental."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 5 preguntas sobre los 4 principios y etica de IA en documentos.</p>
+
+    <div class="tg-answer"><strong>1.</strong> Nombra los 4 principios UNESCO adaptados al uso de IA en documentos:<br>→ <strong>(1) La IA sugiere, el humano decide. (2) Los hechos vienen de fuente verificable. (3) Toda modificacion queda en bitacora. (4) La responsabilidad es de quien firma.</strong></div>
+    <div class="tg-answer"><strong>2.</strong> ¿En que casos SI se debe usar IA para apoyar la redaccion de documentos?<br>→ <strong>Para mejorar forma: ortografia, gramatica, tono, estructura de parrafos, claridad. La IA ayuda a comunicar mejor lo que el humano ya sabe.</strong></div>
+    <div class="tg-answer"><strong>3.</strong> ¿En que casos NO se debe usar IA?<br>→ <strong>Para inventar contenido: datos, cifras, hechos, nombres de personas, plazos, valores monetarios. Si el dato no existe en una fuente real, no debe aparecer en el documento — así lo haya escrito la IA.</strong></div>
+    <div class="tg-answer"><strong>4.</strong> ¿Que es una alucinacion de IA?<br>→ <strong>Es cuando la IA genera informacion que parece correcta pero es falsa: numeros de guia que no existen, plazos inventados, nombres de personas que no son reales, valores que no coinciden con la fuente.</strong> <em>(Rawte et al., 2024)</em></div>
+    <div class="tg-answer"><strong>5.</strong> ¿Para que sirve la bitacora de 4 columnas?<br>→ <strong>Para mantener trazabilidad: saber que prompt se uso, que modifico la IA, que corrigio el humano y de donde salio cada dato. Permite auditar el documento y responsabilizar al humano — no a la IA.</strong></div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa. Evidencia para PI4 (portafolio documental digital).</p>
+    <p><strong>Que se evalua:</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>Documento mejorado (version final hibrida): tono profesional, estructura clara, sin alucinaciones.</li>
+      <li>Bitacora completa de 4 columnas con trazabilidad verificable.</li>
+      <li><strong>Rubrica PI4:</strong> se evalua el uso etico de IA (principios aplicados) <em>(UNESCO, 2021; AENOR/SEDIC, 2024)</em>, la calidad de la bitacora, y la capacidad de detectar y corregir alucinaciones.</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar un debate teorico largo sobre IA.</strong> La sesion es practica: los estudiantes usan la IA en el momento. La teoria son 4 principios que se explican en 15 minutos. El resto es taller y votacion.</li>
+      <li>No preparar la historia de la UNESCO, los ODS, ni el marco completo de etica de IA. Solo los 4 principios adaptados al contexto documental.</li>
+      <li>No preparar comparativas de herramientas de IA (ChatGPT vs Claude vs Copilot). Los estudiantes usan la que tengan disponible. La habilidad es independiente de la plataforma.</li>
+      <li>No permitir que los estudiantes usen la IA para generar documentos desde cero sin el correo original. La tarea es <strong>mejorar</strong> un documento existente, no crearlo. Si un estudiante solo copia y pega lo que dijo la IA sin mostrar el original, no cumple.</li>
+      <li>No dejar que la bitacora quede vacia o incompleta. La bitacora NO es opcional — es la evidencia de que el estudiante superviso a la IA. Sin bitacora, no hay nota.</li>
+      <li>Si un estudiante pregunta "¿puedo usar IA en el examen final?", responder: "El examen evalua lo que TU sabes hacer. La IA es una herramienta de apoyo en el trabajo diario, no un reemplazo de tu criterio. En el examen demuestras tu criterio."</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📚 Bibliografía</h2>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);line-height:1.8;">
+      <li>UNESCO (2021). <em>Recommendation on the Ethics of Artificial Intelligence</em>. UNESCO. [Norma/Recomendación internacional]</li>
+      <li>MinCiencias/DNP (2024). <em>Marco Ético para la Inteligencia Artificial en Colombia</em>. Ministerio de Ciencias, Tecnología e Innovación / Departamento Nacional de Planeación. [Política pública]</li>
+      <li>Bender, E.M., Gebru, T., McMillan-Major, A. y Shmitchell, S. (2021). On the Dangers of Stochastic Parrots: Can Language Models Be Too Big?. <em>ACM FAccT '21</em>. [Paper académico]</li>
+      <li>Rawte, V., Sheth, A. et al. (2024). <em>Hallucination in Large Language Models: A Comprehensive Survey</em>. arXiv / Journal of Artificial Intelligence Research. [Paper académico]</li>
+      <li>Hajishirzi, H. et al. (2023). <em>Document AI: Benchmarks, Models and Applications</em>. Stanford University / ACL Conference. [Paper académico]</li>
+      <li>Comisión Europea / Parlamento Europeo (2024). <em>EU AI Act: Regulation on Artificial Intelligence</em>. Comisión Europea. [Regulación]</li>
+      <li>AENOR/SEDIC (2024). <em>Uso responsable de la IA generativa en la gestión documental: guía práctica para organizaciones</em>. AENOR/SEDIC. [Guía práctica]</li>
+      <li>Universidad Externado de Colombia (2023). <em>Inteligencia Artificial para la Gestión de Documentos en el Sector Público Colombiano: Oportunidades y Riesgos</em>. Universidad Externado de Colombia. [Reporte académico]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

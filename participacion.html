@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Participacion — ADM18 | IUB</title>
+<meta name="supabase-supabase_url" content="https://nnrgxuzvjtweyzkdrech.supabase.co">
+<meta name="supabase-supabase_anon_key" content="sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/iub-tokens.css">
+<style>
+ .strategy-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+   gap: var(--space-md);
+   margin-bottom: var(--space-lg);
+ }
+ .strategy-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+ }
+ .strategy-card .strat-num {
+   display: inline-block;
+   background: var(--primary);
+   color: var(--text-on-dark);
+   border-radius: 50%;
+   width: 28px;
+   height: 28px;
+   text-align: center;
+   line-height: 28px;
+   font-size: 0.75rem;
+   font-weight: 700;
+   margin-bottom: var(--space-xs);
+ }
+ .strategy-card h4 {
+   font-size: var(--font-size-md);
+   color: var(--primary);
+   margin-bottom: var(--space-xs);
+ }
+ .strategy-card p {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+ }
+ .checklist-weekly {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+   gap: var(--space-md);
+ }
+ .week-check-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+ }
+ .week-check-card h4 {
+   font-size: var(--font-size-md);
+   color: var(--primary);
+   margin-bottom: var(--space-sm);
+   padding-bottom: var(--space-xs);
+   border-bottom: 1px solid var(--border);
+ }
+ .week-check-card label {
+   display: flex;
+   align-items: center;
+   gap: var(--space-sm);
+   font-size: var(--font-size-sm);
+   padding: var(--space-xs) 0;
+   cursor: pointer;
+   min-height: 36px;
+ }
+ .week-check-card input[type="checkbox"] {
+   width: 20px;
+   height: 20px;
+   accent-color: var(--primary);
+   flex-shrink: 0;
+ }
+ .group-log-entry {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+   margin-bottom: var(--space-md);
+ }
+ .group-log-entry .log-header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-wrap: wrap;
+   gap: var(--space-sm);
+   margin-bottom: var(--space-sm);
+ }
+ .group-log-entry .log-members {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+ }
+ .coeval-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+   margin-bottom: var(--space-md);
+ }
+ .coeval-card .coeval-header {
+   font-weight: 700;
+   color: var(--primary);
+   margin-bottom: var(--space-sm);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+ }
+ .coeval-meta {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+ }
+ .rotate-badge {
+   display: inline-block;
+   font-size: 0.65rem;
+   font-weight: 700;
+   padding: 0.15rem 0.4rem;
+   border-radius: var(--radius-sm);
+   background: #e8f0fe;
+   color: #2c5ea8;
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Procesamiento de la Informacion</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="index.html">Inicio</a>
+   <a href="progreso.html">Mi Progreso</a>
+   <a href="profesor.html">Profesor</a>
+   <a href="notas.html">Notas</a>
+   <a href="participacion.html" class="active">Participacion</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<div class="card">
+ <h1 class="card-header">Participacion y Trabajo Grupal — ADM18</h1>
+ <p style="color:var(--text-secondary);font-size:var(--font-size-sm)">
+   Estrategias de trabajo grupal, registro de participacion semanal, formacion de grupos y coevaluacion.
+ </p>
+</div>
+
+<!-- 12 Group Work Strategies -->
+<h2 style="color:var(--primary);margin-bottom:var(--space-md)">12 Estrategias de Trabajo Grupal</h2>
+<div class="strategy-grid">
+ <div class="strategy-card">
+   <div class="strat-num">1</div>
+   <h4>Rotacion aleatoria de grupos</h4>
+   <p>Grupos nuevos cada semana. Sorteo aleatorio de 4 personas. Aplicacion: <span class="rotate-badge">Todas las semanas</span></p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">2</div>
+   <h4>Reportero aleatorio</h4>
+   <p>El docente elige quien presenta. Todos deben estar preparados. Semanas: 1, 3, 6, 8, 12.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">3</div>
+   <h4>Producto individual previo</h4>
+   <p>Primero trabajan solos (5-10 min), luego comparten en grupo. Semanas: 6, 7, 8, 9, 12.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">4</div>
+   <h4>Roles rotativos</h4>
+   <p>Redactor, Verificador, Vocero, Cronometrista. Cada miembro con funcion definida. Semanas: 7, 9.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">5</div>
+   <h4>Documento colaborativo con colores</h4>
+   <p>Google Docs compartido. Cada estudiante escribe en su color asignado. Semanas: 7, 9.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">6</div>
+   <h4>Coevaluacion anonima (exit ticket)</h4>
+   <p>Papel anonimo al final: ¿que tanto contribuyo cada integrante? (1-5). Semanas: 3, 6, 9, 12.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">7</div>
+   <h4>Tiempos estructurados 2-2-2</h4>
+   <p>2 min persona A expone, 2 min persona B responde, 2 min ambos discuten. Semanas: 1, 3, 7.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">8</div>
+   <h4>"Todos escriben, uno entrega"</h4>
+   <p>Cada integrante produce su version individual; el grupo integra y entrega una version final. Semanas: 6, 7, 12.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">9</div>
+   <h4>Rompecabezas (Jigsaw)</h4>
+   <p>Cada miembro se vuelve experto en 1 documento/subsistema y ensena a los demas. Semanas: 8, 11.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">10</div>
+   <h4>Regla de consenso</h4>
+   <p>No se avanza hasta que todos los miembros esten de acuerdo con la respuesta. Semanas: 3, 11.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">11</div>
+   <h4>Competencia entre grupos</h4>
+   <p>Se compite por la mejor respuesta. Todos deben poder explicar la solucion de su grupo. Semanas: 4, 11.</p>
+ </div>
+ <div class="strategy-card">
+   <div class="strat-num">12</div>
+   <h4>Gallery walk con post-its</h4>
+   <p>Los trabajos se exponen en las paredes. Correcciones anonimas en post-its de colores. Semanas: 3, 8.</p>
+ </div>
+</div>
+
+<!-- Strategy Rotation Schedule -->
+<h2 style="color:var(--primary);margin-bottom:var(--space-md)">Rotacion de Estrategias por Semana</h2>
+<div class="card">
+ <div class="table-responsive">
+ <table>
+   <tr><th>Semana</th><th>Estrategias aplicadas</th></tr>
+   <tr><td>1</td><td>Rotacion aleatoria · Reportero aleatorio · Tiempos 2-2-2</td></tr>
+   <tr><td>2</td><td>Rotacion aleatoria</td></tr>
+   <tr><td>3</td><td>Rotacion aleatoria · Reportero aleatorio · 2-2-2 · Regla de consenso · Gallery walk · Coevaluacion</td></tr>
+   <tr><td>4</td><td>Rotacion aleatoria · Competencia entre grupos</td></tr>
+   <tr><td>5</td><td>Parcial 1 — Individual (sin grupos)</td></tr>
+   <tr><td>6</td><td>Rotacion aleatoria · Reportero aleatorio · Producto individual previo · Todos escriben uno entrega · Coevaluacion</td></tr>
+   <tr><td>7</td><td>Rotacion aleatoria · Producto individual previo · Roles rotativos · Doc colaborativo con colores · 2-2-2 · Todos escriben</td></tr>
+   <tr><td>8</td><td>Rotacion aleatoria · Reportero aleatorio · Producto individual previo · Rompecabezas · Gallery walk</td></tr>
+   <tr><td>9</td><td>Rotacion aleatoria · Producto individual previo · Roles rotativos · Doc colaborativo con colores · Coevaluacion</td></tr>
+   <tr><td>10</td><td>Parcial 2 — Individual (sin grupos)</td></tr>
+   <tr><td>11</td><td>Rotacion aleatoria · Rompecabezas · Regla de consenso · Competencia entre grupos</td></tr>
+   <tr><td>12</td><td>Rotacion aleatoria · Reportero aleatorio · Producto individual previo · Todos escriben uno entrega · Coevaluacion</td></tr>
+   <tr><td>13</td><td>Rotacion aleatoria</td></tr>
+   <tr><td>14</td><td>Evaluacion Final — Individual (sin grupos)</td></tr>
+ </table>
+ </div>
+</div>
+
+<!-- Weekly Participation Checklist -->
+<h2 style="color:var(--primary);margin:var(--space-xl) 0 var(--space-md)" id="checklist-section">Autoevaluacion de Participacion Semanal</h2>
+<div class="checklist-weekly" id="weekly-checklist">
+ <!-- Populated by JS -->
+</div>
+<div style="text-align:center;margin:var(--space-md) 0">
+ <button class="btn btn-gold btn-sm" onclick="saveParticipation()">Guardar checklist</button>
+ <span id="part-save-msg" style="font-size:var(--font-size-sm);color:var(--success);margin-left:var(--space-md);display:none">Guardado local ✓</span>
+</div>
+
+<!-- Group Formation Log -->
+<h2 style="color:var(--primary);margin:var(--space-xl) 0 var(--space-md)">Registro de Grupos</h2>
+<div class="card">
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">
+   Anota con quien trabajaste cada semana. Util para recordar colaboraciones y para la coevaluacion.
+ </p>
+ <div id="group-log-container">
+   <!-- Populated by JS -->
+ </div>
+ <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:end;margin-top:var(--space-md)">
+   <div style="flex:1;min-width:120px">
+     <label style="font-size:var(--font-size-sm);font-weight:600">Semana</label>
+     <select id="group-week-select" style="width:100%;padding:var(--space-sm);border:2px solid var(--border);border-radius:var(--radius-sm);min-height:44px">
+       <option value="1">Semana 1</option><option value="2">Semana 2</option>
+       <option value="3">Semana 3</option><option value="4">Semana 4</option>
+       <option value="5">Semana 5 (Parcial 1)</option>
+       <option value="6">Semana 6</option><option value="7">Semana 7</option>
+       <option value="8">Semana 8</option><option value="9">Semana 9</option>
+       <option value="10">Semana 10 (Parcial 2)</option>
+       <option value="11">Semana 11</option><option value="12">Semana 12</option>
+       <option value="13">Semana 13</option>
+       <option value="14">Semana 14 (Final)</option>
+     </select>
+   </div>
+   <div style="flex:2;min-width:200px">
+     <label style="font-size:var(--font-size-sm);font-weight:600">Integrantes (nombres separados por coma)</label>
+     <input id="group-members-input" placeholder="Ej: Ana Perez, Juan Lopez, Maria Ruiz" style="width:100%;padding:var(--space-sm);border:2px solid var(--border);border-radius:var(--radius-sm);min-height:44px">
+   </div>
+   <button class="btn btn-primary btn-sm" onclick="addGroupEntry()" style="white-space:nowrap">+ Agregar</button>
+ </div>
+</div>
+
+<!-- Coevaluacion Section -->
+<h2 style="color:var(--primary);margin:var(--space-xl) 0 var(--space-md)">Registro de Coevaluacion</h2>
+<div class="card">
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">
+   Registra los resultados de las coevaluaciones anonimas (semanas 3, 6, 9, 12). Califica de 1 (no contribuyo) a 5 (contribucion excepcional).
+ </p>
+ <div id="coeval-container">
+   <!-- Populated by JS -->
+ </div>
+ <div style="display:flex;gap:var(--space-sm);flex-wrap:wrap;align-items:end;margin-top:var(--space-md)">
+   <div style="flex:1;min-width:100px">
+     <label style="font-size:var(--font-size-sm);font-weight:600">Semana</label>
+     <select id="coeval-week-select" style="width:100%;padding:var(--space-sm);border:2px solid var(--border);border-radius:var(--radius-sm);min-height:44px">
+       <option value="3">Semana 3</option><option value="6">Semana 6</option>
+       <option value="9">Semana 9</option><option value="12">Semana 12</option>
+     </select>
+   </div>
+   <div style="flex:2;min-width:180px">
+     <label style="font-size:var(--font-size-sm);font-weight:600">Mi calificacion recibida (1-5)</label>
+     <input id="coeval-score-input" type="number" min="1" max="5" placeholder="1-5" style="width:100%;padding:var(--space-sm);border:2px solid var(--border);border-radius:var(--radius-sm);min-height:44px">
+   </div>
+   <div style="flex:3;min-width:200px">
+     <label style="font-size:var(--font-size-sm);font-weight:600">Comentario / Retroalimentacion</label>
+     <input id="coeval-comment-input" placeholder="Ej: Buen trabajo en equipo, cumpli con mi rol..." style="width:100%;padding:var(--space-sm);border:2px solid var(--border);border-radius:var(--radius-sm);min-height:44px">
+   </div>
+   <button class="btn btn-primary btn-sm" onclick="addCoevalEntry()" style="white-space:nowrap">+ Agregar</button>
+ </div>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion en la Organizacion</p>
+ <p>IUB / Unibarranquilla — Facultad de Ciencias Economicas y Administrativas</p>
+ <p style="margin-top:var(--space-xs)"><small>2026 · Participacion y Trabajo Grupal</small></p>
+</footer>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script>
+// ── Participation Checklist ──
+function buildChecklist() {
+ const items = [
+   'Asisti puntualmente a clase',
+   'Participe activamente en la actividad grupal',
+   'Cumpli con mi rol asignado (si aplica)',
+   'Contribui ideas o soluciones al grupo',
+   'Escuche y respete las opiniones de los demas',
+   'Entregue el producto o evidencia requerida',
+   'Participe en la plenaria o discusion general'
+ ];
+ const container = document.getElementById('weekly-checklist');
+ let html = '';
+ for (let w = 1; w <= 14; w++) {
+   html += '<div class="week-check-card" data-week="' + w + '">';
+   html += '<h4>Semana ' + w + '</h4>';
+   items.forEach((item, i) => {
+     html += '<label>';
+     html += '<input type="checkbox" data-week="' + w + '" data-item="' + i + '" onchange="autoSaveChecklist()">';
+     html += item;
+     html += '</label>';
+   });
+   html += '</div>';
+ }
+ container.innerHTML = html;
+}
+
+function autoSaveChecklist() {
+ // Debounced save
+ clearTimeout(window._checklistTimer);
+ window._checklistTimer = setTimeout(saveParticipation, 500);
+}
+
+async function saveParticipation() {
+ const data = {};
+ document.querySelectorAll('#weekly-checklist input[type="checkbox"]').forEach(cb => {
+   const w = cb.dataset.week;
+   const i = cb.dataset.item;
+   if (!data[w]) data[w] = [];
+   data[w][i] = cb.checked;
+ });
+ localStorage.setItem('adm18_participation', JSON.stringify(data));
+ const msg = document.getElementById('part-save-msg');
+ msg.textContent = 'Guardado local ✓';
+ msg.style.display = 'inline';
+
+ await syncParticipationToSupabase();
+
+ setTimeout(() => { msg.style.display = 'none'; }, 2500);
+}
+
+function loadParticipation() {
+ const saved = JSON.parse(localStorage.getItem('adm18_participation') || '{}');
+ document.querySelectorAll('#weekly-checklist input[type="checkbox"]').forEach(cb => {
+   const w = cb.dataset.week;
+   const i = parseInt(cb.dataset.item);
+   if (saved[w] && saved[w][i]) {
+     cb.checked = true;
+   }
+ });
+}
+
+// ── Group Formation Log ──
+function addGroupEntry() {
+ const week = document.getElementById('group-week-select').value;
+ const members = document.getElementById('group-members-input').value.trim();
+ if (!members) return;
+
+ const logs = JSON.parse(localStorage.getItem('adm18_groups') || '{}');
+ logs['week_' + week] = {
+   members: members.split(',').map(s => s.trim()).filter(Boolean),
+   timestamp: Date.now()
+ };
+ localStorage.setItem('adm18_groups', JSON.stringify(logs));
+ document.getElementById('group-members-input').value = '';
+ renderGroupLog();
+ syncParticipationToSupabase();
+}
+
+function renderGroupLog() {
+ const logs = JSON.parse(localStorage.getItem('adm18_groups') || '{}');
+ const container = document.getElementById('group-log-container');
+ const keys = Object.keys(logs).sort((a,b) => {
+   const na = parseInt(a.replace('week_',''));
+   const nb = parseInt(b.replace('week_',''));
+   return na - nb;
+ });
+
+ if (keys.length === 0) {
+   container.innerHTML = '<p style="font-size:var(--font-size-sm);color:var(--text-secondary)">No hay grupos registrados todavia.</p>';
+   return;
+ }
+
+ let html = '';
+ keys.forEach(k => {
+   const w = k.replace('week_','');
+   const entry = logs[k];
+   html += '<div class="group-log-entry">';
+   html += '<div class="log-header">';
+   html += '<strong style="color:var(--primary)">Semana ' + w + '</strong>';
+   html += '<span class="log-members">' + entry.members.join(', ') + '</span>';
+   html += '<button class="btn btn-sm" style="background:var(--error);color:white;border:none;padding:2px 8px;font-size:0.7rem" onclick="deleteGroupEntry(\'' + k + '\')">✕</button>';
+   html += '</div>';
+   html += '</div>';
+ });
+ container.innerHTML = html;
+}
+
+function deleteGroupEntry(key) {
+ const logs = JSON.parse(localStorage.getItem('adm18_groups') || '{}');
+ delete logs[key];
+ localStorage.setItem('adm18_groups', JSON.stringify(logs));
+ renderGroupLog();
+ syncParticipationToSupabase();
+}
+
+// ── Coevaluacion ──
+function addCoevalEntry() {
+ const week = document.getElementById('coeval-week-select').value;
+ const score = parseInt(document.getElementById('coeval-score-input').value);
+ const comment = document.getElementById('coeval-comment-input').value.trim();
+
+ if (!score || score < 1 || score > 5) {
+   alert('Por favor ingresa una calificacion valida (1-5).');
+   return;
+ }
+
+ const coeval = JSON.parse(localStorage.getItem('adm18_coeval') || '{}');
+ coeval['week_' + week] = {
+   score: score,
+   comment: comment || '',
+   timestamp: Date.now()
+ };
+ localStorage.setItem('adm18_coeval', JSON.stringify(coeval));
+ document.getElementById('coeval-score-input').value = '';
+ document.getElementById('coeval-comment-input').value = '';
+ renderCoeval();
+ syncParticipationToSupabase();
+}
+
+function renderCoeval() {
+ const coeval = JSON.parse(localStorage.getItem('adm18_coeval') || '{}');
+ const container = document.getElementById('coeval-container');
+ const keys = Object.keys(coeval).sort((a,b) => {
+   return parseInt(a.replace('week_','')) - parseInt(b.replace('week_',''));
+ });
+
+ if (keys.length === 0) {
+   container.innerHTML = '<p style="font-size:var(--font-size-sm);color:var(--text-secondary)">No hay coevaluaciones registradas todavia. Las coevaluaciones ocurren en las semanas 3, 6, 9 y 12.</p>';
+   return;
+ }
+
+ let html = '';
+ keys.forEach(k => {
+   const w = k.replace('week_','');
+   const entry = coeval[k];
+   html += '<div class="coeval-card">';
+   html += '<div class="coeval-header">';
+   html += '<span>Semana ' + w + ' — Calificacion: ' + entry.score + '/5</span>';
+   html += '<button class="btn btn-sm" style="background:var(--error);color:white;border:none;padding:2px 8px;font-size:0.7rem" onclick="deleteCoevalEntry(\'' + k + '\')">✕</button>';
+   html += '</div>';
+   if (entry.comment) {
+     html += '<div class="coeval-meta">' + entry.comment + '</div>';
+   }
+   html += '</div>';
+ });
+ container.innerHTML = html;
+}
+
+function deleteCoevalEntry(key) {
+ const coeval = JSON.parse(localStorage.getItem('adm18_coeval') || '{}');
+ delete coeval[key];
+ localStorage.setItem('adm18_coeval', JSON.stringify(coeval));
+ renderCoeval();
+ syncParticipationToSupabase();
+}
+
+async function syncParticipationToSupabase() {
+ if (typeof SupabaseClient === 'undefined') return;
+ const msg = document.getElementById('part-save-msg');
+ const payload = {
+   participation: JSON.parse(localStorage.getItem('adm18_participation') || '{}'),
+   groups: JSON.parse(localStorage.getItem('adm18_groups') || '{}'),
+   coeval: JSON.parse(localStorage.getItem('adm18_coeval') || '{}')
+ };
+ const result = await SupabaseClient.saveParticipation(payload);
+ if (msg && result.synced) {
+   msg.textContent = 'Guardado local + Supabase ✓';
+ }
+}
+
+// ── Init ──
+document.addEventListener('DOMContentLoaded', function() {
+ buildChecklist();
+ loadParticipation();
+ renderGroupLog();
+ renderCoeval();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADM18 — Knowledge Base | Procesamiento de la Información</title>
+<style>
+  :root {
+    --navy: #1a2744; --blue: #2c5ea8; --light-blue: #e8f0fe;
+    --green: #1e7a3e; --light-green: #e6f4ea;
+    --gold: #b8860b; --light-gold: #fef7e0;
+    --red: #c62828; --light-red: #fdecea;
+    --purple: #6c3a9e; --light-purple: #f3e8ff;
+    --gray: #5f6368; --light-gray: #f1f3f4;
+    --white: #fff; --border: #dadce0; --text: #202124;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:system-ui,-apple-system,'Segoe UI',sans-serif; color:var(--text); background:var(--light-gray); line-height:1.6; }
+  
+  /* HEADER */
+  .header { background:var(--navy); color:white; padding:2rem; }
+  .header h1 { font-size:1.8rem; margin-bottom:.25rem; }
+  .header .subtitle { opacity:.85; font-size:.95rem; }
+  .header .meta { display:flex; flex-wrap:wrap; gap:1.5rem; margin-top:1rem; font-size:.85rem; opacity:.9; }
+  
+  /* STATS BAR */
+  .stats { display:flex; flex-wrap:wrap; gap:1rem; padding:1rem 2rem; background:white; border-bottom:1px solid var(--border); }
+  .stat { display:flex; align-items:center; gap:.5rem; font-size:.85rem; font-weight:600; }
+  .stat .icon { font-size:1.2rem; }
+  .stat .val { color:var(--blue); }
+  
+  /* NAV TABS */
+  .nav { display:flex; flex-wrap:wrap; gap:0; background:white; border-bottom:2px solid var(--border); padding:0 1rem; position:sticky; top:0; z-index:10; }
+  .nav a { padding:.7rem 1rem; text-decoration:none; color:var(--gray); font-size:.85rem; font-weight:600; border-bottom:3px solid transparent; transition:.15s; }
+  .nav a:hover, .nav a.active { color:var(--blue); border-bottom-color:var(--blue); }
+  
+  /* CONTAINER */
+  .container { max-width:1100px; margin:0 auto; padding:1.5rem 1rem; }
+  
+  /* SECTION */
+  section { margin-bottom:2rem; scroll-margin-top:60px; }
+  section h2 { color:var(--navy); font-size:1.3rem; margin-bottom:1rem; padding-bottom:.4rem; border-bottom:2px solid var(--border); display:flex; align-items:center; gap:.5rem; }
+  section h2 .badge { font-size:.75rem; padding:.2rem .6rem; border-radius:4px; font-weight:700; text-transform:uppercase; }
+  section h3 { color:var(--blue); font-size:1.05rem; margin:1.2rem 0 .5rem; }
+  
+  /* CARDS */
+  .card { background:white; border:1px solid var(--border); border-radius:8px; padding:1.25rem; margin-bottom:1rem; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+  .card h4 { color:var(--navy); margin-bottom:.5rem; }
+  
+  /* TABLES */
+  table { width:100%; border-collapse:collapse; font-size:.85rem; margin:.75rem 0; }
+  th { background:var(--navy); color:white; padding:.5rem .6rem; text-align:left; font-size:.78rem; font-weight:600; }
+  td { padding:.45rem .6rem; border-bottom:1px solid var(--border); vertical-align:top; }
+  tr:nth-child(even) td { background:#fafafa; }
+  
+  /* BADGES */
+  .b-ra1 { background:var(--light-blue); color:var(--blue); }
+  .b-ra2 { background:var(--light-purple); color:var(--purple); }
+  .b-ra3 { background:var(--light-green); color:var(--green); }
+  .b-ra4 { background:var(--light-gold); color:var(--gold); }
+  .b-eval { background:var(--light-red); color:var(--red); }
+  
+  /* RA GRID */
+  .ra-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:1rem; }
+  .ra-card { border-radius:8px; padding:1.25rem; border:1px solid var(--border); }
+  .ra-card.ra1 { border-left:4px solid var(--blue); background:var(--light-blue); }
+  .ra-card.ra2 { border-left:4px solid var(--purple); background:var(--light-purple); }
+  .ra-card.ra3 { border-left:4px solid var(--green); background:var(--light-green); }
+  .ra-card.ra4 { border-left:4px solid var(--gold); background:var(--light-gold); }
+  .ra-card h3 { margin-top:0; }
+  .ra-card .ra-label { font-size:.7rem; font-weight:800; text-transform:uppercase; letter-spacing:1px; margin-bottom:.35rem; }
+  
+  /* TIMELINE */
+  .timeline { display:flex; flex-wrap:wrap; gap:.5rem; margin:1rem 0; }
+  .timeline .step { background:white; border:1px solid var(--border); border-radius:6px; padding:.6rem .8rem; font-size:.8rem; flex:1; min-width:120px; text-align:center; }
+  .timeline .step .phase { font-weight:700; color:var(--blue); font-size:.7rem; text-transform:uppercase; }
+  .timeline .step .doc { font-size:.82rem; margin-top:.2rem; }
+  
+  /* CALLOUTS */
+  .callout { padding:.75rem 1rem; border-radius:6px; font-size:.85rem; margin:.75rem 0; }
+  .callout.info { background:var(--light-blue); border-left:3px solid var(--blue); }
+  .callout.warn { background:var(--light-gold); border-left:3px solid var(--gold); }
+  .callout.note { background:var(--light-red); border-left:3px solid var(--red); }
+  
+  /* STRATEGIES GRID */
+  .strat-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:.75rem; }
+  .strat-card { background:#fafafa; border:1px solid var(--border); border-radius:6px; padding:1rem; }
+  .strat-card h4 { font-size:.9rem; color:var(--blue); margin-bottom:.3rem; }
+  .strat-card p { font-size:.82rem; color:var(--gray); }
+  .strat-card .tag { display:inline-block; font-size:.7rem; background:var(--light-blue); color:var(--blue); padding:.15rem .5rem; border-radius:3px; margin-top:.4rem; font-weight:600; }
+  
+  /* FOOTER */
+  .footer { text-align:center; padding:2rem; color:var(--gray); font-size:.82rem; border-top:1px solid var(--border); margin-top:2rem; }
+  
+  /* PRINT */
+  @media print {
+    .nav { display:none; }
+    body { background:white; }
+    .card, .ra-card { break-inside:avoid; box-shadow:none; }
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width:768px) {
+    .header { padding:1.25rem; }
+    .header h1 { font-size:1.3rem; }
+    .ra-grid, .strat-grid { grid-template-columns:1fr; }
+    table { font-size:.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HEADER ═══════════ -->
+<div class="header">
+  <h1>ADM18 · Procesamiento de la Información en la Organización</h1>
+  <div class="subtitle">Knowledge Base — Referencia completa del curso · 2026</div>
+  <div class="meta">
+    <span>🏫 IUB / Unibarranquilla — Facultad de Ciencias Económicas y Administrativas</span>
+    <span>📦 Caso integrador: <strong>LatamBox</strong></span>
+    <span>📅 14 semanas · 117 horas · 2 créditos</span>
+  </div>
+</div>
+
+<!-- ═══════════ STATS ═══════════ -->
+<div class="stats">
+  <div class="stat"><span class="icon">📋</span> Programas: <span class="val">Comercio Exterior + Procesos Empresariales</span></div>
+  <div class="stat"><span class="icon">🎯</span> RAs: <span class="val">4</span></div>
+  <div class="stat"><span class="icon">📝</span> Evaluaciones: <span class="val">3 (2 parciales + final)</span></div>
+  <div class="stat"><span class="icon">📚</span> Fuentes: <span class="val">30</span></div>
+  <div class="stat"><span class="icon">👥</span> Estrategias grupales: <span class="val">12</span></div>
+</div>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav">
+  <a href="#ras">Resultados de Aprendizaje</a>
+  <a href="#evaluaciones">Evaluaciones</a>
+  <a href="#latambox">Caso LatamBox</a>
+  <a href="#plan">Plan Semanal</a>
+  <a href="#estrategias">Estrategias Grupales</a>
+  <a href="#rubricas">Rúbricas</a>
+  <a href="#bibliografia">Bibliografía</a>
+  <a href="#convenciones">Convenciones</a>
+  <a href="#notas">Notas</a>
+</nav>
+
+<div class="container">
+
+<!-- ═══════════ RESULTADOS DE APRENDIZAJE ═══════════ -->
+<section id="ras">
+  <h2>🎯 Resultados de Aprendizaje (RA)</h2>
+  <div class="ra-grid">
+    <div class="ra-card ra1">
+      <div class="ra-label" style="color:var(--blue)">RA1 — Semanas 1-3</div>
+      <h3>Identificar documentos administrativos</h3>
+      <p>Identificar las principales características de los documentos administrativos más comunes que se originan en la gestión empresarial.</p>
+      <p style="font-size:.8rem;margin-top:.5rem;color:var(--gray)"><strong>Evalúa:</strong> Parcial 1 (Sem 5) + Final (Sem 14)</p>
+    </div>
+    <div class="ra-card ra2">
+      <div class="ra-label" style="color:var(--purple)">RA2 — Semanas 4,6,7</div>
+      <h3>Construir documentos bajo estándares</h3>
+      <p>Construir documentos administrativos bajo estándares de calidad, con diversos propósitos organizacionales.</p>
+      <p style="font-size:.8rem;margin-top:.5rem;color:var(--gray)"><strong>Evalúa:</strong> Parcial 1 (Sem 5) + Parcial 2 (Sem 10) + Final (Sem 14)</p>
+    </div>
+    <div class="ra-card ra3">
+      <div class="ra-label" style="color:var(--green)">RA3 — Semanas 8-9</div>
+      <h3>Analizar para decidir</h3>
+      <p>Analizar los procesos de documentación de planeación estratégica organizacional.</p>
+      <p style="font-size:.8rem;margin-top:.5rem;color:var(--gray)"><strong>Evalúa:</strong> Parcial 2 (Sem 10) + Final (Sem 14)</p>
+    </div>
+    <div class="ra-card ra4">
+      <div class="ra-label" style="color:var(--gold)">RA4 — Semanas 11-13</div>
+      <h3>Valorar TIC en gestión documental</h3>
+      <p>Valorar la relevancia de las TICS en los procesos de gestión de la información en las empresas.</p>
+      <p style="font-size:.8rem;margin-top:.5rem;color:var(--gray)"><strong>Evalúa:</strong> Final (Sem 14)</p>
+    </div>
+  </div>
+  
+  <h3>Unidad de Competencia y Elementos</h3>
+  <div class="card">
+    <p><strong>UC1:</strong> Procesar la información que se originan de las funciones administrativas, teniendo en cuenta las normas legales y de la organización.</p>
+    <table style="margin-top:.75rem">
+      <tr><th>EC</th><th>Descripción</th></tr>
+      <tr><td>EC1</td><td>Organizar documentos aplicando los principios archivísticos, las normas y técnicas y la legislación vigente</td></tr>
+      <tr><td>EC2</td><td>Operar los recursos tecnológicos requeridos para el recibo, despacho y la organización de los documentos</td></tr>
+      <tr><td>EC3</td><td>Recibir y despachar documentos empresariales teniendo en cuenta las normas de la organización y la legislación vigente</td></tr>
+      <tr><td>EC4</td><td>Conservar y preservar los documentos para el suministro de la información</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ EVALUACIONES ═══════════ -->
+<section id="evaluaciones">
+  <h2>📝 Evaluaciones</h2>
+  <table>
+    <tr><th>Sem</th><th>Tipo</th><th>Qué evalúa</th><th>Caso espejo</th><th>Formato</th></tr>
+    <tr>
+      <td><span class="badge b-eval">5</span></td>
+      <td><strong>Parcial 1</strong></td>
+      <td>RA1 + RA2</td>
+      <td>"Envíos del Pacífico" — otra empresa de casilleros</td>
+      <td>Clasificar 6 documentos + detectar 5 errores GTC 185 + corregir 1 documento</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-eval">10</span></td>
+      <td><strong>Parcial 2</strong></td>
+      <td>RA2 + RA3</td>
+      <td>"AndesBox" — casillero con operación en Chile y Perú</td>
+      <td>Dossier 5 docs: extraer hallazgos + memo de decisión + comunicación a clientes</td>
+    </tr>
+    <tr>
+      <td><span class="badge b-eval">14</span></td>
+      <td><strong>Final</strong></td>
+      <td>RA1-RA4 (integrador)</td>
+      <td>"GlobalBox Connect" — Colombia, Panamá y México</td>
+      <td>Dossier 8 docs: clasificar + redactar + analizar + proponer estructura TIC</td>
+    </tr>
+  </table>
+  <div class="callout info"><strong>💡 Principio:</strong> Todos los exámenes usan casos espejo — misma lógica, datos distintos. Sin tema nuevo en semana de parcial.</div>
+</section>
+
+<!-- ═══════════ CASO LATAMBOX ═══════════ -->
+<section id="latambox">
+  <h2>📦 Caso Integrador: LatamBox</h2>
+  <p style="margin-bottom:1rem">LatamBox es un casillero virtual ficticio que permite a clientes colombianos comprar productos en USA y recibirlos en Colombia. Atraviesa las 14 semanas del curso.</p>
+  
+  <h3>Ciclo de vida documental</h3>
+  <div class="timeline">
+    <div class="step"><div class="phase">1. Registro</div><div class="doc">Correo bienvenida<br>Formulario registro</div></div>
+    <div class="step"><div class="phase">2. Compra</div><div class="doc">Factura Amazon</div></div>
+    <div class="step"><div class="phase">3. Recepción Miami</div><div class="doc">Notificación llegada<br>Declaración valor</div></div>
+    <div class="step"><div class="phase">4. Vuelo</div><div class="doc">Guía aérea (AWB)</div></div>
+    <div class="step"><div class="phase">5. Nacionalización</div><div class="doc">Factura flete<br>Correo nacionalización<br>Comprobante impuestos</div></div>
+    <div class="step"><div class="phase">6. Entrega</div><div class="doc">Guía entrega local<br>Confirmación<br>Encuesta / Queja</div></div>
+  </div>
+  
+  <h3>12 documentos del ecosistema</h3>
+  <table>
+    <tr><th>#</th><th>Documento</th><th>Etapa del ciclo</th><th>Función</th></tr>
+    <tr><td>1</td><td>Correo de bienvenida / registro</td><td>Creación</td><td>Comunicación externa</td></tr>
+    <tr><td>2</td><td>Formulario de registro</td><td>Creación</td><td>Soporte operativo</td></tr>
+    <tr><td>3</td><td>Factura de Amazon</td><td>Entrada</td><td>Soporte de valor para aduana</td></tr>
+    <tr><td>4</td><td>Notificación de llegada a Miami</td><td>Uso</td><td>Comunicación operativa</td></tr>
+    <tr><td>5</td><td>Declaración de valor</td><td>Uso</td><td>Soporte legal/aduanero</td></tr>
+    <tr><td>6</td><td>Guía aérea (AWB)</td><td>Uso</td><td>Soporte operativo</td></tr>
+    <tr><td>7</td><td>Factura de flete</td><td>Uso</td><td>Soporte financiero</td></tr>
+    <tr><td>8</td><td>Correo de nacionalización</td><td>Uso</td><td>Comunicación externa</td></tr>
+    <tr><td>9</td><td>Comprobante de pago de impuestos</td><td>Uso</td><td>Soporte financiero</td></tr>
+    <tr><td>10</td><td>Guía de entrega local</td><td>Uso</td><td>Soporte operativo</td></tr>
+    <tr><td>11</td><td>Correo de confirmación de entrega</td><td>Archivo</td><td>Comunicación externa</td></tr>
+    <tr><td>12</td><td>Encuesta / Reporte de queja</td><td>Disposición</td><td>Decisión / mejora</td></tr>
+  </table>
+</section>
+
+<!-- ═══════════ PLAN SEMANAL ═══════════ -->
+<section id="plan">
+  <h2>📅 Plan Semanal</h2>
+  
+  <h3><span class="badge b-ra1">RA1</span> Identificar (Semanas 1-3)</h3>
+  <table>
+    <tr><th>Sem</th><th>Título</th><th>h</th><th>Actividad principal</th><th>Evidencia</th></tr>
+    <tr><td>1</td><td>Cerebro, información y decisiones</td><td>3.5</td><td>Presentación LatamBox + quiz diagnóstico + actividad grupal con 5 docs</td><td>Tabla grupal + post-it</td></tr>
+    <tr><td>2</td><td>Ciclo de vida documental en LatamBox</td><td>3.5</td><td>Línea de tiempo con 12 tarjetas + quiz clasificación</td><td>Foto línea tiempo + puntaje quiz</td></tr>
+    <tr><td>3</td><td>Clases, usos y componentes de documentos</td><td>3.5</td><td>Disección documental + matriz documento-función + gallery walk</td><td>Docs diseccionados + papelógrafo</td></tr>
+  </table>
+  
+  <h3><span class="badge b-ra2">RA2</span> Construir (Semanas 4-7)</h3>
+  <table>
+    <tr><th>Sem</th><th>Título</th><th>h</th><th>Actividad principal</th><th>Evidencia</th></tr>
+    <tr><td>4</td><td>GTC 185 como checklist: formato, redacción y tono</td><td>3.5</td><td>Clínica documental (diagnosticar errores, reescribir) + peer review</td><td>Docs corregidos + quiz</td></tr>
+    <tr><td style="background:var(--light-red)">5</td><td style="background:var(--light-red)"><strong>🔴 Parcial 1</strong> — Sin tema nuevo</td><td>3.0</td><td>Caso espejo "Envíos del Pacífico" + revisión colectiva</td><td>Parcial escrito</td></tr>
+    <tr><td>6</td><td>Responder al cliente: cartas, correos y tono profesional</td><td>3.5</td><td>Central de respuestas LatamBox (3 reclamos → 3 respuestas)</td><td>3 correos subidos</td></tr>
+    <tr><td>7</td><td>Actas, circulares y comunicaciones internas</td><td>3.5</td><td>Simulación reunión emergencia + acta individual + circular grupal</td><td>Acta + circular</td></tr>
+  </table>
+  
+  <h3><span class="badge b-ra3">RA3</span> Analizar (Semanas 8-10)</h3>
+  <table>
+    <tr><th>Sem</th><th>Título</th><th>h</th><th>Actividad principal</th><th>Evidencia</th></tr>
+    <tr><td>8</td><td>De los datos a la decisión: extrayendo hallazgos</td><td>3.5</td><td>Gabinete de crisis (dossier 8 docs → tabla de hallazgos)</td><td>Papelógrafo</td></tr>
+    <tr><td>9</td><td>Memo de decisión y plan de mejora</td><td>3.5</td><td>Redacción memo con roles + peer review + plan 3 acciones</td><td>Google Docs</td></tr>
+    <tr><td style="background:var(--light-red)">10</td><td style="background:var(--light-red)"><strong>🔴 Parcial 2</strong> — Sin tema nuevo</td><td>3.0</td><td>Caso espejo "AndesBox" + revisión colectiva</td><td>Parcial escrito</td></tr>
+  </table>
+  
+  <h3><span class="badge b-ra4">RA4</span> TIC (Semanas 11-13)</h3>
+  <table>
+    <tr><th>Sem</th><th>Título</th><th>h</th><th>Actividad principal</th><th>Evidencia</th></tr>
+    <tr><td>11</td><td>Carpetas, metadatos y versionamiento</td><td>3.0</td><td>Organizar 20 archivos con convención nombres + búsqueda del tesoro</td><td>Screenshot estructura</td></tr>
+    <tr><td>12</td><td>IA asistida y ética documental</td><td>3.0</td><td>Taller con IA + bitácora + debate ético (5 escenarios)</td><td>Doc mejorado + bitácora</td></tr>
+    <tr><td>13</td><td>Portafolio documental y cierre LatamBox</td><td>3.5</td><td>Armado individual + defensa speed-dating + LatamBox Awards</td><td>Portafolio digital</td></tr>
+  </table>
+  
+  <h3><span class="badge b-eval">FINAL</span> Semana 14</h3>
+  <table>
+    <tr><th>Sem</th><th>Título</th><th>h</th><th>Formato</th></tr>
+    <tr><td style="background:var(--light-red)">14</td><td style="background:var(--light-red)"><strong>🔴 Evaluación final integradora</strong></td><td>3.0</td><td>Caso "GlobalBox Connect" — dossier 8 docs, cubre RA1-RA4</td></tr>
+  </table>
+</section>
+
+<!-- ═══════════ ESTRATEGIAS GRUPALES ═══════════ -->
+<section id="estrategias">
+  <h2>👥 12 Estrategias de Trabajo Grupal</h2>
+  <p style="margin-bottom:1rem;color:var(--gray)">Grupos rotativos semanales (4 personas, sorteo aleatorio). Se rotan 2-3 estrategias por sesión.</p>
+  
+  <div class="strat-grid">
+    <div class="strat-card">
+      <h4>1. Rotación aleatoria de grupos</h4>
+      <p>Grupos nuevos cada semana al azar. Nadie se sienta con los mismos 2 semanas seguidas.</p>
+      <span class="tag">Todas las semanas</span>
+    </div>
+    <div class="strat-card">
+      <h4>2. Reportero aleatorio</h4>
+      <p>El docente elige al azar quién presenta. Como nadie sabe a quién le tocará, todos deben estar preparados.</p>
+      <span class="tag">Semanas 1, 3, 6, 8, 12</span>
+    </div>
+    <div class="strat-card">
+      <h4>3. Producto individual previo</h4>
+      <p>Cada miembro produce algo individual (5-10 min) antes de la fase grupal. Sin producto no se participa.</p>
+      <span class="tag">Semanas 6, 7, 8, 9, 12</span>
+    </div>
+    <div class="strat-card">
+      <h4>4. Roles rotativos</h4>
+      <p>Redactor, Verificador, Vocero, Cronometrista. Cada miembro con función explícita que cambia cada actividad.</p>
+      <span class="tag">Semanas 7, 9</span>
+    </div>
+    <div class="strat-card">
+      <h4>5. Documento colaborativo con colores</h4>
+      <p>Google Docs: cada miembro escribe en un color distinto. El docente proyecta en vivo.</p>
+      <span class="tag">Semanas 7, 9</span>
+    </div>
+    <div class="strat-card">
+      <h4>6. Coevaluación anónima</h4>
+      <p>Exit ticket: "En escala 1-5, ¿qué tanto contribuyó cada miembro de tu grupo?"</p>
+      <span class="tag">Semanas 3, 6, 9, 12</span>
+    </div>
+    <div class="strat-card">
+      <h4>7. Tiempos estructurados 2-2-2</h4>
+      <p>2 min habla A, 2 min B, 2 min todos juntos. Sin interrupciones.</p>
+      <span class="tag">Semanas 1, 3, 7</span>
+    </div>
+    <div class="strat-card">
+      <h4>8. "Todos escriben, uno entrega"</h4>
+      <p>Cada miembro produce su versión. Luego el grupo integra lo mejor. El docente puede pedir ver las individuales.</p>
+      <span class="tag">Semanas 6, 7, 12</span>
+    </div>
+    <div class="strat-card">
+      <h4>9. Rompecabezas (Jigsaw)</h4>
+      <p>Cada miembro se vuelve experto en 1 documento y lo explica a los demás. Todos dependen de todos.</p>
+      <span class="tag">Semanas 8, 11</span>
+    </div>
+    <div class="strat-card">
+      <h4>10. Regla de consenso</h4>
+      <p>No se avanza al siguiente ítem hasta que los 4 miembros están de acuerdo. Si alguien discrepa, se debate.</p>
+      <span class="tag">Semanas 3, 11</span>
+    </div>
+    <div class="strat-card">
+      <h4>11. Competencia entre grupos</h4>
+      <p>Gana el grupo que complete correctamente primero — pero solo si todos pueden explicar la respuesta.</p>
+      <span class="tag">Semanas 4, 11</span>
+    </div>
+    <div class="strat-card">
+      <h4>12. Gallery walk con post-its</h4>
+      <p>Trabajos en la pared, todos caminan en silencio dejando correcciones anónimas en post-its.</p>
+      <span class="tag">Semanas 3, 8</span>
+    </div>
+  </div>
+  
+  <div class="callout warn" style="margin-top:1.5rem">
+    <strong>💡 Principio fundamental:</strong> Diseñar actividades donde sea más fácil trabajar que no trabajar. Si la actividad está bien diseñada, la participación es el camino de menor resistencia.
+  </div>
+</section>
+
+<!-- ═══════════ RÚBRICAS ═══════════ -->
+<section id="rubricas">
+  <h2>📏 Rúbricas de Evaluación</h2>
+  <table>
+    <tr><th>Rúbrica</th><th>Qué evalúa</th><th>Cuándo se usa</th></tr>
+    <tr><td><strong>PI1</strong></td><td>Clasificación documental (RA1)</td><td>Semanas 1-3, Parcial 1, Final</td></tr>
+    <tr><td><strong>PI2</strong></td><td>Construcción de documentos (RA2)</td><td>Semanas 4, 6, 7, Parcial 1-2, Final</td></tr>
+    <tr><td><strong>PI3</strong></td><td>Análisis y decisión documental (RA3)</td><td>Semanas 8, 9, Parcial 2, Final</td></tr>
+    <tr><td><strong>PI4</strong></td><td>Uso de TIC en gestión documental (RA4)</td><td>Semanas 11, 12, 13, Final</td></tr>
+  </table>
+</section>
+
+<!-- ═══════════ BIBLIOGRAFÍA ═══════════ -->
+<section id="bibliografia">
+  <h2>📚 Bibliografía Actualizada (30 fuentes)</h2>
+  <p style="color:var(--gray);margin-bottom:1rem">Compilado 31 mayo 2026. Prioridad 2020-2026. Documentos completos: <code>BIBLIOGRAFIA_ACTUALIZADA_ADM18.md</code> y <code>fuentes_curso_ADM18.md</code></p>
+  
+  <h3>Normas fundamentales (siempre vigentes)</h3>
+  <table>
+    <tr><th>Norma</th><th>Uso principal</th></tr>
+    <tr><td><strong>GTC 185</strong> (ICONTEC)</td><td>Estructura y redacción de documentos organizacionales</td></tr>
+    <tr><td><strong>Ley 594 de 2000</strong></td><td>Ley General de Archivos de Colombia</td></tr>
+    <tr><td><strong>ISO 15489-1:2016</strong></td><td>Gestión documental — conceptos y principios</td></tr>
+    <tr><td><strong>ISO 9001:2015 §7.5</strong></td><td>Control de información documentada en SGC</td></tr>
+  </table>
+  
+  <h3>Fuentes por RA</h3>
+  <table>
+    <tr><th>RA</th><th>Fuentes clave</th></tr>
+    <tr><td><span class="badge b-ra1">RA1</span> Identificar</td><td>GTC 185, Ley 594/2000, ISO 15489-1, Baddeley (2020), Kahneman (2011), Pacori Cari (2023)</td></tr>
+    <tr><td><span class="badge b-ra2">RA2</span> Construir</td><td>ISO 15489-1, ISO 30300/30301, GTC 185, ISO 9001 §7.5, NTC-ISO 10013, Pacori Cari, Manual Opera Prima</td></tr>
+    <tr><td><span class="badge b-ra3">RA3</span> Analizar</td><td>ISO 15489-1, MoReq2010, La República (2025), Valora Analitik (2025), Decreto 1165/2019, ISO 9001</td></tr>
+    <tr><td><span class="badge b-ra4">RA4</span> TIC</td><td>MoReq2020, Gartner MQ (2026), UNESCO (2021), Bender et al. (2021), W3C VC (2022), eIDAS 2.0</td></tr>
+  </table>
+  
+  <h3>Reemplazos de bibliografía obsoleta</h3>
+  <table>
+    <tr><th>Fuente anterior</th><th>Se reemplaza por</th></tr>
+    <tr><td>Gutiérrez & Prida (1998) — Logística</td><td>La República (2025) + Valora Analitik (2025)</td></tr>
+    <tr><td>Czinkota & Ronkainen (2002) — Marketing</td><td>ProColombia (2025) + DIAN (2019-2026)</td></tr>
+    <tr><td>Christopher (2002) — Logística estratégica</td><td>Astute Analytica (2024)</td></tr>
+    <tr><td>Muñoz & Mora (2005) — Diccionario logística</td><td>ISO 15489-1:2016 + GTC 185</td></tr>
+    <tr><td>Payne & Benassini (1993) — Mercadotecnia</td><td>Eliminada (fuera de alcance)</td></tr>
+    <tr><td>Villegas (1993) — Marketing estratégico</td><td>Eliminada (fuera de alcance)</td></tr>
+    <tr><td>Chiavenato (2007) — RRHH</td><td>ISO 9001:2015 §7.5 + NTC-ISO 10013:2021</td></tr>
+  </table>
+</section>
+
+<!-- ═══════════ CONVENCIONES ═══════════ -->
+<section id="convenciones">
+  <h2>🔧 Convenciones del Curso</h2>
+  
+  <div class="card">
+    <h3>Nombres de archivo (Semana 11)</h3>
+    <p style="font-family:monospace;background:#f5f5f5;padding:.5rem;border-radius:4px;font-size:.9rem">
+      TIPO_Destinatario_Asunto_FECHA_VERSION.ext<br>
+      Ej: CORREO_ClienteMolina_RetrasoPaquete_20260711_v02.docx
+    </p>
+  </div>
+  
+  <div class="card">
+    <h3>Estructura de carpetas</h3>
+    <p style="font-family:monospace;background:#f5f5f5;padding:.5rem;border-radius:4px">
+      01_Comunicaciones/<br>
+      02_Operaciones/<br>
+      03_Decisiones/<br>
+      04_Archivo/
+    </p>
+  </div>
+  
+  <div class="card">
+    <h3>Checklist GTC 185 simplificada (10 criterios)</h3>
+    <ol style="padding-left:1.25rem;font-size:.9rem;line-height:1.8">
+      <li>¿Tiene membrete?</li>
+      <li>¿Fecha completa?</li>
+      <li>¿Destinatario identificado?</li>
+      <li>¿Asunto claro?</li>
+      <li>¿Párrafos breves?</li>
+      <li>¿Lenguaje profesional?</li>
+      <li>¿Firma con cargo?</li>
+      <li>¿Anexos listados?</li>
+      <li>¿Copia a quien corresponda?</li>
+      <li>¿Formato consistente?</li>
+    </ol>
+  </div>
+  
+  <div class="card">
+    <h3>4 Principios de IA Asistida (Semana 12 · UNESCO 2021)</h3>
+    <ol style="padding-left:1.25rem;font-size:.9rem;line-height:1.8">
+      <li><strong>La IA sugiere, el humano decide.</strong></li>
+      <li><strong>Los hechos siempre vienen de fuente verificable, no de la IA.</strong></li>
+      <li><strong>Toda modificación de IA se registra en bitácora.</strong></li>
+      <li><strong>El documento final es responsabilidad de quien lo firma.</strong></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ═══════════ NOTAS ═══════════ -->
+<section id="notas">
+  <h2>📌 Notas</h2>
+  
+  <div class="callout info" style="margin-top:1rem">
+    <h3 style="color:var(--blue);margin-top:0">Relación con los RAs del Programa de Comercio Exterior</h3>
+    <p>ADM18 es un módulo del programa de <strong>Comercio Exterior</strong>. El programa tiene sus propios 5 RAs macro y ADM18 contribuye a ellos desde su dominio específico: la documentación organizacional.</p>
+    <table style="margin-top:.75rem">
+      <tr><th>RA del Programa (CE)</th><th>Contribución de ADM18</th><th>Fuerza</th></tr>
+      <tr><td><strong>CE RA1</strong> — Operar procesos de importación/exportación</td><td>Enseña a identificar, clasificar y diligenciar los documentos aduaneros y comerciales que requiere cualquier operación de comercio exterior</td><td><span class="badge b-ra3">Alta</span></td></tr>
+      <tr><td><strong>CE RA2</strong> — Operar logística de entrada/salida</td><td>Enseña el ciclo de vida documental en la cadena de suministro: documentos que habilitan cada etapa logística</td><td><span class="badge b-ra4">Media</span></td></tr>
+      <tr><td><strong>CE RA3</strong> — Aplicar pensamiento crítico en la cadena logística</td><td>Enseña a extraer hallazgos de documentos, formular problemas y proponer decisiones basadas en evidencia documental (memo de decisión, plan de mejora)</td><td><span class="badge b-ra3">Alta</span></td></tr>
+      <tr><td><strong>CE RA4</strong> — Participar en equipos de trabajo</td><td>Las 12 estrategias grupales del plan de clases desarrollan colaboración, roles y coevaluación</td><td><span class="badge b-ra4">Media</span></td></tr>
+      <tr><td><strong>CE RA5</strong> — Transmitir ideas/resultados efectivamente</td><td>Enseña a construir documentos profesionales con estándares de calidad (GTC 185), tono adecuado y claridad administrativa</td><td><span class="badge b-ra3">Alta</span></td></tr>
+    </table>
+    <p style="margin-top:.5rem;font-size:.82rem;color:var(--gray)">Los archivos <code>Data_Assessment_CE_RA1-5_2025-2.xlsm</code> en <code>RAs de Comercio Ext.</code> miden los RAs del programa, no los del módulo. La plantilla que más se alinea con ADM18 es <strong>CE RA3</strong> (pensamiento crítico → análisis documental), pero ninguna es reemplazo directo: ADM18 requiere su propio instrumento con sus 4 RAs y rúbricas PI1-PI4.</p>
+  </div>
+  
+  <div class="callout info" style="margin-top:1rem">
+    <h3 style="color:var(--blue);margin-top:0">Historial del archivo</h3>
+    <p>El KNOWLEDGE_BASE.md anterior describía el proyecto <strong>TGA04</strong> (Fundamentos de Computación, caso NeuroBiz, stack HTML/CSS/JS + Supabase). Ese contenido se eliminó en la versión actual (31 mayo 2026). Si necesitas restaurarlo, está en el historial del archivo.</p>
+  </div>
+</section>
+
+<!-- ═══════════ DOCUMENTOS RELACIONADOS ═══════════ -->
+<section>
+  <h2>📁 Documentos del Curso</h2>
+  <table>
+    <tr><th>Documento</th><th>Rol</th><th>Actualizado</th></tr>
+    <tr><td><code>ADM18_Procesamiento_Informacion.md</code></td><td>Microcurrículo oficial (fuente institucional)</td><td>Mayo 2023</td></tr>
+    <tr><td><code>PlanDeClases_ADM18_LatamBox_2026.html</code></td><td>Plan de clases detallado con LatamBox</td><td>2026</td></tr>
+    <tr><td><code>BIBLIOGRAFIA_ACTUALIZADA_ADM18.md</code></td><td>Bibliografía actualizada (30 fuentes)</td><td>31 mayo 2026</td></tr>
+    <tr><td><code>fuentes_curso_ADM18.md</code></td><td>Fuentes detalladas por dimensión (7 dimensiones)</td><td>2026</td></tr>
+    <tr><td><strong><code>KNOWLEDGE_BASE.md</code></strong></td><td>Referencia compacta para IA (este doc en .md)</td><td>31 mayo 2026</td></tr>
+    <tr><td><strong><code>KNOWLEDGE_BASE.html</code></strong></td><td>Referencia legible para humanos (este archivo)</td><td>31 mayo 2026</td></tr>
+  </table>
+  
+  <h3 style="margin-top:1.5rem">Instrumentos de Assessment (<code>instrumentos/</code>)</h3>
+  <table>
+    <tr><th>Documento</th><th>Formato</th><th>Rol</th></tr>
+    <tr><td><code>PLO_Alignment_CE_RA3_ADM18.md</code></td><td>Editable (.md)</td><td>Tabla de alineación PLO CE RA3 → ADM18</td></tr>
+    <tr><td><code>PLO_Alignment_CE_RA3_ADM18.pdf</code></td><td>PDF</td><td>Versión estática para impresión</td></tr>
+    <tr><td><code>PI3_Rubrica_ADM18.md</code></td><td>Editable (.md)</td><td>Rúbrica PI3: 3 criterios × 4 niveles</td></tr>
+    <tr><td><code>PI3_Rubrica_ADM18.pdf</code></td><td>PDF</td><td>Versión estática para impresión</td></tr>
+    <tr><td><code>Parcial2_ADM18_AndesBox.md</code></td><td>Editable (.md)</td><td>Instrumento del Parcial 2: dossier + instrucciones</td></tr>
+    <tr><td><code>Parcial2_ADM18_AndesBox.pdf</code></td><td>PDF</td><td>Versión estática para impresión</td></tr>
+    <tr><td><code>pdf-style.css</code></td><td>CSS</td><td>Estilos para conversión HTML/PDF</td></tr>
+    <tr><td><code>_gen_pdf.py</code></td><td>Script</td><td>Generador de PDFs (<code>pip install fpdf2</code>)</td></tr>
+  </table>
+  
+  <div class="callout warn" style="margin-top:1rem">
+    <strong>⚠️ Regla de sincronización:</strong> Ambos archivos (KNOWLEDGE_BASE.md y KNOWLEDGE_BASE.html) deben actualizarse siempre juntos.
+  </div>
+  
+  <h3 style="margin-top:1.5rem">Casos de Estudio (<code>casos/</code>) — 31 docs × 4 formatos</h3>
+  <table>
+    <tr><th>Carpeta</th><th>Empresa</th><th>Uso</th><th>Docs</th><th>Formatos</th><th>Semana</th></tr>
+    <tr><td><code>casos/latambox/</code></td><td>LatamBox (Colombia-USA)</td><td>Formativo</td><td>12</td><td>.eml .docx .xlsx .pdf</td><td>1-13</td></tr>
+    <tr><td><code>casos/envios_pacifico/</code></td><td>Envíos del Pacífico (Colombia-Asia)</td><td>Parcial 1</td><td>6</td><td>.eml .docx .xlsx .pdf</td><td>5</td></tr>
+    <tr><td><code>casos/andesbox/</code></td><td>AndesBox (Colombia-Chile-Perú)</td><td>Parcial 2</td><td>5</td><td>.eml .docx .xlsx .pdf</td><td>10</td></tr>
+    <tr><td><code>casos/globalbox/</code></td><td>GlobalBox Connect (Colombia-Panamá-México)</td><td>Final</td><td>8</td><td>.eml .docx .xlsx .pdf</td><td>14</td></tr>
+  </table>
+  <p style="font-size:.82rem;color:var(--gray)"><strong>Formato por tipo:</strong> correos → <code>.eml</code> · formularios/cartas/actas → <code>.docx</code> · facturas/reportes → <code>.xlsx</code> · todos → <code>.pdf</code>. Ver <code>casos/README.md</code> para índice completo.</p>
+</section>
+
+</div><!-- /container -->
+
+<div class="footer">
+  <p>ADM18 · Procesamiento de la Información en la Organización · IUB / Unibarranquilla · 2026</p>
+  <p style="font-size:.75rem;margin-top:.25rem">Generado: 31 mayo 2026 · <a href="./KNOWLEDGE_BASE.md" style="color:var(--blue)">Ver versión .md (IA)</a></p>
+</div>
+
+</body>
+</html>

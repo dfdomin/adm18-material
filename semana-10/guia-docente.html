@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 10 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card.eval { background: linear-gradient(135deg, #7a1e1e 0%, #a52a2a 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-rubric { background: #f0f4ff; border: 1px solid #93c5fd; padding: var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card { background: #fff5f5; border: 1px solid #fecaca; border-left: 4px solid var(--error); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card h4 { color: var(--error); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-problem-card .tg-solution { color: var(--success); font-weight: 600; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  .tg-badge-eval { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: #c62828; color: white; }
+  .tg-findings-table { font-size: 0.78rem; }
+  .tg-findings-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); text-align: left; }
+  .tg-findings-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); vertical-align: top; }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-problem-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card eval">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18 · PARCIAL 2</div>
+    <h1>Semana 10 · Parcial 2: AndesBox</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra2">RA2</span>
+      <span class="badge badge-ra3">RA3</span>
+      <span class="tg-badge-eval">EVALUACION</span>
+      <span class="tg-badge-gold">3.0 h</span>
+      <span>Examen escrito · Transferencia a caso nuevo</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de evaluacion</h2>
+    <p>Evaluar la transferencia de habilidades de RA2 y RA3 al caso espejo AndesBox (Colombia-Chile-Peru):</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li><strong>RA3 — Extraccion de hallazgos:</strong> El estudiante extrae informacion relevante de 5 documentos, distinguiendo hechos de opiniones, y construye una tabla hecho→fuente→implicacion (ISO 15489-1:2016, §8).</li>
+      <li><strong>RA3 — Memo de decision:</strong> El estudiante redacta un memo completo con problema, hallazgos, opciones comparadas, recomendacion y proximos pasos (GTC 185:2009).</li>
+      <li><strong>RA2 — Comunicacion externa:</strong> El estudiante redacta una respuesta profesional a una queja del dossier aplicando los 5 criterios del correo profesional (GTC 185:2009; Bustelo Ruesta, 2023).</li>
+      <li><strong>Transferencia:</strong> El estudiante demuestra que las habilidades de RA2 y RA3 no dependen del caso LatamBox — aplican a cualquier contexto empresarial (ISO 9001:2015, §7.5).</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar ANTES de la clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>5 documentos AndesBox impresos</strong> (1 juego por estudiante): reporte operaciones, 2 quejas de cliente, factura de flete, acta de reunion. <span class="tg-note-critico">CRITICO</span> Verificar que todos los problemas inyectados esten presentes en las copias impresas.</li>
+      <li>Instrumento de evaluacion impreso: <code>Parcial2_ADM18_AndesBox.md</code> (1 por estudiante).</li>
+      <li>Rubricas PI3 y PI2 impresas — 1 juego para el docente.</li>
+      <li>Proyector con diapositiva de "Hallazgos esperados" para la revision colectiva.</li>
+      <li>Carpeta o sobre para que cada estudiante entregue su examen.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–10</td>
+        <td><strong>Instrucciones y entrega</strong></td>
+        <td>
+          <span class="tg-note-critico">LEER EN VOZ ALTA</span> las instrucciones del instrumento. Repartir: instrumento + 5 documentos a cada estudiante.<br>
+          Explicar la estructura de 3 secciones y los tiempos sugeridos:<br>
+          - Seccion A (RA3, tabla de hallazgos) → 25 min<br>
+          - Seccion B (RA3, memo de decision) → 45 min<br>
+          - Seccion C (RA2, respuesta a queja) → 20 min<br>
+          <span class="tg-note">RECORDAR</span> "Usen la tabla hecho→fuente→implicacion que practicamos en la semana 8 (ISO 15489-1:2016, §8). Usen la anatomia del memo que practicamos en la semana 9 (GTC 185:2009)."
+        </td>
+      </tr>
+      <tr>
+        <td>10–100</td>
+        <td><strong>Parcial escrito</strong> (90 min, 3 secciones)</td>
+        <td>
+          <span class="tg-note-critico">SILENCIO ABSOLUTO</span><br>
+          <strong>Seccion A — Tabla de hallazgos (5 pts, 25 min):</strong> El estudiante lee los 5 documentos y completa la tabla hecho→fuente→implicacion. Minimo 1 hallazgo por documento. Debe distinguir hecho de opinion.<br>
+          <strong>Seccion B — Memo de decision (10 pts, 45 min):</strong> Usando los hallazgos de la Seccion A, redacta el memo completo con las 5 secciones obligatorias. ≥2 opciones comparadas por costo y tiempo.<br>
+          <strong>Seccion C — Respuesta a cliente (calificado con PI2, 20 min):</strong> Elige 1 queja del dossier y redacta correo profesional con receta de 5 partes.<br>
+          <span class="tg-note">AVISOS DE TIEMPO</span> en minuto 25 ("Seccion A deberia estar terminada"), minuto 55 ("Quedan 45 min"), minuto 80 ("Quedan 20 min — inicien Seccion C"), minuto 95 ("Quedan 5 min — revisen").<br>
+          <span class="tg-note">NO RESPONDER</span> preguntas de contenido. Solo procedimiento.
+        </td>
+      </tr>
+      <tr>
+        <td>100–110</td>
+        <td><strong>PAUSA</strong></td>
+        <td>
+          Descanso obligatorio. <span class="tg-note-critico">RECOGER</span> examenes antes de la pausa para evitar modificaciones.
+        </td>
+      </tr>
+      <tr>
+        <td>110–130</td>
+        <td><strong>Revision colectiva</strong></td>
+        <td>
+          <span class="tg-note-critico">PROYECTAR HALLAZGOS ESPERADOS</span> Devolver los examenes. Proyectar diapositiva con:<br>
+          - Los 5 problemas inyectados detectados.<br>
+          - Tabla modelo con hecho→fuente→implicacion.<br>
+          - Ejemplo de memo bien estructurado (anonimizado).<br>
+          - Ejemplo de respuesta profesional a cliente.<br>
+          Los estudiantes comparan con su propio examen. <span class="tg-note">NO ES NOTA FINAL</span> — la calificacion se hace despues con rubricas.
+        </td>
+      </tr>
+      <tr>
+        <td>130–135</td>
+        <td><strong>Cierre</strong></td>
+        <td>
+          Recoger todos los examenes nuevamente. <span class="tg-note">FEEDBACK</span> general. Anunciar que las notas se publicaran en 1 semana.<br>
+          <span class="tg-note">SEMANA 11</span> "La proxima semana arrancamos RA4: Excel y tablas dinamicas."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- PROBLEMAS INYECTADOS -->
+  <div class="tg-section">
+    <h2>🔍 Problemas inyectados — SOLO DOCENTE</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Estos son los 5 problemas que el estudiante debe detectar en el dossier de AndesBox. <span class="tg-note-critico">NO REVELAR ANTES NI DURANTE EL EXAMEN.</span></p>
+
+    <div class="tg-problem-card">
+      <h4>1. Ruta Lima tiene 3 veces mas retrasos que ruta Santiago</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El Reporte de Operaciones muestra que la ruta Lima acumula el 68% de los retrasos totales vs 22% de la ruta Santiago. Esto es un hecho numerico verificable — no una opinion.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Hecho: "Ruta Lima tiene 3x mas retrasos que Santiago (68% vs 22%, Reporte de Operaciones julio 2026)." Implicacion: "El cuello de botella esta en la operacion peruana, no en la chilena."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>2. Proveedor logistico en Peru cambiado sin evaluacion documentada</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El Acta de reunion del 15 de julio registra que se cambio el proveedor logistico en Peru, pero el acta misma senala que "no se realizo evaluacion comparativa de alternativas" y la decision fue "por recomendacion verbal". Esto es un hecho registrado en el acta.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Hecho: "Proveedor logistico peruano cambiado sin evaluacion documentada de alternativas (Acta reunion 15 julio 2026, punto 3)." Implicacion: "No hay evidencia de que el nuevo proveedor sea mejor que el anterior o que otras opciones."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>3. No hay protocolo de comunicacion cuando paquete se retrasa</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La Queja #1 (Sr. Gonzalez) menciona explicitamente que su paquete lleva 4 semanas detenido en aduana chilena y "nadie me informo nada", "el sistema solo dice 'en proceso'", "llame 3 veces y nadie supo decirme que pasaba". Esto revela ausencia de protocolo.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Hecho: "Cliente Sr. Gonzalez no recibio ninguna comunicacion proactiva durante 4 semanas de retraso (Queja #1)." Implicacion: "La falta de protocolo de comunicacion genera perdida de confianza y riesgo de cancelacion de clientes."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>4. Cobros de impuestos no verificados contra factura Amazon</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La Queja #2 (Sra. Fuentes) adjunta su factura de Amazon que muestra impuestos de $32 USD, pero AndesBox le cobro $75 USD. La diferencia de $43 no fue verificada antes de pasar el cobro al cliente. Esto es un hecho — las dos facturas estan en el dossier.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Hecho: "AndesBox cobro impuestos de $75 USD a la Sra. Fuentes cuando la factura de Amazon indicaba $32 USD — diferencia de $43 sin verificacion (Queja #2 + factura Amazon adjunta)." Implicacion: "Los cobros de impuestos no tienen un paso de verificacion antes de facturar al cliente, generando sobrecostos y quejas."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>5. Costos flete Lima son 35% mas altos que Santiago sin considerar rutas alternativas</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La Factura de flete muestra que el costo aereo a Lima es $1,890 USD vs $1,400 USD a Santiago (35% mas). Sin embargo, no hay evidencia en el dossier de que se hayan evaluado rutas alternativas (maritimo, compartido, otro aeropuerto).</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Hecho: "Costo flete Lima: $1,890 USD. Costo flete Santiago: $1,400 USD. Diferencia: 35% (Factura de flete aereo)." Implicacion: "La ruta Lima es significativamente mas cara y no se han explorado alternativas para reducir costos."</p>
+    </div>
+  </div>
+
+  <!-- TABLA DE HALLAZGOS MODELO -->
+  <div class="tg-section">
+    <h2>📊 Tabla de hallazgos modelo — Revision colectiva</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Proyectar DESPUES del parcial. Esta es la tabla que el docente muestra para que los estudiantes comparen con su propio trabajo.</p>
+
+    <div class="table-responsive">
+    <table class="tg-findings-table">
+      <tr>
+        <th>#</th>
+        <th>Hecho detectado</th>
+        <th>Fuente (documento #, tipo)</th>
+        <th>Implicacion para AndesBox</th>
+        <th>¿Hecho u opinion?</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Ruta Lima concentra el 68% de retrasos totales (3x mas que Santiago con 22%)</td>
+        <td>Doc #1 — Reporte de Operaciones, julio 2026</td>
+        <td>El cuello de botella esta en Peru. Si no se resuelve, los retrasos seguiran creciendo y los clientes de esa ruta cancelaran.</td>
+        <td>HECHO</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Proveedor logistico en Peru fue cambiado sin evaluacion documentada de alternativas</td>
+        <td>Doc #5 — Acta de reunion, 15 julio 2026</td>
+        <td>No hay certeza de que el nuevo proveedor sea la mejor opcion. La decision fue apresurada y sin datos.</td>
+        <td>HECHO</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Cliente Sr. Gonzalez (queja #1) no recibio comunicacion proactiva durante 4 semanas de retraso</td>
+        <td>Doc #2 — Queja de cliente #1</td>
+        <td>La falta de protocolo de comunicacion dana la confianza del cliente. Riesgo de cancelacion y mala reputacion.</td>
+        <td>HECHO</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Cobro de impuestos a Sra. Fuentes: $75 USD AndesBox vs $32 USD factura Amazon. Diferencia $43 sin verificacion</td>
+        <td>Doc #3 — Queja de cliente #2 + Factura Amazon adjunta</td>
+        <td>No existe un paso de verificacion de impuestos antes de facturar. Genera sobrecostos, quejas y posible perdida de clientes.</td>
+        <td>HECHO</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Costo flete a Lima: $1,890 USD vs Santiago: $1,400 USD (35% mas caro)</td>
+        <td>Doc #4 — Factura de flete aereo</td>
+        <td>La operacion en Lima es significativamente mas costosa. No hay evidencia de que se hayan evaluado rutas alternativas.</td>
+        <td>HECHO</td>
+      </tr>
+      <tr>
+        <td>6 (bonus)</td>
+        <td>Las 2 quejas del dossier mencionan independientemente "falta de comunicacion" como el problema principal</td>
+        <td>Docs #2 y #3 — Quejas de clientes</td>
+        <td>Relacion causal: la falta de protocolo de comunicacion (hallazgo 3) explica parcialmente las quejas #1 y #2. Es un patron, no un caso aislado.</td>
+        <td>HECHO (patron)</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- CRITERIOS DE CALIFICACION -->
+  <div class="tg-section">
+    <h2>📊 Criterios de calificacion</h2>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Secciones A y B — RA3: PI3 (15 pts)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI3_Rubrica_ADM18.md</code>. Criterios basados en la valoracion y extraccion de informacion de documentos (ISO 15489-1:2016, §8; Kahneman, 2011). Resumen:</p>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Pts</th><th>Excelente</th><th>Aceptable</th><th>Insuficiente</th></tr>
+        <tr>
+          <td>C1 — Identificacion de variables (SO3.1)</td>
+          <td>5</td>
+          <td>≥5 hallazgos con fuente, jerarquizados, 100% hecho vs opinion correcto, relaciones causales detectadas</td>
+          <td>≥5 hallazgos, ≥80% hecho/opinion correcto, fuente citada</td>
+          <td>≤2 hallazgos o confusion hecho/opinion</td>
+        </tr>
+        <tr>
+          <td>C2 — Formulacion del problema (SO3.2)</td>
+          <td>5</td>
+          <td>Problema en ≤5 lineas con dato numerico, objetivo medible, conectado a hallazgos</td>
+          <td>Problema claro, conectado a ≥3 hallazgos</td>
+          <td>Problema vago o sin conexion a hallazgos</td>
+        </tr>
+        <tr>
+          <td>C3 — Valoracion de soluciones (SO3.3)</td>
+          <td>5</td>
+          <td>≥3 opciones comparadas por costo+tiempo, recomendacion justificada, 3 acciones SMART con indicador</td>
+          <td>≥2 opciones, recomendacion concreta, proximos pasos generales</td>
+          <td>1 opcion o sin proximos pasos</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tg-rubric" style="margin-top:var(--space-md);">
+      <h3 style="margin-top:0;">Seccion C — RA2: PI2 (calificacion independiente)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI2_Rubrica_ADM18.md</code>. La respuesta a cliente se evalua con los 5 criterios del correo profesional (GTC 185:2009): saludo personalizado, reconocimiento, explicacion, solucion concreta con plazo, despedida con datos de contacto. Tono profesional obligatorio.</p>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:var(--space-md);"><strong>Nota total Parcial 2 = PI3 (Secciones A+B, 15 pts) + PI2 (Seccion C).</strong> Escala PI3: 0-6 = Low, 6.3-9 = Low (refuerzo), 9.3-12 = Medium, 12.3-15 = High. El contexto AndesBox refleja tendencias reales del sector mensajeria-logistica en Colombia (ANDI/FENALCO, 2023; MinTIC/CRC, 2024).</p>
+  </div>
+
+  <!-- RESPUESTAS ESPERADAS PARA REVISION COLECTIVA -->
+  <div class="tg-section">
+    <h2>📋 Respuestas esperadas — Revision colectiva (proyectar despues del parcial)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Esto es lo que el docente proyecta para que los estudiantes comparen con su propio examen.</p>
+
+    <h3>Documentos del dossier AndesBox</h3>
+    <div class="tg-answer"><strong>Doc #1 — Reporte de Operaciones, julio 2026:</strong> Datos de retrasos por ruta. Lima: 68% retrasos, Santiago: 22%. Tiempo promedio Lima: 12 dias, Santiago: 4 dias. Volumen: 320 paquetes/mes.</div>
+    <div class="tg-answer"><strong>Doc #2 — Queja Sr. Gonzalez:</strong> Paquete 4 semanas en aduana chilena. Cero comunicacion. Amenaza cancelar cuenta. Cliente recurrente (8 envios/ano).</div>
+    <div class="tg-answer"><strong>Doc #3 — Queja Sra. Fuentes:</strong> Cobro impuestos $75 USD vs $32 USD factura Amazon. Adjunta ambas facturas. Primera vez usando AndesBox.</div>
+    <div class="tg-answer"><strong>Doc #4 — Factura de flete aereo (ruta Lima):</strong> Costo envio $1,890 USD. Recargos $340. Comparativa con Santiago ($1,400 USD + $210 recargos).</div>
+    <div class="tg-answer"><strong>Doc #5 — Acta de reunion, 15 julio 2026:</strong> Decision: cambio proveedor logistico Peru. Sin evaluacion de alternativas. Discusion sobre abrir almacen en Chile.</div>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar tema nuevo.</strong> Esta semana es solo evaluacion + feedback. Cualquier contenido nuevo genera ansiedad pre-examen y confunde.</li>
+      <li>No preparar "repaso general" extenso. Los estudiantes ya tuvieron 4 semanas de practica en RA2 (semanas 4-7) y 2 semanas en RA3 (semanas 8-9). Maximo recordar la anatomia del memo y la tabla hecho→fuente→implicacion en 1 diapositiva.</li>
+      <li>No dar pistas sobre los problemas inyectados durante el examen. Si un estudiante pregunta "¿esto esta bien?", responder: "Eso es lo que tu debes determinar con la tabla hecho→fuente→implicacion."</li>
+      <li>No calificar en el momento. La revision colectiva es formativa — la calificacion con rubrica se hace despues, en frio, usando PI3 y PI2.</li>
+      <li>Si un estudiante pregunta "¿cuantas opciones debo proponer?", responder: "El instrumento dice minimo 2. Revisa la estructura del memo."</li>
+    </ul>
+  </div>
+
+  <!-- BIBLIOGRAFÍA -->
+  <div class="tg-section" style="border-left-color:#5c6bc0;">
+    <h2 style="color:#3949ab;border-bottom-color:#5c6bc0;">📚 Bibliografía</h2>
+    <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Fuentes que respaldan los contenidos evaluados en el Parcial 2 (RA2 + RA3). Corresponden a los bloques CONSTRUIR y ANALIZAR del curso ADM18.</p>
+    <ol style="font-size:0.85rem;line-height:1.8;padding-left:var(--space-lg);">
+      <li>ISO 15489-1:2016. <em>Information and documentation — Records management — Part 1: Concepts and principles.</em> Organización Internacional de Normalización. [Norma internacional]</li>
+      <li>GTC 185:2009. <em>Documentación organizacional.</em> ICONTEC — Instituto Colombiano de Normas Técnicas y Certificación. [Guía técnica colombiana]</li>
+      <li>Bustelo Ruesta, C. (2023). <em>Gestión Documental y Administración de Archivos.</em> SEDIC — Sociedad Española de Documentación e Información Científica. [Libro]</li>
+      <li>Cruz Mundet, J. R. (2022). <em>Archivística: Gestión de documentos y administración de archivos.</em> Alianza Editorial. [Libro]</li>
+      <li>ISO 9001:2015. <em>Sistemas de gestión de la calidad — Requisitos.</em> Organización Internacional de Normalización. [Norma internacional]</li>
+      <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow.</em> Farrar, Straus and Giroux. [Libro]</li>
+      <li>ANDI / FENALCO (2023). <em>Guía de transporte y logística en Colombia.</em> Asociación Nacional de Empresarios de Colombia / Federación Nacional de Comerciantes. [Reporte sectorial]</li>
+      <li>MinTIC / CRC (2024). <em>Informe sector postal y mensajería.</em> Ministerio de Tecnologías de la Información y las Comunicaciones / Comisión de Regulación de Comunicaciones. [Reporte oficial]</li>
+      <li>NTC-ISO 10013:2021. <em>Sistemas de gestión de la calidad — Orientación para la documentación.</em> Organización Internacional de Normalización. [Norma internacional]</li>
+      <li>Mayer, R. E. (2024). <em>Multimedia Learning</em> (4.ª ed.). Cambridge University Press. [Libro]</li>
+      <li>Sweller, J., van Merriënboer, J. J. G., &amp; Paas, F. (2022). <em>Cognitive Load Theory.</em> Springer. [Libro]</li>
+      <li>Paivio, A. &amp; Clark, J. M. (2021). <em>Dual Coding Theory and Education.</em> Oxford University Press. [Libro]</li>
+      <li>Ley 594 de 2000. <em>Ley General de Archivos.</em> Congreso de la República de Colombia. [Norma legal]</li>
+      <li>Baddeley, A., Eysenck, M. W., &amp; Anderson, M. C. (2020). <em>Memory</em> (3.ª ed.). Routledge. [Libro]</li>
+      <li>Slotnick, S. D. (2023). <em>Cognitive Neuroscience of Memory.</em> Cambridge University Press. [Libro]</li>
+      <li>Posner, M. I. &amp; Rothbart, M. K. (2023). Attention and Information Processing. <em>Annual Review of Psychology.</em> Annual Reviews. [Paper]</li>
+      <li>MoReq2010. <em>Modular Requirements for Records Systems.</em> DLM Forum Foundation. [Especificación técnica]</li>
+      <li>La República (2025). <em>Ranking del sector mensajería en Colombia.</em> La República. [Reporte sectorial]</li>
+      <li>Valora Analitik (2025). <em>Tendencias del sector logístico en Colombia.</em> Valora Analitik. [Reporte sectorial]</li>
+      <li>Astute Analytica (2024). <em>Global Mailbox and Package Forwarding Market.</em> Astute Analytica. [Reporte de mercado]</li>
+      <li>Superintendencia de Industria y Comercio (2023). <em>Cifras del sector mensajería en Colombia.</em> SIC. [Reporte oficial]</li>
+    </ol>
+  </div>
+
+</div>
+
+</body>
+</html>

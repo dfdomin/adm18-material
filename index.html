@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADM18 — Procesamiento de la Informacion | IUB</title>
+<meta name="description" content="Modulo ADM18 — Procesamiento de la Informacion en la Organizacion. Caso integrador LatamBox. IUB / Unibarranquilla.">
+<meta name="supabase-supabase_url" content="https://nnrgxuzvjtweyzkdrech.supabase.co">
+<meta name="supabase-supabase_anon_key" content="sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/iub-tokens.css">
+<style>
+ .hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(135deg, #1A2B4B 0%, #2C3E50 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+ }
+ .hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 72px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .hero-shell {
+   position: relative;
+   z-index: 1;
+   max-width: 980px;
+   margin: 0 auto;
+ }
+ .hero-chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.14);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .hero-title {
+   margin-top: 1.2rem;
+   font-size: clamp(2rem, 4.5vw, 3.5rem);
+   font-weight: 800;
+   line-height: 1.05;
+ }
+ .hero-title .hero-icon {
+   margin-right: 0.35rem;
+ }
+ .hero-subtitle {
+   margin: 0.85rem auto 0;
+   font-size: clamp(1rem, 2vw, 1.35rem);
+   color: rgba(255, 255, 255, 0.82);
+   max-width: 900px;
+ }
+ .hero-progress {
+   margin: 1.8rem auto 0;
+   max-width: 720px;
+ }
+ .hero-progress .progress-bar {
+   height: 16px;
+   background: rgba(255, 255, 255, 0.18);
+   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+ }
+ .hero-progress .progress-fill {
+   background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%);
+ }
+ .hero-progress-meta {
+   display: flex;
+   justify-content: space-between;
+   gap: var(--space-md);
+   margin-top: 0.7rem;
+   font-size: var(--font-size-md);
+   color: rgba(255, 255, 255, 0.88);
+ }
+ .hero-progress-xp {
+   margin-top: 0.45rem;
+   color: rgba(255, 255, 255, 0.72);
+   font-size: var(--font-size-sm);
+ }
+ .hero-progress-xp strong {
+   color: var(--text-on-dark);
+ }
+ .hero-nav {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.15rem;
+   background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08);
+   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin-bottom: var(--space-lg);
+ }
+ .hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+   padding: 0.25rem 0;
+   border-radius: 999px;
+ }
+ .hero-nav a:hover { color: var(--gold-hover); }
+ .progress-widget {
+   display: none;
+ }
+ .progress-widget .progress-bar {
+   height: 10px;
+   background: rgba(255, 255, 255, 0.14);
+ }
+ .progress-widget .progress-fill {
+   background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%);
+ }
+ .progress-widget__name {
+   font-weight: 700;
+   font-size: 1rem;
+   margin-bottom: 0.75rem;
+ }
+ .progress-widget__row {
+   display: flex;
+   justify-content: space-between;
+   gap: var(--space-sm);
+   margin-top: 0.65rem;
+   font-size: var(--font-size-sm);
+   color: rgba(255, 255, 255, 0.85);
+ }
+ @media (min-width: 1024px) {
+   .hero {
+     padding-bottom: 6.75rem;
+   }
+   .progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 40;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .progress-widget__header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     font-weight: 800;
+     margin-bottom: 0.9rem;
+   }
+   .progress-widget__header span {
+     font-size: 1.4rem;
+     line-height: 1;
+   }
+   .progress-widget__bar {
+     margin-top: 0.5rem;
+   }
+   .progress-widget__actions {
+     display: flex;
+     gap: 0.65rem;
+     margin-top: 1rem;
+   }
+   .progress-widget__actions .btn {
+     flex: 1;
+   }
+ }
+ .ra-section { margin-bottom: var(--space-xl); }
+ .ra-title {
+   font-size: var(--font-size-lg); font-weight: 700; color: var(--primary);
+   padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold);
+   margin-bottom: var(--space-md);
+ }
+ .week-card-link .card { position: relative; }
+ .week-card-link .card.completed::after {
+   content: '✓'; position: absolute; top: var(--space-sm); right: var(--space-sm);
+   background: var(--success); color: white; width: 28px; height: 28px;
+   border-radius: 50%; display: flex; align-items: center; justify-content: center;
+   font-weight: 700; font-size: 14px;
+ }
+ .eval-card { border-left: 4px solid var(--error); }
+ .eval-card .card-header { color: var(--error); }
+ @media (max-width: 480px) {
+   .hero h1 { font-size: 1.5rem; }
+   .hero p { font-size: var(--font-size-md); }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Procesamiento de la Informacion</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="index.html" class="active">Inicio</a>
+   <a href="progreso.html">Mi Progreso</a>
+   <a href="profesor.html">Profesor</a>
+   <a href="notas.html">Notas</a>
+ </nav>
+</header>
+
+<!-- ═══════════ CONTENT ═══════════ -->
+<main class="iub-content">
+
+ <!-- Hero -->
+ <div class="hero">
+   <div class="hero-shell">
+     <div class="hero-chip">ADM18 · Procesamiento de la Informacion · Semana 1 de 14</div>
+     <h1 class="hero-title"><span class="hero-icon">📦</span>Procesamiento de la Informacion</h1>
+     <p class="hero-subtitle">LatamBox · Comercio exterior · Datos, documentos y decisiones con orden.</p>
+     <!-- 14-Week Progress Pills -->
+     <div class="progress-pills-section" aria-label="Progreso por semana">
+       <div class="progress-pills-meta">
+         <span id="hero-progress-label">0 de 14 semanas completadas</span>
+         <span class="progress-pct" id="hero-progress-pct">0%</span>
+       </div>
+       <div class="progress-pills" id="progress-pills">
+         <!-- Pills generated by JS from localStorage -->
+       </div>
+       <div class="hero-progress-xp">XP de sesión: <strong id="hero-session-xp">0 / 100 pts</strong></div>
+     </div>
+   </div>
+ </div>
+
+ <div class="hero-nav" aria-label="Secciones del curso">
+   <a href="#material">🎯 Misión</a>
+   <a href="#ra1">📚 Teoría</a>
+   <a href="#ra2">🐍 Python</a>
+   <a href="#ra3">⚙️ Actividad</a>
+   <a href="#ra4">🏠 HTI</a>
+   <a href="semana-01/">🎮 Quiz</a>
+   <a href="#bibliografia">📖 Bibliografía</a>
+ </div>
+
+ <!-- ═══════════ MATERIAL DE ESTUDIO ═══════════ -->
+ <div class="ra-section" id="material">
+   <h2 class="ra-title">📦 Material de Estudio</h2>
+   <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">Recursos centralizados del módulo. Todo el material de referencia en un solo lugar.</p>
+   <div class="week-grid" style="grid-template-columns:repeat(auto-fill, minmax(180px, 1fr))">
+     <a href="casos/" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #e67e22">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">📂</div>
+         <div class="card-header" style="font-size:0.95rem">Casos de Estudio</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">LatamBox · Envíos del Pacífico · AndesBox · GlobalBox</p>
+       </div>
+     </a>
+     <a href="BIBLIOGRAFIA_ACTUALIZADA_ADM18.md" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #2c5ea8">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">📋</div>
+         <div class="card-header" style="font-size:0.95rem">Normas</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">GTC 185 · Ley 594 · ISO 15489 · ISO 9001</p>
+       </div>
+     </a>
+     <a href="BIBLIOGRAFIA_ACTUALIZADA_ADM18.md" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #1e7a3e">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">📚</div>
+         <div class="card-header" style="font-size:0.95rem">Bibliografía Completa</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">30 fuentes actualizadas · 7 dimensiones</p>
+       </div>
+     </a>
+     <a href="instrumentos/" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #c62828">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">📏</div>
+         <div class="card-header" style="font-size:0.95rem">Rúbricas</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">PI1 · PI2 · PI3 · PI4 · Parciales · Final</p>
+       </div>
+     </a>
+     <a href="PlanDeClases_ADM18_LatamBox_2026.html" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #b8860b">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">📅</div>
+         <div class="card-header" style="font-size:0.95rem">Plan de Clases</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">14 semanas detalladas · Actividades · Evidencias</p>
+       </div>
+     </a>
+     <a href="KNOWLEDGE_BASE.html" style="text-decoration:none">
+       <div class="card" style="text-align:center;padding:var(--space-lg) var(--space-md);border-left:4px solid #6c3a9e">
+         <div style="font-size:2rem;margin-bottom:var(--space-sm)">🧠</div>
+         <div class="card-header" style="font-size:0.95rem">Knowledge Base</div>
+         <p style="font-size:0.8rem;color:var(--text-secondary)">Referencia completa · RAs · Rúbricas · Casos</p>
+       </div>
+     </a>
+   </div>
+ </div>
+
+ <!-- RA1 Block -->
+ <div class="ra-section" id="ra1">
+   <h2 class="ra-title"><span class="badge badge-ra1">RA1</span> Identificar documentos administrativos</h2>
+   <div class="week-grid">
+     <a href="semana-01/" class="week-card-link">
+       <div class="card" data-week="1">
+         <div class="week-number">01</div>
+         <div class="card-header">Cerebro, informacion y decisiones</div>
+         <p>Quiz diagnostico + 5 docs LatamBox. Metacognicion aplicada.</p>
+         <div class="week-ra">3.5 h · Grupal · RA1</div>
+       </div>
+     </a>
+     <a href="semana-02/" class="week-card-link">
+       <div class="card" data-week="2">
+         <div class="week-number">02</div>
+         <div class="card-header">Ciclo de vida documental en LatamBox</div>
+         <p>Linea de tiempo con 12 tarjetas. Clasificacion por etapa y funcion.</p>
+         <div class="week-ra">3.5 h · Grupal · RA1</div>
+       </div>
+     </a>
+     <a href="semana-03/" class="week-card-link">
+       <div class="card" data-week="3">
+         <div class="week-number">03</div>
+         <div class="card-header">Clases, usos y componentes</div>
+         <p>Diseccion documental. Matriz documento-funcion. Gallery walk.</p>
+         <div class="week-ra">3.5 h · Grupal · RA1</div>
+       </div>
+     </a>
+   </div>
+ </div>
+
+ <!-- RA2 Block -->
+ <div class="ra-section" id="ra2">
+   <h2 class="ra-title"><span class="badge badge-ra2">RA2</span> Construir documentos bajo estandares</h2>
+   <div class="week-grid">
+     <a href="semana-04/" class="week-card-link">
+       <div class="card" data-week="4">
+         <div class="week-number">04</div>
+         <div class="card-header">GTC 185 como checklist</div>
+         <p>Clinica documental: diagnosticar errores y reescribir documentos.</p>
+         <div class="week-ra">3.5 h · Grupal · RA2</div>
+       </div>
+     </a>
+     <a href="semana-05/" class="week-card-link">
+       <div class="card eval-card" data-week="5">
+         <div class="week-number">05</div>
+         <div class="card-header"><span class="badge badge-eval">Parcial 1</span> Envios del Pacifico</div>
+         <p>Caso espejo: clasificar, detectar errores, corregir. RA1 + RA2.</p>
+         <div class="week-ra">3.0 h · Individual · Evaluacion</div>
+       </div>
+     </a>
+     <a href="semana-06/" class="week-card-link">
+       <div class="card" data-week="6">
+         <div class="week-number">06</div>
+         <div class="card-header">Responder al cliente</div>
+         <p>Central de respuestas LatamBox. Correos profesionales con tono y formato.</p>
+         <div class="week-ra">3.5 h · Grupal · RA2</div>
+       </div>
+     </a>
+     <a href="semana-07/" class="week-card-link">
+       <div class="card" data-week="7">
+         <div class="week-number">07</div>
+         <div class="card-header">Actas, circulares y comunicaciones internas</div>
+         <p>Simulacion de reunion de emergencia. Acta individual + circular grupal.</p>
+         <div class="week-ra">3.5 h · Grupal · RA2</div>
+       </div>
+     </a>
+   </div>
+ </div>
+
+ <!-- RA3 Block -->
+ <div class="ra-section" id="ra3">
+   <h2 class="ra-title"><span class="badge badge-ra3">RA3</span> Analizar procesos de documentacion</h2>
+   <div class="week-grid">
+     <a href="semana-08/" class="week-card-link">
+       <div class="card" data-week="8">
+         <div class="week-number">08</div>
+         <div class="card-header">De los datos a la decision</div>
+         <p>Gabinete de crisis: dossier 8 docs, tabla de hallazgos. Jigsaw.</p>
+         <div class="week-ra">3.5 h · Grupal · RA3</div>
+       </div>
+     </a>
+     <a href="semana-09/" class="week-card-link">
+       <div class="card" data-week="9">
+         <div class="week-number">09</div>
+         <div class="card-header">Memo de decision y plan de mejora</div>
+         <p>Redaccion de memo con roles. Peer review. Plan de 3 acciones.</p>
+         <div class="week-ra">3.5 h · Grupal · RA3</div>
+       </div>
+     </a>
+     <a href="semana-10/" class="week-card-link">
+       <div class="card eval-card" data-week="10">
+         <div class="week-number">10</div>
+         <div class="card-header"><span class="badge badge-eval">Parcial 2</span> AndesBox</div>
+         <p>Caso espejo Chile-Peru: hallazgos, memo de decision, comunicacion.</p>
+         <div class="week-ra">3.0 h · Individual · Evaluacion</div>
+       </div>
+     </a>
+   </div>
+ </div>
+
+ <!-- RA4 Block -->
+ <div class="ra-section" id="ra4">
+   <h2 class="ra-title"><span class="badge badge-ra4">RA4</span> Valorar TIC en gestion documental</h2>
+   <div class="week-grid">
+     <a href="semana-11/" class="week-card-link">
+       <div class="card" data-week="11">
+         <div class="week-number">11</div>
+         <div class="card-header">Carpetas, metadatos y versionamiento</div>
+         <p>Organizar 20 archivos con convencion de nombres. Busqueda del tesoro.</p>
+         <div class="week-ra">3.0 h · Grupal · RA4</div>
+       </div>
+     </a>
+     <a href="semana-12/" class="week-card-link">
+       <div class="card" data-week="12">
+         <div class="week-number">12</div>
+         <div class="card-header">IA asistida y etica documental</div>
+         <p>Taller con IA + bitacora. Debate etico: 5 escenarios.</p>
+         <div class="week-ra">3.0 h · Grupal · RA4</div>
+       </div>
+     </a>
+     <a href="semana-13/" class="week-card-link">
+       <div class="card" data-week="13">
+         <div class="week-number">13</div>
+         <div class="card-header">Portafolio documental y cierre</div>
+         <p>Armado individual + defensa speed-dating + LatamBox Awards.</p>
+         <div class="week-ra">3.5 h · Individual · RA4</div>
+       </div>
+     </a>
+     <a href="semana-14/" class="week-card-link">
+       <div class="card eval-card" data-week="14">
+         <div class="week-number">14</div>
+         <div class="card-header"><span class="badge badge-eval">Final</span> GlobalBox Connect</div>
+         <p>Examen integrador: clasificar, redactar, analizar, proponer TIC.</p>
+         <div class="week-ra">3.0 h · Individual · Evaluacion</div>
+       </div>
+     </a>
+   </div>
+ </div>
+
+ <!-- Nota bibliografía por semana -->
+ <p style="font-size:var(--font-size-sm);color:var(--text-muted);text-align:center;margin-top:var(--space-md);margin-bottom:var(--space-xl);">
+  📌 Cada semana incluye su propia sección de bibliografía con las fuentes específicas trabajadas en esa unidad.
+ </p>
+
+</main>
+
+<!-- ═══════════ BIBLIOGRAFÍA DEL CURSO ═══════════ -->
+<section id="bibliografia" style="background:var(--bg-card);border-top:4px solid var(--gold);padding:var(--space-xl) var(--space-lg);margin:0;">
+ <div style="max-width:900px;margin:0 auto;">
+  <h2 style="font-size:var(--font-size-xl);font-weight:800;color:var(--primary);margin-bottom:var(--space-md);">📚 Bibliografía del Curso</h2>
+  <p style="font-size:var(--font-size-sm);color:var(--text-muted);margin-bottom:var(--space-md);">Fuentes normativas y académicas principales del módulo ADM18:</p>
+  <ol style="font-size:var(--font-size-sm);line-height:1.8;padding-left:var(--space-lg);color:var(--text-body);">
+   <li><strong>GTC 185:2009</strong> — Guía Técnica Colombiana para la elaboración de documentos comerciales. ICONTEC.</li>
+   <li><strong>Ley 594/2000</strong> — Ley General de Archivos de Colombia. Congreso de la República.</li>
+   <li><strong>ISO 15489-1:2016</strong> — Information and documentation — Records management. ISO/TC 46.</li>
+   <li><strong>ISO 9001:2015</strong> — Sistemas de gestión de la calidad — Requisitos. ISO/TC 176.</li>
+   <li><strong>Acuerdo AGN 060/2001</strong> — Pautas para la administración de comunicaciones oficiales. Archivo General de la Nación.</li>
+   <li><strong>Decreto 2609/2012</strong> — Gestión documental en entidades del Estado colombiano. Presidencia de la República.</li>
+   <li><strong>NTC 3397:2008</strong> — Gestión de documentos. Vocabulario. ICONTEC.</li>
+   <li><strong>MoReq2010</strong> — Modular Requirements for Records Systems. DLM Forum Foundation.</li>
+   <li><strong>Ley 527/1999</strong> — Comercio electrónico y firma digital en Colombia. Congreso de la República.</li>
+  </ol>
+  <p style="margin-top:var(--space-md);font-size:var(--font-size-sm);">
+   📄 Lista completa:
+   <a href="BIBLIOGRAFIA_ACTUALIZADA_ADM18.md" style="color:var(--primary);font-weight:600;">BIBLIOGRAFIA_ACTUALIZADA_ADM18.md</a>
+   &nbsp;·&nbsp;
+   <a href="fuentes_curso_ADM18.md" style="color:var(--primary);font-weight:600;">fuentes_curso_ADM18.md</a>
+  </p>
+ </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion en la Organizacion</p>
+ <p>IUB / Unibarranquilla — Facultad de Ciencias Economicas y Administrativas</p>
+ <p style="margin-top:var(--space-xs)"><small>2026 · Caso integrador LatamBox · <a href="https://github.com">GitHub Pages</a></small></p>
+</footer>
+
+</div>
+
+<aside class="progress-widget" aria-label="Mi progreso">
+  <div class="progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>
+  <div class="progress-widget__name" id="widget-name">Tu progreso del curso</div>
+  <div class="progress-widget__bar">
+    <div class="progress-bar">
+      <div class="progress-fill" id="widget-progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+  <div class="progress-widget__row">
+    <span id="widget-week-label">Semana 1</span>
+    <strong id="widget-xp">0 XP</strong>
+  </div>
+  <div class="progress-widget__actions">
+    <a class="btn btn-gold btn-sm" href="progreso.html">Ver progreso</a>
+    <a class="btn btn-primary btn-sm" href="notas.html">Notas</a>
+  </div>
+</aside>
+
+<script src="js/app.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/supabase-client.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var userName = localStorage.getItem('adm18_user') || 'Tu progreso del curso';
+  var progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+  var scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+  var completed = Object.values(progress).filter(function(item) {
+    return item && item.completed;
+  }).length;
+  var scoreEntries = Object.keys(scores).map(function(key) {
+    return { week: Number(key.replace('week_', '')), data: scores[key] };
+  }).filter(function(entry) {
+    return entry.data && typeof entry.data.percent === 'number';
+  }).sort(function(a, b) {
+    return b.week - a.week;
+  });
+
+  var pct = Math.round((completed / 14) * 100);
+  var sessionXp = scoreEntries.length ? scoreEntries[0].data.percent : Math.min(100, completed * 25);
+  var nextWeek = 14;
+  for (var w = 1; w <= 14; w++) {
+    if (!(progress['week_' + w] && progress['week_' + w].completed)) {
+      nextWeek = w;
+      break;
+    }
+  }
+
+  // Update meta labels
+  var pctEl = document.getElementById('hero-progress-pct');
+  var labelEl = document.getElementById('hero-progress-label');
+  var widgetWeek = document.getElementById('widget-week-label');
+  var widgetXp = document.getElementById('widget-xp');
+  var sessionXpEl = document.getElementById('hero-session-xp');
+  var widgetName = document.getElementById('widget-name');
+
+  if (pctEl) pctEl.textContent = pct + '%';
+  if (labelEl) labelEl.textContent = completed + ' de 14 semanas completadas';
+  if (widgetWeek) widgetWeek.textContent = 'Semana ' + nextWeek;
+  if (widgetXp) widgetXp.textContent = sessionXp + ' XP';
+  if (sessionXpEl) sessionXpEl.textContent = sessionXp + ' / 100 pts';
+  if (widgetName) widgetName.textContent = userName;
+
+  // Build 14 progress pills
+  var pillsContainer = document.getElementById('progress-pills');
+  if (pillsContainer) {
+    var weekNames = [
+      'Cerebro, información y decisiones',
+      'Ciclo de vida documental',
+      'Clases, usos y componentes',
+      'GTC 185 como checklist',
+      'Parcial 1 — Envíos del Pacífico',
+      'Responder al cliente',
+      'Actas, circulares y comunicaciones',
+      'De los datos a la decisión',
+      'Memo de decisión y plan de mejora',
+      'Parcial 2 — AndesBox',
+      'Carpetas, metadatos y versionamiento',
+      'IA asistida y ética documental',
+      'Portafolio documental y cierre',
+      'Final — GlobalBox Connect'
+    ];
+    var examWeeks = [5, 10, 14];
+
+    for (var w = 1; w <= 14; w++) {
+      var pill = document.createElement('div');
+      pill.className = 'progress-pill';
+      pill.setAttribute('data-week', w);
+      pill.textContent = w;
+
+      var isExam = examWeeks.indexOf(w) !== -1;
+      var weekProgress = progress['week_' + w];
+      var weekScore = scores['week_' + w];
+
+      if (isExam) pill.classList.add('exam');
+
+      if (weekProgress && weekProgress.completed) {
+        pill.classList.add('completed');
+        pill.innerHTML = '✓';
+      } else if (weekProgress || (weekScore && weekScore.percent > 0)) {
+        pill.classList.add('in-progress');
+      } else {
+        pill.classList.add('pending');
+      }
+
+      // Tooltip
+      var scorePct = weekScore && weekScore.percent ? weekScore.percent : 0;
+      var tooltipText = 'Semana ' + w + ' — ' + weekNames[w - 1] + ' — ' + scorePct + '%';
+      pill.setAttribute('data-tooltip', tooltipText);
+
+      pillsContainer.appendChild(pill);
+    }
+  }
+
+  // Update widget fill if exists
+  var widgetFill = document.getElementById('widget-progress-fill');
+  if (widgetFill) widgetFill.style.width = pct + '%';
+});
+</script>
+</body>
+</html>

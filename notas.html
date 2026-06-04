@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Notas — ADM18 | IUB</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/iub-tokens.css">
+<style>
+ .weight-table td:last-child { text-align: right; font-weight: 700; }
+ .calc-section {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-lg);
+   margin-bottom: var(--space-lg);
+ }
+ .calc-section h3 {
+   color: var(--primary);
+   margin-bottom: var(--space-md);
+   padding-bottom: var(--space-xs);
+   border-bottom: 2px solid var(--gold);
+ }
+ .input-group {
+   display: flex;
+   align-items: center;
+   gap: var(--space-md);
+   margin-bottom: var(--space-md);
+   flex-wrap: wrap;
+ }
+ .input-group label {
+   font-weight: 600;
+   font-size: var(--font-size-sm);
+   min-width: 180px;
+ }
+ .input-group input {
+   width: 80px;
+   padding: var(--space-sm);
+   border: 2px solid var(--border);
+   border-radius: var(--radius-sm);
+   font-family: var(--font-family);
+   font-size: var(--font-size-md);
+   text-align: center;
+   min-height: 44px;
+ }
+ .input-group input:focus {
+   border-color: var(--primary);
+   outline: none;
+ }
+ .input-group .weight-hint {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+ }
+ .total-display {
+   background: var(--primary);
+   color: var(--text-on-dark);
+   padding: var(--space-md) var(--space-lg);
+   border-radius: var(--radius-md);
+   text-align: center;
+   margin-top: var(--space-md);
+ }
+ .total-display .total-value {
+   font-size: var(--font-size-2xl);
+   font-weight: 800;
+ }
+ .total-display .total-label {
+   font-size: var(--font-size-sm);
+   opacity: 0.85;
+ }
+ .matrix-cell {
+   text-align: center;
+   font-weight: 700;
+   min-width: 60px;
+ }
+ .matrix-cell.measured { color: var(--success); }
+ .matrix-cell.not-measured { color: var(--text-secondary); opacity: 0.4; }
+ .formative-note {
+   margin-top: var(--space-sm);
+   padding: var(--space-sm) var(--space-md);
+   background: #dbeafe;
+   border-radius: var(--radius-sm);
+   font-size: var(--font-size-sm);
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Procesamiento de la Informacion</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="index.html">Inicio</a>
+   <a href="progreso.html">Mi Progreso</a>
+   <a href="profesor.html">Profesor</a>
+   <a href="notas.html" class="active">Notas</a>
+   <a href="participacion.html">Participacion</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<div class="card">
+ <h1 class="card-header">Calculadora de Notas — ADM18</h1>
+ <p style="color:var(--text-secondary);font-size:var(--font-size-sm)">
+   Visualiza como se compone la nota final segun los pesos de cada evaluacion. Ingresa tus puntajes para simular el resultado.
+ </p>
+</div>
+
+<!-- Assessment Weight Table -->
+<div class="calc-section">
+ <h3>Pesos de las evaluaciones</h3>
+ <div class="table-responsive">
+ <table class="weight-table">
+   <tr><th>Evaluacion</th><th>Semana</th><th>¿Que mide?</th><th>Peso</th></tr>
+   <tr><td>Participacion y Actividades</td><td>1-14</td><td>Actividades grupales, tickets de salida, peer review</td><td>30%</td></tr>
+   <tr><td>Parcial 1 — Envios del Pacifico</td><td>5</td><td>RA1 + RA2</td><td>20%</td></tr>
+   <tr><td>Parcial 2 — AndesBox</td><td>10</td><td>RA2 + RA3</td><td>25%</td></tr>
+   <tr><td>Evaluacion Final — GlobalBox</td><td>14</td><td>RA1 + RA2 + RA3 + RA4</td><td>25%</td></tr>
+ </table>
+ </div>
+</div>
+
+<!-- Grade Calculator -->
+<div class="calc-section">
+ <h3>Calculadora de nota final</h3>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">
+   Ingresa tus puntajes (0 a 100) en cada evaluacion. La calculadora aplica los pesos automaticamente.
+ </p>
+
+ <div class="input-group">
+   <label for="in-part">Participacion / Actividades (30%)</label>
+   <input type="number" id="in-part" min="0" max="100" placeholder="0-100" oninput="calculateGrade()">
+   <span class="weight-hint">× 0.30</span>
+ </div>
+ <div class="input-group">
+   <label for="in-par1">Parcial 1 — Envios del Pacifico (20%)</label>
+   <input type="number" id="in-par1" min="0" max="100" placeholder="0-100" oninput="calculateGrade()">
+   <span class="weight-hint">× 0.20</span>
+ </div>
+ <div class="input-group">
+   <label for="in-par2">Parcial 2 — AndesBox (25%)</label>
+   <input type="number" id="in-par2" min="0" max="100" placeholder="0-100" oninput="calculateGrade()">
+   <span class="weight-hint">× 0.25</span>
+ </div>
+ <div class="input-group">
+   <label for="in-final">Evaluacion Final — GlobalBox (25%)</label>
+   <input type="number" id="in-final" min="0" max="100" placeholder="0-100" oninput="calculateGrade()">
+   <span class="weight-hint">× 0.25</span>
+ </div>
+
+ <!-- Formative Average from quizzes -->
+ <div id="formative-avg-display" class="formative-note"></div>
+
+ <div class="total-display">
+   <div class="total-label">Nota Final Estimada</div>
+   <div class="total-value" id="final-grade">—</div>
+ </div>
+
+ <!-- Save to localStorage -->
+ <div style="text-align:center;margin-top:var(--space-md)">
+   <button class="btn btn-gold btn-sm" onclick="saveGrades()">Guardar en localStorage</button>
+   <span id="save-msg" style="font-size:var(--font-size-sm);color:var(--success);margin-left:var(--space-md);display:none">Guardado ✓</span>
+ </div>
+</div>
+
+<!-- RA Coverage Matrix -->
+<div class="calc-section">
+ <h3>Matriz de cobertura RA × Evaluacion</h3>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">
+   Muestra cuales Resultados de Aprendizaje (RA) son medidos por cada instrumento de evaluacion.
+ </p>
+ <div class="table-responsive">
+ <table>
+   <tr>
+     <th>RA</th>
+     <th>Participacion</th>
+     <th>Parcial 1</th>
+     <th>Parcial 2</th>
+     <th>Final</th>
+   </tr>
+   <tr>
+     <td><span class="badge badge-ra1">RA1</span> Identificar documentos</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell measured">✓</td>
+   </tr>
+   <tr>
+     <td><span class="badge badge-ra2">RA2</span> Construir documentos</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell measured">✓</td>
+   </tr>
+   <tr>
+     <td><span class="badge badge-ra3">RA3</span> Analizar procesos</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell measured">✓</td>
+     <td class="matrix-cell measured">✓</td>
+   </tr>
+   <tr>
+     <td><span class="badge badge-ra4">RA4</span> Valorar TIC</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell not-measured">—</td>
+     <td class="matrix-cell measured">✓</td>
+   </tr>
+ </table>
+ </div>
+ <div class="alert alert-info" style="margin-top:var(--space-md)">
+   <strong>Nota:</strong> La matriz refleja la cobertura directa de cada RA en cada instrumento sumativo. Las actividades formativas de las semanas 1-13 tambien contribuyen a la nota de participacion (30%).
+ </div>
+</div>
+
+<!-- PI Rubric Score Ranges -->
+<div class="calc-section">
+ <h3>Referencia de rubricas PI y rangos</h3>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Rubrica</th><th>Que evalua</th><th>Niveles</th><th>Documento</th></tr>
+   <tr>
+     <td><strong>PI1</strong></td>
+     <td>Clasificacion documental (RA1)</td>
+     <td>No alcanza · Basico · Competente · Avanzado</td>
+     <td><span style="color:var(--warning)">(en desarrollo)</span></td>
+   </tr>
+   <tr>
+     <td><strong>PI2</strong></td>
+     <td>Construccion de documentos (RA2)</td>
+     <td>No alcanza · Basico · Competente · Avanzado</td>
+     <td><span style="color:var(--warning)">(en desarrollo)</span></td>
+   </tr>
+   <tr>
+     <td><strong>PI3</strong></td>
+     <td>Analisis y decision (RA3)</td>
+     <td>3 criterios × 4 niveles</td>
+     <td><a href="instrumentos/PI3_Rubrica_ADM18.pdf">PI3_Rubrica_ADM18.pdf</a></td>
+   </tr>
+   <tr>
+     <td><strong>PI4</strong></td>
+     <td>Uso de TIC (RA4)</td>
+     <td>No alcanza · Basico · Competente · Avanzado</td>
+     <td><span style="color:var(--warning)">(en desarrollo)</span></td>
+   </tr>
+ </table>
+ </div>
+</div>
+
+<!-- 
+ Supabase Integration Placeholder
+ ================================
+ TODO: When Supabase is configured, uncomment below to sync grades.
+ Requires: js/supabase-client.js loaded, auth enabled, table 'adm18_grades' created.
+ 
+ async function syncToSupabase(grades) { ... }
+-->
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion en la Organizacion</p>
+ <p>IUB / Unibarranquilla — Facultad de Ciencias Economicas y Administrativas</p>
+ <p style="margin-top:var(--space-xs)"><small>2026 · Calculadora de Notas</small></p>
+</footer>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+function calculateGrade() {
+ const part = parseFloat(document.getElementById('in-part')?.value) || 0;
+ const par1 = parseFloat(document.getElementById('in-par1')?.value) || 0;
+ const par2 = parseFloat(document.getElementById('in-par2')?.value) || 0;
+ const fin  = parseFloat(document.getElementById('in-final')?.value) || 0;
+
+ // Clamp 0-100
+ const c = v => Math.max(0, Math.min(100, v));
+ const weighted = c(part)*0.30 + c(par1)*0.20 + c(par2)*0.25 + c(fin)*0.25;
+
+ const display = document.getElementById('final-grade');
+ if (part + par1 + par2 + fin === 0) {
+   display.textContent = '—';
+ } else {
+   display.textContent = weighted.toFixed(1);
+ }
+}
+
+function saveGrades() {
+ const data = {
+   participacion: parseFloat(document.getElementById('in-part')?.value) || 0,
+   parcial1:      parseFloat(document.getElementById('in-par1')?.value) || 0,
+   parcial2:      parseFloat(document.getElementById('in-par2')?.value) || 0,
+   final:         parseFloat(document.getElementById('in-final')?.value) || 0,
+   timestamp: Date.now()
+ };
+ localStorage.setItem('adm18_grades', JSON.stringify(data));
+ const msg = document.getElementById('save-msg');
+ msg.style.display = 'inline';
+ setTimeout(() => { msg.style.display = 'none'; }, 2000);
+}
+
+// Load saved grades and compute formative average from quizzes
+document.addEventListener('DOMContentLoaded', function() {
+ const saved = JSON.parse(localStorage.getItem('adm18_grades') || '{}');
+ if (saved.participacion !== undefined) document.getElementById('in-part').value = saved.participacion;
+ if (saved.parcial1 !== undefined)      document.getElementById('in-par1').value = saved.parcial1;
+ if (saved.parcial2 !== undefined)      document.getElementById('in-par2').value = saved.parcial2;
+ if (saved.final !== undefined)         document.getElementById('in-final').value = saved.final;
+ calculateGrade();
+
+ // Compute formative average from quiz scores
+ const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+ const scoreList = [];
+ Object.keys(scores).forEach(k => {
+   const s = scores[k];
+   if (s && typeof s.percent === 'number') {
+     scoreList.push({ week: k.replace('week_',''), percent: s.percent });
+   }
+ });
+ const avgDiv = document.getElementById('formative-avg-display');
+ if (scoreList.length > 0) {
+   const avg = Math.round(scoreList.reduce((a,b) => a + b.percent, 0) / scoreList.length);
+   avgDiv.innerHTML = '<strong>Promedio formativo (quizzes):</strong> ' + avg + '% sobre ' + scoreList.length + ' quizzes. <em>Este valor es informativo; no se incluye en la nota final automaticamente. La participacion (30%) incluye actividades grupales, no solo quizzes.</em>';
+ } else {
+   avgDiv.innerHTML = '<strong>Promedio formativo (quizzes):</strong> No hay quizzes registrados aun. Completa los quizzes semanales para ver tu promedio.';
+ }
+});
+</script>
+</body>
+</html>

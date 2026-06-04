@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi Progreso — ADM18 | IUB</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/iub-tokens.css">
+<style>
+ .stats-row {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+   gap: var(--space-md);
+   margin-bottom: var(--space-lg);
+ }
+ .stat-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+   text-align: center;
+ }
+ .stat-value {
+   font-size: var(--font-size-2xl);
+   font-weight: 800;
+   color: var(--primary);
+   line-height: 1.1;
+ }
+ .stat-label {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+   margin-top: var(--space-xs);
+ }
+ .week-card-link .card.completed {
+   border: 2px solid var(--success);
+ }
+ .week-card-link .card.pending {
+   opacity: 0.55;
+ }
+ .eval-card { border-left: 4px solid var(--error); }
+ .week-card-link .card .quiz-badge {
+   display: inline-block;
+   font-size: 0.7rem;
+   font-weight: 700;
+   padding: 0.15rem 0.4rem;
+   border-radius: var(--radius-sm);
+   margin-top: var(--space-xs);
+ }
+ .quiz-badge.good { background: #dcfce7; color: #166534; }
+ .quiz-badge.ok   { background: #fef3c7; color: #92400e; }
+ .quiz-badge.low  { background: #fee2e2; color: #991b1b; }
+ .quiz-badge.none { background: var(--bg-page); color: var(--text-secondary); }
+ @media (max-width: 480px) {
+   .stats-row { grid-template-columns: 1fr 1fr; }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Procesamiento de la Informacion</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="index.html">Inicio</a>
+   <a href="progreso.html" class="active">Mi Progreso</a>
+   <a href="profesor.html">Profesor</a>
+   <a href="notas.html">Notas</a>
+   <a href="participacion.html">Participacion</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<div class="card">
+ <h1 class="card-header">Mi Progreso — ADM18</h1>
+ <p style="color:var(--text-secondary);font-size:var(--font-size-sm)">
+   Seguimiento de avance semanal, quizzes y estado de cada semana del semestre.
+ </p>
+
+ <!-- Progress Bar -->
+ <div style="display:flex;align-items:center;gap:var(--space-md);margin-top:var(--space-md);flex-wrap:wrap">
+   <span style="font-weight:600;font-size:var(--font-size-sm);white-space:nowrap">Progreso del curso:</span>
+   <div style="flex:1;min-width:150px"><div class="progress-bar"><div class="progress-fill" id="main-progress-fill" style="width:0%"></div></div></div>
+   <span style="font-weight:800;color:var(--primary);font-size:var(--font-size-lg)" id="main-progress-pct">0%</span>
+ </div>
+</div>
+
+<!-- Summary Stats -->
+<div class="stats-row" id="stats-row">
+ <div class="stat-card">
+   <div class="stat-value" id="stat-completed">0</div>
+   <div class="stat-label">Semanas completadas</div>
+ </div>
+ <div class="stat-card">
+   <div class="stat-value" id="stat-avg">—</div>
+   <div class="stat-label">Promedio quizzes</div>
+ </div>
+ <div class="stat-card">
+   <div class="stat-value" id="stat-best">—</div>
+   <div class="stat-label">Mejor semana</div>
+ </div>
+ <div class="stat-card">
+   <div class="stat-value" id="stat-worst">—</div>
+   <div class="stat-label">Peor semana</div>
+ </div>
+</div>
+
+<!-- All 14 Weeks Grid -->
+<div class="week-grid" id="weeks-grid">
+ <!-- Populated by JS -->
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion en la Organizacion</p>
+ <p>IUB / Unibarranquilla — Facultad de Ciencias Economicas y Administrativas</p>
+ <p style="margin-top:var(--space-xs)"><small>2026 · Caso integrador LatamBox</small></p>
+</footer>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ const weekData = [
+   { n:1,  title:'Cerebro, informacion y decisiones',         ra:'RA1', eval:false },
+   { n:2,  title:'Ciclo de vida documental en LatamBox',      ra:'RA1', eval:false },
+   { n:3,  title:'Clases, usos y componentes',                 ra:'RA1', eval:false },
+   { n:4,  title:'GTC 185 como checklist',                     ra:'RA2', eval:false },
+   { n:5,  title:'Parcial 1 — Envios del Pacifico',            ra:'RA1', eval:true  },
+   { n:6,  title:'Responder al cliente',                       ra:'RA2', eval:false },
+   { n:7,  title:'Actas, circulares y comunicaciones internas',ra:'RA2', eval:false },
+   { n:8,  title:'De los datos a la decision',                 ra:'RA3', eval:false },
+   { n:9,  title:'Memo de decision y plan de mejora',          ra:'RA3', eval:false },
+   { n:10, title:'Parcial 2 — AndesBox',                       ra:'RA2', eval:true  },
+   { n:11, title:'Carpetas, metadatos y versionamiento',       ra:'RA4', eval:false },
+   { n:12, title:'IA asistida y etica documental',             ra:'RA4', eval:false },
+   { n:13, title:'Portafolio documental y cierre',             ra:'RA4', eval:false },
+   { n:14, title:'Evaluacion final — GlobalBox Connect',       ra:'RA4', eval:true  }
+ ];
+
+ const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+ const scores   = JSON.parse(localStorage.getItem('adm18_scores')   || '{}');
+
+ let completedCount = 0;
+ const scoreList = [];
+
+ Object.keys(scores).forEach(k => {
+   const s = scores[k];
+   if (s && typeof s.percent === 'number') {
+     scoreList.push({ week: parseInt(k.replace('week_','')), percent: s.percent });
+   }
+ });
+
+ // Render grid
+ const grid = document.getElementById('weeks-grid');
+ let html = '';
+ weekData.forEach(w => {
+   const key = 'week_' + w.n;
+   const isCompleted = !!(progress[key] && progress[key].completed);
+   const scoreEntry = scores[key];
+   const hasQuiz = !!scoreEntry;
+
+   if (isCompleted) completedCount++;
+
+   let quizHtml = '';
+   if (hasQuiz) {
+     const pct = scoreEntry.percent;
+     const cls = pct >= 80 ? 'good' : (pct >= 60 ? 'ok' : 'low');
+     quizHtml = '<span class="quiz-badge ' + cls + '">Quiz: ' + pct + '%</span>';
+   } else {
+     quizHtml = '<span class="quiz-badge none">Quiz: pendiente</span>';
+   }
+
+   const statusIcon = isCompleted ? '✓' : '○';
+   const statusLabel = isCompleted ? 'completed' : 'pending';
+   const evalClass = w.eval ? ' eval-card' : '';
+
+   html += '<a href="semana-' + String(w.n).padStart(2,'0') + '.html" class="week-card-link">';
+   html += '<div class="card ' + statusLabel + evalClass + '" data-week="' + w.n + '">';
+   html += '<div class="week-number">' + String(w.n).padStart(2,'0') + ' <span style="font-size:var(--font-size-lg);color:' + (isCompleted ? 'var(--success)' : 'var(--text-secondary)') + '">' + statusIcon + '</span></div>';
+   html += '<div class="card-header" style="border-bottom:none;margin-bottom:0">' + w.title + '</div>';
+   html += '<div style="display:flex;gap:var(--space-xs);align-items:center;flex-wrap:wrap;margin-top:var(--space-xs)">';
+   html += '<span class="badge badge-' + w.ra.toLowerCase() + '">' + w.ra + '</span>';
+   if (w.eval) html += '<span class="badge badge-eval">Evaluacion</span>';
+   html += '</div>';
+   html += quizHtml;
+   html += '</div></a>';
+ });
+ grid.innerHTML = html;
+
+ // Update stats
+ document.getElementById('stat-completed').textContent = completedCount;
+ const pct = Math.round((completedCount / 14) * 100);
+ document.getElementById('main-progress-fill').style.width = pct + '%';
+ document.getElementById('main-progress-pct').textContent = pct + '%';
+
+ if (scoreList.length > 0) {
+   const avg = Math.round(scoreList.reduce((s,e) => s + e.percent, 0) / scoreList.length);
+   document.getElementById('stat-avg').textContent = avg + '%';
+   const best = scoreList.reduce((a,b) => a.percent > b.percent ? a : b);
+   const worst = scoreList.reduce((a,b) => a.percent < b.percent ? a : b);
+   document.getElementById('stat-best').textContent = 'S' + best.week + ' (' + best.percent + '%)';
+   document.getElementById('stat-worst').textContent = 'S' + worst.week + ' (' + worst.percent + '%)';
+ }
+});
+</script>
+</body>
+</html>

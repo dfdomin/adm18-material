@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 14 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, #7a1e1e 0%, #a52a2a 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-rubric { background: #f0f4ff; border: 1px solid #93c5fd; padding: var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card { background: #fff5f5; border: 1px solid #fecaca; border-left: 4px solid var(--error); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card h4 { color: var(--error); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-problem-card .tg-solution { color: var(--success); font-weight: 600; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  .tg-badge-eval { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: #c62828; color: white; }
+  .tg-findings-table { font-size: 0.78rem; }
+  .tg-findings-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); text-align: left; }
+  .tg-findings-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); vertical-align: top; }
+  .tg-causal-box { background: #fef7e0; border: 1px solid var(--tg-border-gold); border-left: 4px solid var(--tg-gold); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-causal-box h4 { color: var(--tg-gold); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-problem-card { background: #eee; } .tg-warning-box { background: #eee; } .tg-causal-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18 · EXAMEN FINAL</div>
+    <h1>Semana 14 · Examen Final: GlobalBox Connect</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="badge badge-ra2">RA2</span>
+      <span class="badge badge-ra3">RA3</span>
+      <span class="badge badge-ra4">RA4</span>
+      <span class="tg-badge-eval">EXAMEN FINAL</span>
+      <span class="tg-badge-gold">3.0 h</span>
+      <span>Evaluacion integradora · Caso nuevo</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de evaluacion</h2>
+    <p>Evaluacion integradora de los 4 Resultados de Aprendizaje mediante el caso nuevo GlobalBox Connect (Colombia-Panama-Mexico). El estudiante demuestra transferencia de todas las habilidades del semestre a un contexto empresarial no practicado:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li><strong>RA1 — Clasificacion documental:</strong> Clasifica 8 documentos por clase, funcion, etapa del ciclo de vida y componentes GTC 185 <span class="tg-note">(GTC 185:2009; ISO 15489-1:2016, §7)</span>.</li>
+      <li><strong>RA2 — Produccion documental:</strong> Redacta una respuesta profesional a una queja real aplicando los 5 criterios del correo profesional <span class="tg-note">(GTC 185:2009)</span>.</li>
+      <li><strong>RA3 — Procesamiento de informacion:</strong> Extrae hallazgos de 3 documentos, construye tabla hecho→fuente→implicacion y redacta memo de decision con opciones comparadas <span class="tg-note">(ISO 15489-1:2016, §8; Kahneman, 2011)</span>.</li>
+      <li><strong>RA4 — Organizacion documental:</strong> Diseña estructura de carpetas digitales para GlobalBox, propone nombres normalizados y plantea uso etico de IA con bitacora <span class="tg-note">(ISO 15489-1:2016, §9.3; UNESCO, 2021)</span>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar ANTES de la clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>8 documentos GlobalBox impresos</strong> (1 juego por estudiante): correo bienvenida, reporte operaciones, queja Panama, queja Mexico, factura flete Madrid, acta junta, cotizacion Doxis, memo protocolo. <span class="tg-note-critico">CRITICO</span> Verificar que los 8 problemas inyectados esten presentes en las copias impresas.</li>
+      <li>Instrumento de evaluacion impreso: <code>Final_ADM18_GlobalBox.md</code> (1 por estudiante).</li>
+      <li>Rubricas PI1, PI2, PI3 y PI4 impresas — 1 juego para el docente.</li>
+      <li>Proyector con diapositiva de "Hallazgos esperados" para la revision post-examen (semana siguiente).</li>
+      <li>Carpeta o sobre para que cada estudiante entregue su examen.</li>
+      <li>Reloj o temporizador visible para los avisos de tiempo durante el examen.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📐 Estructura del examen (110 min, 40 pts)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">El examen tiene 4 secciones. El estudiante administra su tiempo dentro de los limites sugeridos. NO HAY PAUSA NI REVISION COLECTIVA — es examen final.</p>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion A — RA1: Clasificacion documental (10 pts, 25 min)</h3>
+      <p style="font-size:0.8rem;">Clasificar los 8 documentos del dossier GlobalBox por: clase documental, funcion en el negocio, etapa del ciclo de vida y componentes GTC 185 identificables <span class="tg-note">(GTC 185:2009; Ley 594/2000, Art. 4)</span>.</p>
+    </div>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion B — RA2: Comunicacion externa (10 pts, 25 min)</h3>
+      <p style="font-size:0.8rem;">Elegir 1 de las 2 quejas del dossier (Panama o Mexico) y redactar una respuesta profesional completa con formato de correo: membrete, fecha, asunto, saludo personalizado, reconocimiento, explicacion, solucion concreta con plazo, datos de contacto y firma con cargo.</p>
+    </div>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion C — RA3: Procesamiento de informacion (10 pts, 35 min)</h3>
+      <p style="font-size:0.8rem;">Analizar 3 documentos (reporte operaciones, acta junta, memo protocolo). Extraer hallazgos con la tabla hecho→fuente→implicacion <span class="tg-note">(ISO 15489-1:2016, §8)</span>. Redactar memo de decision con: problema, hallazgos, ≥2 opciones comparadas, recomendacion y proximos pasos <span class="tg-note">(ISO 9001:2015, §7.5)</span>.</p>
+    </div>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion D — RA4: Organizacion documental digital (10 pts, 25 min)</h3>
+      <p style="font-size:0.8rem;">Diseñar estructura de carpetas digitales para GlobalBox (minimo 4 carpetas). Proponer nombres normalizados para 5 documentos del dossier. Plantear propuesta de uso de IA para GlobalBox con consideraciones eticas (que SI, que NO, como llevarian la bitacora).</p>
+    </div>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (120 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–10</td>
+        <td><strong>Instrucciones y entrega</strong></td>
+        <td>
+          <span class="tg-note-critico">LEER EN VOZ ALTA</span> las instrucciones del instrumento. Repartir: instrumento + 8 documentos a cada estudiante.<br>
+          Explicar la estructura de 4 secciones y los tiempos sugeridos:<br>
+          - Seccion A (RA1, clasificacion) → 25 min<br>
+          - Seccion B (RA2, respuesta a queja) → 25 min<br>
+          - Seccion C (RA3, hallazgos + memo) → 35 min<br>
+          - Seccion D (RA4, carpetas + IA) → 25 min<br>
+          <span class="tg-note-critico">NO HAY PAUSA</span> El examen es continuo. Si un estudiante necesita ir al baño, lo hace individualmente y deja su examen en el puesto del docente.<br>
+          <span class="tg-note">RECORDAR</span> "Usen la tabla hecho→fuente→implicacion de la semana 8 <span class="tg-note">(ISO 15489-1:2016, §8)</span>. Usen la anatomia del memo de la semana 9. Usen la convencion de nombres de la semana 11 <span class="tg-note">(ISO 15489-1:2016, §9.3)</span>. Usen los principios de etica IA de la semana 12 <span class="tg-note">(UNESCO, 2021; MinCiencias/DNP, 2024)</span>. Todo lo que necesitan ya lo practicaron."
+        </td>
+      </tr>
+      <tr>
+        <td>10–120</td>
+        <td><strong>Examen Final</strong> (110 min, 4 secciones)</td>
+        <td>
+          <span class="tg-note-critico">SILENCIO ABSOLUTO</span><br>
+          <strong>Min 10-35 — Seccion A (RA1, 25 min):</strong> Clasificar 8 docs por clase, funcion, etapa y componentes GTC 185.<br>
+          <strong>Min 35-60 — Seccion B (RA2, 25 min):</strong> Redactar respuesta profesional a 1 queja. Formato correo completo.<br>
+          <strong>Min 60-95 — Seccion C (RA3, 35 min):</strong> Tabla de hallazgos + memo de decision. La seccion mas extensa — requiere lectura cuidadosa de 3 documentos.<br>
+          <strong>Min 95-120 — Seccion D (RA4, 25 min):</strong> Carpetas + nombres + propuesta IA. La seccion mas abierta y creativa.<br>
+          <span class="tg-note">AVISOS DE TIEMPO</span> en minuto 35 ("Termino Seccion A — inicien Seccion B"), minuto 60 ("Termino Seccion B — inicien Seccion C"), minuto 85 ("Quedan 35 min — deberian estar en Seccion C"), minuto 105 ("Quedan 15 min — cierren con Seccion D"), minuto 115 ("Quedan 5 min — revisen todo").<br>
+          <span class="tg-note-critico">NO RESPONDER</span> preguntas de contenido. Solo procedimiento ("¿puedo usar ambas caras de la hoja?", "¿entrego todo junto?").
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- PROBLEMAS INYECTADOS — 8 problemas, uno por documento -->
+  <div class="tg-section">
+    <h2>🔍 Problemas inyectados — SOLO DOCENTE</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Estos son los 8 problemas que el estudiante debe detectar en el dossier de GlobalBox Connect. Cada documento tiene 1 problema inyectado. <span class="tg-note-critico">NO REVELAR ANTES NI DURANTE EL EXAMEN.</span></p>
+
+    <div class="tg-problem-card">
+      <h4>1. Correo de bienvenida — Datos de contacto incompletos (Doc #1)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El correo de bienvenida a nuevos clientes de GlobalBox tiene membrete correcto (logo, razon social, direccion Colombia) pero no incluye los datos de contacto del agente aduanal en Panama. El cliente que recibe este correo no sabe a quien llamar si su paquete queda retenido en aduana panameña.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Correo de bienvenida tiene membrete corporativo completo pero omite datos del agente aduanal en Panama (nombre, telefono, correo)." Implicacion: "Un cliente con problema en aduana de Panama no tiene a quien contactar directamente — el proceso de resolucion se vuelve lento y dependiente de la oficina central en Colombia."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>2. Reporte de operaciones — Asimetria de retrasos Mexico vs Panama (Doc #2)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El reporte de operaciones muestra que la ruta Mexico tiene 22% de paquetes con retraso mayor a 7 dias, mientras que la ruta Panama tiene solo 3% de retraso. La asimetria es significativa (7x mas retrasos en Mexico) y el reporte no ofrece ninguna explicacion. Es un hecho numerico — no una opinion.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Ruta Mexico: 22% paquetes con retraso >7 dias. Ruta Panama: 3%. Asimetria de 7x sin explicacion en el reporte (Reporte de Operaciones Q2 2026)." Implicacion: "Hay un problema estructural en la operacion mexicana que no ha sido diagnosticado. La falta de explicacion sugiere ausencia de analisis de causas."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>3. Queja Panama — Impacto social, no solo economico (Doc #3)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> Un cliente en Panama compro un insumo medico urgente (valvula cardiaca) y el paquete lleva 12 dias de retraso. El impacto no es solo economico (costo del producto) — es social y potencialmente de vida o muerte. La respuesta de GlobalBox no puede ser generica; debe reconocer la urgencia medica y escalar el caso.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Cliente Panama compro insumo medico urgente (valvula cardiaca). Retraso de 12 dias. El cliente menciona 'mi familiar esta esperando esto para una cirugia programada' (Queja Panama)." Implicacion: "No es una queja comercial ordinaria. El impacto es de salud. Requiere respuesta inmediata, escalamiento prioritario y comunicacion transparente. GlobalBox no tiene protocolo para carga medica urgente."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>4. Queja Mexico — Error en calculo de impuestos sin explicacion (Doc #4)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> Un cliente en Mexico recibio un cobro de impuestos con una diferencia de $147 USD que no esta explicada en la factura. El cliente adjunta su calculo propio mostrando que el impuesto deberia ser $203 USD pero GlobalBox cobro $350 USD. La diferencia de $147 no tiene desglose ni justificacion.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Cliente Mexico: diferencia de $147 USD en calculo de impuestos. Cliente calcula $203 USD, GlobalBox cobro $350 USD. Sin desglose ni justificacion de la diferencia (Queja Mexico + calculo adjunto)." Implicacion: "El proceso de calculo y facturacion de impuestos en ruta Mexico no es transparente. La falta de desglose genera desconfianza y posibles errores sistematicos no detectados."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>5. Factura flete Madrid — Descuento corporativo sin documento soporte (Doc #5)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La factura de flete aereo Madrid-Bogota muestra una tarifa con 40% de descuento bajo el concepto "clientes corporativos". Sin embargo, no hay ningun documento en el dossier que justifique ese descuento: no hay contrato corporativo, no hay politica de descuentos, no hay aprobacion de gerencia.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Factura flete Madrid: tarifa con descuento 40% ('clientes corporativos') sin documento soporte que justifique el descuento (Factura flete + ausencia de contrato o politica en el dossier)." Implicacion: "Los descuentos se aplican sin un proceso documentado de aprobacion. Esto es un riesgo de auditoria y puede estar generando perdidas no controladas."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>6. Acta de junta — Decision de abrir almacen en Mexico sin estudio de factibilidad (Doc #6)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El acta de junta directiva registra la decision de abrir un almacen en Mexico. Sin embargo, el acta misma menciona que "no se ha realizado estudio de factibilidad" y que "los costos estimados son preliminares". Es una decision de alto impacto financiero tomada sin datos.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Acta de junta registra decision de abrir almacen en Mexico sin estudio de factibilidad documentado. Los costos son 'preliminares' y no hay analisis de retorno de inversion (Acta junta directiva, punto 4)." Implicacion: "Decision estrategica de alta inversion sin datos objetivos. Riesgo financiero significativo. La junta esta decidiendo por intuicion, no por evidencia."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>7. Cotizacion Doxis — Sistema de gestion documental sin comparacion de alternativas (Doc #7)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La cotizacion del sistema Doxis para gestion documental es la unica que aparece en el dossier. No hay comparacion con otros proveedores (Alfresco, Nuxeo, SharePoint, Google Workspace). Comprar sin comparar es una mala practica de adquisicion — especialmente en tecnologia.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Cotizacion Doxis es el unico sistema evaluado para gestion documental. No hay comparacion con alternativas (Cotizacion Doxis — unico proveedor en el dossier)." Implicacion: "GlobalBox no tiene un proceso de evaluacion de proveedores de tecnologia. La decision de compra se esta tomando con 1 sola opcion, sin benchmarks de funcionalidad, costo o soporte."</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>8. Memo protocolo — Propone IA para clasificar documentos sin etica ni supervision (Doc #8)</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El memo de protocolo propone usar inteligencia artificial para "clasificar automaticamente todos los documentos de GlobalBox". Pero el memo no menciona: bitacora de trazabilidad, validacion humana de las clasificaciones, criterios eticos, manejo de errores de la IA, ni quien es responsable si la IA clasifica mal un documento critico.</p>
+      <p><span class="tg-solution">✅ Hallazgo esperado:</span> Hecho: "Memo protocolo propone usar IA para 'clasificar automaticamente documentos' pero no menciona bitacora, validacion humana, etica ni responsable de errores (Memo protocolo de digitalizacion)." Implicacion: "La propuesta de IA es tecnicamente viable pero eticamente incompleta. Viola los 4 principios UNESCO practicados en la semana 12. Implementarlo asi expone a GlobalBox a errores de clasificacion sin trazabilidad ni responsable."</p>
+    </div>
+  </div>
+
+  <!-- TABLA DE HALLAZGOS MODELO -->
+  <div class="tg-section">
+    <h2>📊 Tabla de hallazgos modelo — Solo docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Esta es la tabla esperada en la Seccion C del examen. El estudiante debe construir minimo 5 filas con el formato hecho→fuente→implicacion.</p>
+
+    <div class="table-responsive">
+    <table class="tg-findings-table">
+      <tr>
+        <th>#</th>
+        <th>Hecho detectado</th>
+        <th>Documento fuente</th>
+        <th>Implicacion para GlobalBox</th>
+        <th>Tipo</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Correo bienvenida sin datos de contacto del agente aduanal en Panama</td>
+        <td>Doc #1 — Correo bienvenida</td>
+        <td>Cliente con problema en aduana Panama no tiene a quien contactar. El proceso de resolucion depende de oficina Colombia — lento, centralizado.</td>
+        <td>Operacional</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>22% retrasos en ruta Mexico vs 3% en Panama. Asimetria de 7x sin explicacion</td>
+        <td>Doc #2 — Reporte operaciones Q2 2026</td>
+        <td>Problema estructural en Mexico. Sin diagnostico de causas, los retrasos continuaran. Clientela mexicana en riesgo de cancelacion masiva.</td>
+        <td>Operacional</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Cliente Panama compro insumo medico urgente. Retraso de 12 dias. Impacto de salud.</td>
+        <td>Doc #3 — Queja Panama</td>
+        <td>No es queja comercial ordinaria. Requiere escalamiento prioritario. GlobalBox no tiene protocolo para carga medica urgente.</td>
+        <td>Social / Salud</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Diferencia de $147 USD en calculo de impuestos ruta Mexico. Sin desglose.</td>
+        <td>Doc #4 — Queja Mexico</td>
+        <td>Proceso de facturacion de impuestos no es transparente. Riesgo de errores sistematicos y perdida de confianza de clientes.</td>
+        <td>Financiero</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Descuento 40% en flete Madrid aplicado como "clientes corporativos" sin documento soporte</td>
+        <td>Doc #5 — Factura flete Madrid</td>
+        <td>Descuentos sin proceso documentado de aprobacion. Riesgo de auditoria. Posibles perdidas no controladas.</td>
+        <td>Financiero / Auditoria</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Decision de abrir almacen en Mexico sin estudio de factibilidad ni analisis de costo</td>
+        <td>Doc #6 — Acta junta directiva</td>
+        <td>Decision estrategica de alta inversion sin datos. Riesgo financiero. La junta decide por intuicion, no por evidencia.</td>
+        <td>Estrategico</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Sistema Doxis cotizado como unica opcion. Sin comparacion con alternativas</td>
+        <td>Doc #7 — Cotizacion Doxis</td>
+        <td>No hay proceso de evaluacion de proveedores. Comprar sin comparar es mala practica de adquisicion. Riesgo de sobreprecio o funcionalidad inadecuada.</td>
+        <td>Tecnologico</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Memo propone IA para clasificar documentos sin bitacora, validacion humana ni etica</td>
+        <td>Doc #8 — Memo protocolo digitalizacion</td>
+        <td>Propuesta tecnicamente viable pero eticamente incompleta. Viola principios UNESCO. Implementarla asi expone a errores sin trazabilidad.</td>
+        <td>Etico / Tecnologico</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- RELACIONES CAUSALES -->
+  <div class="tg-section">
+    <h2>🔗 Relaciones causales — Solo docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Los estudiantes que obtengan puntajes altos en RA3 deben detectar al menos 2 de estas relaciones causales entre los problemas inyectados. No es obligatorio — es criterio de excelencia.</p>
+
+    <div class="tg-causal-box">
+      <h4>🔗 Cadena causal 1: Mexico — del problema operativo a la decision sin datos</h4>
+      <p><strong>Retrasos Mexico (Doc #2)</strong> → La ruta Mexico tiene 7x mas retrasos que Panama. Esto indica un problema estructural.</p>
+      <p><strong>Falta de almacen (Doc #6)</strong> → La junta decide abrir un almacen en Mexico. Esta decision PODRIA resolver los retrasos si el cuello de botella es capacidad de almacenamiento.</p>
+      <p><strong>Decision sin analisis (Doc #6)</strong> → PERO la decision se toma sin estudio de factibilidad. No hay datos que confirmen que el almacen es la solucion correcta. La junta esta disparando sin mirar.</p>
+      <p><span class="tg-solution">💡 Relacion:</span> "Los retrasos en Mexico motivan la decision de abrir un almacen, pero la decision se toma sin datos objetivos. Si el problema real no es capacidad de almacenamiento sino otro factor (aduanas, personal, procesos), la inversion en el almacen no resolvera los retrasos y GlobalBox habra gastado sin corregir la causa raiz."</p>
+    </div>
+
+    <div class="tg-causal-box">
+      <h4>🔗 Cadena causal 2: Trazabilidad medica → necesidad de Doxis → pero sin evaluacion</h4>
+      <p><strong>Queja medica (Doc #3)</strong> → Un insumo medico urgente esta perdido en la ruta Panama. El cliente necesita saber exactamente donde esta, quien lo tiene, cuando llega. Esto requiere trazabilidad documental completa.</p>
+      <p><strong>Doxis promete trazabilidad (Doc #7)</strong> → El sistema Doxis se cotiza como solucion de gestion documental que podria dar esa trazabilidad.</p>
+      <p><strong>Pero sin evaluacion (Doc #7)</strong> → Doxis es la unica opcion evaluada. No sabemos si realmente resuelve el problema de trazabilidad o si hay alternativas mejores o mas economicas.</p>
+      <p><span class="tg-solution">💡 Relacion:</span> "La queja medica urgente revela una necesidad real de trazabilidad documental que Doxis promete resolver. Pero sin evaluacion de alternativas, GlobalBox podria invertir en un sistema que no se ajusta a su necesidad real o pagar de mas por funcionalidades que otros proveedores ofrecen a menor costo."</p>
+    </div>
+
+    <div class="tg-causal-box">
+      <h4>🔗 Cadena causal 3: IA sin etica → mismo patron en adquisiciones y clasificacion</h4>
+      <p><strong>Memo IA sin etica (Doc #8)</strong> → Propone automatizar clasificacion documental sin supervision humana ni bitacora.</p>
+      <p><strong>Doxis sin comparacion (Doc #7)</strong> → Se cotiza un solo sistema sin evaluar alternativas.</p>
+      <p><strong>Almacen sin estudio (Doc #6)</strong> → Se decide abrir almacen sin analisis de factibilidad.</p>
+      <p><span class="tg-solution">💡 Relacion:</span> "Los documentos 6, 7 y 8 revelan un patron organizacional: GlobalBox toma decisiones importantes (inversion en infraestructura, compra de tecnologia, automatizacion de procesos) sin datos, sin comparacion de alternativas y sin criterios eticos documentados. Esto no es un problema aislado — es una debilidad sistemica en la cultura de toma de decisiones de la empresa."</p>
+    </div>
+  </div>
+
+  <!-- CRITERIOS DE CALIFICACION -->
+  <div class="tg-section">
+    <h2>📊 Criterios de calificacion</h2>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion A — RA1: PI1 (10 pts)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI1_Rubrica_ADM18.md</code>. Resumen:</p>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Pts</th><th>Excelente</th><th>Aceptable</th><th>Insuficiente</th></tr>
+        <tr>
+          <td>C1 — Clase documental</td>
+          <td>3</td>
+          <td>8/8 docs clasificados correctamente</td>
+          <td>5-7/8 correctos</td>
+          <td>≤4 correctos</td>
+        </tr>
+        <tr>
+          <td>C2 — Etapa ciclo de vida</td>
+          <td>3</td>
+          <td>8/8 docs ubicados en etapa correcta</td>
+          <td>5-7/8 correctos</td>
+          <td>≤4 correctos</td>
+        </tr>
+        <tr>
+          <td>C3 — Componentes GTC 185</td>
+          <td>4</td>
+          <td>Identifica ≥4 componentes en ≥5 documentos</td>
+          <td>Identifica 2-3 componentes en 3-4 docs</td>
+          <td>≤1 componente o ≤2 docs</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tg-rubric" style="margin-top:var(--space-md);">
+      <h3 style="margin-top:0;">Seccion B — RA2: PI2 (10 pts)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI2_Rubrica_ADM18.md</code>. Evaluada con checklist de 5 criterios del correo profesional: saludo personalizado, reconocimiento del problema, explicacion clara, solucion concreta con plazo, despedida con datos de contacto. Tono profesional, empatico y orientado a solucion.</p>
+    </div>
+
+    <div class="tg-rubric" style="margin-top:var(--space-md);">
+      <h3 style="margin-top:0;">Seccion C — RA3: PI3 (10 pts)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI3_Rubrica_ADM18.md</code>. Resumen:</p>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Pts</th><th>Excelente</th><th>Aceptable</th><th>Insuficiente</th></tr>
+        <tr>
+          <td>C1 — Identificacion de variables</td>
+          <td>4</td>
+          <td>≥5 hallazgos con fuente, hecho/opinion correcto, ≥2 relaciones causales detectadas</td>
+          <td>≥4 hallazgos, ≥80% hecho/opinion correcto</td>
+          <td>≤2 hallazgos o confusion hecho/opinion</td>
+        </tr>
+        <tr>
+          <td>C2 — Memo de decision</td>
+          <td>6</td>
+          <td>Problema con dato numerico, ≥2 opciones comparadas por costo+tiempo, recomendacion justificada, 3 acciones SMART</td>
+          <td>Problema claro, ≥2 opciones, recomendacion concreta</td>
+          <td>1 opcion, sin recomendacion o sin acciones</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tg-rubric" style="margin-top:var(--space-md);">
+      <h3 style="margin-top:0;">Seccion D — RA4: PI4 (10 pts)</h3>
+      <p style="font-size:0.8rem;margin-bottom:var(--space-sm);">Ver rubrica completa en <code>../instrumentos/PI4_Rubrica_ADM18.md</code>. Resumen:</p>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Pts</th><th>Excelente</th><th>Aceptable</th><th>Insuficiente</th></tr>
+        <tr>
+          <td>C1 — Estructura carpetas</td>
+          <td>4</td>
+          <td>≥4 carpetas con logica clara, nombres funcionales, todos los docs del dossier clasificables en ellas</td>
+          <td>4 carpetas, nombres aceptables, mayoria de docs clasificables</td>
+          <td>≤2 carpetas o sin logica de clasificacion</td>
+        </tr>
+        <tr>
+          <td>C2 — Nombres normalizados</td>
+          <td>3</td>
+          <td>5/5 documentos con convencion completa y correcta</td>
+          <td>3-4/5 con convencion correcta</td>
+          <td>≤2 con convencion o formato incorrecto</td>
+        </tr>
+        <tr>
+          <td>C3 — Propuesta IA con etica</td>
+          <td>3</td>
+          <td>Propuesta clara: que SI, que NO, como llevarian bitacora, menciona al menos 2 principios UNESCO <span class="tg-note">(UNESCO, 2021; MinCiencias/DNP, 2024)</span></td>
+          <td>Propuesta general con alguna consideracion etica</td>
+          <td>Propuesta sin consideraciones eticas o ausente</td>
+        </tr>
+      </table>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:var(--space-md);"><strong>Nota total Examen Final = PI1 (10) + PI2 (10) + PI3 (10) + PI4 (10) = 40 puntos.</strong> Escala por PI: 0-4 = Low, 4.5-6 = Low (refuerzo), 6.5-8 = Medium, 8.5-10 = High.</p>
+  </div>
+
+  <!-- RESPUESTAS ESPERADAS PARA REVISION -->
+  <div class="tg-section">
+    <h2>📋 Respuestas esperadas — Revision post-examen (semana siguiente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Proyectar en la sesion de feedback post-examen. Esto es lo que los estudiantes comparan con su propio examen.</p>
+
+    <h3>Documentos del dossier GlobalBox Connect</h3>
+    <div class="tg-answer"><strong>Doc #1 — Correo de bienvenida GlobalBox:</strong> Membrete: logo, razon social, direccion Bogota. Cuerpo: bienvenida, servicios, tiempos estimados. Faltante: datos de contacto agente aduanal Panama. Clase: Administrativo. Etapa: Creacion. Funcion: Formalizar relacion con cliente nuevo.</div>
+    <div class="tg-answer"><strong>Doc #2 — Reporte de Operaciones Q2 2026:</strong> Datos de retrasos Mexico (22%) vs Panama (3%). Tiempo promedio Mexico: 9.5 dias, Panama: 4 dias. Volumen total: 520 paquetes. Sin analisis de causas. Clase: Administrativo. Etapa: Uso. Funcion: Monitorear desempeño operativo.</div>
+    <div class="tg-answer"><strong>Doc #3 — Queja cliente Panama (Sra. Marquez):</strong> Insumo medico urgente (valvula cardiaca). 12 dias de retraso. Familiar espera cirugia. Solicita informacion inmediata. Tono angustiado. Clase: Administrativo. Etapa: Uso. Funcion: Reclamo que requiere respuesta y escalamiento.</div>
+    <div class="tg-answer"><strong>Doc #4 — Queja cliente Mexico (Sr. Hernandez):</strong> Diferencia impuestos: GlobalBox cobro $350 USD, cliente calcula $203 USD. Diferencia $147 USD sin desglose. Adjunta calculo propio. Clase: Administrativo. Etapa: Uso. Funcion: Reclamo con documentacion soporte del cliente.</div>
+    <div class="tg-answer"><strong>Doc #5 — Factura flete aereo Madrid-Bogota:</strong> Tarifa regular $1,890 USD. Descuento 40% ($756) por "clientes corporativos". Total facturado $1,134 USD. Sin documento soporte del descuento. Clase: Comercial. Etapa: Uso. Funcion: Cobro de servicio de transporte internacional.</div>
+    <div class="tg-answer"><strong>Doc #6 — Acta junta directiva, 10 agosto 2026:</strong> Punto 4: Decision de abrir almacen en Mexico. Costos "preliminares" ($120,000-$180,000 USD). "No se ha realizado estudio de factibilidad." Asistentes: 5 directivos. Clase: Administrativo. Etapa: Uso. Funcion: Registro de decisiones estrategicas.</div>
+    <div class="tg-answer"><strong>Doc #7 — Cotizacion Doxis (sistema gestion documental):</strong> Licencia anual $24,500 USD. Implementacion $15,000 USD. Modulos: trazabilidad, clasificacion, busqueda. Unico proveedor evaluado. Sin comparacion con alternativas. Clase: Comercial. Etapa: Tramite. Funcion: Propuesta comercial de proveedor de tecnologia.</div>
+    <div class="tg-answer"><strong>Doc #8 — Memo protocolo de digitalizacion:</strong> Propone: "usar IA para clasificar automaticamente todos los documentos." No menciona bitacora, validacion humana, criterios eticos, ni responsable de errores. Clase: Tecnico. Etapa: Creacion. Funcion: Propuesta de procedimiento interno.</div>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar tema nuevo.</strong> Esta semana es exclusivamente evaluacion final. Cualquier contenido nuevo genera estres y confunde. El examen evalua lo que ya saben — no lo que no han visto.</li>
+      <li>No preparar "repaso general" extenso. Los estudiantes tuvieron 13 semanas de practica en los 4 RA. Recordar en 1 diapositiva: la anatomia del memo, la tabla hecho→fuente→implicacion, la convencion de nombres, los 4 principios UNESCO de IA.</li>
+      <li>No dar pistas sobre los problemas inyectados durante el examen. Si un estudiante pregunta "¿esto esta bien?" o "¿encontre algo?", responder unicamente: "El instrumento te guia. Confia en lo que practicaste durante el semestre."</li>
+      <li>No calificar en el momento. La revision post-examen es para la semana siguiente. La calificacion con rubricas se hace en frio, usando los 4 instrumentos PI.</li>
+      <li>No permitir intercambio de informacion durante el examen. Si se detecta, aplicar el protocolo institucional de fraude academico.</li>
+      <li>No olvidar recoger absolutamente todos los documentos al finalizar. Los 8 documentos del dossier son material controlado que se reutilizara en futuros semestres. Contar los juegos antes y despues.</li>
+    </ul>
+  </div>
+
+</div>
+
+<div class="tg-section" id="bibliografia">
+  <h2>📚 Bibliografía</h2>
+  <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);font-style:italic;">La Semana 14 (Evaluación Final — GlobalBox Connect) integra los cuatro resultados de aprendizaje del curso; se listan todas las fuentes que respaldan los RA1–RA4 más las específicas de esta semana.</p>
+  <ul style="padding-left:var(--space-lg);font-size:0.85rem;line-height:1.9;">
+      <!-- RA1 — Identificar (Semanas 1-3) -->
+    <li>Baddeley, A., Anderson, M.C. &amp; Eysenck, M.W. (2020). <em>Memory</em> (3.ª ed.). Routledge. [Libro]</li>
+    <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux. [Libro]</li>
+    <li>Cowan, N. (2022). Working memory capacity. <em>Psychological Bulletin</em>. [Paper]</li>
+    <li>Sweller, J., van Merriënboer, J.J.G. &amp; Paas, F. (2022). <em>Cognitive Load Theory</em>. Springer. [Libro]</li>
+    <li>Mayer, R.E. (2024). <em>Multimedia Learning</em> (4.ª ed.). Cambridge University Press. [Libro]</li>
+    <li>Posner, M.I. &amp; Rothbart, M.K. (2023). Attention and Information Processing. <em>Annual Review of Neuroscience</em>. [Paper]</li>
+    <li>Manes, F. &amp; Roca, M. (2022). <em>Procesamiento de la información en el aprendizaje</em>. Paidós. [Libro]</li>
+    <li>Paivio, A. &amp; Clark, J.M. (2021). <em>Dual Coding Theory</em>. Oxford University Press. [Libro]</li>
+    <li>ISO 15489-1:2016. <em>Information and documentation – Records management</em>. ISO. [Norma]</li>
+    <li>GTC 185:2009. <em>Documentación organizacional</em>. ICONTEC. [Norma]</li>
+    <li>Ley 594 de 2000. <em>Ley General de Archivos</em>. Congreso de Colombia. [Norma]</li>
+    <li>Decreto 1080 de 2015. <em>Decreto Único Reglamentario del Sector Cultura</em>. Presidencia de la República de Colombia. [Norma]</li>
+    <li>Cruz Mundet, J.R. (2022). <em>Archivística: Gestión de documentos y administración de archivos</em>. Alianza Editorial. [Libro]</li>
+    <li>Bustelo Ruesta, C. (2023). <em>Gestión Documental y Administración de Archivos</em>. SEDIC. [Libro]</li>
+    <li>NTC-ISO 30300:2020. <em>Información y documentación – Sistemas de gestión para documentos</em>. ICONTEC. [Norma]</li>
+    <li>ISO 9001:2015. <em>Sistemas de gestión de la calidad – Requisitos</em>. ISO. [Norma]</li>
+      <!-- RA2 — Construir (Semanas 4, 6, 7) -->
+    <li>NTC-ISO 10013:2021. <em>Directrices para la información documentada del sistema de gestión de la calidad</em>. ICONTEC. [Norma]</li>
+    <li>Decreto 1165 de 2019. <em>Régimen aduanero colombiano</em>. Presidencia de la República de Colombia. [Norma]</li>
+    <li>ProColombia (2024). <em>Guía práctica para exportar</em>. ProColombia. [Reporte]</li>
+    <li>DIAN Resolución 046 de 2019. <em>Documentación aduanera</em>. DIAN. [Norma]</li>
+    <li>Pardo Carrero, G. (2024). <em>Estatuto Aduanero Colombiano Comentado</em>. Legis. [Libro]</li>
+      <!-- RA3 — Analizar (Semanas 8-9) -->
+    <li>Slotnick, S.D. (2023). <em>Cognitive Neuroscience of Memory</em>. Cambridge University Press. [Libro]</li>
+    <li>MoReq2010. <em>Modular Requirements for Records Systems</em>. DLM Forum. [Norma]</li>
+    <li>La República (2025). <em>Sector mensajería colombiano: datos y tendencias</em>. La República. [Reporte]</li>
+    <li>Valora Analitik (2025). <em>Ranking y tendencias del sector mensajería</em>. Valora Analitik. [Reporte]</li>
+    <li>Astute Analytica (2024). <em>Global Mailbox Market Analysis</em>. Astute Analytica. [Reporte]</li>
+    <li>ANDI / FENALCO (2023). <em>Guía de transporte y logística en Colombia</em>. ANDI. [Reporte]</li>
+    <li>MinTIC / CRC (2024). <em>Informe sector postal y mensajería</em>. CRC. [Reporte]</li>
+    <li>Superintendencia de Industria y Comercio (2023). <em>Cifras del sector postal</em>. SIC. [Reporte]</li>
+      <!-- RA4 — Valorar TIC (Semanas 11-13) -->
+    <li>ISO 30301:2019. <em>Information and documentation – Management systems for records</em>. ISO. [Norma]</li>
+    <li>MoReq2020 (draft). <em>Modular Requirements for Records Systems v2020</em>. DLM Forum. [Norma]</li>
+    <li>Archivo General de la Nación (2022). <em>Guía para la implementación de un Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA)</em>. AGN. [Guía oficial]</li>
+    <li>AGN Acuerdo 003 de 2023. <em>Preservación digital</em>. Archivo General de la Nación. [Norma]</li>
+    <li>NIST SP 800-207 (2023). <em>Zero Trust Architecture</em>. NIST. [Norma]</li>
+    <li>IDC Latin America (2024). <em>Adopción cloud en gestión documental</em>. IDC. [Reporte]</li>
+    <li>Echavarría, A.F. (2023). <em>Blockchain para trazabilidad documental</em>. Universidad Nacional de Colombia. [Paper]</li>
+    <li>UNESCO (2021). <em>Recomendación sobre la Ética de la Inteligencia Artificial</em>. UNESCO. [Norma/Recomendación]</li>
+    <li>MinCiencias / DNP (2024). <em>Marco Ético de la IA en Colombia</em>. MinCiencias. [Reporte]</li>
+    <li>Bender, E.M., Gebru, T., McMillan-Major, A. &amp; Shmitchell, S. (2021). On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? <em>FAccT 2021</em>. [Paper]</li>
+    <li>Rawte, V., Sheth, A. &amp; Das, A. (2024). A Survey of Hallucination in Large Foundation Models. <em>arXiv</em>. [Paper]</li>
+    <li>Hajishirzi, H. et al. (2023). Document AI: Benchmarks, Models and Applications. <em>ACL Anthology</em>. [Paper]</li>
+    <li>Parlamento Europeo (2024). <em>EU AI Act – Regulation on Artificial Intelligence</em>. Parlamento Europeo. [Norma]</li>
+    <li>AENOR / SEDIC (2024). <em>Guía práctica de IA generativa en gestión documental</em>. AENOR. [Guía oficial]</li>
+    <li>Universidad Externado de Colombia (2023). <em>Inteligencia artificial en el sector público colombiano: marco jurídico</em>. Externado. [Reporte]</li>
+    <li>Gartner (2026). <em>Magic Quadrant for Document Management</em>. Gartner. [Reporte]</li>
+    <li>Forrester Research (2023). <em>Transformación digital en gestión documental</em>. Forrester Research. [Reporte]</li>
+    <li>Universidad de La Salle (2023). <em>Estado del arte de la gestión documental electrónica en Colombia</em>. Universidad de La Salle. [Reporte]</li>
+    <li>W3C (2022). <em>Verifiable Credentials Data Model</em>. W3C. [Norma]</li>
+      <!-- Fuentes específicas Semana 14 -->
+    <li>Banco Mundial (2024). <em>Logistics Performance Index (LPI) – Colombia</em>. Banco Mundial. [Reporte]</li>
+    <li>Universidad de los Andes / Servientrega (2022). <em>Caso: modelo de gestión documental real</em>. Universidad de los Andes. [Reporte]</li>
+    <li>Ley 1369 de 2009. <em>Régimen de los servicios postales</em>. Congreso de Colombia. [Norma]</li>
+    <li>Resolución CRC 5050 de 2016. <em>Régimen de Protección de Usuarios de Servicios Postales</em>. CRC. [Norma]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

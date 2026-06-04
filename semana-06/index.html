@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 6 — Responder al cliente: cartas, correos y tono profesional | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 70px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(255, 255, 255, 0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255, 255, 255, 0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+ }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .week-progress-widget__header {
+     display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800;
+   }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255, 255, 255, 0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+   .week-progress-widget__name {
+     margin-bottom: 0.7rem;
+     border: 1px solid rgba(255, 255, 255, 0.24);
+     border-radius: 12px;
+     padding: 0.45rem 0.7rem;
+   }
+   .week-progress-widget__meta {
+     display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm);
+   }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 6 · RA2</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../progreso.html">Mi Progreso</a>
+   <a href="../semana-06/" class="active">Semana 6</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 6 de 14</div>
+    <h1 class="week-hero__title">📧 Responder al Cliente</h1>
+    <p class="week-hero__subtitle">Cartas · Correos · Tono Profesional · Empatía Documental</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra2">RA2</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 6 — Responder al cliente: cartas, correos y tono profesional</h1>
+
+ <!-- Memo LatamBox -->
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:1.25rem 1.5rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-size:0.93rem;line-height:1.75">
+   <div style="font-weight:700;color:#1a73e8;font-size:0.95rem;margin-bottom:0.85rem;letter-spacing:0.04em;text-transform:uppercase">📄 Memorando Interno — LatamBox S.A.</div>
+   <table style="border:none;background:transparent;width:100%;font-size:0.88rem;margin-bottom:0.85rem;border-collapse:collapse">
+     <tr><td style="width:90px;font-weight:600;color:#555;padding:3px 0;vertical-align:top">De:</td><td style="color:#222;padding:3px 0">Lucía Fuentes, Jefa de Atención al Cliente — LatamBox Colombia</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Para:</td><td style="color:#222;padding:3px 0">Equipo de Operaciones y Practicantes ADM18</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Asunto:</td><td style="color:#222;padding:3px 0">Activación Central de Respuestas — La importancia del tono profesional</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Fecha:</td><td style="color:#222;padding:3px 0">Barranquilla, 31 de mayo de 2026</td></tr>
+   </table>
+   <hr style="border:none;border-top:1px solid #c8d3dd;margin:0.75rem 0">
+   <p style="margin:0.6rem 0">Equipo, bienvenidos a la Central de Respuestas LatamBox. Esta semana no vamos a estudiar teoría en abstracto: vamos a responder a clientes reales con reclamos reales.</p>
+   <p style="margin:0.6rem 0">Quiero ser directa: <strong>cada correo que ustedes escriban representa a esta empresa</strong>. He visto clientes perderse para siempre por un mensaje mal redactado — un saludo genérico, una explicación que suena a excusa, una solución vaga sin plazo. Y también he visto clientes furiosos calmarse con un correo profesional que reconoce el problema, explica la causa y propone una solución concreta con fecha.</p>
+   <p style="margin:0.6rem 0">El tono profesional no es opcional ni decorativo. Es el vehículo mediante el cual la información documentada llega al destinatario y produce un efecto: confianza, acción, retención del cliente. La GTC 185:2009 establece que todo documento organizacional debe ser claro, verificable y orientado al destinatario. Pacori Cari (2023) insiste en que la redacción administrativa efectiva no depende del vocabulario rebuscado sino de la estructura lógica y la empatía con quien lee.</p>
+   <p style="margin:0.6rem 0">Durante esta semana ustedes serán el equipo que responde. Cada queja que reciban es una oportunidad de demostrar que LatamBox no solo mueve paquetes: cuida relaciones. Y eso empieza por la primera línea del correo.</p>
+   <p style="margin:0.75rem 0 0 0;font-weight:700;color:#1a73e8">Lucía Fuentes</p>
+   <p style="margin:0.1rem 0 0 0;font-size:0.85rem;color:#555">Jefa de Atención al Cliente · LatamBox S.A.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Propósito:</strong> El estudiante produce comunicaciones externas respondiendo a clientes simulados de LatamBox. Practica el tono profesional, la claridad, la empatía documental y el formato correcto según la GTC 185:2009. Aprende la receta de 5 partes del correo profesional fundamentada en los principios de redacción administrativa de Pacori Cari (2023) y en los requisitos de información documentada de ISO 9001:2015 §7.5.
+ </div>
+
+ <!-- ═══════════ CONTENIDO TEÓRICO ═══════════ -->
+ <h2 id="contenido" style="margin-top:var(--space-lg)">📚 Contenido — Responder al cliente: cartas, correos y tono profesional</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-lg)">En una organización, cada comunicación escrita que sale representa a la empresa. Un correo mal redactado puede perder un cliente; una carta profesional puede recuperarlo. Esta semana los estudiantes aprenden a construir respuestas escritas con formato, tono y claridad, usando fuentes reales del entorno normativo colombiano y de la redacción administrativa contemporánea.</p>
+
+ <div style="background:var(--bg-card);border-left:5px solid #2c5ea8;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#2c5ea8;margin-top:0;font-size:1.05rem">📧 La receta del correo profesional: 5 partes que funcionan</h3>
+   <p>Una respuesta profesional efectiva no se improvisa: sigue una estructura probada que reduce la ambigüedad, orienta al lector y transmite competencia. Esta receta de cinco partes está alineada con los principios de claridad documental de la GTC 185:2009 (ICONTEC) y con el enfoque de redacción administrativa centrada en el destinatario propuesto por Pacori Cari (2023):</p>
+   <p><strong>(1) Saludo personalizado con nombre.</strong> Nada dice "esto es una plantilla genérica" como un "Estimado cliente". Usar el nombre del destinatario activa la atención y señala que el mensaje fue escrito para esa persona específica. La GTC 185:2009 recomienda identificar al destinatario con precisión en todo documento organizacional.</p>
+   <p><strong>(2) Reconocimiento del problema.</strong> Antes de explicar nada, el cliente necesita saber que lo entendiste. "Entendemos que su paquete #447 no ha sido entregado en la fecha prometida" es distinto a "Lamentamos las molestias". El primer enunciado demuestra que leíste el caso concreto; el segundo es una frase genérica que el cliente ya ha escuchado cien veces. Pacori Cari (2023) señala que el reconocimiento específico del problema es el primer paso para restaurar la confianza en la comunicación administrativa.</p>
+   <p><strong>(3) Explicación clara de la causa.</strong> Sin excusas, sin culpar a terceros, sin tecnicismos innecesarios. "El envío está retenido en aduana porque la declaración de valor reportada en origen contiene un error" es una explicación. "El sistema de aduanas está colapsado" es una excusa vaga. La información documentada debe ser verificable (ISO 9001:2015 §7.5): si dices que es un error en la declaración, debes poder mostrarlo.</p>
+   <p><strong>(4) Solución concreta con plazo.</strong> Esta es la parte que más peso tiene para el cliente. No basta con "estamos trabajando en ello". Debe haber una acción específica ("solicitamos la corrección aduanera hoy a las 10:00 am") y un plazo verificable ("su entrega queda programada para el jueves 4 de junio"). Sin plazo, no hay compromiso; sin compromiso, no hay confianza.</p>
+   <p><strong>(5) Despedida con canal de contacto.</strong> El cierre debe incluir nombre, cargo y al menos un canal donde el cliente pueda hacer seguimiento (correo, teléfono, WhatsApp). Esto cierra el ciclo de comunicación y le devuelve el control al cliente. La GTC 185:2009 establece que todo documento debe permitir la trazabilidad del emisor.</p>
+   <p style="margin-top:0.75rem"><strong>Ejemplo completo (LatamBox):</strong><br>
+   <strong>Asunto:</strong> Actualización de su envío — Paquete #447<br>
+   <strong>Señora Pérez,</strong><br>
+   Entendemos su preocupación porque el paquete #447 no ha sido entregado aún. El envío está retenido en aduana por un error en la declaración de valor. Ya solicitamos la corrección y estamos validando el nuevo soporte documental.<br>
+   <strong>Acción y plazo:</strong> el caso está priorizado con el agente aduanero; su entrega queda programada para el jueves 4 de junio. Puede hacer seguimiento respondiendo a este correo o por WhatsApp al 300-123-4567 con su número de guía.<br>
+   Cordialmente,<br>
+   <strong>Equipo de Atención al Cliente — LatamBox</strong></p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #1e7a3e;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#1e7a3e;margin-top:0;font-size:1.05rem">🎵 Tono profesional vs. tono informal: cuándo usar cada uno</h3>
+   <p>No todas las comunicaciones con el cliente requieren el mismo registro. Saber elegir el tono adecuado según el contexto, el canal y la gravedad de la situación es una competencia profesional que la GTC 185:2009 contempla al distinguir tipos de documentos según su propósito y destinatario.</p>
+   <p><strong>Tono profesional formal:</strong> Se usa en cartas de respuesta a reclamos, notificaciones contractuales, comunicaciones con implicaciones legales y correspondencia con clientes corporativos. Se caracteriza por lenguaje preciso, estructura completa (membrete, fecha, asunto, cuerpo, firma), tratamiento de "usted" y ausencia de coloquialismos. Es el tono que exige la GTC 185:2009 para documentos comerciales que quedan como registro organizacional.</p>
+   <p><strong>Tono profesional cálido:</strong> Se usa en correos de seguimiento, notificaciones de estado, respuestas a consultas simples y comunicaciones por canales digitales (WhatsApp Business, chat). Mantiene el respeto y la claridad, pero admite un lenguaje más cercano, frases como "buenas noticias" o "ya lo tenemos resuelto", y un cierre menos protocolar. Sigue siendo profesional: no es informal.</p>
+   <p><strong>Tono informal:</strong> NO debe usarse en comunicaciones externas de la empresa. Expresiones como "hey", "tranqui", "ya cuadramos eso", emojis excesivos o ausencia de saludo y firma dañan la credibilidad institucional. Pacori Cari (2023) advierte que la informalidad en documentos administrativos confunde los roles: el cliente no es un amigo, es un usuario del servicio que espera ser tratado con respeto y competencia.</p>
+   <p><strong>Diferencias culturales:</strong> En el entorno colombiano, el trato de "usted" con nombre propio ("Señora Pérez") es la norma en comunicación formal escrita. En contextos internacionales (clientes en Estados Unidos o Europa), el tratamiento puede ser "Dear Ms. Pérez". La GTC 185:2009 orienta sobre las convenciones locales e internacionales para la documentación comercial. Un error frecuente en el sector logística es aplicar el mismo tono a un cliente en Bogotá que a uno en Miami: el primero puede esperar un "usted" formal; el segundo, un "you" directo pero cortés.</p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #e67e22;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#e67e22;margin-top:0;font-size:1.05rem">🤝 Empatía documental: reconocer el problema sin prometer lo imposible</h3>
+   <p>La empatía documental es la capacidad de escribir reconociendo la experiencia emocional del destinatario, sin comprometer a la organización más allá de lo verificable y realista. No es "ser amable": es una técnica de redacción administrativa que Pacori Cari (2023) describe como el equilibrio entre la cercanía con el destinatario y la precisión de la información.</p>
+   <p>Un cliente cuyo paquete lleva tres semanas atascado no quiere escuchar "lamentamos las molestias". Quiere tres cosas: (a) saber que alguien leyó su caso específico, (b) entender qué pasó realmente, y (c) conocer qué va a pasar y cuándo. La empatía documental consiste en dar esas tres cosas en el orden correcto.</p>
+   <p><strong>Lo que SÍ debe hacer un documento empático:</strong></p>
+   <ul style="margin:0.5rem 0;padding-left:1.5rem;line-height:1.8">
+     <li>Nombrar el problema concreto del cliente ("su paquete #447 con destino a Barranquilla").</li>
+     <li>Reconocer el impacto ("entendemos que esta demora afecta su planificación").</li>
+     <li>Explicar la causa sin desviar responsabilidad ("el error en la declaración de valor fue detectado por nuestro equipo en aduana y estamos corrigiéndolo").</li>
+     <li>Ofrecer una solución concreta con plazo verificable.</li>
+     <li>Dejar un canal de contacto para seguimiento.</li>
+   </ul>
+   <p><strong>Lo que NO debe hacer:</strong></p>
+   <ul style="margin:0.5rem 0;padding-left:1.5rem;line-height:1.8">
+     <li>Prometer fechas que no dependen de usted ("mañana sin falta" cuando el trámite de aduana toma 48 horas).</li>
+     <li>Culpar a terceros ("es que la DIAN…", "es que la aerolínea…"). El cliente contrató a LatamBox, no a la DIAN.</li>
+     <li>Usar frases genéricas tipo "lamentamos las molestias ocasionadas" sin información específica.</li>
+     <li>Compensar sin autorización ("le regalamos el envío" cuando usted no tiene esa facultad).</li>
+   </ul>
+   <p>La ISO 9001:2015 §7.5 exige que la información documentada esté disponible y sea adecuada para su uso. Un documento empático pero impreciso (promesas falsas, fechas inventadas) incumple este requisito: la organización necesita poder respaldar cada afirmación que emite por escrito. La empatía sin verificabilidad genera expectativas falsas que, al romperse, dañan la relación más que la demora original.</p>
+ </div>
+
+ <div style="background:var(--bg-card);border-left:5px solid #b8860b;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#b8860b;margin-top:0;font-size:1.05rem">⚠️ Errores fatales en comunicación escrita: casos reales del sector logística</h3>
+   <p>En el sector de mensajería y logística, donde los clientes ya llegan frustrados por una demora o un daño, ciertos errores de comunicación escrita convierten un problema operativo en una crisis de reputación. Estos son los errores más costosos documentados en la práctica del sector y analizados desde la normativa documental:</p>
+   <p><strong>Error 1: Responder sin leer el caso.</strong> Un cliente escribe detallando que su paquete #447 lleva tres semanas en Miami y recibe una respuesta genérica sobre "tiempos de entrega de 5 a 7 días hábiles". El cliente percibe que nadie leyó su mensaje. La GTC 185:2009 exige que el documento responda al asunto específico del destinatario, no a una categoría genérica.</p>
+   <p><strong>Error 2: Usar jerga interna con el cliente.</strong> "Su envío está en proceso de nacionalización con levante pendiente por inconsistencia en la DEX." El cliente no sabe qué es una DEX ni qué significa "levante". Pacori Cari (2023) insiste en que la redacción administrativa debe usar el lenguaje del destinatario, no el del emisor. Si el cliente no entiende, el documento fracasó, sin importar cuán técnicamente correcto sea.</p>
+   <p><strong>Error 3: Omitir el plazo.</strong> "Estamos trabajando para resolver su caso." Esta frase, sin fecha, es una no-respuesta. El cliente no sabe si "trabajando" significa horas, días o semanas. La ISO 9001:2015 §7.5 establece que la información documentada debe ser adecuada para la toma de decisiones; sin plazo, el cliente no puede decidir si espera o busca alternativas.</p>
+   <p><strong>Error 4: Transferir la culpa al cliente.</strong> "Usted declaró mal el valor del paquete en el formulario de registro." Aunque sea técnicamente cierto, un correo no es el espacio para señalar culpas sino para resolver problemas. La comunicación externa debe proteger la relación. Si hubo un error del cliente, se aborda en una llamada o en un canal separado, no en la respuesta escrita que queda como registro.</p>
+   <p><strong>Error 5: Copiar y pegar plantillas sin adaptar.</strong> En épocas de alto volumen (Black Friday, Navidad), algunos equipos recurren a respuestas prediseñadas que no se adaptan al caso concreto. Una plantilla que dice "su pedido será entregado en 48 horas" cuando el paquete ya lleva 20 días de retraso es peor que no responder: confirma que la empresa no está prestando atención. La GTC 185:2009 advierte que las plantillas son ayudas, no sustitutos del criterio profesional.</p>
+   <p>En el contexto de LatamBox, estos errores no son hipotéticos. Con 12 clientes furiosos y 47 paquetes retrasados, un solo correo mal redactado puede escalar una queja a una reclamación formal, una mala reseña pública o la pérdida de un cliente corporativo. La comunicación escrita es la última línea de defensa de la reputación.</p>
+ </div>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripción</th></tr>
+   <tr>
+     <td>0–15</td>
+     <td>Entrada: el peor correo jamás recibido</td>
+     <td>Cada estudiante recuerda el peor correo, chat o mensaje que ha recibido de una empresa. Comparte en parejas y discuten las razones: ¿qué lo hizo malo? ¿tono? ¿falta de solución? El docente recoge 3 ejemplos en el tablero y los contrasta con la receta de 5 partes (GTC 185:2009; Pacori Cari, 2023).</td>
+   </tr>
+   <tr>
+     <td>15–35</td>
+     <td>Input: la receta de 5 partes del correo profesional</td>
+     <td>Exposición dialogada de las 5 partes: (1) saludo con nombre, (2) reconocimiento del problema, (3) explicación clara, (4) solución concreta con plazos, (5) despedida con canal de contacto. Se proyectan ejemplos buenos y malos. La estructura sigue las convenciones de la GTC 185:2009 para documentos comerciales y los principios de redacción administrativa de Pacori Cari (2023).</td>
+   </tr>
+   <tr>
+     <td>35–45</td>
+     <td>Pausa activa</td>
+     <td>Estiramiento y cambio de grupos.</td>
+   </tr>
+   <tr>
+     <td>45–95</td>
+     <td>Central de Respuesta LatamBox (actividad grupal)</td>
+     <td>Cada grupo recibe 3 quejas simuladas de clientes LatamBox: (A) paquete atascado en Miami 3 semanas, (B) cobro incorrecto de impuestos, (C) caja dañada en la entrega. Cada miembro elige 1 queja. Fases: 10 min escritura individual aplicando tono y empatía según Pacori Cari (2023), 20 min lectura en voz alta + revisión con checklist basada en GTC 185:2009, 10 min corrección con retroalimentación del grupo.</td>
+   </tr>
+   <tr>
+     <td>95–115</td>
+     <td>Competencia: la mejor respuesta</td>
+     <td>Cada grupo elige su mejor respuesta (1 de las 3). Se leen en voz alta y la clase vota usando mentimeter o sticky notes. Categorías: mejor tono profesional, mejor solución concreta, más empática. Se evalúa con base en la receta de 5 partes (GTC 185:2009).</td>
+   </tr>
+   <tr>
+     <td>115–130</td>
+     <td>Subida a Teams</td>
+     <td>Cada estudiante sube su respuesta corregida a la tarea de Teams como documento de evidencia. La correcta conservación de los registros de comunicación con clientes es un requisito de la información documentada (ISO 9001:2015 §7.5).</td>
+   </tr>
+   <tr>
+     <td>130–135</td>
+     <td>Cierre</td>
+     <td>El docente resume los 5 elementos clave del correo profesional y los errores fatales vistos en clase. Anuncia que la próxima semana se trabajará comunicación interna (actas y circulares).</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> 3 respuestas corregidas a clientes (individual). Rúbrica PI2. Solo 1 producto final se califica (el mejor de los 3, elegido por el estudiante).
+ </div>
+
+ <h2 style="margin-top:var(--space-lg)">Documentos del caso — LatamBox</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">Documentos base de donde se derivan las 3 quejas simuladas para la actividad de respuesta a clientes.</p>
+ <ul class="doc-list">
+   <li class="doc-item" style="font-weight:700">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name" style="font-weight:700">04 — Notificación de llegada a Miami ★</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/04_notificacion_llegada.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item" style="font-weight:700">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name" style="font-weight:700">08 — Correo de nacionalización ★</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/08_correo_nacionalizacion.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item" style="font-weight:700">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name" style="font-weight:700">11 — Correo de confirmación de entrega ★</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/11_correo_confirmacion_entrega.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+ </ul>
+
+ <!-- Quiz -->
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-05/index.html" class="btn btn-outline" style="margin-right:var(--space-sm)">← Semana 5</a>
+ <a href="../semana-07/index.html" class="btn btn-primary">Siguiente: Semana 7 →</a>
+</div>
+
+<!-- Bibliografía -->
+<div class="card" id="bibliografia" style="margin-top:var(--space-lg)">
+ <h2>📚 Bibliografía</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">Fuentes que fundamentan el diseño didáctico de esta semana.</p>
+ <ol style="line-height:1.95;font-size:0.92rem;color:var(--text-secondary);padding-left:1.4rem">
+   <li id="ref-gtc185">Instituto Colombiano de Normas Técnicas y Certificación (ICONTEC). (2009). <em>GTC 185: Documentación organizacional — Guía técnica colombiana para la elaboración de documentos comerciales</em>. Bogotá: ICONTEC. <span style="color:#888;font-size:0.85em">→ Estructura y formato de cartas, correos y documentos empresariales. Principios de claridad, verificabilidad y orientación al destinatario.</span></li>
+   <li id="ref-pacori">Pacori Cari, R. (2023). <em>Manual de Redacción Administrativa</em>. Lima: Opera Prima Editores. <span style="color:#888;font-size:0.85em">→ Técnicas de redacción administrativa centrada en el destinatario. Estructura lógica, tono profesional y empatía documental en comunicaciones organizacionales.</span></li>
+   <li id="ref-iso9001">International Organization for Standardization. (2015). <em>ISO 9001:2015 — Quality management systems — Requirements</em> (§7.5 Documented information). Ginebra: ISO. <span style="color:#888;font-size:0.85em">→ Requisitos de disponibilidad, legibilidad y control de la información documentada que respalda las comunicaciones con clientes.</span></li>
+ </ol>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Información · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<aside class="week-progress-widget" aria-label="Mi progreso ADM18">
+  <div class="week-progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>
+  <div class="week-progress-widget__name" id="week-widget-name">Estudiante ADM18</div>
+  <div class="progress-bar"><div class="progress-fill" id="week-widget-fill" style="width:0%"></div></div>
+  <div class="week-progress-widget__meta"><span>Semana 6</span><strong id="week-widget-xp">0 XP</strong></div>
+</aside>
+
+<script src="../js/app.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+ const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+ const userName = localStorage.getItem('adm18_user') || 'Estudiante ADM18';
+ const completed = Object.values(progress).filter(function(item) { return item && item.completed; }).length;
+ const pct = Math.round((completed / 14) * 100);
+ const sessionScore = scores.week_6 && typeof scores.week_6.percent === 'number'
+   ? scores.week_6.percent
+   : Math.min(100, completed * 25);
+ const heroFill = document.getElementById('week-hero-fill');
+ const widgetFill = document.getElementById('week-widget-fill');
+ const heroXp = document.getElementById('week-hero-xp');
+ const widgetXp = document.getElementById('week-widget-xp');
+ const widgetName = document.getElementById('week-widget-name');
+ if (heroFill) heroFill.style.width = pct + '%';
+ if (widgetFill) widgetFill.style.width = pct + '%';
+ if (heroXp) heroXp.textContent = sessionScore + ' / 100 pts';
+ if (widgetXp) widgetXp.textContent = sessionScore + ' XP';
+ if (widgetName) widgetName.textContent = userName;
+
+ QuizEngine.init(6, [
+   {
+     question: '¿Cuál de las siguientes NO es una de las 5 partes del correo profesional según la receta vista en clase?',
+     options: ['Saludo con nombre', 'Reconocimiento del problema', 'Adjuntar factura escaneada', 'Solución concreta con plazos'],
+     correct: 2
+   },
+   {
+     question: 'En la receta de 5 partes, el paso que sigue después del saludo con nombre es:',
+     options: ['Explicación clara del proceso interno', 'Reconocimiento del problema (mostrar que entendiste)', 'Solución concreta con plazos', 'Despedida con canal de contacto'],
+     correct: 1
+   },
+   {
+     question: 'Un tono profesional en un correo de respuesta a una queja se caracteriza por:',
+     options: ['Usar palabras técnicas para impresionar al cliente', 'Ser respetuoso, claro y mostrar empatía sin ser informal', 'Responder con una sola línea para ahorrar tiempo', 'Copiar y pegar una plantilla sin personalizar'],
+     correct: 1
+   },
+   {
+     question: '¿Qué canal de contacto debe incluirse en la despedida de un correo profesional?',
+     options: ['Solo el nombre del remitente', 'Nombre, cargo y al menos un canal (correo, teléfono o WhatsApp)', 'Solo el logo de la empresa', 'La dirección física de la oficina central'],
+     correct: 1
+   },
+   {
+     question: 'En la actividad grupal, ¿qué debe hacer cada miembro del grupo en la primera fase?',
+     options: ['Discutir en grupo la respuesta antes de escribir', 'Elegir 1 de las 3 quejas y escribir su respuesta individualmente (10 min)', 'Leer las 3 quejas y votar cuál responder', 'Esperar a que el docente asigne una queja específica'],
+     correct: 1
+   }
+ ]);
+});
+</script>
+</body>
+</html>

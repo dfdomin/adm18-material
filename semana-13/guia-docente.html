@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 13 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-note-premio { background: #fef7e0; color: #b8860b; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-checklist-card { background: #f0f4ff; border: 1px solid #93c5fd; border-left: 4px solid var(--info); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-checklist-card h4 { color: var(--info); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-award-card { background: #fef7e0; border: 1px solid var(--tg-border-gold); border-left: 4px solid var(--tg-gold); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-award-card h4 { color: var(--tg-gold); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-checklist-card { background: #eee; } .tg-award-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 13 · Portafolio documental y cierre LatamBox</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra4">RA4</span>
+      <span class="tg-badge-gold">3.5 h</span>
+      <span>Clase presencial · Integracion final + defensa</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Integra todas las competencias del semestre en un portafolio documental digital que evidencia sus habilidades en RA1, RA2, RA3 y RA4 <span style="color:var(--text-secondary);font-size:0.8em;">(ISO 15489-1:2016, §4)</span>.</li>
+      <li>Organiza su portafolio con estructura de carpetas correcta, archivos con nombres normalizados y una reflexion de cierre <span style="color:var(--text-secondary);font-size:0.8em;">(ISO 15489-1:2016, §9.3)</span>.</li>
+      <li>Presenta y defiende su portafolio ante sus compañeros en formato speed-dating, recibiendo y dando feedback constructivo.</li>
+      <li>Participa en la votacion de los LatamBox Awards como ejercicio de evaluacion entre pares.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>Checklist de portafolio impresa</strong> (1 por estudiante): los 7 items de verificacion.</li>
+      <li>Acceso a archivos personales del semestre: cada estudiante debe traer sus evidencias digitales de las semanas anteriores (USB, carpeta en la nube, correo).</li>
+      <li>USB o carpeta digital vacia para armar el portafolio final.</li>
+      <li>Post-its de colores (1 bloque por estudiante) para la votacion de awards.</li>
+      <li>Certificados simbolicos impresos para las 4 categorias de LatamBox Awards (opcional pero recomendado).</li>
+      <li>Alarma o temporizador visible para las rondas de speed-dating (5 min por ronda).</li>
+      <li>Proyector para mostrar la checklist y las categorias de awards.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Checklist del portafolio — 7 items de verificacion</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Entregar impresa a cada estudiante. El docente verifica estos 7 items al recibir el portafolio.</p>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 1 — Evidencia RA1 (Clasificacion documental)</h4>
+      <p>Un documento que demuestre que el estudiante clasifica documentos por clase, etapa del ciclo de vida y funcion. Puede ser el quiz de la semana 2, el ejercicio de clasificacion de la semana 3, o cualquier trabajo de RA1.</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 2 — Evidencia RA2 (Produccion documental)</h4>
+      <p>Un correo, carta, memo o respuesta a queja producido por el estudiante aplicando GTC 185 <span style="color:var(--text-secondary);font-size:0.8em;">(GTC 185:2009)</span>. Puede ser de la semana 4, 6 o 7.</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 3 — Evidencia RA3 (Procesamiento de informacion)</h4>
+      <p>Una tabla de hallazgos, memo de decision, o analisis de datos de las semanas 8 o 9. Debe mostrar extraccion de informacion y formulacion de conclusiones.</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 4 — Evidencia RA4 (Organizacion documental + IA)</h4>
+      <p>Evidencia de la semana 11 (screenshot carpetas + archivos renombrados) y de la semana 12 (documento mejorado con IA + bitacora).</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 5 — Archivos con nombre normalizado</h4>
+      <p>Todos los archivos del portafolio deben seguir la convencion TIPO_Destinatario_Asunto_FECHA_VERSION.ext <span style="color:var(--text-secondary);font-size:0.8em;">(ISO 15489-1:2016, §9.3)</span>. Si un archivo se llama "trabajo final.pdf", no cumple.</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 6 — Estructura de carpetas correcta</h4>
+      <p>El portafolio debe tener 4 carpetas: 01_Comunicaciones, 02_Operaciones, 03_Decisiones, 04_Archivo. Las evidencias deben estar clasificadas en la carpeta que corresponde.</p>
+    </div>
+
+    <div class="tg-checklist-card">
+      <h4>☐ Item 7 — Reflexion (1 parrafo)</h4>
+      <p>Un texto breve (5-8 lineas) donde el estudiante responde: ¿Que aprendi este semestre que no sabia antes? ¿Cual fue mi mayor desafio? ¿Como voy a usar esto en mi vida profesional? No es un resumen del curso — es una reflexion personal.</p>
+    </div>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–10</td>
+        <td><strong>Instrucciones:</strong> checklist y reglas</td>
+        <td>
+          <span class="tg-note">PROYECTAR</span> la checklist de 7 items. Explicar cada uno con un ejemplo.<br>
+          <span class="tg-note-critico">CIERRE EN CLASE</span> "Tienen 50 minutos para armar el portafolio. El que no termina, entrega lo que tenga. No se finaliza en casa. Esto es un cierre de semestre, no una tarea."<br>
+          Entregar checklist impresa a cada estudiante.<br>
+          <span class="tg-note">RECORDAR</span> "Usen la convencion de nombres de la semana 11. Usen la estructura de carpetas que practicamos."
+        </td>
+      </tr>
+      <tr>
+        <td>10–60</td>
+        <td><strong>Armado individual</strong> (50 min)</td>
+        <td>
+          <span class="tg-note-critico">SILENCIO RELATIVO</span> — pueden consultar entre compañeros pero cada uno arma su portafolio.<br>
+          <strong>Min 10-35:</strong> Recopilar evidencias. Cada estudiante busca en sus archivos las 4 evidencias requeridas. Si falta alguna, usa lo que tenga mas parecido.<br>
+          <strong>Min 35-50:</strong> Renombrar archivos, crear carpetas, clasificar, escribir reflexion.<br>
+          <span class="tg-note">CIRCULAR</span> verificando que los nombres sigan la convencion, que las carpetas esten bien clasificadas, que la reflexion sea personal (no generica).<br>
+          <span class="tg-note">AVISOS DE TIEMPO</span> "Quedan 25 min", "Quedan 10 min — escriban la reflexion ya", "Ultimos 5 min — guarden todo".<br>
+          <span class="tg-note">ESTUDIANTES SIN EVIDENCIAS</span> Si alguien no tiene archivos de semanas anteriores: que use lo que tenga (quiz, capturas, apuntes). El portafolio se construye con lo que hay. Mejor incompleto que vacio.
+        </td>
+      </tr>
+      <tr>
+        <td>60–70</td>
+        <td><strong>PAUSA</strong></td>
+        <td>
+          Descanso. <span class="tg-note">RECOGER</span> portafolios (USB o carpeta digital) antes de la pausa. El que no entrego, entrega despues de la pausa pero con la nota "entrega tardia".
+        </td>
+      </tr>
+      <tr>
+        <td>70–115</td>
+        <td><strong>Defensa speed-dating</strong> (45 min, 3 rondas)</td>
+        <td>
+          <span class="tg-note-critico">FORMATO ESTRICTO</span> Explicar la dinamica:<br>
+          - 3 rondas de 5 minutos cada una.<br>
+          - En cada ronda, cada estudiante se empareja con un compañero diferente.<br>
+          - <strong>Min 0-2:</strong> Estudiante A presenta su portafolio (muestra pantalla, explica sus 4 evidencias y su reflexion en 2 min).<br>
+          - <strong>Min 2-4:</strong> Estudiante B da feedback (1 cosa que le gusto, 1 sugerencia).<br>
+          - <strong>Min 4-5:</strong> Cambio de pareja. Rotacion.<br>
+          <span class="tg-note">ALARMA</span> Usar temporizador visible. A los 2 min suena para cambio de expositor. A los 5 min suena para rotacion.<br>
+          <span class="tg-note">DOCENTE CAMINA</span> entre parejas verificando que todos participen. Si alguien esta callado, intervenir: "¿Que fue lo que mas te gusto del portafolio de tu compañero?"<br>
+          <span class="tg-note">CANTIDAD</span> Cada estudiante presenta 3 veces y recibe feedback de 3 personas diferentes.
+        </td>
+      </tr>
+      <tr>
+        <td>115–130</td>
+        <td><strong>LatamBox Awards</strong> (15 min)</td>
+        <td>
+          <span class="tg-note-premio">DINAMICA DE CIERRE</span> 4 categorias. Cada estudiante vota con post-its (escribe el nombre de un compañero y lo pega en la cartelera/pizarron):<br><br>
+          <div class="tg-award-card"><h4>🏆 Mejor Portafolio</h4><p>El portafolio mas completo, mejor organizado y con la reflexion mas profunda.</p></div>
+          <div class="tg-award-card"><h4>📝 Mejor Memo</h4><p>El memo de decision mas claro, mejor estructurado y con recomendaciones mas accionables.</p></div>
+          <div class="tg-award-card"><h4>🤖 Mejor Uso Etico de IA</h4><p>La bitacora mas completa y el mejor ejemplo de supervision humana sobre IA.</p></div>
+          <div class="tg-award-card"><h4>📁 Mejor Estructura de Carpetas</h4><p>La organizacion digital mas limpia, con nombres perfectamente normalizados.</p></div>
+          <br>
+          <span class="tg-note">CONTAR VOTOS</span> en vivo. Entregar certificados simbolicos a los ganadores.<br>
+          <span class="tg-note">NO ES COMPETENCIA REAL</span> — los awards son un juego de cierre para celebrar el trabajo del semestre. Todos reciben aplauso.
+        </td>
+      </tr>
+      <tr>
+        <td>130–135</td>
+        <td><strong>Cierre + anuncio Examen Final</strong></td>
+        <td>
+          <span class="tg-note-critico">ANUNCIO FINAL</span> "Semana 14: Examen Final. Caso nuevo — GlobalBox Connect (Colombia-Panama-Mexico). Evalua los 4 RA. Mismas habilidades que practicaron todo el semestre. Sin tema nuevo. Sin sorpresas."<br>
+          <span class="tg-note">CIERRE MOTIVACIONAL</span> "En 13 semanas pasaron de no saber que era un documento empresarial a construir un portafolio profesional completo <span style="color:var(--text-secondary);font-size:0.8em;">(Forrester, 2023; Univ. de La Salle, 2023)</span>. Eso no lo hace cualquiera. Lleguen al examen con la confianza de que YA saben hacerlo."<br>
+          <span class="tg-note">ENTREGAR</span> checklist del examen final con lo que deben traer (lapiz, borrador — sin apuntes).
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 3 preguntas sobre el portafolio documental. Rapido — al inicio de la sesion.</p>
+
+    <div class="tg-answer"><strong>1.</strong> ¿Cuales son las 4 evidencias que debe contener tu portafolio?<br>→ <strong>1 evidencia de RA1 (clasificacion), 1 de RA2 (produccion documental), 1 de RA3 (procesamiento de informacion), 1 de RA4 (organizacion + IA) <span style="color:var(--success);font-size:0.85em;">(ISO 15489-1:2016, §4)</span>.</strong></div>
+    <div class="tg-answer"><strong>2.</strong> ¿Como deben estar organizadas las carpetas del portafolio?<br>→ <strong>4 carpetas: 01_Comunicaciones, 02_Operaciones, 03_Decisiones, 04_Archivo. Cada evidencia en la carpeta que corresponde segun su funcion.</strong></div>
+    <div class="tg-answer"><strong>3.</strong> ¿Que debe contener la reflexion del portafolio?<br>→ <strong>No es un resumen del curso. Es una reflexion personal: ¿que aprendi?, ¿cual fue mi mayor desafio?, ¿como voy a usar esto profesionalmente? Maximo 1 parrafo de 5-8 lineas.</strong></div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Sumativa. El portafolio es la evidencia principal de PI4 (RA4) <span style="color:var(--text-secondary);font-size:0.85em;">(Gartner, 2026)</span>.</p>
+    <p><strong>Que se evalua:</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>Portafolio digital completo con los 7 items de la checklist verificados.</li>
+      <li>Participacion en las 3 rondas de speed-dating (defensa oral breve).</li>
+      <li><strong>Rubrica PI4:</strong> evalua organizacion (convencion de nombres + carpetas), completitud (4 evidencias + reflexion), y presentacion (defensa en speed-dating).</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No permitir que los estudiantes finalicen el portafolio en casa.</strong> El portafolio se cierra en clase. Esta regla es explicita: "el que no termina, entrega lo que tenga." Esto enseña responsabilidad con plazos reales — en el mundo laboral los cierres no se extienden.</li>
+      <li>No preparar tema nuevo. Esta es la ultima sesion antes del examen final. Cualquier contenido nuevo genera ansiedad y distrae del objetivo: integrar y cerrar.</li>
+      <li>No preparar una galeria larga de presentaciones individuales. El speed-dating de 2 minutos por persona mantiene la energia alta y asegura que todos participen. Las presentaciones largas (5-10 min por estudiante) aburren y toman demasiado tiempo.</li>
+      <li>No forzar a un estudiante timido a presentar si claramente no quiere. El speed-dating es en pareja, lo que reduce la ansiedad. Si aun asi alguien se niega, permitir que solo escuche el feedback de sus compañeros y registrarlo como participacion parcial.</li>
+      <li>No olvidar el anuncio del examen final. Los estudiantes necesitan saber explicitamente: "Sin tema nuevo. Sin sorpresas. Las mismas habilidades que ya practicaron." Esto reduce la ansiedad y mejora el desempeño.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section" id="bibliografia">
+    <h2>📚 Bibliografía</h2>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);line-height:1.9;">
+      <li>ISO (2016). <em>ISO 15489-1:2016 — Información y documentación: Gestión de documentos. Parte 1: Conceptos y principios</em>. Ginebra: ISO/TC 46. [Norma internacional]</li>
+      <li>ICONTEC (2009). <em>GTC 185 — Documentación organizacional</em>. Bogotá: ICONTEC. [Guía técnica colombiana]</li>
+      <li>Gartner (2026). <em>Magic Quadrant for Document Management</em>. Stamford: Gartner Research. [Reporte de industria]</li>
+      <li>Forrester Research (2023). <em>Transformación digital en gestión documental: tendencias y mejores prácticas</em>. Cambridge: Forrester. [Reporte de industria]</li>
+      <li>Universidad de La Salle (2023). <em>Estado del arte de la gestión documental electrónica en Colombia</em>. Bogotá: Universidad de La Salle. [Investigación académica]</li>
+      <li>W3C (2022). <em>Verifiable Credentials Data Model 1.1</em>. W3C Recommendation. Recuperado de https://www.w3.org/TR/vc-data-model/ [Estándar web]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

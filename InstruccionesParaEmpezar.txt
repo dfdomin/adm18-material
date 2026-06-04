@@ -1,0 +1,5 @@
+    1. system-prompt.txt — Procede con todo lo que aquí se pide
+    
+    2. SKILL.md — procede con todo lo que aquí se pide
+    
+    3. reference.md — De este documento vas a omitir lo solicitado frente a la Ley 1581/2012 (consentimiento, anonimización) todo lo demás lo vas a cumplir

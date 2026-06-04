@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 2 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root {
+    --tg-gold: #B8860B;
+    --tg-gold-light: #FFF8E1;
+    --tg-border-gold: #D4A017;
+  }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card {
+    background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%);
+    color: var(--text-on-dark);
+    padding: var(--space-lg);
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    border-left: 6px solid var(--gold);
+  }
+  .tg-header-card .tg-guide-label {
+    font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px;
+    color: var(--gold); font-weight: 700;
+  }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section {
+    background: var(--bg-card);
+    border-left: 4px solid var(--tg-border-gold);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-md);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .tg-section h2 {
+    font-size: 1.1rem; font-weight: 700; color: var(--tg-gold);
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: var(--space-md); padding-bottom: var(--space-xs);
+    border-bottom: 2px solid var(--gold);
+  }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; }
+  .tg-timeline th:first-child { width: 70px; }
+  .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note {
+    display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000;
+    padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px;
+  }
+  .tg-answer {
+    background: #e6f4ea; border: 1px solid #86efac;
+    padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm);
+    font-size: 0.85rem; margin: var(--space-xs) 0;
+  }
+  .tg-answer strong { color: var(--success); }
+  .tg-warning-box {
+    background: #fff3e0; border-left: 4px solid #e65100;
+    padding: var(--space-md); margin-top: var(--space-md);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem;
+  }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li {
+    padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border);
+    display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem;
+  }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold {
+    display: inline-block; font-size: 0.7rem; font-weight: 700;
+    padding: 0.2rem 0.5rem; border-radius: var(--radius-sm);
+    text-transform: uppercase; letter-spacing: 0.5px;
+    background: var(--gold); color: var(--text-on-gold);
+  }
+  cite {
+    font-style: normal; font-size: 0.78rem; color: #5a6a8a;
+    background: #eef2f9; border-radius: 3px; padding: 0.05rem 0.3rem;
+    white-space: nowrap;
+  }
+  .tg-biblio { margin-top: var(--space-md); }
+  .tg-biblio ol { padding-left: var(--space-lg); font-size: 0.83rem; line-height: 1.7; color: var(--text-secondary); }
+  .tg-biblio ol li { margin-bottom: var(--space-xs); }
+  .tg-biblio .bib-type {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    background: #e8edf5; color: #3a4a6a; border-radius: 3px; padding: 0.1rem 0.35rem; margin-left: 0.25rem;
+  }
+  /* Print */
+  @media print {
+    body { background: white; font-size: 11px; }
+    .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; }
+    .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .tg-header-card h1 { color: black !important; }
+    .tg-header-card .tg-guide-label { color: #666 !important; }
+    .tg-section h2 { color: #666; }
+    .tg-note { background: #eee; color: #333; }
+    .tg-warning-box { background: #eee; }
+  }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 2 · Ciclo de vida documental en LatamBox</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="tg-badge-gold">3.5 h</span>
+      <span>Clase presencial · Clasificacion documental</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Identifica el ciclo de vida documental: creacion → uso → archivo → disposicion <cite>(ISO 15489-1:2016, §5)</cite>.</li>
+      <li>Clasifica los 12 documentos de LatamBox por etapa del ciclo y funcion <cite>(GTC 185:2009)</cite>.</li>
+      <li>Comprende que los documentos no existen aislados: cada uno responde a una etapa del negocio <cite>(Cruz Mundet, 2022)</cite>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li>12 tarjetas con documentos LatamBox impresas y recortadas (1 juego por grupo). Cada tarjeta: nombre del documento + miniatura o icono.</li>
+      <li>Quizizz de 8 preguntas (preparar enlace).</li>
+      <li>Proyector con linea de tiempo del ciclo de vida documental (plantilla visual).</li>
+      <li>Tarjetas de colores (4 colores: verde=creacion, azul=uso, amarillo=archivo, rojo=disposicion) para la clasificacion.</li>
+      <li>Celular de los estudiantes (para Quizizz y foto final).</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td><strong>Activacion:</strong> retomar semana 1</td>
+        <td>
+          Recordar los 5 docs vistos en semana 1. Preguntar: "¿Creen que esos 5 documentos son todos los que usa LatamBox?"<br>
+          <span class="tg-note">ENGANCHE</span> Mostrar las 12 tarjetas: "Hoy vamos a descubrir los 12 documentos del ciclo completo, y a ordenarlos como si fueran una pelicula."<br>
+          Entregar tarjetas de colores a cada grupo.
+        </td>
+      </tr>
+      <tr>
+        <td>15–35</td>
+        <td><strong>Input:</strong> 4 etapas del ciclo</td>
+        <td>
+          Proyectar linea de tiempo. Explicar: 1) CREACION — alguien genera el documento. 2) USO — el documento circula y se consulta. 3) ARCHIVO — se guarda para consulta futura. 4) DISPOSICION — se destruye o conserva permanentemente <cite>(ISO 15489-1:2016, §5; Ley 594/2000, Art. 4)</cite>.<br>
+          <span class="tg-note">EJEMPLO</span> Mostrar los 12 docs en la linea de tiempo completa para que tengan referencia.
+        </td>
+      </tr>
+      <tr>
+        <td>35–45</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso.</td>
+      </tr>
+      <tr>
+        <td>45–85</td>
+        <td><strong>Actividad grupal:</strong> ordenar y clasificar</td>
+        <td>
+          <strong>Fase 1 — Orden cronologico (10 min):</strong> Grupos ordenan 12 tarjetas en secuencia temporal. "¿Que paso primero en LatamBox?"<br>
+          <strong>Fase 2 — Clasificar por etapa (15 min):</strong> Usar tarjetas de colores. Verde=creacion, Azul=uso, Amarillo=archivo, Rojo=disposicion. Colocar cada doc bajo la etapa que corresponde <cite>(NTC-ISO 30300:2020)</cite>.<br>
+          <strong>Fase 3 — Rotar y verificar (10 min):</strong> Grupos rotan a la mesa vecina. Verifican el orden y clasificacion del otro grupo. Marcan diferencias con post-it.<br>
+          <span class="tg-note">CIRCULAR</span> entre mesas resolviendo dudas. No dar respuestas — preguntar: "¿Por que creen que ese doc va ahi?"
+        </td>
+      </tr>
+      <tr>
+        <td>85–110</td>
+        <td><strong>Quiz individual</strong> (8 preguntas)</td>
+        <td>
+          Quizizz sobre ciclo de vida y clasificacion de documentos. <span class="tg-note">CON PUNTAJE</span> Este si se registra como parte de la evaluacion formativa.
+        </td>
+      </tr>
+      <tr>
+        <td>110–120</td>
+        <td><strong>Cierre:</strong> foto + reflexion</td>
+        <td>
+          <span class="tg-note">FOTO</span> Cada grupo toma foto de su linea de tiempo con las 12 tarjetas ordenadas y clasificadas. Subir al grupo/plataforma.<br>
+          Pregunta de cierre: "¿Por que importa saber en que etapa esta un documento?"<br>
+          <span class="tg-note">ANUNCIO</span> "La proxima semana diseccionaremos documentos para ver que tienen por dentro."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 8 preguntas sobre ciclo de vida y clasificacion documental en LatamBox.</p>
+
+    <div class="tg-answer"><strong>1.</strong> ¿Cual es el orden correcto del ciclo de vida documental?<br>→ <strong>Creacion → Uso → Archivo → Disposicion</strong></div>
+    <div class="tg-answer"><strong>2.</strong> Un correo de bienvenida al cliente pertenece a la etapa de:<br>→ <strong>Creacion</strong> (se genera al iniciar la relacion con el cliente)</div>
+    <div class="tg-answer"><strong>3.</strong> Una factura de proveedor en el archivo contable esta en etapa de:<br>→ <strong>Archivo</strong> (se conserva para consulta fiscal/legal) <cite>(Decreto 1080/2015, Parte VIII)</cite></div>
+    <div class="tg-answer"><strong>4.</strong> Una guia de entrega que ya fue ejecutada y no tiene valor legal pertenece a:<br>→ <strong>Disposicion</strong> (puede destruirse segun tabla de retencion) <cite>(Ley 594/2000, Art. 4)</cite></div>
+    <div class="tg-answer"><strong>5.</strong> ¿Cuantos documentos componen el ciclo completo de LatamBox?<br>→ <strong>12 documentos</strong></div>
+    <div class="tg-answer"><strong>6.</strong> El formulario de registro de un cliente nuevo esta en etapa de:<br>→ <strong>Creacion</strong></div>
+    <div class="tg-answer"><strong>7.</strong> ¿Todos los documentos pasan por las 4 etapas?<br>→ <strong>Si, aunque algunos permanecen mas tiempo en una etapa que en otra</strong></div>
+    <div class="tg-answer"><strong>8.</strong> ¿En que etapa un documento se convierte en "memoria externa" de la empresa?<br>→ <strong>Archivo</strong> (es cuando persiste mas alla de su uso inmediato)</div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa.</p>
+    <p><strong>Que se evalua:</strong> Foto de la linea de tiempo con 12 tarjetas ordenadas y clasificadas por etapa (50%) + puntaje del quiz individual (50%) <cite>(Bustelo Ruesta, 2023)</cite>.</p>
+    <p><strong>Lista de cotejo rapida (para el docente):</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>12 documentos ordenados cronologicamente (sin errores graves de secuencia).</li>
+      <li>Cada documento clasificado en 1 de las 4 etapas.</li>
+      <li>Quiz con al menos 5/8 correctas (no es nota, es referencia).</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li>No preparar clase grabada o material asincrono. Si alguien falta, compartir el mazo de tarjetas en PDF con las etapas marcadas.</li>
+      <li>No profundizar en tablas de retencion documental (TGDR) todavia — eso es semana 9.</li>
+      <li>No convertir el quiz en examen. Es formativo y de diagnostico del RA1.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-biblio">
+    <h2>📚 Bibliografía</h2>
+    <ol>
+      <li>ISO 15489-1:2016. <em>Information and documentation — Records management — Part 1: Concepts and principles</em>. International Organization for Standardization. <span class="bib-type">Norma</span></li>
+      <li>Ley 594 de 2000. <em>Ley General de Archivos</em>. Congreso de la República de Colombia. <span class="bib-type">Norma</span></li>
+      <li>GTC 185:2009. <em>Documentación organizacional</em>. ICONTEC — Instituto Colombiano de Normas Técnicas y Certificación. <span class="bib-type">Norma</span></li>
+      <li>Decreto 1080 de 2015, Parte VIII. <em>Decreto Único Reglamentario del Sector Cultura — Gestión documental</em>. Ministerio de Cultura, República de Colombia. <span class="bib-type">Norma</span></li>
+      <li>Cruz Mundet, J.R. (2022). <em>Archivística: Gestión de documentos y administración de archivos</em>. Alianza Editorial. <span class="bib-type">Libro</span></li>
+      <li>Bustelo Ruesta, C. (2023). <em>Gestión Documental y Administración de Archivos</em>. Trea. <span class="bib-type">Libro</span></li>
+      <li>NTC-ISO 30300:2020. <em>Información y documentación — Sistemas de gestión para los documentos — Fundamentos y vocabulario</em>. ICONTEC. <span class="bib-type">Norma</span></li>
+    </ol>
+  </div>
+
+</div>
+
+  <div class="tg-section">
+    <h2>📚 Bibliografía</h2>
+    <div class="tg-biblio">
+      <ol>
+        <li>ISO 15489-1:2016 §5. <em>Information and documentation — Records management.</em> ISO. <span class="bib-type">Norma internacional</span></li>
+        <li>Ley 594 de 2000, Art. 3-5. <em>Ley General de Archivos de Colombia.</em> <span class="bib-type">Legislación</span></li>
+        <li>GTC 185:2009. <em>Documentación organizacional.</em> ICONTEC. <span class="bib-type">Norma técnica</span></li>
+        <li>Decreto 1080 de 2015, Parte VIII. <em>Patrimonio Documental.</em> MinCultura. <span class="bib-type">Decreto</span></li>
+        <li>Cruz Mundet, J.R. (2022). <em>Archivística: Gestión de documentos y administración de archivos.</em> <span class="bib-type">Libro</span></li>
+        <li>Bustelo Ruesta, C. (2023). <em>Gestión Documental y Administración de Archivos.</em> AENOR. <span class="bib-type">Libro</span></li>
+        <li>NTC-ISO 30300:2020. <em>Información y documentación — Sistemas de gestión para documentos.</em> ICONTEC. <span class="bib-type">Norma técnica</span></li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,34 @@
+# Caso GlobalBox Connect — Documento 3 de 8
+## Queja — Cliente Panamá (Retraso Crónico)
+
+---
+
+**De:** juan.carlos@email.com
+**Para:** quejas@globalboxconnect.com
+**Fecha:** 18 de agosto de 2026
+**Asunto:** TERCER retraso consecutivo — Voy a cancelar
+
+---
+
+GlobalBox Connect:
+
+Este es el tercer envío consecutivo que llega con más de 15 días de retraso a Panamá. Ya no es un incidente aislado: es un problema estructural.
+
+Mis últimos 3 envíos:
+| Tracking | Producto | Prometido | Entregado | Retraso |
+|----------|----------|:---------:|:---------:|:-------:|
+| GBC-0451 | Laptop Dell | 10 jul | 28 jul | 18 días |
+| GBC-0522 | Repuestos auto | 5 ago | 22 ago | 17 días |
+| GBC-0590 | Celular Samsung | 12 ago | Aún no llega | 20+ días |
+
+En los tres casos, nadie me avisó del retraso. Tuve que llamar yo. La explicación siempre es la misma: "problemas con el agente aduanal en Panamá".
+
+Exijo una solución definitiva o cancelo mi cuenta y procedo con una queja ante ACODECO (Autoridad de Protección al Consumidor de Panamá).
+
+**Juan Carlos Mendoza**
+Cédula: 8-901-2345
+Cel: +507 6123-4567
+
+---
+
+*Caso GlobalBox Connect — Examen Final ADM18. IUB/Unibarranquilla, 2026.*

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 13 — Portafolio documental y cierre LatamBox | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 70px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(255, 255, 255, 0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255, 255, 255, 0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+ }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .week-progress-widget__header {
+     display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800;
+   }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255, 255, 255, 0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+   .week-progress-widget__name {
+     margin-bottom: 0.7rem;
+     border: 1px solid rgba(255, 255, 255, 0.24);
+     border-radius: 12px;
+     padding: 0.45rem 0.7rem;
+   }
+   .week-progress-widget__meta {
+     display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm);
+   }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 13 · RA4</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../progreso.html">Mi Progreso</a>
+   <a href="../semana-13/" class="active">Semana 13</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 13 de 14</div>
+    <h1 class="week-hero__title">📁 Portafolio documental y cierre del caso LatamBox</h1>
+    <p class="week-hero__subtitle">Evidencia · Organización · Defensa · Cierre</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra4">RA4</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 13 — Portafolio documental y cierre LatamBox</h1>
+
+ <!-- Memo Gerente General — LatamBox -->
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:var(--space-md) var(--space-lg);margin:var(--space-md) 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+   <p style="font-size:var(--font-size-xs);text-transform:uppercase;letter-spacing:.08em;color:#1a73e8;font-weight:700;margin:0 0 var(--space-sm)">MEMORANDO INTERNO · LatamBox S.A.S.</p>
+   <table style="font-size:var(--font-size-sm);color:var(--text-secondary);border:none;margin:0 0 var(--space-sm);width:auto;border-collapse:collapse">
+     <tr><td style="padding:2px 12px 2px 0;font-weight:700;white-space:nowrap;color:var(--text-primary)">De:</td><td style="padding:2px 0">Gerente General, LatamBox S.A.S.</td></tr>
+     <tr><td style="padding:2px 12px 2px 0;font-weight:700;white-space:nowrap;color:var(--text-primary)">Para:</td><td style="padding:2px 0">Equipo de aprendices — Curso ADM18, Procesamiento de la Información</td></tr>
+     <tr><td style="padding:2px 12px 2px 0;font-weight:700;white-space:nowrap;color:var(--text-primary)">Asunto:</td><td style="padding:2px 0">Cierre del portafolio documental y celebración LatamBox Awards</td></tr>
+     <tr><td style="padding:2px 12px 2px 0;font-weight:700;white-space:nowrap;color:var(--text-primary)">Fecha:</td><td style="padding:2px 0">Semana 13 — Periodo académico 2026</td></tr>
+   </table>
+   <p style="margin:0;font-style:italic;color:var(--text-primary)">Han llegado al final del ciclo. Durante 13 semanas construyeron documentos reales de LatamBox siguiendo los principios de gestión documental (ISO 15489-1:2016, §4) y los estándares de presentación organizacional (GTC 185, 2009). Hoy ensamblan su portafolio individual, lo defienden ante sus pares y reconocemos los mejores trabajos del semestre. La documentación que produjeron es evidencia viva de una competencia real.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Proposito:</strong> El estudiante integra todas las competencias del semestre en un portafolio documental de LatamBox<sup><a href="#ref1" style="color:inherit;text-decoration:none">[1]</a></sup>: selecciona sus mejores evidencias, las organiza digitalmente<sup><a href="#ref3" style="color:inherit;text-decoration:none">[3]</a></sup> y presenta una breve defensa ante sus pares<sup><a href="#ref4" style="color:inherit;text-decoration:none">[4]</a></sup>. Cierre completo en el salon de clase.
+ </div>
+
+ <section id="contenido" style="margin:var(--space-lg) 0">
+   <h2>🧠 Contenido — Portafolio documental: 14 semanas en un solo documento</h2>
+   <p>El portafolio documental no es una carpeta con <em>todos</em> los trabajos del semestre. Es una selección curada: eliges tus mejores evidencias y las organizas para contar una historia clara, verificable y profesional.</p>
+   <p>Esa historia es tu evolución: pasaste de no saber identificar un documento a poder analizar, construir y proponer sistemas de información completos. La clave no es “tener mucho”, sino mostrar aprendizaje con intención: qué elegiste, por qué lo elegiste y qué demuestra.</p>
+
+   <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:var(--space-md) var(--space-lg);margin:var(--space-md) 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+     <h3 style="margin-top:0">📂 Qué incluye un portafolio — las 4 evidencias que cuentan tu historia</h3>
+     <p>Selecciona <strong>UNA</strong> evidencia por cada RA, y ordénalas para que se lea un hilo lógico de progreso: (1) <strong>RA1 Identificar</strong>: un documento donde clasificaste correctamente varios tipos documentales; (2) <strong>RA2 Construir</strong>: un documento que redactaste aplicando <strong>GTC 185:2009</strong>; (3) <strong>RA3 Analizar</strong>: un memo de decisión o una tabla de hallazgos; (4) <strong>RA4 Valorar TIC</strong>: una propuesta de estructura de carpetas o un análisis de una herramienta digital.</p>
+     <p>Cada evidencia debe ir acompañada de una breve reflexión (5–8 líneas): ¿qué aprendiste haciéndolo?, ¿qué harías diferente hoy? Esa reflexión conecta tu práctica con principios integradores de la gestión documental (ISO 15489-1:2016, §4) y con criterios de presentación y normalización (GTC 185:2009): no solo “cumplí”, sino “entendí por qué”.</p>
+   </div>
+
+   <div style="background:#f4f6f8;border-left:5px solid #188038;padding:var(--space-md) var(--space-lg);margin:var(--space-md) 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+     <h3 style="margin-top:0">🎤 La defensa speed-dating — explicar tu trabajo en 3 minutos</h3>
+     <p>La dinámica funciona así: rotas por 3–4 estaciones. En cada estación tienes 3 minutos para presentar tu portafolio a un compañero que no conoce tu trabajo. El objetivo es practicar una explicación breve y profesional, como cuando defiendes decisiones documentales ante un equipo.</p>
+     <p>Estructura recomendada: (1) “Mi portafolio cubre estos 4 RA”, (2) “Mi mejor evidencia es… porque…”, (3) “Lo que más me costó fue…”, (4) “Si empezara de nuevo, haría diferente…”. No es un examen oral: es una conversación profesional sobre tu aprendizaje y cómo lo convertirías en valor organizacional (Gartner, 2026; Forrester, 2023).</p>
+   </div>
+
+   <div style="background:#f4f6f8;border-left:5px solid #f29900;padding:var(--space-md) var(--space-lg);margin:var(--space-md) 0;border-radius:0 var(--radius-sm) var(--radius-sm) 0">
+     <h3 style="margin-top:0">🏆 LatamBox Awards — criterios de excelencia</h3>
+     <p>Categorías: <strong>Mejor acta</strong>, <strong>Mejor memo de decisión</strong>, <strong>Mejor comunicación a cliente</strong>, <strong>Portafolio más completo</strong>. Criterios: claridad, aplicación de normas (GTC 185), creatividad en la solución y presentación profesional.</p>
+     <p>El objetivo no es “ganar”: es ver el trabajo de otros, comparar estándares y calibrar tu propio criterio de calidad. Un buen portafolio se sostiene por evidencias, trazabilidad y una presentación verificable (Univ. La Salle, 2023), y puede alinearse con estándares modernos de credenciales/presentación digital (W3C VC, 2022).</p>
+   </div>
+ </section>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripcion</th></tr>
+   <tr>
+     <td>0–10</td>
+     <td>Instrucciones del portafolio</td>
+     <td>El docente entrega y explica el checklist del portafolio: (a) 1 evidencia RA1 (matriz de clasificacion), (b) 1 evidencia RA2 (documento construido con los criterios de GTC 185, 2009), (c) 1 evidencia RA3 (memo de decision), (d) 1 evidencia RA4 (bitacora de IA), (e) todos los archivos con nombres normalizados (ISO 15489-1:2016, §9.3), (f) estructura de carpetas correcta, (g) 1 parrafo de reflexion personal.</td>
+   </tr>
+   <tr>
+     <td>10–60</td>
+     <td>Ensamblaje individual del portafolio</td>
+     <td>Cada estudiante selecciona sus 4 mejores evidencias del semestre (una por cada RA), les asigna nombres normalizados segun los principios de autenticidad e integridad documental (ISO 15489-1:2016, §8.3), crea la estructura de carpetas recomendada (AGN Guia SGDEA, 2022) y escribe un parrafo de reflexion sobre su aprendizaje. Los 50 minutos se trabajan completos en clase — no queda tarea para la casa.</td>
+   </tr>
+   <tr>
+     <td>60–70</td>
+     <td>Pausa</td>
+     <td>Descanso breve. Los estudiantes pueden salir del salon.</td>
+   </tr>
+   <tr>
+     <td>70–115</td>
+     <td>Defensa del portafolio: speed-dating</td>
+     <td>Cada estudiante se empareja con 3 companeros distintos en rondas de 5 minutos cada una (2 min de presentacion + 2 min de retroalimentacion + 1 min de rotacion). En cada ronda, el estudiante muestra su portafolio digital, explica sus 4 evidencias y recibe feedback del par. Este modelo de evaluacion entre pares fomenta el aprendizaje colaborativo y la mejora continua (Forrester, 2023). Los roles se invierten en la siguiente ronda.</td>
+   </tr>
+   <tr>
+     <td>115–130</td>
+     <td>Premios LatamBox</td>
+     <td>Reconocimientos simbolicos votados por la clase: mejor portafolio, evidencia mas creativa, mejor nombre de archivo, mejor reflexion. Los criterios de calidad documental que respaldan la evaluacion incluyen autenticidad, fiabilidad e integridad (ISO 15489-1:2016, §7.2) y el nivel de madurez digital de la organizacion (Gartner, 2026). El docente entrega certificados simbolicos impresos.</td>
+   </tr>
+   <tr>
+     <td>130–135</td>
+     <td>Cierre: anuncio del examen final</td>
+     <td>El docente felicita a la clase por el trabajo del semestre, recuerda la fecha y estructura del examen final integrador (Semana 14) y resuelve dudas de ultimo minuto. El portafolio entregado hoy constituye evidencia de competencias en gestion documental digital segun los estandares nacionales (Universidad de La Salle, 2023) e internacionales (ISO 15489-1:2016, §4).</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> Portafolio digital completo (4 carpetas + reflexion). Checklist de verificacion: 4 evidencias (una por RA), nombres normalizados<sup><a href="#ref2" style="color:inherit;text-decoration:none">[2]</a></sup>, estructura de carpetas, parrafo de reflexion. Rubrica PI4 (valoracion de TIC en gestion documental)<sup><a href="#ref3" style="color:inherit;text-decoration:none">[3]</a></sup>.
+ </div>
+
+ <div class="alert alert-warning" style="margin-top:var(--space-md)">
+   <strong>Instrumentos de evaluacion:</strong> 
+   <a href="../instrumentos/PI4_Rubrica_ADM18.pdf" style="color:var(--text-on-gold);font-weight:600">Rubrica PI4 (valoracion TIC)</a>
+ </div>
+
+ <h2 style="margin-top:var(--space-lg)">Documentos del caso — LatamBox</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">12 documentos del ciclo completo LatamBox. Los estudiantes usan estos documentos como referencia<sup><a href="#ref5" style="color:inherit;text-decoration:none">[5]</a></sup> para seleccionar sus 4 evidencias del portafolio (una por cada RA). Formatos nativos (.eml, .docx, .xlsx) y .pdf para referencia<sup><a href="#ref2" style="color:inherit;text-decoration:none">[2]</a></sup>.</p>
+ <ul class="doc-list">
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">01 — Correo de bienvenida / registro</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/01_correo_bienvenida.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📝</span>
+     <span class="doc-name">02 — Formulario de registro</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/02_formulario_registro.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">03 — Factura de Amazon</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/03_factura_amazon.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">04 — Notificacion de llegada a Miami</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/04_notificacion_llegada.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📋</span>
+     <span class="doc-name">05 — Declaracion de valor</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/05_declaracion_valor.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">✈️</span>
+     <span class="doc-name">06 — Guia aerea (AWB)</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/06_guia_aerea_awb.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">07 — Factura de flete</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/07_factura_flete.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">08 — Correo de nacionalizacion</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/08_correo_nacionalizacion.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">09 — Comprobante de impuestos</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/09_comprobante_impuestos.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📋</span>
+     <span class="doc-name">10 — Guia de entrega local</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/10_guia_entrega_local.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">11 — Correo de confirmacion de entrega</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/11_correo_confirmacion_entrega.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📝</span>
+     <span class="doc-name">12 — Encuesta de satisfaccion y queja</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/12_encuesta_y_queja.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+ </ul>
+
+ <!-- Quiz -->
+ <section id="bibliografia" style="margin-top:var(--space-xl)">
+   <h2>📚 Bibliografía</h2>
+   <ol style="font-size:var(--font-size-sm);line-height:1.9;color:var(--text-secondary);padding-left:1.4em">
+     <li id="ref1">ISO 15489-1:2016. <em>Information and documentation — Records management — Part 1: Concepts and principles</em>. §4 Principios; §7.2 Características; §8.3 Integridad; §9.3 Metadatos. Geneva: International Organization for Standardization. [Tipo: norma internacional]</li>
+     <li id="ref2">ICONTEC. (2009). <em>GTC 185: Documentación organizacional — Guía técnica colombiana para la elaboración de documentos comerciales y administrativos</em>. Bogotá: Instituto Colombiano de Normas Técnicas y Certificación. [Tipo: norma técnica colombiana]</li>
+     <li id="ref3">Archivo General de la Nación (AGN). (2022). <em>Guía para la implementación de un Sistema de Gestión de Documentos Electrónicos de Archivo (SGDEA)</em>. Bogotá: AGN Colombia. [Tipo: guía oficial]</li>
+     <li id="ref4">Forrester Research. (2023). <em>The Digital Transformation Landscape: Document Workflows and Collaborative Learning</em>. Cambridge, MA: Forrester. [Tipo: reporte de industria]</li>
+     <li id="ref5">Gartner. (2026). <em>Magic Quadrant for Document Management and Content Services Platforms</em>. Stamford, CT: Gartner Research. [Tipo: reporte de industria]</li>
+     <li id="ref6">Universidad de La Salle. (2023). <em>Estado del arte de la gestión documental electrónica en Colombia: madurez, brechas y perspectivas</em>. Bogotá: Ediciones Unisalle. [Tipo: publicación académica]</li>
+     <li id="ref7">W3C. (2022). <em>Verifiable Credentials Data Model v1.1</em>. W3C Recommendation. <a href="https://www.w3.org/TR/vc-data-model/" target="_blank" rel="noopener">https://www.w3.org/TR/vc-data-model/</a> [Tipo: estándar web]</li>
+   </ol>
+ </section>
+
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-12/index.html" class="btn btn-outline" style="margin-right:var(--space-sm)">← Semana 12</a>
+ <a href="../semana-14/index.html" class="btn btn-primary">Siguiente: Semana 14 →</a>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+ const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+ const userName = localStorage.getItem('adm18_user') || 'Estudiante ADM18';
+ const completed = Object.values(progress).filter(function(item) { return item && item.completed; }).length;
+ const pct = Math.round((completed / 14) * 100);
+ const sessionScore = scores.week_13 && typeof scores.week_13.percent === 'number'
+   ? scores.week_13.percent
+   : Math.min(100, completed * 25);
+ const heroFill = document.getElementById('week-hero-fill');
+ const widgetFill = document.getElementById('week-widget-fill');
+ const heroXp = document.getElementById('week-hero-xp');
+ const widgetXp = document.getElementById('week-widget-xp');
+ const widgetName = document.getElementById('week-widget-name');
+ if (heroFill) heroFill.style.width = pct + '%';
+ if (widgetFill) widgetFill.style.width = pct + '%';
+ if (heroXp) heroXp.textContent = sessionScore + ' / 100 pts';
+ if (widgetXp) widgetXp.textContent = sessionScore + ' XP';
+ if (widgetName) widgetName.textContent = userName;
+
+ QuizEngine.init(13, [
+   {
+     question: '¿Cuantas evidencias debe contener el portafolio documental de LatamBox?',
+     options: ['2 (RA1 y RA2)', '3 (RA1, RA2, RA3)', '4 (una por cada RA: RA1, RA2, RA3, RA4)', '12 (una por cada documento de LatamBox)'],
+     correct: 2
+   },
+   {
+     question: '¿Que tipo de evidencia corresponde al RA3 (decision)?',
+     options: ['Matriz de clasificacion de documentos', 'Un documento construido como un correo o circular', 'Un memo de decision con problema, opciones y recomendacion', 'Una bitacora de uso de IA'],
+     correct: 2
+   },
+   {
+     question: 'En la defensa del portafolio (speed-dating), ¿con cuantos companeros distintos se empareja cada estudiante?',
+     options: ['1', '2', '3', '4'],
+     correct: 2
+   },
+   {
+     question: '¿Cual de los siguientes NO es un requisito del portafolio segun el checklist?',
+     options: ['Nombres de archivo normalizados', 'Estructura de carpetas correcta', 'Un video de 5 minutos explicando el portafolio', 'Un parrafo de reflexion personal'],
+     correct: 2
+   },
+   {
+     question: 'La evidencia del RA4 (valoracion de TIC) que se incluye en el portafolio es:',
+     options: ['La factura de flete de LatamBox', 'La guia aerea AWB', 'La bitacora de uso de IA del taller de la Semana 12', 'El formulario de registro de LatamBox'],
+     correct: 2
+   }
+ ]);
+});
+</script>
+</body>
+</html>

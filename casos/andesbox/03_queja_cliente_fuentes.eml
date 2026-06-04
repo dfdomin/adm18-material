@@ -1,0 +1,62 @@
+From: mfuentes@email.com
+To: cliente@email.com
+Date: 31 de May de 2026
+Subject: Sin asunto
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+
+De: mfuentes@email.com
+Para: servicio@andesbox.com; cobros@andesbox.com
+CC: comercioexterior@andesbox.com
+Fecha: 30 de julio de 2026
+Asunto: Cobro indebido de impuestos — Factura mal calculada
+
+---
+
+Estimados:
+
+Recibí la factura de nacionalización de mi último envío (Tracking ABX-2026-01035) y encuentro un error grave en el cálculo de impuestos que necesito sea corregido de inmediato.
+
+Datos de mi envío:
+
+- Tracking AndesBox: ABX-2026-01035
+- Producto: Oximetro de pulso portátil (Wellue O2Ring)
+- Valor en factura Amazon: USD $149.99 (Factura #116-9975432-1234567)
+- Fecha de compra: 15 de julio de 2026
+
+El problema:
+
+Ustedes me están cobrando impuestos sobre un valor declarado de USD $320.00, cuando la factura de Amazon claramente dice USD $149.99. Adjunto la factura original en este correo.
+
+El desglose que me enviaron dice:
+
+| Concepto | Según AndesBox | Según factura real | Diferencia |
+|----------|:--------------:|:------------------:|:----------:|
+| Valor declarado | USD $320.00 | USD $149.99 | USD $170.01 demás |
+| IVA Perú (18%) | USD $57.60 | USD $27.00 | USD $30.60 demás |
+| Percepción IGV (3.5%) | USD $11.20 | USD $5.25 | USD $5.95 demás |
+| Total cobrado de más | — | — | USD $36.55 |
+
+Me están cobrando USD $36.55 de más porque alguien declaró mal el valor del producto. Esto es inaceptable.
+
+Lo que solicito:
+
+1. Corrección inmediata de la factura con el valor real de USD $149.99.
+2. Reembolso de los USD $36.55 cobrados de más.
+3. Explicación de por qué se declaró un valor que no corresponde a la factura.
+
+Como referencia, el oximetro de pulso NO paga arancel en Perú por ser un dispositivo médico de uso doméstico (Partida Arancelaria 9018.19.00.00 — 0% de gravamen).
+
+Espero una solución en máximo 3 días hábiles. De lo contrario, procederé con una queja ante INDECOPI (Instituto Nacional de Defensa de la Competencia y de la Protección de la Propiedad Intelectual del Perú).
+
+Atentamente,
+
+María Fuentes Castillo
+Médico Pediatra
+DNI: 45678901
+Celular: +51 987 654 321
+
+---
+
+*Este documento es parte del caso de estudio AndesBox para el módulo ADM18. IUB/Unibarranquilla, 2026.*

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profesor — ADM18 | IUB</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/iub-tokens.css">
+<style>
+ .tab-nav {
+   display: flex;
+   gap: var(--space-xs);
+   flex-wrap: wrap;
+   margin-bottom: var(--space-lg);
+ }
+ .tab-btn {
+   padding: var(--space-sm) var(--space-md);
+   border: 2px solid var(--border);
+   background: var(--bg-card);
+   border-radius: var(--radius-md);
+   font-family: var(--font-family);
+   font-size: var(--font-size-sm);
+   font-weight: 600;
+   cursor: pointer;
+   transition: all 0.2s;
+   min-height: 44px;
+   color: var(--text-secondary);
+ }
+ .tab-btn:hover { border-color: var(--primary); color: var(--primary); }
+ .tab-btn.active {
+   background: var(--primary);
+   color: var(--text-on-dark);
+   border-color: var(--primary);
+ }
+ .tab-panel { display: none; }
+ .tab-panel.active { display: block; }
+ .ref-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+   margin-bottom: var(--space-md);
+   display: flex;
+   align-items: flex-start;
+   gap: var(--space-md);
+   flex-wrap: wrap;
+ }
+ .ref-card .ref-icon {
+   font-size: 1.8rem;
+   flex-shrink: 0;
+   width: 48px;
+   text-align: center;
+ }
+ .ref-card .ref-body { flex: 1; min-width: 200px; }
+ .ref-card .ref-body h3 {
+   font-size: var(--font-size-md);
+   color: var(--primary);
+   margin-bottom: var(--space-xs);
+ }
+ .ref-card .ref-body p {
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+   margin-bottom: var(--space-sm);
+ }
+ .ref-card .ref-tags {
+   display: flex;
+   gap: var(--space-xs);
+   flex-wrap: wrap;
+ }
+ .ref-card .ref-tags a {
+   display: inline-block;
+   padding: var(--space-xs) var(--space-sm);
+   border-radius: var(--radius-sm);
+   font-size: 0.7rem;
+   font-weight: 600;
+   text-decoration: none;
+   text-transform: uppercase;
+ }
+ .tag-pdf  { background: #fee2e2; color: #991b1b; }
+ .tag-html { background: #dbeafe; color: #1e40af; }
+ .tag-md   { background: #dcfce7; color: #166534; }
+ .tag-missing { background: #fef3c7; color: #92400e; font-style: italic; }
+ .checklist-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+   gap: var(--space-md);
+ }
+ .guide-card {
+   background: var(--bg-card);
+   border: 1px solid var(--border);
+   border-radius: var(--radius-md);
+   padding: var(--space-md);
+ }
+ .guide-card h4 {
+   font-size: var(--font-size-md);
+   color: var(--primary);
+   margin-bottom: var(--space-xs);
+   padding-bottom: var(--space-xs);
+   border-bottom: 2px solid var(--gold);
+ }
+ .guide-card ol, .guide-card ul {
+   padding-left: var(--space-lg);
+   font-size: var(--font-size-sm);
+   color: var(--text-secondary);
+ }
+ .guide-card li { margin-bottom: var(--space-xs); }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Procesamiento de la Informacion</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="index.html">Inicio</a>
+   <a href="progreso.html">Mi Progreso</a>
+   <a href="profesor.html" class="active">Profesor</a>
+   <a href="notas.html">Notas</a>
+   <a href="participacion.html">Participacion</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<div class="card">
+ <h1 class="card-header">Dashboard del Instructor — ADM18</h1>
+ <p style="color:var(--text-secondary);font-size:var(--font-size-sm)">
+   Referencia central de rubricas, instrumentos de evaluacion, alineacion PLO y guias rapidas del curso.
+ </p>
+</div>
+
+<!-- Tab Navigation -->
+<div class="tab-nav" id="tab-nav">
+ <button class="tab-btn active" onclick="showTab('rubricas')">Rubricas</button>
+ <button class="tab-btn" onclick="showTab('instrumentos')">Instrumentos</button>
+ <button class="tab-btn" onclick="showTab('plo')">PLO Alignment</button>
+ <button class="tab-btn" onclick="showTab('guias')">Guias</button>
+</div>
+
+<!-- Rubricas Tab -->
+<div class="tab-panel active" id="tab-rubricas">
+ <div class="ref-card">
+   <div class="ref-icon">🔖</div>
+   <div class="ref-body">
+     <h3>PI1 — Clasificacion documental (RA1)</h3>
+     <p>Evalua la capacidad del estudiante para identificar y clasificar documentos administrativos por tipo, funcion, etapa del ciclo de vida y destino. Usada en semanas 1-3, Parcial 1 y Evaluacion Final.</p>
+     <div class="ref-tags">
+       <span class="tag-missing">(en desarrollo)</span>
+     </div>
+   </div>
+ </div>
+ <div class="ref-card">
+   <div class="ref-icon">✏️</div>
+   <div class="ref-body">
+     <h3>PI2 — Construccion de documentos (RA2)</h3>
+     <p>Evalua la capacidad de construir documentos administrativos bajo estandares GTC 185: formato, redaccion, tono profesional y estructura. Usada en semanas 4, 6, 7, Parciales 1-2 y Final.</p>
+     <div class="ref-tags">
+       <span class="tag-missing">(en desarrollo)</span>
+     </div>
+   </div>
+ </div>
+ <div class="ref-card">
+   <div class="ref-icon">📊</div>
+   <div class="ref-body">
+     <h3>PI3 — Analisis y decision documental (RA3)</h3>
+     <p>Rubrica analitica con 3 criterios (SO3.1, SO3.2, SO3.3) x 4 niveles. Evaluacion de hallazgos, memo de decision y plan de mejora. Usada en semanas 8, 9, Parcial 2 y Final.</p>
+     <div class="ref-tags">
+       <a href="instrumentos/PI3_Rubrica_ADM18.pdf" class="tag-pdf">PDF</a>
+       <a href="instrumentos/PI3_Rubrica_ADM18.html" class="tag-html">HTML</a>
+       <a href="instrumentos/PI3_Rubrica_ADM18.md" class="tag-md">MD</a>
+     </div>
+   </div>
+ </div>
+ <div class="ref-card">
+   <div class="ref-icon">💻</div>
+   <div class="ref-body">
+     <h3>PI4 — Uso de TIC en gestion documental (RA4)</h3>
+     <p>Evalua la capacidad de aplicar TIC en la organizacion documental: carpetas, convencion de nombres, metadatos, IA asistida, bitacora. Usada en semanas 11-13 y Final.</p>
+     <div class="ref-tags">
+       <span class="tag-missing">(en desarrollo)</span>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- Instrumentos Tab -->
+<div class="tab-panel" id="tab-instrumentos">
+ <div class="ref-card">
+   <div class="ref-icon">📝</div>
+   <div class="ref-body">
+     <h3>Parcial 1 — Envios del Pacifico</h3>
+     <p>Semana 5. Caso espejo: clasificar documentos, detectar errores, corregir. Cubre RA1 + RA2. 3.0 horas, individual.</p>
+     <div class="ref-tags">
+       <span class="tag-missing">(en desarrollo)</span>
+     </div>
+   </div>
+ </div>
+ <div class="ref-card">
+   <div class="ref-icon">📋</div>
+   <div class="ref-body">
+     <h3>Parcial 2 — AndesBox</h3>
+     <p>Semana 10. Caso espejo Chile-Peru: dossier con 5 documentos, extraer hallazgos, redactar memo de decision, comunicacion a clientes. Cubre RA2 + RA3. 3.0 horas, individual.</p>
+     <div class="ref-tags">
+       <a href="instrumentos/Parcial2_ADM18_AndesBox.pdf" class="tag-pdf">PDF</a>
+       <a href="instrumentos/Parcial2_ADM18_AndesBox.html" class="tag-html">HTML</a>
+       <a href="instrumentos/Parcial2_ADM18_AndesBox.md" class="tag-md">MD</a>
+     </div>
+   </div>
+ </div>
+ <div class="ref-card">
+   <div class="ref-icon">🏁</div>
+   <div class="ref-body">
+     <h3>Evaluacion Final — GlobalBox Connect</h3>
+     <p>Semana 14. Caso integrador con 8 documentos: clasificar, redactar, analizar, proponer estructura TIC. Cubre RA1-RA4. 3.0 horas, individual.</p>
+     <div class="ref-tags">
+       <span class="tag-missing">(en desarrollo)</span>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- PLO Alignment Tab -->
+<div class="tab-panel" id="tab-plo">
+ <div class="ref-card">
+   <div class="ref-icon">🔗</div>
+   <div class="ref-body">
+     <h3>PLO Alignment — CE RA3 → ADM18</h3>
+     <p>Tabla de alineacion entre el Resultado de Aprendizaje 3 del programa de Comercio Exterior (pensamiento critico en cadena logistica) y los temas, actividades, evidencias y criterios de ADM18.</p>
+     <div class="ref-tags">
+       <a href="instrumentos/PLO_Alignment_CE_RA3_ADM18.pdf" class="tag-pdf">PDF</a>
+       <a href="instrumentos/PLO_Alignment_CE_RA3_ADM18.html" class="tag-html">HTML</a>
+       <a href="instrumentos/PLO_Alignment_CE_RA3_ADM18.md" class="tag-md">MD</a>
+     </div>
+   </div>
+ </div>
+ <div class="alert alert-info" style="margin-top:var(--space-md)">
+   <strong>Nota:</strong> ADM18 contribuye a los 5 RAs del Programa de Comercio Exterior (CE RA1-RA5). Ver KNOWLEDGE_BASE.md §Relacion con los RAs del Programa para el detalle completo de contribucion y fuerza de alineacion.
+ </div>
+</div>
+
+<!-- Guias Tab -->
+<div class="tab-panel" id="tab-guias">
+ <div class="checklist-grid">
+   <div class="guide-card">
+     <h4>Checklist GTC 185 (10 criterios)</h4>
+     <ol>
+       <li>¿Tiene membrete?</li>
+       <li>¿Fecha completa?</li>
+       <li>¿Destinatario identificado?</li>
+       <li>¿Asunto claro?</li>
+       <li>¿Parrafos breves?</li>
+       <li>¿Lenguaje profesional?</li>
+       <li>¿Firma con cargo?</li>
+       <li>¿Anexos listados?</li>
+       <li>¿Copia a quien corresponda?</li>
+       <li>¿Formato consistente?</li>
+     </ol>
+   </div>
+   <div class="guide-card">
+     <h4>Convencion de nombres de archivo</h4>
+     <p style="font-family:var(--font-mono);font-size:var(--font-size-sm);background:var(--bg-page);padding:var(--space-sm);border-radius:var(--radius-sm);margin:var(--space-sm) 0">
+       TIPO_Destinatario_Asunto_FECHA_VERSION.ext
+     </p>
+     <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">Ejemplo: CORREO_ClienteMolina_RetrasoPaquete_20260711_v02.docx</p>
+   </div>
+   <div class="guide-card">
+     <h4>Estructura de carpetas</h4>
+     <ul>
+       <li><code>01_Comunicaciones/</code></li>
+       <li><code>02_Operaciones/</code></li>
+       <li><code>03_Decisiones/</code></li>
+       <li><code>04_Archivo/</code></li>
+     </ul>
+   </div>
+   <div class="guide-card">
+     <h4>Principios de IA asistida</h4>
+     <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-sm)">Basado en UNESCO (2021). Semana 12.</p>
+     <ol>
+       <li>La IA sugiere, el humano decide</li>
+       <li>Los hechos siempre vienen de fuente verificable, no de la IA</li>
+       <li>Toda modificacion de IA se registra en bitacora</li>
+       <li>El documento final es responsabilidad de quien lo firma</li>
+     </ol>
+   </div>
+   <div class="guide-card">
+     <h4>Evaluaciones del curso</h4>
+     <table style="font-size:var(--font-size-sm)">
+       <tr><th>Sem</th><th>Tipo</th><th>Que evalua</th></tr>
+       <tr><td>5</td><td>Parcial 1</td><td>RA1 + RA2</td></tr>
+       <tr><td>10</td><td>Parcial 2</td><td>RA2 + RA3</td></tr>
+       <tr><td>14</td><td>Final</td><td>RA1-RA4</td></tr>
+     </table>
+   </div>
+   <div class="guide-card">
+     <h4>Documentos del curso</h4>
+     <ul style="font-size:var(--font-size-sm)">
+       <li><a href="KNOWLEDGE_BASE.html">KNOWLEDGE_BASE.html</a> — Referencia completa legible</li>
+       <li><a href="KNOWLEDGE_BASE.md">KNOWLEDGE_BASE.md</a> — Referencia para IA</li>
+       <li><a href="PlanDeClases_ADM18_LatamBox_2026.html">Plan de Clases</a> — Plan detallado</li>
+       <li><a href="BIBLIOGRAFIA_ACTUALIZADA_ADM18.md">Bibliografia</a> — 30 fuentes actualizadas</li>
+     </ul>
+   </div>
+ </div>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion en la Organizacion</p>
+ <p>IUB / Unibarranquilla — Facultad de Ciencias Economicas y Administrativas</p>
+ <p style="margin-top:var(--space-xs)"><small>2026 · Dashboard del Instructor</small></p>
+</footer>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+function showTab(name) {
+ document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+ document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+ document.getElementById('tab-' + name).classList.add('active');
+ event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

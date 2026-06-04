@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 8 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, var(--primary) 0%, #2a3a5e 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-finding-card { background: #f0f4ff; border: 1px solid #93c5fd; border-left: 4px solid var(--info); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-finding-card h4 { color: var(--info); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-technique-card { background: #f3e8ff; border: 1px solid #c4b5fd; border-left: 4px solid #6c3a9e; padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-technique-card h4 { color: #6c3a9e; margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-dossier-table { font-size: 0.8rem; }
+  .tg-dossier-table th { background: var(--primary); color: white; padding: var(--space-xs) var(--space-sm); }
+  .tg-dossier-table td { padding: var(--space-xs) var(--space-sm); border-bottom: 1px solid var(--border); }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-finding-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18</div>
+    <h1>Semana 8 · De los datos a la decision: extrayendo hallazgos</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra3">RA3</span>
+      <span class="tg-badge-gold">3.5 h</span>
+      <span>Clase presencial · Analisis de informacion</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de aprendizaje</h2>
+    <p>Al finalizar la sesion, el estudiante:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li>Extrae informacion relevante de un dossier de 8 documentos de LatamBox para identificar problemas y tomar decisiones <em>(ISO 15489-1:2016, §8)</em>.</li>
+      <li>Diferencia claramente entre dato (numero suelto), informacion (dato contextualizado) e insight (conclusion accionable) <em>(Kahneman, 2011)</em>.</li>
+      <li>Aplica 3 tecnicas de lectura estrategica: subrayado estrategico, tabla hecho→fuente→implicacion, y diferenciacion hecho vs opinion <em>(Posner &amp; Rothbart, 2023)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar antes de clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>Dossier de 8 documentos LatamBox</strong> (1 juego por grupo):
+        <br>&nbsp;&nbsp;• 3 quejas de clientes reales simulados
+        <br>&nbsp;&nbsp;• 2 reportes de operaciones (retrasos, costos)
+        <br>&nbsp;&nbsp;• 2 facturas de flete (Miami-Bogota)
+        <br>&nbsp;&nbsp;• 1 acta de reunion anterior
+      </li>
+      <li><strong>Papelografos y marcadores</strong> (1 por grupo) — para construir la tabla de hallazgos.</li>
+      <li><strong>Tarjetas de ticket de salida</strong> (1 por estudiante).</li>
+      <li>Proyector para modelar las 3 tecnicas.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–15</td>
+        <td><strong>Entrada:</strong> 3 datos sueltos → ¿que decision?</td>
+        <td>
+          <span class="tg-note">ENGANCHE</span> Proyectar 3 datos sin contexto:<br>
+          "47 paquetes", "$1,800 USD", "12 llamadas".<br>
+          Preguntar a la clase: "Con SOLO estos 3 datos, ¿tomarian la decision de pagar un vuelo extra?"<br>
+          Discusion breve (2-3 min). La respuesta es NO — faltan fuentes, contexto, y separar hechos de opiniones.<br>
+          <span class="tg-note">TRANSICION</span> "Hoy van a aprender a convertir datos sueltos en decisiones informadas. El secreto: una tabla que conecta cada hecho con su fuente y su implicacion."
+        </td>
+      </tr>
+      <tr>
+        <td>15–40</td>
+        <td><strong>Input:</strong> 3 tecnicas de extraccion</td>
+        <td>
+          Proyectar y modelar cada tecnica con un documento de ejemplo:<br><br>
+          <strong>Tecnica 1 — Subrayado estrategico:</strong> Solo subrayar nombres propios, numeros, fechas y verbos de accion. No subrayar adjetivos ni opiniones — la memoria de trabajo procesa mejor cuando se reduce la carga irrelevante <em>(Baddeley et al., 2020)</em>. Modelar con 1 parrafo proyectado.<br>
+          <span class="tg-note">MODELAR</span> "Lean este parrafo. ¿Que subrayarian? Yo subrayo 'julio 2026', '47 paquetes', 'Miami-Bogota', 'cancelado'. No subrayo 'desastroso' ni 'increible'."<br><br>
+          <strong>Tecnica 2 — Tabla hecho→fuente→implicacion:</strong> 3 columnas <em>(ISO 15489-1:2016, §8)</em>. Ejemplo: "47 paquetes retrasados" | "Reporte operaciones #1" | "Si no se resuelve hoy, 12 clientes cancelaran".<br><br>
+          <strong>Tecnica 3 — Hecho vs opinion:</strong> "El 40% de quejas son por falta de comunicacion" = HECHO (fuente: reporte). "LatamBox tiene pesimo servicio" = OPINION.<br>
+          <span class="tg-note">CRITICO</span> Enfatizar que en el parcial se evalua EXACTAMENTE esta diferenciacion — los sistemas de gestion documental exigen que los hallazgos sean verificables y rastreables <em>(MoReq2010)</em>.
+        </td>
+      </tr>
+      <tr>
+        <td>40–50</td>
+        <td><strong>PAUSA</strong></td>
+        <td>Descanso. Preparar los grupos para el Jigsaw.</td>
+      </tr>
+      <tr>
+        <td>50–95</td>
+        <td><strong>Gabinete de crisis:</strong> Jigsaw</td>
+        <td>
+          <strong>Fase 1 — Asignacion de documentos (5 min):</strong> Grupos de 4 estudiantes. Cada miembro recibe 2 documentos del dossier (8 docs ÷ 4 miembros = 2 docs por persona). Nadie lee los 8 completos — cada uno es EXPERTO en sus 2.<br>
+          <strong>Fase 2 — Lectura individual (10 min):</strong> <span class="tg-note">SILENCIO</span> Cada estudiante lee sus 2 documentos aplicando las 3 tecnicas. Extrae minimo 1 hallazgo por documento en la tabla hecho→fuente→implicacion.<br>
+          <strong>Fase 3 — Integracion grupal (25 min):</strong> Cada miembro comparte sus hallazgos. El grupo construye UNA tabla unificada en papelografo. Discuten: ¿que hallazgos se conectan? ¿hay relaciones causales?<br>
+          <span class="tg-note">CIRCULAR</span> verificando que cada grupo tenga al menos 1 hallazgo por documento y que distingan HECHO de OPINION. Corregir en el momento si confunden: "¿Eso es un hecho o lo que alguien opina?"
+        </td>
+      </tr>
+      <tr>
+        <td>95–120</td>
+        <td><strong>Presentacion:</strong> 2 grupos</td>
+        <td>
+          <span class="tg-note">SELECCIONAR</span> 2 grupos al azar (no voluntarios — todos deben estar preparados). Cada grupo pega su papelografo y explica en 5 min:<br>
+          - ¿Cuales son los 3 hallazgos mas criticos?<br>
+          - ¿Que relaciones encontraron entre documentos?<br>
+          - ¿Como diferenciaron hechos de opiniones?<br>
+          Discusion guiada por el docente: la clase compara las tablas y discute diferencias.
+        </td>
+      </tr>
+      <tr>
+        <td>120–130</td>
+        <td><strong>Ticket de salida</strong></td>
+        <td>
+          Cada estudiante responde en una tarjeta (anonima):<br>
+          1. Un hallazgo que descubriste hoy que no esperabas.<br>
+          2. ¿Como sabes que es un hecho y no una opinion?<br>
+          <span class="tg-note">RECOGER</span> antes de que salgan. Leer 3-4 en voz alta como cierre.
+        </td>
+      </tr>
+      <tr>
+        <td>130–135</td>
+        <td><strong>Cierre</strong></td>
+        <td>
+          <span class="tg-note">RECAP</span> "Hoy aprendieron la diferencia entre dato, informacion e insight. La tabla hecho→fuente→implicacion es su herramienta para el parcial."<br>
+          <span class="tg-note">SEMANA 9</span> "La proxima semana van a usar estos mismos hallazgos para escribir un memo de decision con plan de mejora."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- ESTRUCTURA DEL DOSSIER -->
+  <div class="tg-section">
+    <h2>📁 Estructura del dossier (8 documentos)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">El docente debe conocer el contenido de cada documento para guiar la discusion. <strong>Los estudiantes NO reciben esta tabla — reciben los 8 documentos sin analisis previo.</strong></p>
+
+    <div class="table-responsive">
+    <table class="tg-dossier-table">
+      <tr><th>#</th><th>Documento</th><th>Tipo</th><th>Lo que el estudiante debe encontrar</th></tr>
+      <tr>
+        <td>1</td>
+        <td>Queja cliente — Sr. Mendez</td>
+        <td>Correo externo</td>
+        <td>Paquete 3 semanas retrasado. Cero comunicacion de LatamBox. Amenaza cancelar cuenta.</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Queja cliente — Sra. Fuentes</td>
+        <td>Correo externo</td>
+        <td>Cobro de impuestos $43 extra sin explicacion. Adjunta factura de Amazon.</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Queja cliente — Sr. Castillo</td>
+        <td>Correo externo</td>
+        <td>Caja rota, producto danado. Adjunta 3 fotos. Exige responsable.</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Reporte operaciones #1 — Retrasos</td>
+        <td>Reporte interno</td>
+        <td>Datos duros: 47 paquetes retrasados en julio, 68% por ruta Miami, 22% por aduana, 10% por clima.</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Reporte operaciones #2 — Costos</td>
+        <td>Reporte interno</td>
+        <td>Costos de reempaque, reembolsos, horas extra. Julio fue el mes mas caro del año.</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Factura flete #1 — Miami-Bogota</td>
+        <td>Comercial</td>
+        <td>$1,250 USD por vuelo charter. Recargos por combustible $180.</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Factura flete #2 — Miami-Medellin</td>
+        <td>Comercial</td>
+        <td>$980 USD por vuelo. Recargos $120. Nota: ruta compartida con otra empresa.</td>
+      </tr>
+      <tr>
+        <td>8</td>
+        <td>Acta de reunion — 15 julio 2026</td>
+        <td>Acta</td>
+        <td>Se discutio el cambio de proveedor en Peru. No se evaluaron alternativas. Decision apresurada sin datos.</td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- HALLAZGOS ESPERADOS -->
+  <div class="tg-section">
+    <h2>🔍 Hallazgos esperados — Referencia docente</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">El docente debe verificar que los estudiantes SEPAREN hecho de opinion. Estos son ejemplos de lo que deberian encontrar.</p>
+
+    <div class="tg-finding-card">
+      <h4>Ejemplo de HECHO bien formulado</h4>
+      <p>"El 40% de quejas son por falta de comunicacion" — <strong>HECHO</strong>. Fuente: reporte de operaciones #1, pagina 2. Las 3 quejas mencionan explicitamente "nadie me informo", "el sistema decia en transito", "cero actualizacion".</p>
+    </div>
+
+    <div class="tg-finding-card" style="border-left-color: var(--error);">
+      <h4 style="color: var(--error);">Ejemplo de OPINION que el estudiante NO debe registrar como hallazgo</h4>
+      <p>"LatamBox tiene pesimo servicio" — <strong>OPINION</strong>. Es un juicio de valor, no un dato verificable. El estudiante debe traducirlo a: "3 de 3 quejas recibidas en julio califican la comunicacion como insuficiente (Quejas #1, #2, #3)."</p>
+    </div>
+
+    <h3 style="margin-top:var(--space-lg);">Hallazgos minimos esperados por documento</h3>
+    <div class="tg-answer"><strong>Doc 1 (Queja Mendez):</strong> Paquete 3 semanas sin actualizacion. Cliente recurrente (6 envios/ano) amenaza cancelar. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 2 (Queja Fuentes):</strong> Cobro de impuestos $43 por encima de factura Amazon. Sin verificacion previa. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 3 (Queja Castillo):</strong> Producto danado por mala manipulacion. Evidencia fotografica. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 4 (Reporte retrasos):</strong> 47 paquetes retrasados en julio. 68% por problemas en ruta Miami. HECHO con dato numerico.</div>
+    <div class="tg-answer"><strong>Doc 5 (Reporte costos):</strong> Julio fue el mes mas caro del ano. Costos extra por reempaque + reembolsos. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 6 (Factura flete #1):</strong> Costo vuelo Miami-Bogota: $1,250 + $180 recargos. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 7 (Factura flete #2):</strong> Costo vuelo Miami-Medellin: $980 + $120 recargos. Ruta compartida. HECHO.</div>
+    <div class="tg-answer"><strong>Doc 8 (Acta reunion):</strong> Cambio de proveedor en Peru sin evaluacion de alternativas. Decision sin datos. HECHO registrado en acta.</div>
+  </div>
+
+  <div class="tg-section">
+    <h2>✅ Quiz — Respuestas (solo docente)</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Quiz de 3 preguntas aplicado en el ticket de salida o Quizizz.</p>
+
+    <div class="tg-answer"><strong>1.</strong> ¿Cual es la diferencia entre un hecho y una opinion? Da un ejemplo del dossier.<br>→ <strong>Hecho: verificable con evidencia documental, objetivo. Ej: "47 paquetes estan retrasados (Reporte #1)." Opinion: juicio de valor, subjetivo. Ej: "LatamBox es un desastre." El parcial evalua que el estudiante NO confunda opiniones con hechos.</strong></div>
+    <div class="tg-answer"><strong>2.</strong> ¿Que 3 columnas tiene la tabla de hallazgos?<br>→ <strong>1. Hecho detectado (que paso). 2. Fuente (en que documento aparece, numero y tipo). 3. Implicacion (que consecuencias tiene para la empresa).</strong></div>
+    <div class="tg-answer"><strong>3.</strong> Ordena de menor a mayor procesamiento: dato, informacion, insight.<br>→ <strong>1. Dato: numero suelto sin contexto (ej: "47"). 2. Informacion: dato contextualizado (ej: "47 paquetes retrasados en julio 2026"). 3. Insight: conclusion accionable (ej: "La ruta Miami es el cuello de botella — debemos buscar proveedor alternativo antes de agosto") <em>(Kahneman, 2011)</em>.</strong></div>
+  </div>
+
+  <div class="tg-section">
+    <h2>📊 Evaluacion</h2>
+    <p><strong>Tipo:</strong> Formativa. Producto: tabla de hallazgos en papelografo (foto).</p>
+    <p><strong>Que se evalua:</strong></p>
+    <ul style="font-size:0.85rem;padding-left:var(--space-lg);">
+      <li>Tabla de hallazgos grupal con minimo 1 hallazgo por documento (8 hallazgos minimo).</li>
+      <li>Correcta diferenciacion hecho vs opinion (se verifica en el papelografo y en la presentacion).</li>
+      <li>Ticket de salida individual.</li>
+      <li><strong>Evaluacion formativa — sin nota numerica.</strong> Es practica para el parcial 2 (semana 10); la evaluacion del procesamiento cognitivo de informacion requiere evidencia observable y rastreable <em>(Slotnick, 2023)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar analisis financiero complejo.</strong> Sin calculos de rentabilidad, EBITDA, margenes ni razones financieras. Los estudiantes solo extraen datos numericos de los documentos — no hacen calculos avanzados.</li>
+      <li>No preparar teoria de inteligencia de negocios, mineria de datos o big data. El foco es extraer significado de documentos reales con tecnicas simples.</li>
+      <li>No dar las respuestas de los hallazgos durante la actividad. El aprendizaje ocurre cuando el estudiante lucha por diferenciar hecho de opinion. Guiar con preguntas, no con respuestas.</li>
+      <li>Si un estudiante pregunta "¿esto es un hecho o una opinion?", responder: "¿Puedes senalar exactamente en que pagina del documento aparece? Si no puedes, probablemente es una opinion."</li>
+    </ul>
+  </div>
+
+  <div class="tg-section" id="bibliografia">
+    <h2>📚 Bibliografía</h2>
+    <ul style="list-style:none;padding:0;font-size:0.85rem;line-height:1.7;">
+      <li style="padding:var(--space-sm) 0;border-bottom:1px dotted var(--border);">ISO 15489-1:2016. <em>Información y documentación — Gestión de documentos — Parte 1: Conceptos y principios</em>. ISO/ICONTEC. [Norma internacional]</li>
+      <li style="padding:var(--space-sm) 0;border-bottom:1px dotted var(--border);">Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux. [Libro]</li>
+      <li style="padding:var(--space-sm) 0;border-bottom:1px dotted var(--border);">Baddeley, A., Eysenck, M.W. &amp; Anderson, M.C. (2020). <em>Memory</em> (3rd ed.). Routledge. [Libro]</li>
+      <li style="padding:var(--space-sm) 0;border-bottom:1px dotted var(--border);">Posner, M.I. &amp; Rothbart, M.K. (2023). Attention and Information Processing. <em>Annual Review of Psychology</em>. [Artículo académico]</li>
+      <li style="padding:var(--space-sm) 0;border-bottom:1px dotted var(--border);">DLM Forum. (2010). <em>MoReq2010: Modular Requirements for Records Systems</em>. DLM Forum Foundation. [Norma/Guía técnica]</li>
+      <li style="padding:var(--space-sm) 0;">Slotnick, S.D. (2023). <em>Cognitive Neuroscience of Memory</em>. Cambridge University Press. [Libro]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

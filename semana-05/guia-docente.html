@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GUIA DOCENTE — Semana 5 | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+  :root { --tg-gold: #B8860B; --tg-gold-light: #FFF8E1; --tg-border-gold: #D4A017; }
+  body { background: #fdfaf3; }
+  .tg-guide { max-width: 1100px; margin: 0 auto; padding: var(--space-md); }
+  .tg-header-card { background: linear-gradient(135deg, #7a1e1e 0%, #a52a2a 100%); color: var(--text-on-dark); padding: var(--space-lg); border-radius: var(--radius-md) var(--radius-md) 0 0; border-left: 6px solid var(--gold); }
+  .tg-header-card .tg-guide-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); font-weight: 700; }
+  .tg-header-card h1 { font-size: 1.6rem; font-weight: 800; margin: var(--space-xs) 0; color: white; }
+  .tg-header-card.eval { background: linear-gradient(135deg, #7a1e1e 0%, #a52a2a 100%); }
+  .tg-meta { display: flex; gap: var(--space-sm); flex-wrap: wrap; margin-top: var(--space-sm); }
+  .tg-section { background: var(--bg-card); border-left: 4px solid var(--tg-border-gold); padding: var(--space-lg); margin-bottom: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; box-shadow: var(--shadow-sm); }
+  .tg-section h2 { font-size: 1.1rem; font-weight: 700; color: var(--tg-gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: var(--space-md); padding-bottom: var(--space-xs); border-bottom: 2px solid var(--gold); }
+  .tg-section h3 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin: var(--space-md) 0 var(--space-sm); }
+  .tg-timeline table { font-size: 0.8rem; } .tg-timeline th:first-child { width: 70px; } .tg-timeline td:last-child { color: var(--text-secondary); }
+  .tg-note { display: inline-block; font-size: 0.7rem; background: #FFF8E1; color: #7A6000; padding: 0.15rem 0.5rem; border-radius: 3px; font-weight: 700; margin-top: 2px; }
+  .tg-note-critico { background: #fdecea; color: #c62828; }
+  .tg-answer { background: #e6f4ea; border: 1px solid #86efac; padding: var(--space-sm) var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-xs) 0; }
+  .tg-answer strong { color: var(--success); }
+  .tg-rubric { background: #f0f4ff; border: 1px solid #93c5fd; padding: var(--space-md); border-radius: var(--radius-sm); font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card { background: #fff5f5; border: 1px solid #fecaca; border-left: 4px solid var(--error); padding: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; margin: var(--space-sm) 0; }
+  .tg-problem-card h4 { color: var(--error); margin: 0 0 var(--space-xs); font-size: 0.9rem; font-weight: 700; }
+  .tg-problem-card .tg-solution { color: var(--success); font-weight: 600; }
+  .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
+  .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
+  .tg-materials { list-style: none; padding: 0; }
+  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
+  .tg-badge-eval { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: #c62828; color: white; }
+  @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-problem-card { background: #eee; } .tg-warning-box { background: #eee; } }
+</style>
+</head>
+<body>
+
+<div class="tg-guide">
+
+  <div class="tg-header-card eval">
+    <div class="tg-guide-label">GUIA DOCENTE — ADM18 · PARCIAL 1</div>
+    <h1>Semana 5 · Parcial 1: Envios del Pacifico</h1>
+    <div class="tg-meta">
+      <span class="badge badge-ra1">RA1</span>
+      <span class="badge badge-ra2">RA2</span>
+      <span class="tg-badge-eval">EVALUACION</span>
+      <span class="tg-badge-gold">3.0 h</span>
+      <span>Examen escrito · Transferencia a caso nuevo</span>
+    </div>
+  </div>
+
+  <div class="tg-section">
+    <h2>🎯 Objetivos de evaluacion</h2>
+    <p>Evaluar la transferencia de habilidades a un caso nuevo:</p>
+    <ul style="padding-left:var(--space-lg);font-size:0.9rem;">
+      <li><strong>RA1 (clasificacion):</strong> El estudiante clasifica 6 documentos por clase documental, etapa del ciclo y funcion — ahora en Envios del Pacifico (Colombia-Asia) <em>(ISO 15489-1:2016, §7; Ley 594/2000, Art. 4)</em>.</li>
+      <li><strong>RA2 (construccion):</strong> El estudiante identifica errores usando GTC 185 y reescribe documentos corrigiendolos <em>(GTC 185:2009)</em>.</li>
+      <li><strong>Transferencia:</strong> El estudiante demuestra que las habilidades de las semanas 1-4 no dependen del caso LatamBox — aplican a cualquier contexto documental empresarial <em>(Mayer, 2024; Sweller et al., 2022)</em>.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section">
+    <h2>📦 Materiales (preparar ANTES de la clase)</h2>
+    <ul class="tg-materials">
+      <li><strong>6 documentos Envios del Pacifico impresos</strong> (1 juego por estudiante). Los documentos deben estar enumerados 01 al 06. <span class="tg-note-critico">CRITICO</span> Verificar que todos los errores inyectados esten presentes en las copias impresas.</li>
+      <li>Instrumento de evaluacion impreso: <code>Parcial1_ADM18_EnviosPacifico.md</code> (1 por estudiante).</li>
+      <li>Rubricas PI1 (clasificacion) y PI2 (produccion) impresas — 1 juego para el docente.</li>
+      <li>Proyector con diapositiva de "Respuestas esperadas" para la revision colectiva.</li>
+      <li>Carpeta o sobre para que cada estudiante entregue su examen.</li>
+    </ul>
+  </div>
+
+  <div class="tg-section tg-timeline">
+    <h2>⏱️ Timeline docente (135 min)</h2>
+    <div class="table-responsive">
+    <table>
+      <tr><th>Min</th><th>Actividad</th><th>Notas para el docente</th></tr>
+      <tr>
+        <td>0–10</td>
+        <td><strong>Instrucciones y entrega</strong></td>
+        <td>
+          <span class="tg-note-critico">LEER EN VOZ ALTA</span> las instrucciones del instrumento. No asumir que leyeron. Resolver dudas de procedimiento, no de contenido.<br>
+          Distribuir: instrumento + 6 documentos a cada estudiante.<br>
+          <span class="tg-note">RECORDAR</span> "Tienen 90 minutos. La checklist GTC 185 que usamos la semana pasada esta en su memoria — no pueden sacar apuntes."<br>
+          Aclarar que los documentos pueden estar en chino mandarin (factura de Alibaba) — eso es parte de la prueba.
+        </td>
+      </tr>
+      <tr>
+        <td>10–100</td>
+        <td><strong>Parcial escrito</strong> (90 min)</td>
+        <td>
+          <span class="tg-note-critico">SILENCIO ABSOLUTO</span> El docente circula para verificar que no haya intercambio de informacion.<br>
+          Seccion A (RA1) — 45 min aprox: clasificar 6 docs por clase, etapa, funcion y componentes GTC 185 <em>(ISO 15489-1:2016, §7; GTC 185:2009)</em>.<br>
+          Seccion B (RA2) — 45 min aprox: identificar 5 errores + reescribir 1 documento completo <em>(GTC 185:2009; Cruz Mundet, 2022)</em>.<br>
+          <span class="tg-note">AVISOS DE TIEMPO</span> en minuto 30, 55, 80. "Quedan 60 min", "Quedan 35 min", "Quedan 10 min".<br>
+          <span class="tg-note">NO RESPONDER</span> preguntas de contenido durante el examen. Solo procedimiento ("¿puedo usar lapiz?", "¿es a doble cara?").
+        </td>
+      </tr>
+      <tr>
+        <td>100–110</td>
+        <td><strong>PAUSA</strong></td>
+        <td>
+          Descanso obligatorio. Los estudiantes pueden salir. <span class="tg-note">RECOGER</span> examenes antes de la pausa para evitar modificaciones durante el descanso.
+        </td>
+      </tr>
+      <tr>
+        <td>110–130</td>
+        <td><strong>Revision colectiva</strong></td>
+        <td>
+          <span class="tg-note-critico">PROYECTAR RESPUESTAS ESPERADAS</span> Devolver los examenes. Proyectar diapositiva con:<br>
+          - Clasificacion correcta de los 6 documentos en matriz.<br>
+          - Los 5 errores inyectados con su criterio GTC 185 correspondiente.<br>
+          - Ejemplo de reescritura profesional (anonimizado).<br>
+          Los estudiantes comparan con su propio examen. <span class="tg-note">NO ES NOTA FINAL</span> — la calificacion la hace el docente despues con las rubricas.
+        </td>
+      </tr>
+      <tr>
+        <td>130–135</td>
+        <td><strong>Cierre</strong></td>
+        <td>
+          Recoger todos los examenes nuevamente. <span class="tg-note">FEEDBACK</span> general: "Lo mas comun fue..." Anunciar que las notas se publicaran en la plataforma en 1 semana.<br>
+          <span class="tg-note">SEMANA 6</span> "La proxima semana arrancamos RA3: procesamiento con Excel."
+        </td>
+      </tr>
+    </table>
+    </div>
+  </div>
+
+  <!-- PROBLEMAS INYECTADOS (lo que el estudiante debe encontrar) -->
+  <div class="tg-section">
+    <h2>🔍 Problemas inyectados — SOLO DOCENTE</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Estos son los 5 errores que el estudiante debe identificar en la Seccion B del parcial. <span class="tg-note-critico">NO REVELAR ANTES NI DURANTE EL EXAMEN.</span></p>
+
+    <div class="tg-problem-card">
+      <h4>1. Factura de Alibaba en chino mandarin</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> Es una factura comercial valida aunque este en otro idioma. La clase es <em>comercial</em>, no ilegible. Los componentes clave (montos, fechas, partes) son reconocibles sin saber chino. El error seria clasificarla como "no se entiende" o ignorarla.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Factura comercial. Clase: comercial. Etapa: uso (soporte de valor para aduana y calculo de flete) <em>(Decreto 1165/2019; DIAN, 2019)</em>. Componentes: emisor (Alibaba), numeros de orden, montos en USD, fecha.</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>2. Correo de bienvenida sin membrete ni datos de contacto</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> El correo da la bienvenida a un cliente nuevo pero no incluye: nombre de la empresa (membrete), direccion, telefono, ni datos de contacto. Solo tiene el nombre "Envios del Pacifico" en la firma, sin cargo ni datos.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Error GTC 185 criterio 1 (membrete) y criterio 7 (firma con cargo y datos de contacto) <em>(GTC 185:2009; Bustelo Ruesta, 2023)</em>. Debe agregar: logo, direccion, telefono, cargo de quien firma.</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>3. Factura de flete con error aritmetico en el total</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La factura de flete maritimo lista items que suman $1,250 USD pero el total dice $1,375 USD (10% mas de lo que suma). Debe detectar la discrepancia aritmetica.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Error de contenido/veracidad. La suma de los items no coincide con el total. Debe senalar la diferencia y recalcular. El total correcto es $1,250. No es error de formato — es error de contenido.</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>4. Circular de reempaque sin fecha ni numero de version</h4>
+      <p><strong>Lo que el estudiante debe identificar:</strong> La circular que describe el nuevo procedimiento de reempaque no tiene fecha de emision ni numero de version. Si alguien la lee en 3 meses, no sabe si esta vigente.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Error GTC 185 criterio 2 (fecha completa) y falta de control de versiones <em>(GTC 185:2009; ISO 15489-1:2016, §7.2)</em>. Debe agregar: fecha (dd/mm/aaaa), version (v1.0), y vigencia.</p>
+    </div>
+
+    <div class="tg-problem-card">
+      <h4>5. Queja de cliente sin responder</h4>
+      <p><strong>Lo que el estudiante debe reescribir:</strong> El documento 06 es una queja real de un cliente (paquete llego danado). El estudiante debe redactar una respuesta profesional completa usando GTC 185. No es "identificar errores" — es construir desde cero.</p>
+      <p><span class="tg-solution">✅ Respuesta esperada:</span> Correo de respuesta que incluya: membrete, fecha, asunto claro ("Respuesta a su reclamo #XXX"), saludo personalizado, reconocimiento del problema, solucion concreta (reembolso/reemplazo), plazo, datos de contacto, firma con cargo. Tono profesional, empatico, orientado a solucion.</p>
+    </div>
+  </div>
+
+  <!-- CRITERIOS DE CALIFICACION -->
+  <div class="tg-section">
+    <h2>📊 Criterios de calificacion</h2>
+
+    <div class="tg-rubric">
+      <h3 style="margin-top:0;">Seccion A — RA1: Clasificacion documental (10 pts) <em style="font-weight:400;font-size:0.8rem;">(ISO 15489-1:2016, §7; Ley 594/2000, Art. 4)</em></h3>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Excelente (2pts)</th><th>Aceptable (1pt)</th><th>Insuficiente (0pt)</th></tr>
+        <tr>
+          <td>Clase documental</td>
+          <td>6/6 docs clasificados correctamente (comercial/admin/legal/tecnico)</td>
+          <td>4-5/6 correctos</td>
+          <td>3 o menos correctos</td>
+        </tr>
+        <tr>
+          <td>Etapa del ciclo</td>
+          <td>6/6 docs ubicados en la etapa correcta del ciclo de vida</td>
+          <td>4-5/6 correctos</td>
+          <td>3 o menos correctos</td>
+        </tr>
+        <tr>
+          <td>Funcion</td>
+          <td>Describe con precision la funcion de cada doc en el negocio</td>
+          <td>Funcion parcialmente correcta o vaga</td>
+          <td>Funcion incorrecta o ausente</td>
+        </tr>
+        <tr>
+          <td>Componentes GTC 185</td>
+          <td>Identifica 4+ componentes GTC 185 en al menos 3 documentos</td>
+          <td>Identifica 2-3 componentes en 2 docs</td>
+          <td>Menos de 2 componentes identificados</td>
+        </tr>
+        <tr>
+          <td>Factura en otro idioma</td>
+          <td>Reconoce factura comercial valida aunque este en chino</td>
+          <td>La clasifica pero duda por el idioma</td>
+          <td>La omite o la clasifica como "ilegible"</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="tg-rubric" style="margin-top:var(--space-md);">
+      <h3 style="margin-top:0;">Seccion B — RA2: Deteccion y correccion (10 pts) <em style="font-weight:400;font-size:0.8rem;">(GTC 185:2009; Bustelo Ruesta, 2023)</em></h3>
+      <table style="font-size:0.8rem;margin-top:var(--space-sm);">
+        <tr><th>Criterio</th><th>Excelente (2.5pts)</th><th>Aceptable (1.5pt)</th><th>Insuficiente (0pt)</th></tr>
+        <tr>
+          <td>Deteccion de errores</td>
+          <td>Identifica 5/5 errores inyectados con criterio GTC 185 asociado</td>
+          <td>Identifica 3-4/5 errores</td>
+          <td>2 o menos errores identificados</td>
+        </tr>
+        <tr>
+          <td>Correccion de errores</td>
+          <td>Propone correccion precisa y accionable para cada error</td>
+          <td>Correccion generica o incompleta</td>
+          <td>No propone correccion o es incorrecta</td>
+        </tr>
+        <tr>
+          <td>Reescritura (doc 06)</td>
+          <td>Respuesta profesional completa: membrete, fecha, asunto, solucion concreta, plazo, firma con cargo</td>
+          <td>Respuesta aceptable pero omite 1-2 criterios GTC 185</td>
+          <td>Respuesta informal, incompleta o ausente</td>
+        </tr>
+        <tr>
+          <td>Tono profesional</td>
+          <td>Lenguaje formal, empatico, orientado a solucion. Sin coloquialismos</td>
+          <td>Tono aceptable pero con alguna expresion informal</td>
+          <td>Tono agresivo, coloquial o ausente</td>
+        </tr>
+      </table>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:var(--space-md);"><strong>Nota total = Seccion A (10) + Seccion B (10) = 20 puntos.</strong> Escala: 0-10 = No aprueba RA, 11-14 = Aceptable, 15-17 = Bueno, 18-20 = Excelente.</p>
+  </div>
+
+  <div class="tg-section">
+    <h2>📋 Respuestas esperadas — Revision colectiva</h2>
+    <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-md);">Proyectar despues del parcial. Esto es lo que los estudiantes comparan con su propio examen.</p>
+
+    <h3>Clasificacion de los 6 documentos (Seccion A)</h3>
+    <div class="tg-answer"><strong>01 — Correo de bienvenida:</strong> Clase: Administrativo | Etapa: Creacion | Funcion: Formalizar la relacion con el cliente nuevo</div>
+    <div class="tg-answer"><strong>02 — Factura Alibaba (chino):</strong> Clase: Comercial | Etapa: Uso | Funcion: Soporte de valor para aduana y calculo de flete</div>
+    <div class="tg-answer"><strong>03 — Notificacion de recepcion:</strong> Clase: Administrativo | Etapa: Uso | Funcion: Confirmar que el paquete llego a la bodega en China</div>
+    <div class="tg-answer"><strong>04 — Factura de flete:</strong> Clase: Comercial | Etapa: Uso | Funcion: Cobrar el servicio de transporte maritimo. Contiene error aritmetico.</div>
+    <div class="tg-answer"><strong>05 — Circular de reempaque:</strong> Clase: Tecnico | Etapa: Uso | Funcion: Instruir sobre el nuevo procedimiento de reempaque. Sin fecha ni version.</div>
+    <div class="tg-answer"><strong>06 — Queja por dano:</strong> Clase: Administrativo | Etapa: Uso (activo) | Funcion: Reclamo de cliente que requiere respuesta. El estudiante debe redactarla.</div>
+  </div>
+
+  <div class="tg-warning-box">
+    <h3>⚠️ NO PREPARAR</h3>
+    <ul style="margin:0;padding-left:var(--space-lg);font-size:0.85rem;">
+      <li><strong>No preparar tema nuevo.</strong> Esta semana es solo evaluacion + feedback. Cualquier contenido nuevo desconcentra y genera ansiedad pre-examen.</li>
+      <li>No preparar "repaso general" extenso. Los estudiantes ya tuvieron 4 semanas de practica. Maximo 1 diapositiva recordatoria de los criterios GTC 185.</li>
+      <li>No dar pistas sobre los errores inyectados durante el examen. Si un estudiante pregunta "¿esto esta bien?", responder: "Eso es lo que tu debes determinar."</li>
+      <li>No calificar en el momento. La revision colectiva es formativa — la calificacion con rubrica se hace despues, en frio.</li>
+    </ul>
+  </div>
+
+
+  <div class="tg-section">
+    <h2>📚 Bibliografía</h2>
+    <ul style="padding-left:var(--space-lg);font-size:0.85rem;line-height:1.8;">
+      <li>Baddeley, A., Eysenck, M.W. &amp; Anderson, M.C. (2020). <em>Memory</em> (3.ª ed.). Routledge. [Libro]</li>
+      <li>Bustelo Ruesta, C. (2023). <em>Gestión Documental y Administración de Archivos</em>. SEDIC. [Libro]</li>
+      <li>Clark, J.M. &amp; Paivio, A. (2021). <em>Dual Coding Theory</em>. University of Western Ontario. [Paper]</li>
+      <li>Cowan, N. (2022). <em>Working Memory Capacity</em>. Psychology Press. [Paper]</li>
+      <li>Cruz Mundet, J.R. (2022). <em>Archivística: Gestión de Documentos y Administración de Archivos</em>. Alianza Editorial. [Libro]</li>
+      <li>Decreto 1080 de 2015. <em>Decreto Único Reglamentario del Sector Cultura, Parte VIII: Gestión Documental</em>. Ministerio de Cultura de Colombia. [Norma]</li>
+      <li>Decreto 1165 de 2019. <em>Régimen Aduanero Colombiano</em>. DIAN — Ministerio de Hacienda de Colombia. [Norma]</li>
+      <li>DIAN. (2019). <em>Resolución 046 de 2019: Documentación Aduanera</em>. Dirección de Impuestos y Aduanas Nacionales. [Norma]</li>
+      <li>GTC 185:2009. <em>Documentación Organizacional</em>. ICONTEC. [Norma]</li>
+      <li>ISO 9001:2015. <em>Sistemas de Gestión de la Calidad — Requisitos</em>. ISO. [Norma]</li>
+      <li>ISO 15489-1:2016. <em>Información y Documentación — Gestión de Documentos</em>. ISO. [Norma]</li>
+      <li>Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux. [Libro]</li>
+      <li>Ley 594 de 2000. <em>Ley General de Archivos</em>. Congreso de Colombia. [Norma]</li>
+      <li>Manes, F. &amp; Roca, M. (2022). <em>Procesamiento de la Información en el Aprendizaje</em>. Paidós. [Libro]</li>
+      <li>Mayer, R.E. (2024). <em>Multimedia Learning</em> (4.ª ed.). Cambridge University Press. [Libro]</li>
+      <li>NTC-ISO 10013:2021. <em>Directrices para la Información Documentada del SGC</em>. ICONTEC. [Norma]</li>
+      <li>NTC-ISO 30300:2020. <em>Información y Documentación — Vocabulario</em>. ICONTEC. [Norma]</li>
+      <li>Pardo Carrero, G. (2024). <em>Estatuto Aduanero Colombiano Comentado</em>. Universidad Externado de Colombia. [Libro]</li>
+      <li>Posner, M.I. &amp; Rothbart, M.K. (2023). <em>Attention and Information Processing</em>. MIT Press. [Paper]</li>
+      <li>ProColombia. (2024). <em>Guía Práctica para Exportar</em>. ProColombia. [Reporte]</li>
+      <li>Sweller, J., Ayres, P. &amp; Kalyuga, S. (2022). <em>Cognitive Load Theory</em>. Springer. [Libro]</li>
+    </ul>
+  </div>
+
+</div>
+
+</body>
+</html>

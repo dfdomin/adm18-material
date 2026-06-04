@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 8 — De los datos a la decision: extrayendo hallazgos | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 70px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(255, 255, 255, 0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255, 255, 255, 0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+ }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .week-progress-widget__header {
+     display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800;
+   }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255, 255, 255, 0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+   .week-progress-widget__name {
+     margin-bottom: 0.7rem;
+     border: 1px solid rgba(255, 255, 255, 0.24);
+     border-radius: 12px;
+     padding: 0.45rem 0.7rem;
+   }
+   .week-progress-widget__meta {
+     display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm);
+   }
+ }
+</style>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 8 · RA3</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../progreso.html">Mi Progreso</a>
+   <a href="../semana-08/" class="active">Semana 8</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 8 de 14</div>
+    <h1 class="week-hero__title">📊 De los datos a la decisión: extrayendo hallazgos</h1>
+    <p class="week-hero__subtitle">Dato · Información · Insight · Decisión</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra3">RA3</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 8 — De los datos a la decision: extrayendo hallazgos</h1>
+
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:var(--space-md);margin:var(--space-md) 0;border-radius:0 4px 4px 0;font-size:var(--font-size-sm)">
+   <p style="margin:0 0 8px 0;font-weight:700;color:#1a73e8;text-transform:uppercase;letter-spacing:.6px;font-size:.7rem">📋 MEMORANDO INTERNO — LATAMBOX S.A.S.</p>
+   <table style="border:none;width:100%;margin:0 0 8px 0;font-size:inherit">
+     <tr><td style="padding:2px 8px 2px 0;font-weight:600;color:#555;white-space:nowrap;width:70px">De:</td><td style="color:var(--text-primary)">Dirección de Operaciones — LatamBox S.A.S.</td></tr>
+     <tr><td style="padding:2px 8px 2px 0;font-weight:600;color:#555">Para:</td><td style="color:var(--text-primary)">Equipo de Analistas y Coordinadores / Curso ADM18 — Grupo de Aprendizaje</td></tr>
+     <tr><td style="padding:2px 8px 2px 0;font-weight:600;color:#555">Asunto:</td><td style="color:var(--text-primary)">Semana 8 — Extracción de hallazgos para la toma de decisiones operativas</td></tr>
+     <tr><td style="padding:2px 8px 2px 0;font-weight:600;color:#555">Fecha:</td><td style="color:var(--text-primary)">Semana 8 · Junio 2026 · Periodo académico 2026-1</td></tr>
+   </table>
+   <p style="margin:6px 0 0 0;color:var(--text-primary);line-height:1.6">Esta semana enfrentamos un gabinete de crisis real: 47 paquetes detenidos en Miami, 12 clientes insatisfechos y costos de almacenamiento acumulándose. No basta con <em>tener</em> documentos; hay que saber <em>leerlos</em> para extraer los hallazgos que orienten decisiones. Practicaremos tres técnicas profesionales —subrayado estratégico, tabla de hallazgos y separación hecho/opinión— aplicadas directamente al dossier de LatamBox. La capacidad de convertir datos en decisiones es el núcleo del RA3.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Proposito:</strong> El estudiante aprende a leer documentos para extraer informacion relevante para la toma de decisiones <sup><a href="#bib-kahneman" style="color:inherit">[Kahneman, 2011]</a></sup>. Diferencia dato, informacion e insight <sup><a href="#bib-iso" style="color:inherit">[ISO 15489-1:2016 §8]</a></sup>. Aplica 3 tecnicas: subrayado estrategico <sup><a href="#bib-posner" style="color:inherit">[Posner &amp; Rothbart, 2023]</a></sup>, tabla de hallazgos (hecho→fuente→implicacion) y separacion hecho vs opinion.
+ </div>
+
+ <section aria-labelledby="contenido">
+   <h2 id="contenido">🧠 Contenido — De los datos a la decisión: 3 técnicas para extraer hallazgos</h2>
+   <p>Tener documentos no es lo mismo que entenderlos. En una empresa (y en un gabinete de crisis), puedes tener correos, facturas, actas y reportes; pero si no logras convertir ese material en hallazgos claros, tus decisiones se basan en intuiciones, suposiciones o “lo último que leíste”. Estas tres técnicas te ayudan a leer con propósito: identificar lo relevante, sostenerlo con evidencia y transformar información dispersa en acciones concretas para LatamBox.</p>
+
+   <div style="background:#ffffff;border-left:6px solid #1a73e8;padding:var(--space-md);margin:var(--space-md) 0;border-radius:0 6px 6px 0;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+     <h3 style="margin-top:0">🔎 Técnica 1 — Subrayado estratégico: solo lo que afecta una decisión</h3>
+     <p>Subrayar no es “marcar mucho”: es decidir qué parte del texto cambia lo que harías después. El subrayado estratégico se basa en atención selectiva: eliges fragmentos que, si fueran verdaderos, obligarían a actuar distinto (por ejemplo: priorizar un envío, ajustar un proceso, o escalar un incidente). Esto reduce ruido y aumenta la calidad de los hallazgos porque te enfoca en variables decisionales, no en detalles decorativos. <sup><a href="#bib-posner" style="color:inherit">[Posner &amp; Rothbart, 2023]</a></sup></p>
+     <p>Ejemplo LatamBox: al leer el correo de nacionalización, no subrayes todo el mensaje. Subraya únicamente lo que cambia la decisión operativa: “47 paquetes detenidos en Miami”, “fecha de arribo estimada”, “documento faltante” o “riesgo de cobro por almacenamiento”. Con eso puedes decidir si reasignar a un analista para completar soportes hoy, si informar a clientes clave de inmediato, o si negociar una extensión con el operador.</p>
+     <p>Otro ejemplo: en una factura de flete, lo decisional no es el formato del proveedor, sino el dato que modifica costos o plazos: recargos por bodegaje, cargos por reempaque, o penalidades por demora. Cuando subrayas solo lo que afecta una decisión, el documento deja de ser “texto” y se convierte en un mapa de opciones.</p>
+   </div>
+
+   <div style="background:#ffffff;border-left:6px solid #1e8e3e;padding:var(--space-md);margin:var(--space-md) 0;border-radius:0 6px 6px 0;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+     <h3 style="margin-top:0">🧾 Técnica 2 — Tabla hallazgo: hecho → fuente → implicación</h3>
+     <p>Una tabla de hallazgos obliga a pensar como analista y no como lector pasivo. Cada fila responde tres preguntas: ¿qué es el hecho verificable?, ¿de qué documento exacto sale?, ¿qué implica para la operación o la decisión? Este formato mejora trazabilidad y control: si alguien cuestiona un hallazgo, puedes regresar al documento fuente sin “perderte” en el dossier, manteniendo un estándar de gestión documental y evidencias. <sup><a href="#bib-iso" style="color:inherit">[ISO 15489-1:2016 §8]</a></sup></p>
+     <p>Ejemplo LatamBox: “Hecho: 12 clientes llamaron por retrasos esta semana” → “Fuente: registro de llamadas / correo de quejas” → “Implicación: activar protocolo de comunicación proactiva y priorizar seguimiento de casos con riesgo de reembolso”. La tabla evita que digas “hay muchas quejas” (vago) y te obliga a registrar qué pasó, dónde está escrito y qué decisión se desprende.</p>
+     <p>Otro ejemplo: “Hecho: costo extra por almacenamiento = $320 USD” → “Fuente: factura/nota de cobro del operador” → “Implicación: evaluar costo-beneficio de despacho urgente vs. consolidación; estimar impacto en margen por envío; ajustar política de tiempos límite”. Al final, tienes una hoja que transforma documentos en decisiones defendibles.</p>
+   </div>
+
+   <div style="background:#ffffff;border-left:6px solid #f29900;padding:var(--space-md);margin:var(--space-md) 0;border-radius:0 6px 6px 0;box-shadow:0 1px 2px rgba(0,0,0,.06)">
+     <h3 style="margin-top:0">⚖️ Técnica 3 — Separar hecho de opinión (y de interpretación)</h3>
+     <p>En crisis, tendemos a mezclar hechos con interpretaciones: “esto siempre pasa”, “seguro fue culpa de aduanas”, “el proveedor es irresponsable”. Separar hecho de opinión ayuda a activar pensamiento analítico y a reducir sesgos: primero registras lo que ocurrió (observable o documentado), luego identificas quién afirma qué, y solo después construyes una explicación o decisión. <sup><a href="#bib-kahneman" style="color:inherit">[Kahneman, 2011]</a></sup></p>
+     <p>Ejemplo LatamBox: “El cliente dice que la caja llegó rota” es una afirmación del cliente (fuente: encuesta/queja), pero no prueba el estado real del paquete. El hecho verificable podría ser “hay evidencia fotográfica adjunta” o “el acta de entrega reporta daño”. Cuando separas capas, evitas decisiones erradas como culpar al transporte sin evidencia o prometer compensaciones sin soporte.</p>
+     <p>Otro ejemplo: en un acta de reunión alguien puede escribir “el retraso se debe a mala coordinación”. Eso es opinión/diagnóstico. El hecho que debes extraer es: “se enviaron soportes incompletos el martes”, “el operador solicitó documento X el miércoles”, “no hubo respuesta hasta el viernes”. Con esa línea de tiempo puedes decidir acciones correctivas (responsable, plazo, control) y consolidar el aprendizaje para que el patrón no se repita. <sup><a href="#bib-slotnick" style="color:inherit">[Slotnick, 2023]</a></sup></p>
+   </div>
+ </section>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripcion</th></tr>
+   <tr>
+     <td>0–15</td>
+     <td>Entrada: 3 datos de LatamBox</td>
+     <td>El docente proyecta 3 datos puntuales de LatamBox (ej: \"47 paquetes en Miami desde el lunes\", \"12 clientes han llamado furiosos\", \"costo de almacenamiento extra = $320 USD\"). Pregunta: ¿que decision tomarias con solo esos 3 datos? La investigacion demuestra que el Sistema 1 tiende a decidir con información incompleta <a href="#bib-kahneman" style="color:inherit">(Kahneman, 2011)</a>. Discusion en parejas.</td>
+   </tr>
+   <tr>
+     <td>15–40</td>
+     <td>Input: 3 tecnicas para extraer hallazgos</td>
+     <td>Exposicion dialogada: (1) subrayado estrategico (solo lo que afecta una decision) — activa la atencion selectiva descrita por las redes atencionales <a href="#bib-posner" style="color:inherit">(Posner &amp; Rothbart, 2023)</a>, (2) tabla de hallazgos (hecho → fuente del documento → implicacion para el negocio), tecnica que alivia la carga en la memoria de trabajo <a href="#bib-baddeley" style="color:inherit">(Baddeley et al., 2020, Cap. 3)</a>, (3) separacion hecho vs opinion (\"el cliente dice que la caja llego rota\" ≠ \"la caja llego rota\") — distincion critica en valoracion documental <a href="#bib-iso" style="color:inherit">(ISO 15489-1:2016, §8)</a>. El docente modela las 3 tecnicas con el documento de encuesta y queja.</td>
+   </tr>
+   <tr>
+     <td>40–50</td>
+     <td>Pausa activa</td>
+     <td>Cambio de grupos y estiramiento.</td>
+   </tr>
+   <tr>
+     <td>50–95</td>
+     <td>Gabinete de crisis LatamBox (actividad grupal — Jigsaw)</td>
+     <td>Cada grupo recibe un dossier de 8 documentos: 3 quejas, 2 reportes operativos, 2 facturas de flete y 1 acta de reunion anterior. Los documentos del dossier cumplen los requisitos de autenticidad e integridad establecidos para registros de negocio <a href="#bib-iso" style="color:inherit">(ISO 15489-1:2016, §8)</a> y los requisitos modulares de un sistema de gestion documental <a href="#bib-moreq" style="color:inherit">(MoReq2010)</a>. Metodo Jigsaw: (1) fase individual 10min — cada miembro lee 2 docs asignados y subraya, (2) fase grupal 25min — completan en papel periodico una tabla de hallazgos consolidada (columna hecho, columna fuente, columna implicacion).</td>
+   </tr>
+   <tr>
+     <td>95–120</td>
+     <td>Presentacion de hallazgos</td>
+     <td>2 grupos (seleccionados al azar) presentan su tabla de hallazgos. Los demas grupos comparan y anaden lo que les falto. El docente senala patrones y conexiones entre documentos — un proceso de consolidacion de memoria que refuerza la retencion del aprendizaje <a href="#bib-slotnick" style="color:inherit">(Slotnick, 2023)</a> y activa el Sistema 2 de pensamiento analitico <a href="#bib-kahneman" style="color:inherit">(Kahneman, 2011)</a>.</td>
+   </tr>
+   <tr>
+     <td>120–130</td>
+     <td>Ticket de salida</td>
+     <td>Cada estudiante escribe en un post-it: \"La decision mas urgente que tomaria basado en los hallazgos de hoy es...\" Este ejercicio metacognitivo fuerza al estudiante a cerrar el ciclo dato→informacion→insight→decision <a href="#bib-kahneman" style="color:inherit">(Kahneman, 2011)</a>, consolidando el aprendizaje a traves de la recuperacion activa <a href="#bib-baddeley" style="color:inherit">(Baddeley et al., 2020)</a>. Se pegan en la pared al salir.</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> Tabla de hallazgos grupal (foto del poster). Rubrica PI3.
+ </div>
+
+ <h2 style="margin-top:var(--space-lg)">Documentos del caso — LatamBox</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">Dossier de 8 documentos para el gabinete de crisis <sup><a href="#bib-moreq" style="color:inherit">[MoReq2010]</a></sup>. Incluye quejas, reportes operativos, facturas y un acta anterior. El documento 12 (encuesta y queja) es la entrada principal; los demas se repurposean como dossier. La lectura analitica de estos documentos activa la memoria de trabajo <sup><a href="#bib-baddeley" style="color:inherit">[Baddeley et al., 2020]</a></sup> y los procesos de consolidacion de informacion <sup><a href="#bib-slotnick" style="color:inherit">[Slotnick, 2023]</a></sup>.</p>
+ <ul class="doc-list">
+   <li class="doc-item" style="font-weight:700">
+     <span class="doc-icon">📝</span>
+     <span class="doc-name" style="font-weight:700">12 — Encuesta de satisfaccion y queja ★</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/12_encuesta_y_queja.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">03 — Factura de Amazon (dossier)</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/03_factura_amazon.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">04 — Notificacion de llegada a Miami (dossier)</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/04_notificacion_llegada.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📋</span>
+     <span class="doc-name">05 — Declaracion de valor (dossier)</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/05_declaracion_valor.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">✈️</span>
+     <span class="doc-name">06 — Guia aerea AWB (dossier)</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/06_guia_aerea_awb.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">🧾</span>
+     <span class="doc-name">07 — Factura de flete (dossier)</span>
+     <span class="doc-format">.xlsx</span>
+     <a href="../casos/latambox/07_factura_flete.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">08 — Correo de nacionalizacion (dossier)</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/08_correo_nacionalizacion.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📧</span>
+     <span class="doc-name">11 — Correo de confirmacion de entrega (dossier)</span>
+     <span class="doc-format">.eml</span>
+     <a href="../casos/latambox/11_correo_confirmacion_entrega.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+ </ul>
+
+ <h2 id="bibliografia" style="margin-top:var(--space-lg)">📚 Bibliografía</h2>
+ <ol style="font-size:var(--font-size-sm);line-height:1.8;color:var(--text-secondary)">
+   <li id="bib-baddeley">Baddeley, A., Eysenck, M. W., &amp; Anderson, M. C. (2020). <em>Memory</em> (3.ª ed.). Psychology Press. [Libro — memoria de trabajo y recuperación activa]</li>
+   <li id="bib-iso">ISO 15489-1:2016. <em>Information and documentation — Records management — Part 1: Concepts and principles</em>. §8 Appraisal. International Organization for Standardization. [Norma internacional]</li>
+   <li id="bib-kahneman">Kahneman, D. (2011). <em>Thinking, fast and slow</em>. Farrar, Straus and Giroux. [Libro — sesgos cognitivos, Sistema 1 y Sistema 2 en toma de decisiones]</li>
+   <li id="bib-moreq">MoReq2010. (2011). <em>Modular Requirements for Records Systems</em>. DLM Forum Foundation. [Estándar — requisitos modulares para sistemas de gestión documental]</li>
+   <li id="bib-posner">Posner, M. I., &amp; Rothbart, M. K. (2023). Attentional control and its development. <em>Annual Review of Developmental Psychology</em>, <em>5</em>, 1–20. [Paper — redes atencionales y lectura analítica]</li>
+   <li id="bib-slotnick">Slotnick, S. D. (2023). <em>Cognitive neuroscience of memory</em> (2.ª ed.). Cambridge University Press. [Libro — neurociencia cognitiva de la memoria y consolidación de aprendizaje]</li>
+ </ol>
+
+ <!-- Quiz -->
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-07/index.html" class="btn btn-outline" style="margin-right:var(--space-sm)">← Semana 7</a>
+ <a href="../semana-09/index.html" class="btn btn-primary">Siguiente: Semana 9 →</a>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Informacion · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<script src="../js/app.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+ const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
+ const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+ const userName = localStorage.getItem('adm18_user') || 'Estudiante ADM18';
+ const completed = Object.values(progress).filter(function(item) { return item && item.completed; }).length;
+ const pct = Math.round((completed / 14) * 100);
+ const sessionScore = scores.week_8 && typeof scores.week_8.percent === 'number'
+   ? scores.week_8.percent
+   : Math.min(100, completed * 25);
+ const heroFill = document.getElementById('week-hero-fill');
+ const widgetFill = document.getElementById('week-widget-fill');
+ const heroXp = document.getElementById('week-hero-xp');
+ const widgetXp = document.getElementById('week-widget-xp');
+ const widgetName = document.getElementById('week-widget-name');
+ if (heroFill) heroFill.style.width = pct + '%';
+ if (widgetFill) widgetFill.style.width = pct + '%';
+ if (heroXp) heroXp.textContent = sessionScore + ' / 100 pts';
+ if (widgetXp) widgetXp.textContent = sessionScore + ' XP';
+ if (widgetName) widgetName.textContent = userName;
+
+ QuizEngine.init(8, [
+   {
+     question: 'En la tabla de hallazgos, las tres columnas esenciales son:',
+     options: ['Nombre del cliente, telefono, direccion', 'Hecho, fuente del documento, implicacion para el negocio', 'Fecha, hora, lugar', 'Problema, queja, solucion'],
+     correct: 1
+   },
+   {
+     question: '¿Cual de las siguientes afirmaciones es un hecho y no una opinion?',
+     options: ['\"La caja probablemente llego rota por el mal manejo en aduana\"', '\"El cliente esta exagerando sobre el estado de la caja\"', '\"La guia aerea #AWB-4721 registra 47 paquetes en bodega Miami desde el lunes\"', '\"Seguramente los paquetes se entregaran manana\"'],
+     correct: 2
+   },
+   {
+     question: 'La tecnica de subrayado estrategico consiste en:',
+     options: ['Subrayar todo el documento con un solo color', 'Subrayar unicamente lo que afecta una decision de negocio', 'Subrayar solo los nombres propios y fechas', 'No subrayar nada y leer dos veces'],
+     correct: 1
+   },
+   {
+     question: '¿Cual es la progresion correcta de datos a decision?',
+     options: ['Decision → dato → informacion → insight', 'Dato → informacion → insight → decision', 'Insight → dato → decision → informacion', 'Informacion → decision → dato → insight'],
+     correct: 1
+   },
+   {
+     question: 'En el metodo Jigsaw aplicado al gabinete de crisis, ¿que hace cada miembro en la fase individual?',
+     options: ['Discute todos los documentos con el grupo', 'Lee 2 documentos asignados y aplica subrayado estrategico', 'Escribe el acta de la reunion', 'Presenta los hallazgos a toda la clase'],
+     correct: 1
+   }
+ ]);
+});
+</script>
+</body>
+</html>
