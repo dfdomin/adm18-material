@@ -326,11 +326,9 @@
           headers: { apikey: key, Authorization: "Bearer " + key }
         });
         if (!res.ok) {
-          res = await fetch(url + "/rest/v1/students?select=*&order=name", {
-            headers: { apikey: key, Authorization: "Bearer " + key }
-          });
+          console.warn("v_legacy_students:", res.status);
+          return false;
         }
-        if (!res.ok) return false;
         const data = await res.json();
         if (data && data.length) {
           const students = data.map(function(s) {
@@ -753,23 +751,36 @@
     }
 
     async function syncStudentsToSupabase() {
-      const url = localStorage.getItem("adm18_supabase_url");
-      const key = localStorage.getItem("adm18_supabase_key");
-      if (!url || !key) { alert("Supabase no configurado."); return; }
+      if (typeof GamifSDK === "undefined") { alert("Supabase no configurado."); return; }
       const students = getStudents();
       if (!students.length) { alert("No hay estudiantes para sincronizar."); return; }
       document.getElementById("configSummary").textContent = "Sincronizando...";
       try {
-        for (let i = 0; i < students.length; i += 200) {
-          const batch = students.slice(i, i + 200);
-          const res = await fetch(url + "/rest/v1/students", {
-            method: "POST",
-            headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
-            body: JSON.stringify(batch)
-          });
-          if (!res.ok) throw new Error("HTTP " + res.status);
-        }
-        document.getElementById("configSummary").textContent = `${students.length} estudiantes sincronizados a Supabase.`;
+        const offering = GamifSDK.getOfferingCode() || "ADM18-2026-2";
+        const payload = students.map(function(s) {
+          return {
+            cc: s.cc,
+            name: s.name,
+            grupo: s.grupo || "",
+            horario: s.horario || ""
+          };
+        });
+        const res = await fetch(GamifSDK.sbUrl() + "/rest/v1/rpc/upsert_roster_students", {
+          method: "POST",
+          headers: {
+            apikey: GamifSDK.sbKey(),
+            Authorization: "Bearer " + GamifSDK.sbKey(),
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            p_offering_code: offering,
+            p_students: payload
+          })
+        });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const count = await res.json();
+        document.getElementById("configSummary").textContent =
+          (count || students.length) + " estudiantes sincronizados a Supabase.";
       } catch(e) {
         document.getElementById("configSummary").textContent = "Error: " + e.message;
       }

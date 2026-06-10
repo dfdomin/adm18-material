@@ -57,11 +57,6 @@ async function fetchStudentsFromSupabase() {
       creds.url + "/rest/v1/v_legacy_students?select=cc,name,grupo,horario&offering_code=eq." + offering + "&order=name",
       { headers: { apikey: creds.key, Authorization: "Bearer " + creds.key } }
     );
-    if (!res.ok) {
-      res = await fetch(creds.url + "/rest/v1/students?select=*&order=name", {
-        headers: { apikey: creds.key, Authorization: "Bearer " + creds.key },
-      });
-    }
     if (!res.ok) return false;
     const data = await res.json();
     if (data && data.length) {
