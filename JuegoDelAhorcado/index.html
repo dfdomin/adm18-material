@@ -14,6 +14,11 @@
         font-family: 'Open Sans', sans-serif; font-size: .8rem; gap: .8rem; flex-wrap: wrap;
       }
       .iub-topbar a { color: var(--iub-yellow); text-decoration: none; font-weight: 700; font-size: .78rem; }
+      .iub-topbar .nav-pill {
+        display: inline-block; padding: .35rem .7rem; border-radius: 999px;
+        background: rgba(255,255,255,.12); border: 1px solid rgba(255,223,45,.45);
+        margin-left: .35rem;
+      }
       .student-bar {
         background: #fff; border-bottom: 2px solid #e0e0e0; padding: .75rem 1.2rem;
         display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
@@ -63,9 +68,9 @@
       <div class="iub-topbar">
         <span>🏫 IUB · ADM18 · Procesamiento de la Información · LatamBox</span>
         <span>
-          <a href="../dashboard/participacion.html">Participación</a>
-          &nbsp;·&nbsp;
-          <a href="../profesor.html">Docente</a>
+          <a class="nav-pill" href="../dashboard/participacion.html#live">📋 Clase en vivo</a>
+          <a class="nav-pill" href="../dashboard/participacion.html#importar-estudiantes">⚙️ Configuración</a>
+          <a class="nav-pill" href="../profesor.html">Docente</a>
         </span>
       </div>
 
