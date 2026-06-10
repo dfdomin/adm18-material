@@ -118,6 +118,19 @@ const QuizEngine = (function() {
         ADM18App.saveQuizScore(state.weekNum, score.correct, score.total);
         ADM18App.markWeekComplete(state.weekNum);
 
+        if (typeof GamifSDK !== 'undefined') {
+            var profile = ADM18App.getProfile() || {};
+            if (profile.cc || profile.id_estudiante) {
+                GamifSDK.syncAdm18Scores(
+                    ADM18App.getScores(),
+                    ADM18App.getProgress(),
+                    profile
+                ).catch(function () { /* offline */ });
+            }
+        } else if (typeof SupabaseClient !== 'undefined') {
+            SupabaseClient.syncUnsynced();
+        }
+
         render();
     }
 

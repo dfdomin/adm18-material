@@ -149,6 +149,42 @@
     return callRpc("upsert_weekly_progress", payload);
   }
 
+  async function syncWeekProgress(state, cfg, semana) {
+    var config = cfg || getConfig();
+    var week = semana || (state && state.semana);
+    if (!state || !week) return { ok: false, reason: "no_state" };
+    if (!sbUrl() || !sbKey()) return { ok: false, reason: "no_config" };
+
+    var cc = String(state.id_estudiante || state.cc || "").trim();
+    if (!cc) return { ok: false, reason: "no_cc" };
+
+    var rpc = await upsertWeeklyProgress({
+      p_offering_code: config.offeringCode,
+      p_student_id: cc,
+      p_student_name: state.nombre || state.name || "",
+      p_grupo: state.grupo || "",
+      p_horario: state.horario || "",
+      p_semana: week,
+      p_xp: Number(state.xp || 0),
+      p_quiz_score: Number(state.quiz_puntaje || state.quiz_score || 0),
+      p_quiz_answers: state.quiz_respuestas || state.quiz_answers || {},
+      p_hti_done: !!(state.hti_entregado || state.hti_done),
+      p_activity_done: !!(state.actividad_completada || state.activity_done),
+    });
+    if (rpc.ok) return rpc;
+
+    var legacy = await syncLegacyProgress(state, config);
+    var unified = await syncUnifiedProgress(state, config);
+    return {
+      ok: legacy.ok || unified.ok,
+      status: rpc.status || legacy.status || unified.status,
+      reason: rpc.ok ? undefined : "rpc_failed",
+      rpc: rpc,
+      legacy: legacy,
+      unified: unified,
+    };
+  }
+
   async function syncAdm18Scores(scores, progress, profile) {
     var cfg = getConfig();
     var cc = profile && (profile.cc || profile.id_estudiante);
@@ -341,7 +377,9 @@
       },
       body: JSON.stringify(payload),
     });
-    return { ok: res.ok, status: res.status };
+    var body = "";
+    try { body = await res.text(); } catch (e) { /* ignore */ }
+    return { ok: res.ok, status: res.status, body: body };
   }
 
   async function syncParticipation(events, offeringCode) {
@@ -456,21 +494,15 @@
 
     async function syncCloud() {
       save();
-      if (!sbUrl() || !sbKey()) {
+      var result = await syncWeekProgress(state, cfg, semana);
+      if (result.ok) {
+        msg("✅ Guardado en Supabase ☁️", "lightgreen");
+      } else if (result.reason === "no_config") {
         msg("⚠️ Supabase no configurado", "orange");
-        return;
-      }
-      msg("⏳ Sincronizando…", "#fff9c4");
-      try {
-        var legacy = await syncLegacyProgress(state, cfg);
-        var unified = await syncUnifiedProgress(state, cfg);
-        if (legacy.ok || unified.ok) {
-          msg("✅ Guardado en Supabase ☁️", "lightgreen");
-        } else {
-          msg("❌ Error " + (legacy.status || unified.status), "salmon");
-        }
-      } catch (e) {
-        msg("❌ Sin conexión. Guardado local.", "salmon");
+      } else if (result.reason === "no_cc") {
+        msg("⚠️ Configura tu cédula para sincronizar", "orange");
+      } else {
+        msg("❌ Error " + (result.status || result.reason || "sync"), "salmon");
       }
     }
 
@@ -549,6 +581,7 @@
     syncParticipation: syncParticipation,
     syncAttendanceRows: syncAttendanceRows,
     upsertWeeklyProgress: upsertWeeklyProgress,
+    syncWeekProgress: syncWeekProgress,
     syncAdm18Scores: syncAdm18Scores,
     callRpc: callRpc,
     loadProfile: loadProfile,
