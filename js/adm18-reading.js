@@ -197,6 +197,8 @@
     prepareAnchors: prepareAnchors,
     syncCloud: syncCloud,
     sessionXp: sessionXp,
+    getReadingXp: getReadingXp,
+    getQuizPercent: getQuizPercent,
     updateSessionUI: updateSessionUI,
     parseSemana: parseSemana,
   };

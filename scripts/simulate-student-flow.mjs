@@ -36,7 +36,8 @@ const MODULES = [
     name: "ADM18",
     offering: "ADM18-2026-2",
     semana: 1,
-    minXp: 80,
+    minXp: 90,
+    minReadingXp: 20,
     marker: RUN_ID + "-adm18",
     local: { root: path.resolve(__dirname, ".."), port: 8781, weekPath: "/semana-01/index.html" },
     pages: "https://dfdomin.github.io/adm18-material/semana-01/",
@@ -143,8 +144,36 @@ async function setupProfile(page) {
   }, STUDENT);
 }
 
-async function simulateAdm18Quiz(page, mod) {
-  await page.waitForFunction(() => !!window.GamifSDK, null, { timeout: 20000 });
+async function simulateAdm18Reading(page) {
+  await page.waitForFunction(
+    () => !!window.IUBAdm18Reading && !!window.IUBReadingPolicy,
+    null,
+    { timeout: 15000 },
+  );
+  await page.waitForTimeout(1200);
+  return page.evaluate(() => {
+    if (IUBAdm18Reading.prepareAnchors) IUBAdm18Reading.prepareAnchors();
+    const sections = IUBReadingPolicy.detectSections();
+    const semana = IUBAdm18Reading.parseSemana();
+    const lsKey = "adm18_s" + semana + "_reading";
+    const state = {};
+    sections.forEach((sec) => {
+      IUBAdm18Reading.award(sec);
+      state[sec.id] = true;
+    });
+    try {
+      localStorage.setItem(lsKey, JSON.stringify(state));
+    } catch (e) { /* ignore */ }
+    const granted = parseInt(localStorage.getItem("adm18_s" + semana + "_reading_xp") || "0", 10);
+    return {
+      sections: sections.length,
+      granted,
+      sectionIds: sections.map((s) => s.id),
+    };
+  });
+}
+
+async function simulateAdm18QuizOnly(page, mod) {
   await page.waitForSelector("#quiz-container .quiz-option", { timeout: 15000 });
   const options = page.locator("#quiz-container .quiz-option");
   const count = await options.count();
@@ -161,50 +190,70 @@ async function simulateAdm18Quiz(page, mod) {
   await page.locator("#quiz-container button", { hasText: "Enviar" }).click();
   await page.waitForSelector("#quiz-container .quiz-score", { timeout: 10000 });
 
-  const sync = await page.evaluate(async ({ student, semana, marker }) => {
-    if (!window.GamifSDK) return { ok: false, reason: "gamif_missing" };
-    const profile = { nombre: student.nombre, cc: student.cc, id_estudiante: student.cc, grupo: student.grupo, horario: student.horario };
-    GamifSDK.saveProfile(profile);
-
-    let xp = 80;
-    let quizScore = 4;
+  return page.evaluate(() => {
+    let quizScore = 0;
+    let quizTotal = 5;
+    let quizPercent = 0;
     const scoreEl = document.querySelector("#quiz-container .quiz-score");
     if (scoreEl && scoreEl.textContent) {
       const m = scoreEl.textContent.match(/(\d+)\s*\/\s*(\d+)/);
       if (m) {
         quizScore = parseInt(m[1], 10);
-        const total = parseInt(m[2], 10) || 5;
-        xp = Math.round((quizScore / total) * 100);
+        quizTotal = parseInt(m[2], 10) || 5;
+        quizPercent = Math.round((quizScore / quizTotal) * 100);
       }
     }
+    return { quizScore, quizTotal, quizPercent };
+  });
+}
+
+async function simulateAdm18Week(page, mod) {
+  await page.waitForFunction(() => !!window.GamifSDK, null, { timeout: 20000 });
+  const reading = await simulateAdm18Reading(page);
+  const quiz = await simulateAdm18QuizOnly(page, mod);
+  await page.waitForTimeout(1500);
+
+  const sync = await page.evaluate(async ({ student, semana, marker }) => {
+    if (!window.GamifSDK) return { ok: false, reason: "gamif_missing" };
+    const profile = {
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+    };
+    GamifSDK.saveProfile(profile);
 
     if (window.ADM18App) {
       const progress = ADM18App.getProgress() || {};
       const weekKey = "week_" + semana;
       progress[weekKey] = Object.assign(progress[weekKey] || {}, { completed: true });
-      const result = await GamifSDK.syncAdm18Scores(ADM18App.getScores(), progress, profile);
-      const scores = ADM18App.getScores();
-      if (scores[weekKey] && scores[weekKey].percent) xp = scores[weekKey].percent;
-      if (result.synced > 0) {
-        return { ok: true, xp, path: "syncAdm18Scores", activity_done: true };
-      }
+      await GamifSDK.syncAdm18Scores(ADM18App.getScores(), progress, profile);
+    }
+
+    if (window.IUBAdm18Reading) {
+      await IUBAdm18Reading.syncCloud(semana);
+      const readingXp = parseInt(localStorage.getItem("adm18_s" + semana + "_reading_xp") || "0", 10);
+      const xp = IUBAdm18Reading.sessionXp(semana);
+      return {
+        ok: true,
+        xp,
+        path: "adm18-reading+quiz",
+        reading_xp: readingXp,
+        quiz_percent: (() => {
+          try {
+            const scores = JSON.parse(localStorage.getItem("adm18_scores") || "{}");
+            const w = scores["week_" + semana];
+            return w && typeof w.percent === "number" ? w.percent : 0;
+          } catch (e) {
+            return 0;
+          }
+        })(),
+        marker,
+      };
     }
 
     const state = {
-      semana, xp, nombre: student.nombre, cc: student.cc, id_estudiante: student.cc,
-      grupo: student.grupo, horario: student.horario,
-      quiz_puntaje: quizScore,
-      quiz_respuestas: { _harness_marker: marker },
-      actividad_completada: true, activity_done: true,
-    };
-    const rpc = await GamifSDK.syncWeekProgress(state, GamifSDK.getConfig(), semana);
-    return { ok: rpc.ok, xp, path: "syncWeekProgress", status: rpc.status };
-  }, { student: STUDENT, semana: mod.semana, marker: mod.marker });
-
-  await page.waitForTimeout(1200);
-  await page.evaluate(async ({ student, semana }) => {
-    if (!window.GamifSDK) return;
-    await GamifSDK.syncWeekProgress({
       semana,
       xp: 100,
       nombre: student.nombre,
@@ -213,13 +262,15 @@ async function simulateAdm18Quiz(page, mod) {
       grupo: student.grupo,
       horario: student.horario,
       quiz_puntaje: 5,
+      quiz_respuestas: { _harness_marker: marker },
       actividad_completada: true,
       activity_done: true,
-      quiz_respuestas: { harness_final: true },
-    }, GamifSDK.getConfig(), semana);
-  }, { student: STUDENT, semana: mod.semana });
+    };
+    const rpc = await GamifSDK.syncWeekProgress(state, GamifSDK.getConfig(), semana);
+    return { ok: rpc.ok, xp: state.xp, path: "syncWeekProgress", status: rpc.status };
+  }, { student: STUDENT, semana: mod.semana, marker: mod.marker });
 
-  return sync;
+  return Object.assign(sync, { reading, quiz });
 }
 
 async function resolveWeekXpTarget(page, mod) {
@@ -342,7 +393,7 @@ async function runModule(page, mod, url) {
 
   let sim;
   if (mod.ui === "adm18-quiz") {
-    sim = await simulateAdm18Quiz(page, mod);
+    sim = await simulateAdm18Week(page, mod);
   } else {
     sim = await simulateTgaWeek(page, mod);
   }
@@ -364,10 +415,12 @@ async function runModule(page, mod, url) {
   const xpOk = Number(cloud.row.xp) >= minXp;
   const activityOk = cloud.row.activity_done === true;
   const nameOk = (cloud.row.student_name || "").toLowerCase().includes("dany");
+  const readingGranted = sim.reading?.granted ?? 0;
+  const readingOk = !mod.minReadingXp || readingGranted >= mod.minReadingXp;
 
   return {
     mod: mod.name,
-    ok: xpOk && activityOk,
+    ok: xpOk && activityOk && readingOk,
     step: "verified",
     detail: {
       xp: cloud.row.xp,
@@ -375,6 +428,8 @@ async function runModule(page, mod, url) {
       student_name: cloud.row.student_name,
       sim_path: sim.path,
       minXp,
+      minReadingXp: mod.minReadingXp,
+      reading_xp: sim.reading_xp ?? readingGranted,
       weekMax: sim.xpTarget?.weekMax,
       quiz: sim.quiz,
       reading: sim.reading,
@@ -419,7 +474,8 @@ async function main() {
   let failed = 0;
   for (const r of results) {
     if (r.ok) {
-      console.log("✅", r.mod, "— xp=" + r.detail.xp, "activity=" + r.detail.activity_done, "via", r.detail.sim_path);
+      const readInfo = r.detail.reading_xp != null ? " lectura=" + r.detail.reading_xp : "";
+      console.log("✅", r.mod, "— xp=" + r.detail.xp + readInfo, "activity=" + r.detail.activity_done, "via", r.detail.sim_path);
     } else {
       failed++;
       console.log("❌", r.mod, "—", r.step, JSON.stringify(r.detail));
