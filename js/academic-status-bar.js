@@ -62,20 +62,32 @@
 
     var summary = await IUBAcademicRules.getStudentAttendanceSummary();
     var r = summary.rules;
-    var barColor = summary.status === "lost" ? "#c62828" : summary.status === "risk" ? "#e65100" : "#2e7d32";
-    var lossPct = r.maxAbsenceHours ? Math.min(100, Math.round((summary.hoursLost / r.maxAbsenceHours) * 100)) : 0;
-
     var dashLink = "../dashboard/index.html";
     if (/\/dashboard\//.test(location.pathname)) dashLink = "index.html";
     if (/\/semana/.test(location.pathname)) dashLink = "../dashboard/index.html";
 
+    if (summary.profileRequired || summary.status === "unknown") {
+      existing.innerHTML =
+        IUBAcademicRules.gradeWeightsHtml() +
+        '<span class="iub-att-chip">ℹ️ Sin perfil · configura tu cédula en la semana para ver asistencia</span>' +
+        '<a href="' + dashLink + '">Ver dashboard</a>';
+      return;
+    }
+
+    var barColor = summary.status === "lost" ? "#c62828" : summary.status === "risk" ? "#e65100" : "#2e7d32";
+    var lossPct = r.maxAbsenceHours ? Math.min(100, Math.round((summary.hoursLost / r.maxAbsenceHours) * 100)) : 0;
+    var statusLabel = summary.status === "lost"
+      ? "🔴 Módulo perdido · " + summary.hoursLost + "/" + r.maxAbsenceHours + " h perdidas"
+      : summary.status === "risk"
+        ? "🟠 Riesgo · " + summary.hoursLost + "/" + r.maxAbsenceHours + " h perdidas"
+        : "🟢 Asistencia OK · " + summary.hoursLost + "/" + r.maxAbsenceHours + " h perdidas";
+
     existing.innerHTML =
       IUBAcademicRules.gradeWeightsHtml() +
       '<span class="iub-att-chip ' + summary.status + '">' +
-      (summary.status === "lost" ? "🔴 Módulo perdido por inasistencia" :
-        summary.status === "risk" ? "🟠 Riesgo asistencia" : "🟢 Asistencia OK") +
-      " · " + summary.hoursAttended + "/" + r.totalHours + " h" +
-      ' <span class="iub-mini-bar" title="Horas perdidas ' + summary.hoursLost + '/' + r.maxAbsenceHours + ' h">' +
+      statusLabel +
+      " · Asistidas " + summary.hoursAttended + "/" + r.totalHours + " h" +
+      ' <span class="iub-mini-bar" title="Horas perdidas ' + summary.hoursLost + '/' + r.maxAbsenceHours + ' h (límite reglamentario)">' +
       '<span style="width:' + lossPct + "%;background:" + barColor + '"></span></span>' +
       "</span>" +
       '<a href="' + dashLink + '">Ver dashboard</a>';

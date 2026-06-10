@@ -38,6 +38,17 @@
     return 0;
   }
 
+  function dedupeAttendanceRecords(records) {
+    var map = {};
+    (records || []).forEach(function (row) {
+      var id = String(row.cc || row.student_id || "").trim();
+      var fecha = String(row.fecha || "").trim();
+      if (!id || !fecha) return;
+      map[id + "|" + fecha] = row;
+    });
+    return Object.values(map);
+  }
+
   function summarizeAttendanceRecords(records, studentCc) {
     var rules = rulesConfig();
     var cc = String(studentCc || "").trim();
@@ -45,7 +56,7 @@
     var sessions = { P: 0, T: 0, F: 0, M: 0, I: 0, other: 0 };
     var count = 0;
 
-    (records || []).forEach(function (row) {
+    dedupeAttendanceRecords(records).forEach(function (row) {
       if (cc && String(row.cc || row.student_id || "").trim() !== cc) return;
       var estado = String(row.estado || "").toUpperCase();
       if (!estado || estado === "-") return;
@@ -334,15 +345,28 @@
     }
   }
 
+  function emptyAttendanceSummary(reason) {
+    var summary = summarizeAttendanceRecords([], "");
+    summary.status = "unknown";
+    summary.profileRequired = true;
+    summary.message = reason || "Configura tu cédula en el perfil del curso para ver tu asistencia.";
+    return summary;
+  }
+
   async function getStudentAttendanceSummary(studentCc, options) {
     options = options || {};
     var cfg = global.GamifSDK ? GamifSDK.getConfig() : { prefix: "adm18" };
-    var cc = studentCc || (GamifSDK && GamifSDK.loadProfile(cfg).cc) || "";
+    var profile = GamifSDK ? GamifSDK.loadProfile(cfg) : {};
+    var cc = String(studentCc || profile.cc || profile.id_estudiante || "").trim();
+    if (!cc) return emptyAttendanceSummary();
+
     var localKey = options.storageKey || (cfg.prefix + "_attendance");
     var localRecords = flattenLocalAttendance(localKey, cc);
     var cloudRecords = options.skipCloud ? [] : await fetchCloudAttendance(cc, options.offeringCode);
-    var merged = cloudRecords.length ? cloudRecords : localRecords;
-    return summarizeAttendanceRecords(merged, cc);
+    var merged = mergeAttendanceRecords(cloudRecords, localRecords);
+    var summary = summarizeAttendanceRecords(merged, cc);
+    summary.profileRequired = false;
+    return summary;
   }
 
   function gradeWeightsHtml() {
@@ -355,6 +379,14 @@
 
   function attendanceSummaryHtml(summary) {
     var s = summary || summarizeAttendanceRecords([]);
+    if (s.profileRequired || s.status === "unknown") {
+      return (
+        '<div class="iub-attendance-panel">' +
+        "<h3>ℹ️ Asistencia personal</h3>" +
+        "<p>" + (s.message || "Configura tu cédula en el perfil de cualquier semana para calcular tu asistencia.") + "</p>" +
+        "</div>"
+      );
+    }
     var rules = s.rules;
     var statusClass = s.status === "lost" ? "lost" : s.status === "risk" ? "risk" : "ok";
     var icon = s.status === "lost" ? "🔴" : s.status === "risk" ? "🟠" : "🟢";
