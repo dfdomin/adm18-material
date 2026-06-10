@@ -1,0 +1,50 @@
+name: Harness IUB (4 módulos)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/**"
+      - "js/**"
+      - "semana-**/**"
+      - "dashboard/**"
+      - ".github/workflows/harness.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "0 11 * * 1"
+
+jobs:
+  harness-pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Playwright
+        run: |
+          npm init -y >/dev/null 2>&1
+          npm install playwright@1.49.1
+          npx playwright install chromium --with-deps
+
+      - name: Esperar propagación GitHub Pages
+        run: sleep 120
+
+      - name: Verificar enlaces y scripts (Pages)
+        run: node scripts/verify-all-modules.mjs --pages
+
+      - name: Simular flujo estudiante Dany Perez (Pages)
+        run: node scripts/simulate-student-flow.mjs --pages
+
+      - name: Subir reporte harness
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-reports
+          path: scripts/harness-reports/*.json
+          if-no-files-found: ignore

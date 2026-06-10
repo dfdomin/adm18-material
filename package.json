@@ -1,0 +1,13 @@
+{
+  "name": "adm18-material-harness",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "harness:verify": "node scripts/verify-all-modules.mjs --pages",
+    "harness:sim": "node scripts/simulate-student-flow.mjs --pages",
+    "harness": "npm run harness:verify && npm run harness:sim"
+  },
+  "devDependencies": {
+    "playwright": "1.49.1"
+  }
+}

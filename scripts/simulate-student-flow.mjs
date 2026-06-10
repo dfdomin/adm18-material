@@ -36,7 +36,7 @@ const MODULES = [
     name: "ADM18",
     offering: "ADM18-2026-2",
     semana: 1,
-    minXp: 20,
+    minXp: 80,
     marker: RUN_ID + "-adm18",
     local: { root: path.resolve(__dirname, ".."), port: 8781, weekPath: "/semana-01/index.html" },
     pages: "https://dfdomin.github.io/adm18-material/semana-01/",
@@ -47,7 +47,8 @@ const MODULES = [
     name: "TGA04",
     offering: "TGA04-2026-2",
     semana: 1,
-    minXp: 10,
+    minXp: 80,
+    minXpRatio: 0.8,
     marker: RUN_ID + "-tga04",
     local: { root: "/Users/diegodomingueztapia/code/tga04-neurobiz", port: 8782, weekPath: "/semana1/index.html" },
     pages: "https://dfdomin.github.io/tga04-neurobiz/semana1/",
@@ -57,7 +58,8 @@ const MODULES = [
     name: "TGA05",
     offering: "TGA05-2026-2",
     semana: 1,
-    minXp: 10,
+    minXp: 80,
+    minXpRatio: 0.8,
     marker: RUN_ID + "-tga05",
     local: { root: "/Users/diegodomingueztapia/code/tga05-neurobiz", port: 8783, weekPath: "/semana1/index.html" },
     pages: "https://dfdomin.github.io/tga05-neurobiz/semana1/",
@@ -67,7 +69,8 @@ const MODULES = [
     name: "TD",
     offering: "TD-2026-2",
     semana: 1,
-    minXp: 10,
+    minXp: 80,
+    minXpRatio: 0.8,
     marker: RUN_ID + "-td",
     local: { root: "/Users/diegodomingueztapia/Library/CloudStorage/OneDrive-Unibarranquilla/DiegoIcloud/2026/copilot/TD", port: 8784, weekPath: "/semana1/index.html" },
     pages: "https://dfdomin.github.io/td-inteligencia-negocios/semana1/",
@@ -97,7 +100,23 @@ async function fetchCloudRow(offering, semana, studentId) {
   return { row: rows[0] || null };
 }
 
-async function setupProfile(page, mod) {
+async function installStudentContext(page) {
+  await page.addInitScript((student) => {
+    const profile = {
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+    };
+    localStorage.setItem("adm18_user", JSON.stringify({ nombre: student.nombre, cc: student.cc }));
+    localStorage.setItem("tga04_global", JSON.stringify(profile));
+    localStorage.setItem("tga05_global", JSON.stringify(profile));
+    localStorage.setItem("td_global", JSON.stringify(profile));
+  }, STUDENT);
+}
+
+async function setupProfile(page) {
   await page.evaluate((student) => {
     if (window.GamifSDK) {
       GamifSDK.saveProfile({
@@ -108,10 +127,19 @@ async function setupProfile(page, mod) {
         horario: student.horario,
       });
     }
+    const profile = {
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+    };
     localStorage.setItem("adm18_user", JSON.stringify({ nombre: student.nombre, cc: student.cc }));
-    localStorage.setItem("tga04_global", JSON.stringify({ nombre: student.nombre, cc: student.cc, grupo: student.grupo, horario: student.horario }));
-    localStorage.setItem("tga05_global", JSON.stringify({ nombre: student.nombre, cc: student.cc, grupo: student.grupo, horario: student.horario }));
-    localStorage.setItem("td_global", JSON.stringify({ nombre: student.nombre, cc: student.cc, grupo: student.grupo, horario: student.horario }));
+    localStorage.setItem("tga04_global", JSON.stringify(profile));
+    localStorage.setItem("tga05_global", JSON.stringify(profile));
+    localStorage.setItem("td_global", JSON.stringify(profile));
+    const overlay = document.getElementById("pt-overlay");
+    if (overlay) overlay.style.display = "none";
   }, STUDENT);
 }
 
@@ -151,11 +179,15 @@ async function simulateAdm18Quiz(page, mod) {
     }
 
     if (window.ADM18App) {
-      const result = await GamifSDK.syncAdm18Scores(ADM18App.getScores(), ADM18App.getProgress(), profile);
-      const scores = ADM18App.getScores();
+      const progress = ADM18App.getProgress() || {};
       const weekKey = "week_" + semana;
+      progress[weekKey] = Object.assign(progress[weekKey] || {}, { completed: true });
+      const result = await GamifSDK.syncAdm18Scores(ADM18App.getScores(), progress, profile);
+      const scores = ADM18App.getScores();
       if (scores[weekKey] && scores[weekKey].percent) xp = scores[weekKey].percent;
-      if (result.synced > 0) return { ok: true, xp, path: "syncAdm18Scores" };
+      if (result.synced > 0) {
+        return { ok: true, xp, path: "syncAdm18Scores", activity_done: true };
+      }
     }
 
     const state = {
@@ -169,23 +201,92 @@ async function simulateAdm18Quiz(page, mod) {
     return { ok: rpc.ok, xp, path: "syncWeekProgress", status: rpc.status };
   }, { student: STUDENT, semana: mod.semana, marker: mod.marker });
 
+  await page.waitForTimeout(1200);
+  await page.evaluate(async ({ student, semana }) => {
+    if (!window.GamifSDK) return;
+    await GamifSDK.syncWeekProgress({
+      semana,
+      xp: 100,
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+      quiz_puntaje: 5,
+      actividad_completada: true,
+      activity_done: true,
+      quiz_respuestas: { harness_final: true },
+    }, GamifSDK.getConfig(), semana);
+  }, { student: STUDENT, semana: mod.semana });
+
   return sync;
 }
 
+async function resolveWeekXpTarget(page, mod) {
+  const target = await page.evaluate(() => {
+    const el = document.getElementById("xpCount");
+    if (el && el.parentElement) {
+      const m = (el.parentElement.textContent || "").match(/\/\s*(\d+)\s*pts/i);
+      if (m) return parseInt(m[1], 10);
+    }
+    const pt = document.getElementById("pt-xp-count");
+    if (pt) {
+      const m2 = (pt.textContent || "").match(/(\d+)\s*\/\s*(\d+)/);
+      if (m2) return parseInt(m2[2], 10);
+    }
+    return 100;
+  });
+  const ratio = mod.minXpRatio || 0.8;
+  return { weekMax: target, minXp: Math.round(target * ratio) };
+}
+
+async function simulateTgaFullQuiz(page) {
+  const questions = page.locator(".quiz-q");
+  const total = await questions.count();
+  if (!total) return { answered: 0, total: 0, quizScore: 0 };
+
+  let answered = 0;
+  let quizScore = 0;
+  for (let i = 0; i < total; i++) {
+    const q = questions.nth(i);
+    const answerText = await q.locator(".quiz-answer").innerText().catch(() => "");
+    const m = answerText.match(/✅\s*([a-d])/i);
+    const idx = m ? ["a", "b", "c", "d"].indexOf(m[1].toLowerCase()) : 0;
+    const option = q.locator("li").nth(Math.max(idx, 0));
+    if (await option.count()) {
+      await option.click({ timeout: 8000 });
+      answered++;
+      if (idx >= 0) quizScore++;
+      await page.waitForTimeout(350);
+    }
+  }
+  return { answered, total, quizScore };
+}
+
+async function simulateReadingXp(page) {
+  await page.waitForFunction(() => !!window.IUBReadingPolicy && typeof window.PT !== "undefined", null, { timeout: 8000 }).catch(() => {});
+  return page.evaluate(() => {
+    const sections = window.IUBReadingPolicy
+      ? IUBReadingPolicy.detectSections()
+      : [];
+    let granted = 0;
+    if (typeof window.PT !== "undefined" && PT.addXP) {
+      sections.forEach((sec) => {
+        PT.addXP(sec.xp, "Lectura: " + sec.label);
+        granted += sec.xp;
+      });
+    }
+    return { sections: sections.length, granted };
+  });
+}
+
 async function simulateTgaWeek(page, mod) {
-  const quizLi = page.locator(".quiz-q li").first();
-  if (await quizLi.count()) {
-    await quizLi.click();
-    await page.waitForTimeout(400);
-  }
+  const xpTarget = await resolveWeekXpTarget(page, mod);
+  const quiz = await simulateTgaFullQuiz(page);
+  const reading = await simulateReadingXp(page);
+  await page.waitForTimeout(1500);
 
-  const saveBtn = page.locator("#pt-btn-save, button:has-text('Guardar')").first();
-  if (await saveBtn.count()) {
-    await saveBtn.click();
-    await page.waitForTimeout(1200);
-  }
-
-  const sync = await page.evaluate(async ({ student, semana, marker, minXp }) => {
+  const sync = await page.evaluate(async ({ student, semana, marker, minXp, quizScore, quizTotal }) => {
     if (!window.GamifSDK) return { ok: false, reason: "no_gamif_sdk" };
     const cfg = GamifSDK.getConfig();
     let xp = minXp;
@@ -199,28 +300,45 @@ async function simulateTgaWeek(page, mod) {
       st.horario = student.horario;
       st.actividad_completada = true;
       st.activity_done = true;
+      st.quiz_puntaje = quizScore || st.quiz_puntaje || 0;
       st.quiz_respuestas = Object.assign(st.quiz_respuestas || {}, { _harness_marker: marker });
       if (PT.save) PT.save();
       if (PT.sync) await PT.sync();
+      xp = Math.max(st.xp || 0, xp);
     }
     const state = {
       semana, xp, nombre: student.nombre, cc: student.cc, id_estudiante: student.cc,
       grupo: student.grupo, horario: student.horario,
-      quiz_puntaje: 1, quiz_respuestas: { _harness_marker: marker },
+      quiz_puntaje: quizScore || quizTotal || 0,
+      quiz_respuestas: { _harness_marker: marker },
       actividad_completada: true, activity_done: true,
     };
     const rpc = await GamifSDK.syncWeekProgress(state, cfg, semana);
-    return { ok: rpc.ok, xp, path: "syncWeekProgress", status: rpc.status, module: cfg.moduleCode };
-  }, { student: STUDENT, semana: mod.semana, marker: mod.marker, minXp: mod.minXp });
+    return {
+      ok: rpc.ok,
+      xp,
+      path: "syncWeekProgress",
+      status: rpc.status,
+      module: cfg.moduleCode,
+      weekMax: minXp,
+    };
+  }, {
+    student: STUDENT,
+    semana: mod.semana,
+    marker: mod.marker,
+    minXp: xpTarget.minXp,
+    quizScore: quiz.quizScore,
+    quizTotal: quiz.total,
+  });
 
-  return sync;
+  return Object.assign(sync, { quiz, reading, xpTarget });
 }
 
 async function runModule(page, mod, url) {
   console.log("\n▶ " + mod.name + " → " + url);
   await page.goto(url, { waitUntil: "domcontentloaded", timeout: 30000 });
   await page.waitForFunction(() => !!window.GamifSDK, null, { timeout: 20000 });
-  await setupProfile(page, mod);
+  await setupProfile(page);
 
   let sim;
   if (mod.ui === "adm18-quiz") {
@@ -242,7 +360,8 @@ async function runModule(page, mod, url) {
     return { mod: mod.name, ok: false, step: "supabase_row", detail: "sin fila" };
   }
 
-  const xpOk = Number(cloud.row.xp) >= mod.minXp;
+  const minXp = sim.xpTarget?.minXp ?? mod.minXp;
+  const xpOk = Number(cloud.row.xp) >= minXp;
   const activityOk = cloud.row.activity_done === true;
   const nameOk = (cloud.row.student_name || "").toLowerCase().includes("dany");
 
@@ -255,6 +374,10 @@ async function runModule(page, mod, url) {
       activity_done: cloud.row.activity_done,
       student_name: cloud.row.student_name,
       sim_path: sim.path,
+      minXp,
+      weekMax: sim.xpTarget?.weekMax,
+      quiz: sim.quiz,
+      reading: sim.reading,
       nameOk,
     },
   };
@@ -275,6 +398,7 @@ async function main() {
 
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
+  await installStudentContext(page);
 
   for (const mod of MODULES) {
     const url =
