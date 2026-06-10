@@ -51,7 +51,10 @@
     .att-btn.p { background:#e8f5e9; color:#1b5e20; border-color:#a5d6a7; }
     .att-btn.t { background:#fff3e0; color:#e65100; border-color:#ffb74d; }
     .att-btn.f { background:#ffebee; color:#b71c1c; border-color:#ef9a9a; }
+    .att-btn.m { background:#e3f2fd; color:#0d47a1; border-color:#90caf9; }
+    .att-btn.i { background:#f3e5f5; color:#4a148c; border-color:#ce93d8; }
     .att-btn.sel { box-shadow:0 0 0 2px var(--primary); }
+    .att-actions { display:flex; flex-wrap:wrap; gap:.2rem; }
     .chips { display:flex; gap:.25rem; flex-wrap:wrap; }
     .chip { border-radius:999px; border:1px solid var(--border); padding:.12rem .45rem; font-size:.7rem; font-weight:800; }
     .chip.p { background:#e8f5e9; color:#1b5e20; }
@@ -138,12 +141,18 @@
           <div class="metric"><span>Presentes hoy</span><strong id="mAttPresent">0</strong></div>
           <div class="metric"><span>Tardanza</span><strong id="mAttLate">0</strong></div>
           <div class="metric"><span>Ausentes</span><strong id="mAttAbsent">0</strong></div>
+          <div class="metric"><span>Motivo</span><strong id="mAttMotivo">0</strong></div>
+          <div class="metric"><span>Incapacitado</span><strong id="mAttIncap">0</strong></div>
           <div class="metric"><span>% Asistencia</span><strong id="mAttPct">0%</strong></div>
         </div>
         <div class="panel">
           <div class="toolbar">
             <div><label for="attGroup">Grupo</label><select id="attGroup" onchange="renderAttendance()"><option value="">Todos</option></select></div>
-            <div><label for="attDate">Fecha</label><input id="attDate" type="date" onchange="renderAttendance()"></div>
+            <div><label for="attDate">Fecha de clase</label>
+              <input id="attDate" type="date" onchange="updateAttDateHint(); renderAttendance();">
+              <button type="button" class="btn-sm btn-gold" style="margin-top:.35rem" onclick="useClassSessionDate()">Usar jueves de esta semana</button>
+            </div>
+            <div style="grid-column:1/-1"><p id="attDateHint" class="msg" style="min-height:1rem;margin:0"></p></div>
             <div><label for="attSearch">Buscar</label><input id="attSearch" placeholder="Nombre o CC" oninput="renderAttendance()"></div>
           </div>
           <div class="actions-row">
@@ -254,15 +263,19 @@
     const STORAGE_ATT_LOG = "adm18_attendance_log_v1";
     const STORAGE_TODAY_PTS = "adm18_today_points";
     const STORAGE_CLOUD_REPORT = "adm18_attendance_cloud_report";
+    const STORAGE_CLASS_META = "adm18_class_meta_v1";
+    const ATT_CODES = ["P", "T", "F", "M", "I"];
 
     let currentTab = "live";
     let importedData = null;
+    let lastImportMeta = null;
 
     function unlock() {
       if (document.getElementById("pin").value.trim() !== "sasadfgh2019") return alert("PIN incorrecto");
       document.getElementById("login").hidden = true;
       document.getElementById("app").hidden = false;
-      document.getElementById("attDate").value = todayStr();
+      document.getElementById("attDate").value = classSessionDate();
+      updateAttDateHint();
       wireLiveActions();
       init();
       showTab(tabFromHash());
@@ -270,6 +283,78 @@
 
     function todayStr() {
       return new Date().toISOString().slice(0, 10);
+    }
+
+    function getClassMeta() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_CLASS_META) || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    function setClassMeta(meta) {
+      localStorage.setItem(STORAGE_CLASS_META, JSON.stringify(meta || {}));
+    }
+
+    function classWeekday() {
+      const meta = getClassMeta();
+      return typeof meta.weekday === "number" ? meta.weekday : 4;
+    }
+
+    function classDayLabel() {
+      const meta = getClassMeta();
+      return meta.dayLabel || "JUEVES";
+    }
+
+    function classSessionDate(refDate) {
+      const target = classWeekday();
+      const d = refDate ? new Date(refDate) : new Date();
+      const day = d.getDay();
+      const mondayOffset = day === 0 ? -6 : 1 - day;
+      const monday = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      monday.setDate(monday.getDate() + mondayOffset);
+      const session = new Date(monday);
+      session.setDate(monday.getDate() + (target === 0 ? 6 : target - 1));
+      return session.toISOString().slice(0, 10);
+    }
+
+    function isClassSessionDate(dateStr) {
+      if (!dateStr) return false;
+      const parts = dateStr.split("-");
+      const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12);
+      return d.getDay() === classWeekday();
+    }
+
+    function formatDateEs(dateStr) {
+      if (!dateStr) return "";
+      const parts = dateStr.split("-");
+      const d = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]), 12);
+      return d.toLocaleDateString("es-CO", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+    }
+
+    function updateAttDateHint() {
+      const el = document.getElementById("attDateHint");
+      if (!el) return;
+      const label = classDayLabel();
+      const dateVal = document.getElementById("attDate").value;
+      const suggested = classSessionDate();
+      const horario = getClassMeta().horario || label;
+      if (isClassSessionDate(dateVal)) {
+        el.textContent = "Sesión de clase: " + formatDateEs(dateVal) + " (" + horario + ").";
+        el.className = "msg ok";
+      } else {
+        el.textContent = "Este curso es los " + label + " (" + horario + "). Fecha sugerida: " + formatDateEs(suggested) + ".";
+        el.className = "msg err";
+      }
+    }
+
+    function useClassSessionDate() {
+      document.getElementById("attDate").value = classSessionDate();
+      updateAttDateHint();
+      renderAttendance();
+    }
+
+    function updateClassDayButtonLabel() {
+      const btn = document.querySelector("button[onclick='useClassSessionDate()']");
+      if (btn) btn.textContent = "Usar " + classDayLabel().toLowerCase() + " de esta semana";
     }
 
     function nowISO() {
@@ -386,6 +471,11 @@
     function esc(s) { return String(s ?? "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[m])); }
 
     function init() {
+      if (!getClassMeta().weekday && getClassMeta().weekday !== 0) {
+        setClassMeta({ weekday: 4, dayLabel: "JUEVES", horario: "JUEVES" });
+      }
+      updateClassDayButtonLabel();
+      updateAttDateHint();
       fetchStudentsFromSupabase().finally(function() {
         fillGroupSelect("liveGroup");
         fillGroupSelect("attGroup");
@@ -576,7 +666,14 @@
       if (estado === "P") return "Presente";
       if (estado === "T") return "Tardanza";
       if (estado === "F") return "Ausente";
+      if (estado === "M") return "Motivo";
+      if (estado === "I") return "Incapacitado";
       return estado;
+    }
+
+    function attExportCode(v) {
+      if (v === "P" || v === "T" || v === "F" || v === "M" || v === "I") return v;
+      return "-";
     }
 
     // ── TAB: Asistencia ─────────────────────────────────────
@@ -610,11 +707,15 @@
       const pCount = dayValues.filter(v => v === "P").length;
       const tCount = dayValues.filter(v => v === "T").length;
       const fCount = dayValues.filter(v => v === "F").length;
+      const mCount = dayValues.filter(v => v === "M").length;
+      const iCount = dayValues.filter(v => v === "I").length;
       const total = filtered.length || 1;
 
       document.getElementById("mAttPresent").textContent = pCount;
       document.getElementById("mAttLate").textContent = tCount;
       document.getElementById("mAttAbsent").textContent = fCount;
+      document.getElementById("mAttMotivo").textContent = mCount;
+      document.getElementById("mAttIncap").textContent = iCount;
       document.getElementById("mAttPct").textContent = Math.round(pCount / total * 100) + "%";
 
       document.getElementById("attRows").innerHTML = filtered.map(s => {
@@ -626,9 +727,13 @@
           <td>${esc(s.cc)}</td>
           <td>${esc(s.grupo || "-")}</td>
           <td>
-            <button type="button" class="att-btn p${state==='P'?' sel':''}" onclick="setAtt('${ccSafe}','P')">Presente</button>
-            <button type="button" class="att-btn t${state==='T'?' sel':''}" onclick="setAtt('${ccSafe}','T')">Tarde</button>
-            <button type="button" class="att-btn f${state==='F'?' sel':''}" onclick="setAtt('${ccSafe}','F')">Ausente</button>
+            <div class="att-actions">
+              <button type="button" class="att-btn p${state==='P'?' sel':''}" onclick="setAtt('${ccSafe}','P')">Presente</button>
+              <button type="button" class="att-btn t${state==='T'?' sel':''}" onclick="setAtt('${ccSafe}','T')">Tarde</button>
+              <button type="button" class="att-btn f${state==='F'?' sel':''}" onclick="setAtt('${ccSafe}','F')">Ausente</button>
+              <button type="button" class="att-btn m${state==='M'?' sel':''}" onclick="setAtt('${ccSafe}','M')">Motivo</button>
+              <button type="button" class="att-btn i${state==='I'?' sel':''}" onclick="setAtt('${ccSafe}','I')">Incap.</button>
+            </div>
           </td>
           <td>${pct}%</td>
         </tr>`;
@@ -636,7 +741,7 @@
     }
 
     function setAtt(cc, state) {
-      const date = document.getElementById("attDate").value || todayStr();
+      const date = document.getElementById("attDate").value || classSessionDate();
       const att = getAttendance();
       if (!att[date]) att[date] = {};
       const current = attStateValue(att[date][cc]);
@@ -662,10 +767,11 @@
         : `${attLabel(next)} registrado a las ${new Date(ts).toLocaleTimeString()}.`;
       document.getElementById("attMsg").className = "msg ok";
       renderAttendance();
+      updateAttDateHint();
     }
 
     function markAllAttendance(state) {
-      const date = document.getElementById("attDate").value || todayStr();
+      const date = document.getElementById("attDate").value || classSessionDate();
       const students = getStudents();
       const group = document.getElementById("attGroup").value;
       let filtered = students;
@@ -690,11 +796,12 @@
       document.getElementById("attMsg").textContent = `${attLabel(state)} masivo: ${filtered.length} estudiantes (${new Date(ts).toLocaleString()}).`;
       document.getElementById("attMsg").className = "msg ok";
       renderAttendance();
+      updateAttDateHint();
     }
 
     function clearTodayAtt() {
       if (!confirm("Limpiar asistencia de esta fecha?")) return;
-      const date = document.getElementById("attDate").value || todayStr();
+      const date = document.getElementById("attDate").value || classSessionDate();
       const att = getAttendance();
       delete att[date];
       setAttendance(att);
@@ -708,7 +815,7 @@
       let total = 0, present = 0;
       for (const d of dates) {
         const v = attStateValue((att[d] || {})[cc]);
-        if (v !== undefined && v !== "-") {
+        if (v === "P" || v === "T" || v === "F") {
           total++;
           if (v === "P") present++;
         }
@@ -727,9 +834,9 @@
         let p = 0, t = 0;
         for (const d of dates) {
           const v = attStateValue((att[d] || {})[s.cc]);
-          row.push(v === "P" ? "P" : v === "T" ? "T" : v === "F" ? "F" : "-");
+          row.push(attExportCode(v));
           if (v === "P") p++;
-          else if (v !== "-") t++;
+          else if (v === "T" || v === "F") t++;
         }
         row.push(dates.length ? Math.round(p / dates.length * 100) + "%" : "");
         rows.push(row);
@@ -748,7 +855,7 @@
         let p = 0;
         for (const d of dates) {
           const v = attStateValue((att[d] || {})[s.cc]);
-          row.push(v === "P" ? "P" : v === "T" ? "T" : v === "F" ? "F" : "-");
+          row.push(attExportCode(v));
           if (v === "P") p++;
         }
         row.push(dates.length ? Math.round(p / dates.length * 100) + "%" : "");
@@ -986,8 +1093,10 @@
       }
 
       importedData = students;
+      lastImportMeta = result.meta;
       const groupLabel = result.meta.grupo ? ` (${result.meta.grupo})` : "";
-      msg.textContent = `${students.length} estudiantes detectados${groupLabel} desde ${sourceLabel}.`;
+      const dayLabel = result.meta.dayLabel ? ` · Clase: ${result.meta.dayLabel}` : "";
+      msg.textContent = `${students.length} estudiantes detectados${groupLabel}${dayLabel} desde ${sourceLabel}.`;
       msg.className = "msg ok";
       const preview = document.getElementById("importPreview");
       preview.hidden = false;
@@ -1006,6 +1115,18 @@
       }
       const final = [...byCC.values()];
       setStudents(final);
+      if (lastImportMeta) {
+        setClassMeta({
+          weekday: lastImportMeta.weekday,
+          dayLabel: lastImportMeta.dayLabel || "JUEVES",
+          horario: lastImportMeta.horario || lastImportMeta.dayLabel || "JUEVES",
+          grupo: lastImportMeta.grupo || ""
+        });
+        document.getElementById("attDate").value = classSessionDate();
+        updateAttDateHint();
+        updateClassDayButtonLabel();
+        lastImportMeta = null;
+      }
       importedData = null;
       document.getElementById("importPreview").hidden = true;
       document.getElementById("importActions").hidden = true;

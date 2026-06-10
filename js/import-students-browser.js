@@ -12,6 +12,35 @@
     return compact ? compact[0].trim() : "";
   }
 
+  function detectClassSchedule(text) {
+    const normalized = String(text ?? "").normalize("NFC").replace(/\u00a0/g, " ");
+    const upper = normalized.toUpperCase();
+    const dayMap = [
+      ["DOMINGO", 0],
+      ["LUNES", 1],
+      ["MARTES", 2],
+      ["MIÉRCOLES", 3],
+      ["MIERCOLES", 3],
+      ["JUEVES", 4],
+      ["VIERNES", 5],
+      ["SÁBADO", 6],
+      ["SABADO", 6],
+    ];
+    for (let i = 0; i < dayMap.length; i += 1) {
+      const label = dayMap[i][0];
+      const weekday = dayMap[i][1];
+      if (upper.includes(label)) {
+        const horarioMatch = normalized.match(new RegExp(label + "[^\\n]{0,48}", "i"));
+        return {
+          horario: horarioMatch ? cleanSpaces(horarioMatch[0]) : label,
+          weekday: weekday,
+          dayLabel: label.replace("MIÉRCOLES", "MIERCOLES").replace("SÁBADO", "SABADO"),
+        };
+      }
+    }
+    return { horario: "JUEVES", weekday: 4, dayLabel: "JUEVES" };
+  }
+
   function uniqueStudents(students) {
     const byDocument = new Map();
     for (const student of students) {
@@ -24,7 +53,13 @@
   function parseAcademusoftStudents(rawText) {
     const text = String(rawText ?? "").normalize("NFC").replace(/\u00a0/g, " ");
     const lines = text.split(/\r?\n/).map(cleanSpaces).filter(Boolean);
-    const meta = { grupo: detectGroup(text), horario: "" };
+    const schedule = detectClassSchedule(text);
+    const meta = {
+      grupo: detectGroup(text),
+      horario: schedule.horario,
+      weekday: schedule.weekday,
+      dayLabel: schedule.dayLabel,
+    };
     const students = [];
     const unmatched = [];
     const documentRow = new RegExp(`^\\s*\\d+\\s+(${DOCUMENT_TYPES})\\s*-\\s*(\\d{5,12})\\s+\\d{1,12}\\s+(.+?)\\s*$`, "iu");

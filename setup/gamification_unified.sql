@@ -151,7 +151,7 @@ create table if not exists public.enrollment_attendance (
   enrollment_id uuid not null references public.enrollments(id) on delete cascade,
   offering_id uuid not null references public.course_offerings(id) on delete cascade,
   fecha date not null,
-  estado text not null check (estado in ('P', 'T', 'F')),
+  estado text not null check (estado in ('P', 'T', 'F', 'M', 'I')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   unique (enrollment_id, fecha)
