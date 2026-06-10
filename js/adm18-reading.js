@@ -179,15 +179,29 @@
     });
   }
 
+  async function hydrateFromCloud(semana) {
+    if (!global.GamifSDK || !GamifSDK.isCloudDirectMode()) return;
+    var profile = global.ADM18App ? (ADM18App.getProfile() || {}) : {};
+    var cc = String(profile.cc || profile.id_estudiante || "").trim();
+    if (!cc) return;
+    var row = await GamifSDK.fetchWeekProgressFromCloud(null, semana, cc);
+    if (row && row.quiz_answers && row.quiz_answers.reading_xp != null) {
+      localStorage.setItem(readingXpKey(semana), String(row.quiz_answers.reading_xp));
+    }
+  }
+
   function boot() {
     if (!isAdm18()) return;
+    var semana = parseSemana();
     setTimeout(function () {
       prepareAnchors();
       var sections = global.IUBReadingPolicy
         ? IUBReadingPolicy.detectSections()
         : [];
       injectReadingUI(sections.length);
-      updateSessionUI(parseSemana(), 0, sections.length);
+      hydrateFromCloud(semana).then(function () {
+        updateSessionUI(semana, 0, sections.length);
+      });
     }, 300);
   }
 

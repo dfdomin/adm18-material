@@ -239,8 +239,8 @@
       renderTable();
       var withXp = state.rows.filter(function (r) { return r.phoneXp > 0; }).length;
       setMsg(
-        "Actualizado: " + state.rows.length + " estudiantes, " + withXp + " con XP en nube. "
-        + "Si el celular muestra XP pero aquí sale 0, el estudiante debe pulsar ☁️ en la semana o repetir el quiz.",
+        "Actualizado: " + state.rows.length + " estudiantes, " + withXp + " con XP en la base de datos. "
+        + "El progreso se guarda automáticamente al hacer actividades en la semana.",
         true
       );
     } catch (e) {
@@ -291,9 +291,8 @@
       + "</div>"
       + '<div class="panel">'
       + "<p style=\"margin:0 0 .8rem;font-size:.9rem;color:var(--muted)\">"
-      + "📱 <strong>Cómo usar:</strong> el estudiante abre la <strong>semana</strong> en el celular y muestra el XP del widget "
-      + "«Mi Progreso». Ese número debe coincidir con la columna <em>XP celular</em>. "
-      + "Confirma con <em>Guardar</em> o ajusta la nota manualmente."
+      + "📱 <strong>Cómo usar:</strong> el XP se guarda solo en la base de datos al hacer actividades. "
+      + "Confirma la columna <em>XP celular</em> con el estudiante o ajusta la nota manualmente con <em>Guardar</em>."
       + "</p>"
       + '<div class="toolbar">'
       + '<div><label for="twv-semana">Semana</label><select id="twv-semana">' + weekOptions() + "</select></div>"

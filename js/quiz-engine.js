@@ -120,6 +120,8 @@ const QuizEngine = (function() {
 
         if (typeof IUBAdm18Reading !== 'undefined' && typeof IUBAdm18Reading.syncCloud === 'function') {
             IUBAdm18Reading.syncCloud(state.weekNum);
+        } else if (typeof SupabaseClient !== 'undefined' && SupabaseClient.syncUnsynced) {
+            SupabaseClient.syncUnsynced();
         } else if (typeof GamifSDK !== 'undefined') {
             var profile = ADM18App.getProfile() || {};
             if (profile.cc || profile.id_estudiante) {
@@ -129,8 +131,6 @@ const QuizEngine = (function() {
                     profile
                 ).catch(function () { /* offline */ });
             }
-        } else if (typeof SupabaseClient !== 'undefined') {
-            SupabaseClient.syncUnsynced();
         }
 
         render();

@@ -1,7 +1,6 @@
 /**
- * Sincronización automática a Supabase tras guardar progreso en semana (TGA/TD).
- * Parchea PT.save / PT.addXP para llamar GamifSDK.syncWeekProgress sin botón ☁️.
- * ADM18 usa QuizEngine → syncAdm18Scores (ya automático al enviar quiz).
+ * Progreso semanal directo a Supabase (sin localStorage como fuente de verdad).
+ * Parchea PT en TGA/TD: carga desde nube al iniciar, guarda en nube en cada cambio.
  */
 (function (global) {
   "use strict";
@@ -16,83 +15,137 @@
     };
   }
 
-  async function syncFromPT() {
+  function cloudMode() {
+    return global.GamifSDK && GamifSDK.isCloudDirectMode && GamifSDK.isCloudDirectMode();
+  }
+
+  function getCc() {
+    if (global.PT && typeof PT.state === "function") {
+      var st = PT.state();
+      var cc = String(st.id_estudiante || st.cc || "").trim();
+      if (cc.length >= 3) return cc;
+    }
+    if (global.GamifSDK) {
+      var p = GamifSDK.loadProfile();
+      return String(p.cc || p.id_estudiante || "").trim();
+    }
+    return "";
+  }
+
+  function getSemana() {
+    if (global.PT && typeof PT.state === "function") {
+      var s = PT.state();
+      if (s.semana) return s.semana;
+    }
+    var m = (global.location && global.location.pathname || "").match(/semana(\d+)/i);
+    return m ? parseInt(m[1], 10) : null;
+  }
+
+  async function hydrateFromCloud() {
+    if (!cloudMode() || !global.PT || typeof PT.state !== "function") return;
+    var cc = getCc();
+    var sem = getSemana();
+    if (!cc || !sem) return;
+    var row = await GamifSDK.fetchWeekProgressFromCloud(null, sem, cc);
+    if (row) {
+      GamifSDK.applyCloudRowToState(PT.state(), row);
+      GamifSDK.clearLocalWeekProgress(null, sem);
+      if (typeof PT.render === "function") PT.render();
+    }
+  }
+
+  async function pushToCloud() {
     if (!global.GamifSDK || !global.PT || typeof PT.state !== "function") {
       return { ok: false, reason: "no_sdk" };
     }
     var st = PT.state();
-    var cc = String(st.id_estudiante || st.cc || "").trim();
+    var cc = getCc();
     if (!cc) return { ok: false, reason: "no_cc" };
-    var cfg = GamifSDK.getConfig();
-    var semana = st.semana || cfg.semana;
-    if (!semana) return { ok: false, reason: "no_semana" };
+    if (!st.id_estudiante) st.id_estudiante = cc;
+    if (!st.cc) st.cc = cc;
+    var sem = getSemana() || st.semana;
+    if (!sem) return { ok: false, reason: "no_semana" };
+    if (cloudMode()) GamifSDK.clearLocalWeekProgress(null, sem);
     try {
-      return await GamifSDK.syncWeekProgress(st, cfg, semana);
+      var result = await GamifSDK.syncWeekProgress(st, GamifSDK.getConfig(), sem);
+      if (result && result.ok && cloudMode()) GamifSDK.clearLocalWeekProgress(null, sem);
+      return result;
     } catch (e) {
-      console.warn("[IUB] week-auto-sync:", e.message || e);
+      console.warn("[IUB] cloud-progress:", e.message || e);
       return { ok: false, reason: e.message || "error" };
     }
   }
 
-  async function syncCloudWithFeedback() {
-    if (!global.PT || typeof PT.save === "function") PT.save();
-    var msg = global.PT && typeof PT.msg === "function" ? PT.msg.bind(PT) : null;
-    if (msg) msg("⏳ Sincronizando a la nube…", "#fff9c4");
-    var result = await syncFromPT();
-    if (result && result.ok) {
-      if (msg) msg("✅ Guardado en Supabase ☁️", "lightgreen");
-    } else if (!String(stCc()).trim()) {
-      if (msg) msg("⚠️ Configura tu cédula en el perfil primero", "orange");
-    } else {
-      if (msg) msg("❌ No se pudo sincronizar. Revisa conexión.", "salmon");
-    }
-    return result;
-  }
-
-  function stCc() {
-    if (!global.PT || typeof PT.state !== "function") return "";
-    var st = PT.state();
-    return st.id_estudiante || st.cc || "";
-  }
-
-  var debouncedSync = debounce(syncFromPT, 900);
+  var debouncedPush = debounce(function () {
+    pushToCloud();
+  }, 400);
 
   function patchPT() {
-    if (!global.PT || PT.__iubAutoSyncPatched) return;
-    PT.__iubAutoSyncPatched = true;
+    if (!global.PT || PT.__iubCloudDirect) return;
+    PT.__iubCloudDirect = true;
 
     if (typeof PT.save === "function") {
       var origSave = PT.save;
       PT.save = function () {
-        origSave.apply(PT, arguments);
-        debouncedSync();
+        if (cloudMode()) {
+          if (typeof PT.render === "function") PT.render();
+          debouncedPush();
+        } else {
+          origSave.apply(PT, arguments);
+        }
       };
     }
-    if (typeof PT.addXP === "function") {
-      var origXp = PT.addXP;
-      PT.addXP = function () {
-        var out = origXp.apply(PT, arguments);
-        debouncedSync();
-        return out;
+
+    if (typeof PT.init === "function") {
+      var origInit = PT.init;
+      PT.init = function () {
+        origInit.apply(PT, arguments);
+        hydrateFromCloud();
       };
     }
-    if (typeof PT.completeActivity === "function") {
-      var origDone = PT.completeActivity;
-      PT.completeActivity = function () {
-        var out = origDone.apply(PT, arguments);
-        debouncedSync();
-        return out;
-      };
-    }
-    PT.sync = syncCloudWithFeedback;
-    PT.syncCloud = syncCloudWithFeedback;
+
+    PT.sync = PT.syncCloud = async function () {
+      if (typeof PT.render === "function") PT.render();
+      var result = await pushToCloud();
+      var msgFn = PT.msg && PT.msg.bind(PT);
+      if (result.ok && msgFn) msgFn("✅ Guardado en la base de datos", "lightgreen");
+      else if (result.reason === "no_cc" && msgFn) msgFn("⚠️ Configura tu cédula en el perfil", "orange");
+      else if (!result.ok && msgFn) msgFn("❌ No se pudo guardar. Revisa conexión.", "salmon");
+      return result;
+    };
+
+    PT.export = PT.exportCode = function () {
+      if (PT.msg) PT.msg("ℹ️ El progreso se guarda automáticamente en la base de datos.", "#fff9c4");
+    };
+    PT.import = PT.importCode = function () {
+      if (PT.msg) PT.msg("ℹ️ Ingresa tu cédula; tu progreso se carga desde la nube.", "#fff9c4");
+    };
+  }
+
+  function hideLegacyUi() {
+    if (!cloudMode()) return;
+    var btn = document.getElementById("pt-btn-save");
+    if (btn) btn.style.display = "none";
+    document.querySelectorAll(
+      '[onclick*="ptExportCode"],[onclick*="ptImportCode"],[onclick*="PT.export"],[onclick*="PT.import"]'
+    ).forEach(function (el) {
+      el.style.display = "none";
+    });
   }
 
   function init() {
     patchPT();
-    setTimeout(patchPT, 1200);
-    setTimeout(patchPT, 3000);
+    setTimeout(function () {
+      patchPT();
+      hideLegacyUi();
+      hydrateFromCloud();
+    }, 600);
+    setTimeout(patchPT, 2500);
   }
+
+  document.addEventListener("iub:profile-saved", function () {
+    hydrateFromCloud().then(pushToCloud);
+  });
 
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
@@ -100,5 +153,5 @@
     init();
   }
 
-  global.IUBWeekAutoSync = { syncNow: syncFromPT, patchPT: patchPT };
+  global.IUBWeekAutoSync = { hydrate: hydrateFromCloud, push: pushToCloud, patchPT: patchPT };
 })(typeof window !== "undefined" ? window : globalThis);

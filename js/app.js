@@ -246,6 +246,7 @@ const ADM18App = (function() {
         getCompletionPercent,
         saveQuizScore,
         getQuizScore,
+        updateProgressUI,
         getProgress: function() { return state.progress; },
         getScores: function() { return state.scores; },
         getProfile: function() {
