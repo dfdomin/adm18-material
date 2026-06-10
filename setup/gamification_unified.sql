@@ -706,7 +706,16 @@ begin
 end;
 $$;
 
-drop trigger if exists trg_sync_legacy_progress on public.student_progress;
-create trigger trg_sync_legacy_progress
-after insert or update on public.student_progress
-for each row execute function public.sync_legacy_student_progress();
+do $$
+begin
+  if exists (
+    select 1 from information_schema.tables
+    where table_schema = 'public' and table_name = 'student_progress'
+  ) then
+    drop trigger if exists trg_sync_legacy_progress on public.student_progress;
+    create trigger trg_sync_legacy_progress
+    after insert or update on public.student_progress
+    for each row execute function public.sync_legacy_student_progress();
+  end if;
+end;
+$$;
