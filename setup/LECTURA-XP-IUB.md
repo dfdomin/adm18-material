@@ -50,7 +50,9 @@ En los cuatro módulos (ADM18, TGA04, TGA05, TD) **parte de la nota formativa** 
 ## Implementación en código
 
 - `js/reading-xp-policy.js` — panel informativo + detección de secciones.
-- `js/reading-tracker.js` — otorga XP vía `PT.addXP` / auto-sync.
+- `js/reading-tracker.js` — temporizador por sección (`IntersectionObserver`).
+- `js/adm18-reading.js` — **ADM18**: reestructura secciones, suma XP en `adm18_s{N}_reading_xp`, sincroniza con quiz vía `GamifSDK.syncWeekProgress`.
+- TGA/TD: XP vía `PT.addXP` + `week-auto-sync.js`.
 - Cada `semana*/index.html` incluye el aviso automático al cargar.
 
 ## Mensaje al estudiante (resumen)

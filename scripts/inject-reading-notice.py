@@ -16,6 +16,11 @@ BLOCK = """  <script src="../js/reading-tracker.js"></script>
   <script src="../js/reading-xp-policy.js"></script>
 """
 
+ADM18_BLOCK = """  <script src="../js/reading-tracker.js"></script>
+  <script src="../js/adm18-reading.js"></script>
+  <script src="../js/reading-xp-policy.js"></script>
+"""
+
 
 def copy_policy_js(root: Path) -> None:
     dest = root / "js" / "reading-xp-policy.js"
@@ -25,6 +30,22 @@ def copy_policy_js(root: Path) -> None:
         dest.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(CANON, dest)
         print("copied policy ->", dest.relative_to(root))
+
+
+def inject_adm18_reading(path: Path) -> bool:
+    text = path.read_text(encoding="utf-8")
+    if "adm18-reading.js" in text:
+        return False
+    if 'src="../js/reading-tracker.js"' in text and 'src="../js/reading-xp-policy.js"' in text:
+        text = text.replace(
+            '  <script src="../js/reading-tracker.js"></script>\n'
+            '  <script src="../js/reading-xp-policy.js"></script>\n',
+            ADM18_BLOCK,
+            1,
+        )
+        path.write_text(text, encoding="utf-8")
+        return True
+    return False
 
 
 def inject(path: Path) -> bool:
@@ -50,6 +71,7 @@ def inject(path: Path) -> bool:
 
 def main():
     patched = 0
+    adm18_patched = 0
     for root in REPOS:
         if not root.exists():
             print("skip missing", root)
@@ -61,7 +83,10 @@ def main():
             if inject(html):
                 patched += 1
                 print("patched", html.relative_to(root))
-    print("total patched", patched)
+            if root == REPOS[0] and inject_adm18_reading(html):
+                adm18_patched += 1
+                print("adm18-reading", html.relative_to(root))
+    print("total patched", patched, "adm18-reading", adm18_patched)
 
 
 if __name__ == "__main__":

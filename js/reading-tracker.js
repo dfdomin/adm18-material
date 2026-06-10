@@ -31,20 +31,29 @@
 
     function updateReadingUI(state) {
       var done = sections.filter(function (s) { return state[s.id]; }).length;
-      var el = document.getElementById("pt-reading-progress");
+      var el = document.getElementById("pt-reading-progress")
+        || document.getElementById("adm18-reading-progress");
       if (el) {
         el.textContent = "📖 Lectura: " + done + "/" + sections.length + " secciones";
         el.style.color = done === sections.length ? "var(--green,#2e7d32)" : "var(--muted,#546e7a)";
+      }
+      if (global.IUBAdm18Reading && typeof IUBAdm18Reading.updateSessionUI === "function") {
+        IUBAdm18Reading.updateSessionUI(semana, done, sections.length);
       }
     }
 
     function award(sec) {
       if (global.IUBCelebrate) IUBCelebrate.launch({ message: "📖 " + sec.label });
-      if (typeof options.onAward === "function") options.onAward(sec);
-      else if (global.PT && typeof PT.addXP === "function") PT.addXP(sec.xp, "Lectura: " + sec.label);
-      setTimeout(function () {
-        if (global.PT && typeof PT.sync === "function") PT.sync();
-      }, 1200);
+      if (typeof options.onAward === "function") {
+        options.onAward(sec);
+      } else if (global.IUBAdm18Reading && IUBAdm18Reading.isAdm18()) {
+        IUBAdm18Reading.award(sec);
+      } else if (global.PT && typeof PT.addXP === "function") {
+        PT.addXP(sec.xp, "Lectura: " + sec.label);
+        setTimeout(function () {
+          if (global.PT && typeof PT.sync === "function") PT.sync();
+        }, 1200);
+      }
     }
 
     function initObserver() {
@@ -116,6 +125,7 @@
     }
 
     function injectReadingUI() {
+      if (global.IUBAdm18Reading && IUBAdm18Reading.isAdm18()) return;
       var ptBody = document.getElementById("pt-body");
       if (!ptBody || document.getElementById("pt-reading-progress")) return;
       var div = document.createElement("div");

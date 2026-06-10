@@ -99,12 +99,18 @@
 
   function bootTracker() {
     if (hasEmbeddedTracker() || !global.IUBReadingTracker) return;
+    if (global.IUBAdm18Reading && typeof IUBAdm18Reading.prepareAnchors === "function") {
+      IUBAdm18Reading.prepareAnchors();
+    }
     var sections = detectSections();
     if (!sections.length) return;
-    IUBReadingTracker.init({ semana: parseSemana(), sections: sections });
+    IUBReadingTracker.init({ semana: parseSemana(), sections: sections, delay: 800 });
   }
 
   function boot() {
+    if (global.IUBAdm18Reading && typeof IUBAdm18Reading.prepareAnchors === "function") {
+      IUBAdm18Reading.prepareAnchors();
+    }
     injectNotice();
     bootTracker();
   }

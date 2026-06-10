@@ -118,7 +118,9 @@ const QuizEngine = (function() {
         ADM18App.saveQuizScore(state.weekNum, score.correct, score.total);
         ADM18App.markWeekComplete(state.weekNum);
 
-        if (typeof GamifSDK !== 'undefined') {
+        if (typeof IUBAdm18Reading !== 'undefined' && typeof IUBAdm18Reading.syncCloud === 'function') {
+            IUBAdm18Reading.syncCloud(state.weekNum);
+        } else if (typeof GamifSDK !== 'undefined') {
             var profile = ADM18App.getProfile() || {};
             if (profile.cc || profile.id_estudiante) {
                 GamifSDK.syncAdm18Scores(
