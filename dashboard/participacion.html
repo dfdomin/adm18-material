@@ -76,6 +76,7 @@
       <nav class="nav">
         <a href="../index.html">Inicio</a>
         <a href="#live">Clase en vivo</a>
+        <a href="#report">Reporte</a>
         <a href="../profesor.html">Docente</a>
         <a href="../JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
         <a href="#importar-estudiantes">Importar estudiantes</a>
@@ -98,6 +99,7 @@
         <button class="tab-btn active" onclick="showTab('live')">Clase en Vivo</button>
         <button class="tab-btn" onclick="showTab('attendance')">Asistencia</button>
         <button class="tab-btn" onclick="showTab('history')">Historial</button>
+        <button class="tab-btn" onclick="showTab('report')">Reporte</button>
         <button class="tab-btn" onclick="showTab('config')">Configuracion</button>
       </div>
 
@@ -182,6 +184,27 @@
         </div>
       </div>
 
+      <!-- TAB: Reporte asistencia -->
+      <div class="tab-panel" id="tab-report">
+        <div class="panel">
+          <p style="color:var(--muted);font-size:.9rem;margin-bottom:.8rem">
+            Registro de cada toma de asistencia con fecha y hora exacta (local + nube).
+          </p>
+          <div class="actions-row">
+            <button class="btn-gold" onclick="renderReport()">Actualizar tabla</button>
+            <button onclick="fetchReportFromCloud()">Cargar desde Supabase</button>
+            <button onclick="exportReportCSV()">Exportar CSV</button>
+          </div>
+          <p class="msg" id="reportMsg"></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha</th><th>Hora</th><th>Estudiante</th><th>CC</th><th>Grupo</th><th>Estado</th><th>Origen</th></tr></thead>
+              <tbody id="reportRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
       <!-- TAB: Configuracion -->
       <div class="tab-panel" id="tab-config">
         <div class="card-row">
@@ -225,7 +248,9 @@
     const STORAGE_STUDENTS = "adm18_students_v1";
     const STORAGE_HISTORY = "adm18_participation_history";
     const STORAGE_ATTENDANCE = "adm18_attendance";
+    const STORAGE_ATT_LOG = "adm18_attendance_log_v1";
     const STORAGE_TODAY_PTS = "adm18_today_points";
+    const STORAGE_CLOUD_REPORT = "adm18_attendance_cloud_report";
 
     let currentTab = "live";
     let importedData = null;
@@ -235,6 +260,7 @@
       document.getElementById("login").hidden = true;
       document.getElementById("app").hidden = false;
       document.getElementById("attDate").value = todayStr();
+      wireLiveActions();
       init();
       showTab(tabFromHash());
     }
@@ -283,6 +309,52 @@
       localStorage.setItem(STORAGE_TODAY_PTS, JSON.stringify(obj));
     }
 
+    function getAttLog() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_ATT_LOG) || "[]"); }
+      catch(e) { return []; }
+    }
+
+    function setAttLog(arr) {
+      localStorage.setItem(STORAGE_ATT_LOG, JSON.stringify(arr));
+    }
+
+    function appendAttLog(entry) {
+      const log = getAttLog();
+      log.push(entry);
+      setAttLog(log);
+    }
+
+    function getCloudReport() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_CLOUD_REPORT) || "[]"); }
+      catch(e) { return []; }
+    }
+
+    function setCloudReport(arr) {
+      localStorage.setItem(STORAGE_CLOUD_REPORT, JSON.stringify(arr));
+    }
+
+    function attStateValue(cell) {
+      if (cell == null || cell === "-") return "-";
+      if (typeof cell === "string") return cell;
+      return cell.estado || "-";
+    }
+
+    function wireLiveActions() {
+      const panel = document.getElementById("tab-live");
+      if (!panel || panel.dataset.wired === "1") return;
+      panel.dataset.wired = "1";
+      panel.addEventListener("click", function(e) {
+        const btn = e.target.closest("button[data-live-points]");
+        if (!btn) return;
+        e.preventDefault();
+        giveToStudent(btn.getAttribute("data-cc"), Number(btn.getAttribute("data-live-points")));
+      });
+    }
+
+    function ccAttr(cc) {
+      return String(cc ?? "").replace(/[^\d]/g, "");
+    }
+
     function showTab(name) {
       currentTab = name;
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -292,11 +364,16 @@
       if (name === "live") renderLive();
       if (name === "attendance") renderAttendance();
       if (name === "history") renderHistory();
+      if (name === "report") renderReport();
       if (name === "config") renderConfig();
     }
 
     function tabFromHash() {
-      return location.hash === "#importar-estudiantes" || location.hash === "#config" ? "config" : "live";
+      if (location.hash === "#importar-estudiantes" || location.hash === "#config") return "config";
+      if (location.hash === "#report") return "report";
+      if (location.hash === "#attendance") return "attendance";
+      if (location.hash === "#history") return "history";
+      return "live";
     }
 
     window.addEventListener("hashchange", () => {
@@ -387,14 +464,16 @@
       document.getElementById("liveRows").innerHTML = filtered.map(s => {
         const pts = todayPts[s.cc] || 0;
         return `<tr>
-          <td><input type="checkbox" value="${esc(s.cc)}" class="live-chk"></td>
+          <td><input type="checkbox" value="${ccAttr(s.cc)}" class="live-chk"></td>
           <td><strong>${esc(s.name)}</strong></td>
           <td>${esc(s.cc)}</td>
           <td>${esc(s.grupo || "-")}</td>
           <td>${pts}</td>
           <td>${getStudentTotalXP(s.cc)}</td>
-          <td><button class="btn-sm" onclick="giveToStudent('${esc(s.cc)}',1)">+1</button>
-              <button class="btn-sm" onclick="giveToStudent('${esc(s.cc)}',3)">+3</button></td>
+          <td>
+            <button type="button" class="btn-sm" data-cc="${ccAttr(s.cc)}" data-live-points="1">+1</button>
+            <button type="button" class="btn-sm" data-cc="${ccAttr(s.cc)}" data-live-points="3">+3</button>
+          </td>
         </tr>`;
       }).join("");
     }
@@ -406,16 +485,22 @@
     }
 
     async function syncPointsToCloud(entries) {
-      if (typeof GamifSDK === "undefined" || !entries.length) return;
+      if (typeof GamifSDK === "undefined" || !entries.length) {
+        return { ok: false, reason: "no_sdk", count: 0, failed: entries.length };
+      }
       var events = entries.map(function(e) {
         return { cc: e.cc, points: e.points, type: e.type, name: e.name, ts: e.ts };
       });
-      await GamifSDK.syncParticipation(events);
+      return await GamifSDK.syncParticipation(events);
     }
 
-    function givePoints(amount) {
+    async function givePoints(amount) {
       const checks = document.querySelectorAll(".live-chk:checked");
-      if (!checks.length) { document.getElementById("liveMsg").textContent = "Selecciona al menos un estudiante."; return; }
+      if (!checks.length) {
+        document.getElementById("liveMsg").textContent = "Selecciona al menos un estudiante.";
+        document.getElementById("liveMsg").className = "msg err";
+        return;
+      }
       const history = getHistory();
       const todayPts = getTodayPoints();
       const label = amount === 1 ? "Asistencia" : amount === 3 ? "Participacion" : "Destacado";
@@ -430,22 +515,39 @@
       });
       setTodayPoints(todayPts);
       setHistory(history);
-      syncPointsToCloud(batch);
-      document.getElementById("liveMsg").textContent = `+${amount} pts otorgados a ${checks.length} estudiante(s).`;
-      document.getElementById("liveMsg").className = "msg ok";
+      document.getElementById("liveMsg").textContent = "Guardando en la nube...";
+      document.getElementById("liveMsg").className = "msg";
+      const cloud = await syncPointsToCloud(batch);
+      if (cloud.ok) {
+        document.getElementById("liveMsg").textContent = `+${amount} pts otorgados a ${checks.length} estudiante(s). Sincronizado (${cloud.count}).`;
+        document.getElementById("liveMsg").className = "msg ok";
+      } else {
+        document.getElementById("liveMsg").textContent = `+${amount} pts locales. Nube: ${cloud.failed || 0} error(es). Revisa consola (F12).`;
+        document.getElementById("liveMsg").className = "msg err";
+      }
       renderLive();
     }
 
-    function giveToStudent(cc, amount) {
+    async function giveToStudent(cc, amount) {
+      if (!cc) return;
       const history = getHistory();
       const todayPts = getTodayPoints();
       const label = amount === 1 ? "Asistencia" : amount === 3 ? "Participacion" : "Destacado";
-      todayPts[cc] = (todayPts[cc] || 0) + amount;
       const entry = { ts: nowISO(), cc, name: findStudentName(cc), type: label, points: amount };
+      todayPts[cc] = (todayPts[cc] || 0) + amount;
       history.push(entry);
       setTodayPoints(todayPts);
       setHistory(history);
-      syncPointsToCloud([entry]);
+      document.getElementById("liveMsg").textContent = `Guardando +${amount} para ${entry.name}...`;
+      document.getElementById("liveMsg").className = "msg";
+      const cloud = await syncPointsToCloud([entry]);
+      if (cloud.ok) {
+        document.getElementById("liveMsg").textContent = `+${amount} pts a ${entry.name}. Sincronizado en Supabase.`;
+        document.getElementById("liveMsg").className = "msg ok";
+      } else {
+        document.getElementById("liveMsg").textContent = `+${amount} pts locales a ${entry.name}. Error nube (HTTP ${cloud.status || "?"}).`;
+        document.getElementById("liveMsg").className = "msg err";
+      }
       renderLive();
     }
 
@@ -457,8 +559,21 @@
 
     function findStudentName(cc) {
       const students = getStudents();
-      const s = students.find(s => s.cc === cc);
+      const s = students.find(s => String(s.cc) === String(cc));
       return s ? s.name : cc;
+    }
+
+    function findStudentGrupo(cc) {
+      const students = getStudents();
+      const s = students.find(s => String(s.cc) === String(cc));
+      return s ? (s.grupo || "") : "";
+    }
+
+    function attLabel(estado) {
+      if (estado === "P") return "Presente";
+      if (estado === "T") return "Tardanza";
+      if (estado === "F") return "Ausente";
+      return estado;
     }
 
     // ── TAB: Asistencia ─────────────────────────────────────
@@ -488,7 +603,7 @@
 
       const dayKey = date;
       const dayAtt = att[dayKey] || {};
-      const dayValues = Object.values(dayAtt);
+      const dayValues = Object.values(dayAtt).map(attStateValue);
       const pCount = dayValues.filter(v => v === "P").length;
       const tCount = dayValues.filter(v => v === "T").length;
       const fCount = dayValues.filter(v => v === "F").length;
@@ -500,16 +615,17 @@
       document.getElementById("mAttPct").textContent = Math.round(pCount / total * 100) + "%";
 
       document.getElementById("attRows").innerHTML = filtered.map(s => {
-        const state = dayAtt[s.cc] || "-";
+        const state = attStateValue(dayAtt[s.cc]);
         const pct = calcAttendancePct(s.cc);
+        const ccSafe = ccAttr(s.cc);
         return `<tr>
           <td><strong>${esc(s.name)}</strong></td>
           <td>${esc(s.cc)}</td>
           <td>${esc(s.grupo || "-")}</td>
           <td>
-            <button class="att-btn p${state==='P'?' sel':''}" onclick="setAtt('${esc(s.cc)}','P')">Presente</button>
-            <button class="att-btn t${state==='T'?' sel':''}" onclick="setAtt('${esc(s.cc)}','T')">Tarde</button>
-            <button class="att-btn f${state==='F'?' sel':''}" onclick="setAtt('${esc(s.cc)}','F')">Ausente</button>
+            <button type="button" class="att-btn p${state==='P'?' sel':''}" onclick="setAtt('${ccSafe}','P')">Presente</button>
+            <button type="button" class="att-btn t${state==='T'?' sel':''}" onclick="setAtt('${ccSafe}','T')">Tarde</button>
+            <button type="button" class="att-btn f${state==='F'?' sel':''}" onclick="setAtt('${ccSafe}','F')">Ausente</button>
           </td>
           <td>${pct}%</td>
         </tr>`;
@@ -520,8 +636,28 @@
       const date = document.getElementById("attDate").value || todayStr();
       const att = getAttendance();
       if (!att[date]) att[date] = {};
-      att[date][cc] = att[date][cc] === state ? "-" : state;
+      const current = attStateValue(att[date][cc]);
+      const next = current === state ? "-" : state;
+      const ts = nowISO();
+      if (next === "-") {
+        att[date][cc] = "-";
+      } else {
+        att[date][cc] = { estado: next, ts: ts };
+        appendAttLog({
+          ts: ts,
+          fecha: date,
+          cc: cc,
+          name: findStudentName(cc),
+          grupo: findStudentGrupo(cc),
+          estado: next,
+          origen: "local"
+        });
+      }
       setAttendance(att);
+      document.getElementById("attMsg").textContent = next === "-"
+        ? "Marca de asistencia quitada."
+        : `${attLabel(next)} registrado a las ${new Date(ts).toLocaleTimeString()}.`;
+      document.getElementById("attMsg").className = "msg ok";
       renderAttendance();
     }
 
@@ -533,8 +669,23 @@
       if (group) filtered = filtered.filter(s => s.grupo === group);
       const att = getAttendance();
       if (!att[date]) att[date] = {};
-      filtered.forEach(s => { att[date][s.cc] = state; });
+      const ts = nowISO();
+      filtered.forEach(s => {
+        const cc = ccAttr(s.cc);
+        att[date][cc] = { estado: state, ts: ts };
+        appendAttLog({
+          ts: ts,
+          fecha: date,
+          cc: cc,
+          name: s.name,
+          grupo: s.grupo || "",
+          estado: state,
+          origen: "local"
+        });
+      });
       setAttendance(att);
+      document.getElementById("attMsg").textContent = `${attLabel(state)} masivo: ${filtered.length} estudiantes (${new Date(ts).toLocaleString()}).`;
+      document.getElementById("attMsg").className = "msg ok";
       renderAttendance();
     }
 
@@ -553,9 +704,10 @@
       if (!dates.length) return 100;
       let total = 0, present = 0;
       for (const d of dates) {
-        if (att[d][cc] !== undefined && att[d][cc] !== "-") {
+        const v = attStateValue((att[d] || {})[cc]);
+        if (v !== undefined && v !== "-") {
           total++;
-          if (att[d][cc] === "P") present++;
+          if (v === "P") present++;
         }
       }
       return total ? Math.round(present / total * 100) : 100;
@@ -571,8 +723,8 @@
         const row = [s.name, s.cc, s.grupo || ""];
         let p = 0, t = 0;
         for (const d of dates) {
-          const v = (att[d] || {})[s.cc] || "-";
-          row.push(v === "P" ? "P" : v === "T" ? "T" : "F");
+          const v = attStateValue((att[d] || {})[s.cc]);
+          row.push(v === "P" ? "P" : v === "T" ? "T" : v === "F" ? "F" : "-");
           if (v === "P") p++;
           else if (v !== "-") t++;
         }
@@ -583,31 +735,26 @@
     }
 
     async function syncAttendanceToSupabase() {
-      const url = localStorage.getItem("adm18_supabase_url");
-      const key = localStorage.getItem("adm18_supabase_key");
-      if (!url || !key) { alert("Supabase no configurado."); return; }
+      if (typeof GamifSDK === "undefined") { alert("Supabase no configurado."); return; }
       const att = getAttendance();
       const rows = [];
       for (const [fecha, states] of Object.entries(att)) {
-        for (const [cc, estado] of Object.entries(states)) {
+        for (const [cc, cell] of Object.entries(states)) {
+          const estado = attStateValue(cell);
           if (estado === "-") continue;
-          rows.push({ cc, fecha, estado, grupo: getStudents().find(s => s.cc === cc)?.grupo || "" });
+          rows.push({ cc, fecha, estado });
         }
       }
       if (!rows.length) { alert("Sin datos para sincronizar."); return; }
       document.getElementById("attMsg").textContent = "Sincronizando...";
       try {
-        for (let i = 0; i < rows.length; i += 200) {
-          const batch = rows.slice(i, i + 200);
-          const res = await fetch(url + "/rest/v1/attendance", {
-            method: "POST",
-            headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
-            body: JSON.stringify(batch)
-          });
-          if (!res.ok) throw new Error("HTTP " + res.status);
+        const result = await GamifSDK.syncAttendanceRows(rows);
+        if (result.ok) {
+          document.getElementById("attMsg").textContent = `Asistencia sincronizada (${result.count} registros).`;
+          document.getElementById("attMsg").className = "msg ok";
+        } else {
+          throw new Error((result.failed || 0) + " filas fallaron");
         }
-        document.getElementById("attMsg").textContent = "Asistencia sincronizada.";
-        document.getElementById("attMsg").className = "msg ok";
       } catch(e) {
         document.getElementById("attMsg").textContent = "Error: " + e.message;
         document.getElementById("attMsg").className = "msg err";
@@ -647,6 +794,100 @@
       if (!confirm("Borrar TODO el historial de participacion?")) return;
       setHistory([]);
       renderHistory();
+    }
+
+    function buildReportRows() {
+      const local = getAttLog().map(function(r) {
+        return Object.assign({ origen: r.origen || "local" }, r);
+      });
+      const cloud = getCloudReport();
+      const merged = local.concat(cloud);
+      merged.sort(function(a, b) {
+        return new Date(b.ts || b.fecha).getTime() - new Date(a.ts || a.fecha).getTime();
+      });
+      return merged;
+    }
+
+    function renderReport() {
+      const rows = buildReportRows();
+      const tbody = document.getElementById("reportRows");
+      if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted)">
+          Sin registros aun. Marca asistencia en la pestaña <strong>Asistencia</strong>.
+        </td></tr>`;
+        document.getElementById("reportMsg").textContent = "0 registros.";
+        return;
+      }
+      tbody.innerHTML = rows.map(function(r) {
+        const dt = new Date(r.ts || r.fecha);
+        const fecha = r.fecha || dt.toISOString().slice(0, 10);
+        const hora = r.ts ? dt.toLocaleTimeString() : "—";
+        return `<tr>
+          <td>${esc(fecha)}</td>
+          <td>${esc(hora)}</td>
+          <td><strong>${esc(r.name || findStudentName(r.cc))}</strong></td>
+          <td>${esc(r.cc)}</td>
+          <td>${esc(r.grupo || findStudentGrupo(r.cc) || "-")}</td>
+          <td>${esc(attLabel(r.estado))}</td>
+          <td>${esc(r.origen || "local")}</td>
+        </tr>`;
+      }).join("");
+      document.getElementById("reportMsg").textContent = rows.length + " registros en el reporte.";
+      document.getElementById("reportMsg").className = "msg ok";
+    }
+
+    async function fetchReportFromCloud() {
+      if (typeof GamifSDK === "undefined") {
+        document.getElementById("reportMsg").textContent = "Supabase no configurado.";
+        return;
+      }
+      document.getElementById("reportMsg").textContent = "Cargando desde Supabase...";
+      const offering = encodeURIComponent(GamifSDK.getOfferingCode() || "ADM18-2026-2");
+      try {
+        const res = await fetch(
+          GamifSDK.sbUrl() + "/rest/v1/v_legacy_attendance?select=cc,fecha,estado,created_at,grupo,offering_code&offering_code=eq." + offering + "&order=created_at.desc",
+          { headers: { apikey: GamifSDK.sbKey(), Authorization: "Bearer " + GamifSDK.sbKey() } }
+        );
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const mapped = (data || []).map(function(r) {
+          return {
+            ts: r.created_at,
+            fecha: r.fecha,
+            cc: r.cc,
+            name: findStudentName(r.cc),
+            grupo: r.grupo || findStudentGrupo(r.cc),
+            estado: r.estado,
+            origen: "supabase"
+          };
+        });
+        setCloudReport(mapped);
+        renderReport();
+        document.getElementById("reportMsg").textContent = mapped.length + " registros cargados desde Supabase.";
+        document.getElementById("reportMsg").className = "msg ok";
+      } catch (e) {
+        document.getElementById("reportMsg").textContent = "Error: " + e.message;
+        document.getElementById("reportMsg").className = "msg err";
+      }
+    }
+
+    function exportReportCSV() {
+      const rows = buildReportRows();
+      if (!rows.length) { alert("Sin registros para exportar."); return; }
+      const csvRows = [["Fecha", "Hora", "Estudiante", "CC", "Grupo", "Estado", "Origen"]];
+      rows.forEach(function(r) {
+        const dt = new Date(r.ts || r.fecha);
+        csvRows.push([
+          r.fecha || dt.toISOString().slice(0, 10),
+          r.ts ? dt.toLocaleTimeString() : "",
+          r.name || findStudentName(r.cc),
+          r.cc,
+          r.grupo || findStudentGrupo(r.cc),
+          attLabel(r.estado),
+          r.origen || "local"
+        ]);
+      });
+      downloadCSV(csvRows, "Reporte_Asistencia_ADM18_" + todayStr() + ".csv");
     }
 
     // ── TAB: Configuracion ──────────────────────────────────

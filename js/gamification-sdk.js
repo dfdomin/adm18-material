@@ -337,7 +337,7 @@
     var fail = 0;
     for (var i = 0; i < events.length; i++) {
       var ev = events[i];
-      if (!ev.cc || !ev.points) continue;
+      if (!ev.cc || ev.points == null || Number(ev.points) <= 0) continue;
       var result = await callRpc("record_participation", {
         p_cc: ev.cc,
         p_offering_code: offering,
