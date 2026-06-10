@@ -471,7 +471,8 @@
     function esc(s) { return String(s ?? "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[m])); }
 
     function init() {
-      if (!getClassMeta().weekday && getClassMeta().weekday !== 0) {
+      const meta = getClassMeta();
+      if (typeof meta.weekday !== "number") {
         setClassMeta({ weekday: 4, dayLabel: "JUEVES", horario: "JUEVES" });
       }
       updateClassDayButtonLabel();
