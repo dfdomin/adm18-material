@@ -75,12 +75,18 @@
   }
 
   function filteredRows() {
-    var q = state.search.toLowerCase();
-    return state.rows.filter(function (r) {
+    var q = state.search.toLowerCase().trim();
+    var rows = state.rows.filter(function (r) {
       if (state.group && r.grupo !== state.group) return false;
+      if (state.onlyWithXp && !(r.phoneXp > 0)) return false;
       if (q && !(r.name + " " + r.cc).toLowerCase().includes(q)) return false;
       return true;
     });
+    rows.sort(function (a, b) {
+      if (b.phoneXp !== a.phoneXp) return b.phoneXp - a.phoneXp;
+      return a.name.localeCompare(b.name);
+    });
+    return rows;
   }
 
   function groups() {
@@ -100,13 +106,28 @@
     }
   }
 
+  function refreshGroupSelect() {
+    if (!mountedRoot) return;
+    var sel = mountedRoot.querySelector("#twv-group");
+    if (!sel) return;
+    var current = sel.value;
+    sel.innerHTML = '<option value="">Todos</option>' + groups().map(function (g) {
+      return '<option value="' + esc(g) + '">' + esc(g) + "</option>";
+    }).join("");
+    sel.value = current || "";
+  }
+
   function renderTable() {
     if (!mountedRoot) return;
     var tbody = mountedRoot.querySelector("#twv-rows");
     if (!tbody) return;
     var rows = filteredRows();
+    if (!state.rows.length) {
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--muted)">Sin estudiantes en el roster. Importa la lista en Configuración y sincroniza a Supabase.</td></tr>';
+      return;
+    }
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;padding:2rem;color:var(--muted)">Sin estudiantes para esta semana. Importa la lista en Configuración.</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;padding:2rem;color:var(--muted)">Ningún estudiante coincide con el filtro. Prueba <strong>Grupo: Todos</strong> y borra la búsqueda.</td></tr>';
       return;
     }
 
@@ -214,8 +235,14 @@
     setMsg("Cargando semana " + state.semana + "…", false);
     try {
       state.rows = await fetchWeekRows(state.semana);
+      refreshGroupSelect();
       renderTable();
-      setMsg("Actualizado — pide al estudiante que muestre el widget «Mi Progreso» en el celular.", true);
+      var withXp = state.rows.filter(function (r) { return r.phoneXp > 0; }).length;
+      setMsg(
+        "Actualizado: " + state.rows.length + " estudiantes, " + withXp + " con XP en nube. "
+        + "Si el celular muestra XP pero aquí sale 0, el estudiante debe pulsar ☁️ en la semana o repetir el quiz.",
+        true
+      );
     } catch (e) {
       setMsg("Error: " + (e.message || e), false);
     }
@@ -244,6 +271,10 @@
         state.search = ev.target.value;
         renderTable();
       }
+      if (ev.target.id === "twv-only-xp") {
+        state.onlyWithXp = ev.target.checked;
+        renderTable();
+      }
     });
   }
 
@@ -267,7 +298,8 @@
       + '<div class="toolbar">'
       + '<div><label for="twv-semana">Semana</label><select id="twv-semana">' + weekOptions() + "</select></div>"
       + '<div><label for="twv-group">Grupo</label><select id="twv-group">' + groupOpts + "</select></div>"
-      + '<div><label for="twv-search">Buscar</label><input id="twv-search" placeholder="Nombre o CC"></div>'
+      + '<div><label for="twv-search">Buscar</label><input id="twv-search" placeholder="Nombre o CC (ej. 1001892647)"></div>'
+      + '<div><label for="twv-only-xp">&nbsp;</label><label style="text-transform:none;font-weight:600;font-size:.85rem"><input type="checkbox" id="twv-only-xp" style="width:auto;margin:0 .35rem 0 0"> Solo con XP en celular</label></div>'
       + "</div>"
       + '<div class="actions-row">'
       + '<button type="button" class="btn-gold" id="twv-validate-all">✓ Validar todos (XP del celular)</button>'

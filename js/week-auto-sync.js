@@ -17,18 +17,42 @@
   }
 
   async function syncFromPT() {
-    if (!global.GamifSDK || !global.PT || typeof PT.state !== "function") return;
+    if (!global.GamifSDK || !global.PT || typeof PT.state !== "function") {
+      return { ok: false, reason: "no_sdk" };
+    }
     var st = PT.state();
     var cc = String(st.id_estudiante || st.cc || "").trim();
-    if (!cc) return;
+    if (!cc) return { ok: false, reason: "no_cc" };
     var cfg = GamifSDK.getConfig();
     var semana = st.semana || cfg.semana;
-    if (!semana) return;
+    if (!semana) return { ok: false, reason: "no_semana" };
     try {
-      await GamifSDK.syncWeekProgress(st, cfg, semana);
+      return await GamifSDK.syncWeekProgress(st, cfg, semana);
     } catch (e) {
       console.warn("[IUB] week-auto-sync:", e.message || e);
+      return { ok: false, reason: e.message || "error" };
     }
+  }
+
+  async function syncCloudWithFeedback() {
+    if (!global.PT || typeof PT.save === "function") PT.save();
+    var msg = global.PT && typeof PT.msg === "function" ? PT.msg.bind(PT) : null;
+    if (msg) msg("⏳ Sincronizando a la nube…", "#fff9c4");
+    var result = await syncFromPT();
+    if (result && result.ok) {
+      if (msg) msg("✅ Guardado en Supabase ☁️", "lightgreen");
+    } else if (!String(stCc()).trim()) {
+      if (msg) msg("⚠️ Configura tu cédula en el perfil primero", "orange");
+    } else {
+      if (msg) msg("❌ No se pudo sincronizar. Revisa conexión.", "salmon");
+    }
+    return result;
+  }
+
+  function stCc() {
+    if (!global.PT || typeof PT.state !== "function") return "";
+    var st = PT.state();
+    return st.id_estudiante || st.cc || "";
   }
 
   var debouncedSync = debounce(syncFromPT, 900);
@@ -60,6 +84,8 @@
         return out;
       };
     }
+    PT.sync = syncCloudWithFeedback;
+    PT.syncCloud = syncCloudWithFeedback;
   }
 
   function init() {
