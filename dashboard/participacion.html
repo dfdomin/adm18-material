@@ -10,6 +10,7 @@
   <script src="../js/supabase-config.js"></script>
   <script src="../js/gamification-sdk.js"></script>
   <script src="../js/import-students-browser.js"></script>
+  <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
     [hidden] { display:none !important; }
@@ -158,6 +159,7 @@
             </table>
           </div>
           <div class="actions-row" style="margin-top:1rem">
+            <button onclick="exportAttendanceXLSX()">Exportar Excel (.xlsx)</button>
             <button onclick="exportAttendanceCSV()">Exportar CSV (Academusoft)</button>
             <button onclick="syncAttendanceToSupabase()">Sincronizar a Supabase</button>
           </div>
@@ -193,6 +195,7 @@
           <div class="actions-row">
             <button class="btn-gold" onclick="renderReport()">Actualizar tabla</button>
             <button onclick="fetchReportFromCloud()">Cargar desde Supabase</button>
+            <button class="btn-gold" onclick="exportReportXLSX()">Exportar Excel (.xlsx)</button>
             <button onclick="exportReportCSV()">Exportar CSV</button>
           </div>
           <p class="msg" id="reportMsg"></p>
@@ -734,6 +737,26 @@
       downloadCSV(rows, `Asistencia_ADM18_${todayStr()}.csv`);
     }
 
+    function exportAttendanceXLSX() {
+      const att = getAttendance();
+      const dates = Object.keys(att).sort();
+      const students = getStudents();
+      if (!dates.length) { alert("No hay datos de asistencia."); return; }
+      const rows = [["Estudiante", "CC", "Grupo", ...dates, "% Asistencia"]];
+      for (const s of students.sort((a,b) => a.name.localeCompare(b.name))) {
+        const row = [s.name, s.cc, s.grupo || ""];
+        let p = 0;
+        for (const d of dates) {
+          const v = attStateValue((att[d] || {})[s.cc]);
+          row.push(v === "P" ? "P" : v === "T" ? "T" : v === "F" ? "F" : "-");
+          if (v === "P") p++;
+        }
+        row.push(dates.length ? Math.round(p / dates.length * 100) + "%" : "");
+        rows.push(row);
+      }
+      downloadXLSX(rows, `Asistencia_ADM18_${todayStr()}.xlsx`, "Asistencia");
+    }
+
     async function syncAttendanceToSupabase() {
       if (typeof GamifSDK === "undefined") { alert("Supabase no configurado."); return; }
       const att = getAttendance();
@@ -871,13 +894,12 @@
       }
     }
 
-    function exportReportCSV() {
+    function reportSheetRows() {
       const rows = buildReportRows();
-      if (!rows.length) { alert("Sin registros para exportar."); return; }
-      const csvRows = [["Fecha", "Hora", "Estudiante", "CC", "Grupo", "Estado", "Origen"]];
+      const sheet = [["Fecha", "Hora", "Estudiante", "CC", "Grupo", "Estado", "Origen"]];
       rows.forEach(function(r) {
         const dt = new Date(r.ts || r.fecha);
-        csvRows.push([
+        sheet.push([
           r.fecha || dt.toISOString().slice(0, 10),
           r.ts ? dt.toLocaleTimeString() : "",
           r.name || findStudentName(r.cc),
@@ -887,7 +909,19 @@
           r.origen || "local"
         ]);
       });
-      downloadCSV(csvRows, "Reporte_Asistencia_ADM18_" + todayStr() + ".csv");
+      return sheet;
+    }
+
+    function exportReportCSV() {
+      const rows = buildReportRows();
+      if (!rows.length) { alert("Sin registros para exportar."); return; }
+      downloadCSV(reportSheetRows(), "Reporte_Asistencia_ADM18_" + todayStr() + ".csv");
+    }
+
+    function exportReportXLSX() {
+      const rows = buildReportRows();
+      if (!rows.length) { alert("Sin registros para exportar."); return; }
+      downloadXLSX(reportSheetRows(), "Reporte_Asistencia_ADM18_" + todayStr() + ".xlsx", "Reporte");
     }
 
     // ── TAB: Configuracion ──────────────────────────────────
@@ -1051,6 +1085,17 @@
       a.download = filename;
       a.click();
       URL.revokeObjectURL(a.href);
+    }
+
+    function downloadXLSX(rows, filename, sheetName) {
+      if (typeof XLSX === "undefined") {
+        alert("La libreria Excel aun no cargo. Recarga la pagina (Cmd+Shift+R) e intenta de nuevo.");
+        return;
+      }
+      const ws = XLSX.utils.aoa_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, sheetName || "Reporte");
+      XLSX.writeFile(wb, filename);
     }
   </script>
 </body>
