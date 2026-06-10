@@ -1,97 +1,80 @@
-# Configuración de Supabase (ADM18)
+# Configuración de Supabase — Gamificación unificada (ADM18)
 
-Este proyecto ya tiene cliente en `js/supabase-client.js`.  
-Para activarlo debes configurar credenciales y crear las tablas.
+ADM18 comparte **un solo proyecto Supabase** con otros módulos (TGA04, TGA05…).
+Los puntajes se segmentan por `offering_code = ADM18-2026-2`.
 
-## 1) Dónde poner las credenciales
+## Paso 1 — Preservar datos actuales (SQL Editor)
 
-En las páginas que cargan `js/supabase-client.js` (hoy: `index.html` y `participacion.html`) deja estos meta tags en `<head>`:
+1. Abre [Supabase Dashboard](https://supabase.com/dashboard) → proyecto `nnrgxuzvjtweyzkdrech`.
+2. Ve a **SQL Editor** → **New query**.
+3. Copia y ejecuta el contenido de:
 
-```html
-<meta name="supabase-supabase_url" content="https://TU-PROYECTO.supabase.co">
-<meta name="supabase-supabase_anon_key" content="TU_ANON_KEY">
-```
+   `setup/migrations/000_preserve_adm18_legacy.sql`
 
-Si esos valores quedan en `YOUR_SUPABASE_URL` / `YOUR_SUPABASE_ANON_KEY`, el sitio funciona en modo local/offline.
+   Esto **renombra** las tablas antiguas (`quiz_scores`, `student_progress`…) a `adm18_*_legacy` **sin borrar filas**.
 
-## 2) Crear tablas en Supabase SQL Editor
+## Paso 2 — Instalar esquema unificado
 
-Ejecuta este script:
+En el mismo SQL Editor, ejecuta **en orden**:
 
-```sql
-create extension if not exists pgcrypto;
+1. `setup/gamification_unified.sql` (tablas multi-módulo + vistas legacy)
+2. `setup/migrations/003_adm18_seed_and_rpc.sql` (catálogo ADM18 + función `upsert_weekly_progress`)
 
-create table if not exists public.quiz_scores (
-  id uuid primary key default gen_random_uuid(),
-  week int not null,
-  score int not null,
-  total int not null,
-  percent int not null,
-  updated_at timestamptz default now()
-);
+## Paso 3 — Verificar
 
-create table if not exists public.student_progress (
-  id uuid primary key default gen_random_uuid(),
-  progress jsonb not null default '{}'::jsonb,
-  completion_pct int not null default 0,
-  updated_at timestamptz default now()
-);
-
-create table if not exists public.student_participation (
-  id uuid primary key default gen_random_uuid(),
-  participation jsonb not null default '{}'::jsonb,
-  groups jsonb not null default '{}'::jsonb,
-  coeval jsonb not null default '{}'::jsonb,
-  completion_pct int not null default 0,
-  updated_at timestamptz default now()
-);
-```
-
-## 3) Políticas RLS mínimas (modo clase/demo)
-
-Si no usarás autenticación todavía:
+Ejecuta en SQL Editor:
 
 ```sql
-alter table public.quiz_scores enable row level security;
-alter table public.student_progress enable row level security;
-alter table public.student_participation enable row level security;
-
-drop policy if exists "anon_rw_quiz_scores" on public.quiz_scores;
-create policy "anon_rw_quiz_scores"
-on public.quiz_scores
-for all
-to anon
-using (true)
-with check (true);
-
-drop policy if exists "anon_rw_student_progress" on public.student_progress;
-create policy "anon_rw_student_progress"
-on public.student_progress
-for all
-to anon
-using (true)
-with check (true);
-
-drop policy if exists "anon_rw_student_participation" on public.student_participation;
-create policy "anon_rw_student_participation"
-on public.student_participation
-for all
-to anon
-using (true)
-with check (true);
+select code from public.modules where code = 'ADM18';
+select code from public.course_offerings where code = 'ADM18-2026-2';
+select count(*) from public.periods p
+join public.course_offerings co on co.id = p.offering_id
+where co.code = 'ADM18-2026-2';
 ```
 
-## 4) Verificación rápida
+Debes ver: módulo ADM18, offering ADM18-2026-2, y **14 periodos** (semanas).
 
-1. Abre `index.html` y `participacion.html`.
-2. Guarda quiz/progreso/participación.
-3. En Supabase, revisa tablas:
-   - `quiz_scores`
-   - `student_progress`
-   - `student_participation`
+## Paso 4 — Frontend (ya configurado en el repo)
 
-## 5) Archivos relacionados
+| Archivo | Rol |
+|---------|-----|
+| `js/supabase-config.js` | URL + offering ADM18 |
+| `js/gamification-sdk.js` | SDK compartido (mismo que TGA04) |
+| `js/supabase-client.js` | Sincroniza `adm18_scores` → nube |
+
+Flujo estudiante:
+
+1. Hace quizzes → se guardan en `localStorage` (`adm18_scores`) — **como antes**.
+2. En `index.html` pulsa **Identificarme** e ingresa cédula + nombre.
+3. El sitio llama `upsert_weekly_progress` por cada semana con puntaje.
+4. Las filas quedan en `activity_completions` filtradas por `ADM18-2026-2`.
+
+## Consultas docente
+
+```sql
+-- Resumen por estudiante ADM18
+select * from public.v_legacy_resumen_docente
+where offering_code = 'ADM18-2026-2';
+
+-- Detalle semanal
+select * from public.v_legacy_student_progress
+where offering_code = 'ADM18-2026-2'
+order by student_id, semana;
+```
+
+## Respaldo de tablas legacy
+
+Los datos antiguos siguen en:
+
+- `adm18_quiz_scores_legacy`
+- `adm18_student_progress_legacy`
+- `adm18_student_participation_legacy`
+
+No se eliminan automáticamente.
+
+## Archivos relacionados
 
 - Cliente: `js/supabase-client.js`
-- Participación: `participacion.html`
-- Landing/progreso: `index.html`
+- Config: `js/supabase-config.js`
+- SDK: `js/gamification-sdk.js`
+- Esquema: `setup/gamification_unified.sql`

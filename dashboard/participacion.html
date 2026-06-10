@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Participación y Asistencia · ADM18</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet">
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/gamification-sdk.js"></script>
+  <script src="../js/import-students-browser.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    [hidden] { display:none !important; }
+    :root { --primary:#1E2843; --accent:#2d3a5e; --gold:#FFDF2D; --green:#2e7d32; --red:#c62828; --orange:#e65100; --light-bg:#FAFAFA; --card-bg:#fff; --text:#212121; --muted:#546e7a; --border:#DEDFE4; --radius:12px; }
+    body { font-family:'Open Sans', Arial, sans-serif; background:var(--light-bg); color:var(--text); line-height:1.55; }
+    header { background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; padding:1.4rem 1.2rem; }
+    .wrap { max-width:1280px; margin:0 auto; }
+    .top { display:flex; justify-content:space-between; align-items:center; gap:1rem; flex-wrap:wrap; }
+    h1 { font-size:clamp(1.5rem,4vw,2.3rem); }
+    .nav { display:flex; gap:.5rem; flex-wrap:wrap; }
+    .nav a, button, input, textarea, select { font-family:inherit; }
+    .nav a, button { border:1px solid var(--border); border-radius:10px; padding:.55rem .85rem; background:#fff; color:var(--primary); font-weight:800; text-decoration:none; cursor:pointer; font-size:.84rem; }
+    .btn-sm { padding:.3rem .6rem; font-size:.75rem; }
+    .btn-green { background:var(--green); color:#fff; border-color:var(--green); }
+    .btn-red { background:var(--red); color:#fff; border-color:var(--red); }
+    .btn-gold { background:var(--gold); color:var(--primary); border-color:var(--gold); }
+    .btn-outline { background:transparent; color:var(--primary); }
+    main { padding:1.2rem; }
+    .login { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1rem; max-width:420px; margin:2rem auto; box-shadow:0 2px 10px rgba(0,0,0,.04); }
+    label { display:block; color:var(--muted); font-size:.8rem; font-weight:800; text-transform:uppercase; margin-bottom:.3rem; }
+    input, textarea, select { width:100%; border:1px solid var(--border); border-radius:10px; padding:.65rem .8rem; font-size:.95rem; margin-bottom:.8rem; }
+    textarea { min-height:120px; resize:vertical; font-family:monospace; font-size:.82rem; }
+    .panel { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1rem; box-shadow:0 2px 10px rgba(0,0,0,.04); margin-bottom:1rem; }
+    .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:1rem; }
+    .metric { background:#fff; border:1px solid var(--border); border-radius:var(--radius); padding:1rem; box-shadow:0 2px 10px rgba(0,0,0,.04); }
+    .metric span { color:var(--muted); font-size:.78rem; font-weight:800; text-transform:uppercase; }
+    .metric strong { display:block; font-size:1.8rem; color:var(--primary); }
+    .tabs { display:flex; gap:.3rem; margin-bottom:1rem; flex-wrap:wrap; }
+    .tab-btn { border:1px solid var(--border); border-radius:10px 10px 0 0; padding:.55rem 1rem; background:var(--light-bg); cursor:pointer; font-weight:700; font-size:.84rem; }
+    .tab-btn.active { background:var(--primary); color:#fff; border-color:var(--primary); }
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+    table { width:100%; border-collapse:collapse; font-size:.86rem; }
+    th { text-align:left; background:var(--primary); color:#fff; padding:.55rem .7rem; position:sticky; top:0; }
+    td { border-bottom:1px solid var(--border); padding:.5rem .7rem; vertical-align:middle; }
+    tr:nth-child(even) td { background:#f8f9fb; }
+    .att-btn { padding:.2rem .5rem; border-radius:6px; font-size:.72rem; font-weight:800; cursor:pointer; border:1px solid var(--border); background:#fff; }
+    .att-btn.p { background:#e8f5e9; color:#1b5e20; border-color:#a5d6a7; }
+    .att-btn.t { background:#fff3e0; color:#e65100; border-color:#ffb74d; }
+    .att-btn.f { background:#ffebee; color:#b71c1c; border-color:#ef9a9a; }
+    .att-btn.sel { box-shadow:0 0 0 2px var(--primary); }
+    .chips { display:flex; gap:.25rem; flex-wrap:wrap; }
+    .chip { border-radius:999px; border:1px solid var(--border); padding:.12rem .45rem; font-size:.7rem; font-weight:800; }
+    .chip.p { background:#e8f5e9; color:#1b5e20; }
+    .chip.t { background:#fff3e0; color:#e65100; }
+    .chip.f { background:#ffebee; color:#b71c1c; }
+    .toolbar { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:.7rem; align-items:end; margin-bottom:.9rem; }
+    .actions-row { display:flex; gap:.5rem; flex-wrap:wrap; margin:.8rem 0; }
+    .msg { color:var(--muted); font-size:.9rem; margin:.7rem 0; min-height:1.3rem; }
+    .msg.ok { color:var(--green); }
+    .msg.err { color:var(--red); }
+    .preview-box { background:#f5f5f5; border-radius:var(--radius); padding:.8rem; font-family:monospace; font-size:.82rem; white-space:pre-wrap; max-height:200px; overflow-y:auto; }
+    .card-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    @media (max-width:760px) { .card-row { grid-template-columns:1fr; } table { min-width:700px; } .table-wrap { overflow-x:auto; } }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap top">
+      <div>
+        <h1>Participación y Asistencia</h1>
+        <p>ADM18 · LatamBox — registro de clase, importación y participación.</p>
+      </div>
+      <nav class="nav">
+        <a href="../index.html">Inicio</a>
+        <a href="../profesor.html">Docente</a>
+        <a href="../progreso.html">Progreso</a>
+        <a href="../JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
+        <a href="#importar-estudiantes">Importar estudiantes</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+
+    <!-- PIN login -->
+    <section class="login" id="login">
+      <label for="pin">PIN docente</label>
+      <input id="pin" type="password" autocomplete="current-password" placeholder="Ingrese PIN">
+      <button onclick="unlock()">Entrar</button>
+      <p class="msg">PIN local: protege la vista en clase.</p>
+    </section>
+
+    <!-- Main app -->
+    <section id="app" hidden>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('live')">Clase en Vivo</button>
+        <button class="tab-btn" onclick="showTab('attendance')">Asistencia</button>
+        <button class="tab-btn" onclick="showTab('history')">Historial</button>
+        <button class="tab-btn" onclick="showTab('config')">Configuracion</button>
+      </div>
+
+      <!-- TAB: Clase en Vivo -->
+      <div class="tab-panel active" id="tab-live">
+        <div class="summary">
+          <div class="metric"><span>Estudiantes cargados</span><strong id="mLiveStudents">0</strong></div>
+          <div class="metric"><span>Puntos hoy</span><strong id="mLivePoints">0</strong></div>
+          <div class="metric"><span>Participaron hoy</span><strong id="mLiveActive">0</strong></div>
+        </div>
+        <div class="panel">
+          <div class="toolbar">
+            <div><label for="liveGroup">Grupo</label><select id="liveGroup" onchange="renderLive()"><option value="">Todos</option></select></div>
+            <div><label for="liveSearch">Buscar</label><input id="liveSearch" placeholder="Nombre o CC" oninput="renderLive()"></div>
+          </div>
+          <div class="actions-row">
+            <button class="btn-gold" onclick="givePoints(1)">+1 Asistencia</button>
+            <button onclick="givePoints(3)">+3 Participacion</button>
+            <button onclick="givePoints(5)">+5 Destacado</button>
+            <button class="btn-red btn-sm" onclick="clearToday()">Limpiar hoy</button>
+          </div>
+          <p class="msg" id="liveMsg"></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th style="width:40px">Sel</th><th>Estudiante</th><th>CC</th><th>Grupo</th><th>Pts Hoy</th><th>XP Total</th><th>Accion</th></tr></thead>
+              <tbody id="liveRows"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Asistencia -->
+      <div class="tab-panel" id="tab-attendance">
+        <div class="summary">
+          <div class="metric"><span>Presentes hoy</span><strong id="mAttPresent">0</strong></div>
+          <div class="metric"><span>Tardanza</span><strong id="mAttLate">0</strong></div>
+          <div class="metric"><span>Ausentes</span><strong id="mAttAbsent">0</strong></div>
+          <div class="metric"><span>% Asistencia</span><strong id="mAttPct">0%</strong></div>
+        </div>
+        <div class="panel">
+          <div class="toolbar">
+            <div><label for="attGroup">Grupo</label><select id="attGroup" onchange="renderAttendance()"><option value="">Todos</option></select></div>
+            <div><label for="attDate">Fecha</label><input id="attDate" type="date" onchange="renderAttendance()"></div>
+            <div><label for="attSearch">Buscar</label><input id="attSearch" placeholder="Nombre o CC" oninput="renderAttendance()"></div>
+          </div>
+          <div class="actions-row">
+            <button class="btn-green" onclick="markAllAttendance('P')">Todos Presentes</button>
+            <button onclick="markAllAttendance('T')">Todos Tardanza</button>
+            <button class="btn-red btn-sm" onclick="clearTodayAtt()">Limpiar dia</button>
+          </div>
+          <p class="msg" id="attMsg"></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Estudiante</th><th>CC</th><th>Grupo</th><th>Estado</th><th>% Cuatri</th></tr></thead>
+              <tbody id="attRows"></tbody>
+            </table>
+          </div>
+          <div class="actions-row" style="margin-top:1rem">
+            <button onclick="exportAttendanceCSV()">Exportar CSV (Academusoft)</button>
+            <button onclick="syncAttendanceToSupabase()">Sincronizar a Supabase</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Historial -->
+      <div class="tab-panel" id="tab-history">
+        <div class="panel">
+          <div class="toolbar">
+            <div><label for="histSearch">Buscar</label><input id="histSearch" placeholder="Nombre o CC" oninput="renderHistory()"></div>
+          </div>
+          <p class="msg" id="histMsg"></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Fecha/Hora</th><th>Estudiante</th><th>CC</th><th>Tipo</th><th>Puntos</th></tr></thead>
+              <tbody id="histRows"></tbody>
+            </table>
+          </div>
+          <div class="actions-row">
+            <button onclick="exportHistory()">Exportar Historial (.tsv)</button>
+            <button class="btn-red btn-sm" onclick="clearHistory()">Borrar historial</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Configuracion -->
+      <div class="tab-panel" id="tab-config">
+        <div class="card-row">
+          <div class="panel" id="importar-estudiantes">
+            <h3 style="color:var(--primary);margin-bottom:.8rem">Importar lista de estudiantes</h3>
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:.7rem">Selecciona el reporte de estudiantes de Academusoft en PDF, TXT o CSV.</p>
+            <label for="importFile">Archivo</label>
+            <input id="importFile" type="file" accept=".pdf,.txt,.csv,application/pdf,text/plain,text/csv">
+            <div class="actions-row">
+              <button class="btn-gold" onclick="importSelectedFile()">Importar archivo</button>
+            </div>
+            <details style="margin:.8rem 0">
+              <summary style="cursor:pointer;color:var(--muted);font-weight:800;font-size:.82rem">O pegar texto manualmente</summary>
+              <textarea id="importText" placeholder="Pega aqui el texto del reporte...&#10;Ej: 1  CC - 1000000001  1000000001  ESTUDIANTE PRUEBA UNO"></textarea>
+              <button onclick="parseImportText()">Analizar texto pegado</button>
+            </details>
+            <p style="font-size:.72rem;color:var(--muted);margin-bottom:.6rem">Formato soportado: reporte Academusoft con columnas No., Documento, Codigo y Nombre Completo.</p>
+            <p class="msg" id="importMsg"></p>
+            <div class="preview-box" id="importPreview" hidden></div>
+            <div class="actions-row" id="importActions" hidden>
+              <button class="btn-green" id="importLoadBtn" onclick="loadImported()">Cargar N estudiantes</button>
+              <button class="btn-red btn-sm" onclick="cancelImport()">Cancelar</button>
+            </div>
+          </div>
+          <div class="panel">
+            <h3 style="color:var(--primary);margin-bottom:.8rem">Resumen de estudiantes cargados</h3>
+            <p class="msg" id="configSummary"></p>
+            <p style="font-size:.84rem;color:var(--muted);margin-bottom:.7rem">Grupos detectados:</p>
+            <div id="configGroups"></div>
+            <div class="actions-row" style="margin-top:1rem">
+              <button onclick="syncStudentsToSupabase()">Sincronizar lista a Supabase</button>
+              <button class="btn-red btn-sm" onclick="clearAllData()">Borrar todos los datos</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_STUDENTS = "adm18_students_v1";
+    const STORAGE_HISTORY = "adm18_participation_history";
+    const STORAGE_ATTENDANCE = "adm18_attendance";
+    const STORAGE_TODAY_PTS = "adm18_today_points";
+
+    let currentTab = "live";
+    let importedData = null;
+
+    function unlock() {
+      if (document.getElementById("pin").value.trim() !== "sasadfgh2019") return alert("PIN incorrecto");
+      document.getElementById("login").hidden = true;
+      document.getElementById("app").hidden = false;
+      document.getElementById("attDate").value = todayStr();
+      init();
+      showTab(tabFromHash());
+    }
+
+    function todayStr() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function nowISO() {
+      return new Date().toISOString();
+    }
+
+    function getStudents() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_STUDENTS) || "[]"); }
+      catch(e) { return []; }
+    }
+
+    function setStudents(arr) {
+      localStorage.setItem(STORAGE_STUDENTS, JSON.stringify(arr));
+    }
+
+    function getHistory() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_HISTORY) || "[]"); }
+      catch(e) { return []; }
+    }
+
+    function setHistory(arr) {
+      localStorage.setItem(STORAGE_HISTORY, JSON.stringify(arr));
+    }
+
+    function getAttendance() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_ATTENDANCE) || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    function setAttendance(obj) {
+      localStorage.setItem(STORAGE_ATTENDANCE, JSON.stringify(obj));
+    }
+
+    function getTodayPoints() {
+      try { return JSON.parse(localStorage.getItem(STORAGE_TODAY_PTS) || "{}"); }
+      catch(e) { return {}; }
+    }
+
+    function setTodayPoints(obj) {
+      localStorage.setItem(STORAGE_TODAY_PTS, JSON.stringify(obj));
+    }
+
+    function showTab(name) {
+      currentTab = name;
+      document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
+      document.querySelector(`.tab-btn[onclick*="${name}"]`).classList.add("active");
+      document.getElementById("tab-" + name).classList.add("active");
+      if (name === "live") renderLive();
+      if (name === "attendance") renderAttendance();
+      if (name === "history") renderHistory();
+      if (name === "config") renderConfig();
+    }
+
+    function tabFromHash() {
+      return location.hash === "#importar-estudiantes" || location.hash === "#config" ? "config" : "live";
+    }
+
+    window.addEventListener("hashchange", () => {
+      if (!document.getElementById("app").hidden) showTab(tabFromHash());
+    });
+
+    function esc(s) { return String(s ?? "").replace(/[&<>"']/g, m => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[m])); }
+
+    function init() {
+      fetchStudentsFromSupabase().finally(function() {
+        fillGroupSelect("liveGroup");
+        fillGroupSelect("attGroup");
+        renderLive();
+        renderConfig();
+      });
+    }
+
+    async function fetchStudentsFromSupabase() {
+      const url = localStorage.getItem("adm18_supabase_url");
+      const key = localStorage.getItem("adm18_supabase_key");
+      if (!url || !key) return false;
+      const offering = encodeURIComponent(
+        (typeof GamifSDK !== "undefined" && GamifSDK.getOfferingCode()) || "ADM18-2026-2"
+      );
+      try {
+        let res = await fetch(url + "/rest/v1/v_legacy_students?select=cc,name,grupo,horario&offering_code=eq." + offering + "&order=name", {
+          headers: { apikey: key, Authorization: "Bearer " + key }
+        });
+        if (!res.ok) {
+          res = await fetch(url + "/rest/v1/students?select=*&order=name", {
+            headers: { apikey: key, Authorization: "Bearer " + key }
+          });
+        }
+        if (!res.ok) return false;
+        const data = await res.json();
+        if (data && data.length) {
+          const students = data.map(function(s) {
+            return {
+              name: s.name,
+              cc: s.cc,
+              grupo: s.grupo || "",
+              horario: s.horario || ""
+            };
+          });
+          setStudents(students);
+          return true;
+        }
+      } catch(e) {
+        console.warn("fetchStudentsFromSupabase:", e.message);
+      }
+      return false;
+    }
+
+    function fillGroupSelect(id) {
+      const students = getStudents();
+      const select = document.getElementById(id);
+      const current = select.value;
+      const groups = [...new Set(students.map(s => s.grupo).filter(Boolean))].sort();
+      select.innerHTML = '<option value="">Todos</option>' + groups.map(g => `<option>${esc(g)}</option>`).join("");
+      select.value = current;
+    }
+
+    // ── TAB: Clase en Vivo ──────────────────────────────────
+    function renderLive() {
+      const students = getStudents();
+      const group = document.getElementById("liveGroup").value;
+      const q = document.getElementById("liveSearch").value.toLowerCase();
+      const todayPts = getTodayPoints();
+
+      if (!students.length) {
+        document.getElementById("mLiveStudents").textContent = "0";
+        document.getElementById("mLivePoints").textContent = "0";
+        document.getElementById("mLiveActive").textContent = "0";
+        document.getElementById("liveRows").innerHTML = `<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--muted)">
+          No hay estudiantes cargados.<br>
+          Ve al tab <strong>Configuracion</strong> y pega el texto del reporte PDF de Academusoft para importar la lista.
+        </td></tr>`;
+        return;
+      }
+
+      let filtered = students;
+      if (group) filtered = filtered.filter(s => s.grupo === group);
+      if (q) filtered = filtered.filter(s => (`${s.name} ${s.cc}`.toLowerCase().includes(q)));
+      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+      document.getElementById("mLiveStudents").textContent = students.length;
+      document.getElementById("mLivePoints").textContent = Object.values(todayPts).reduce((s, v) => s + v, 0);
+      document.getElementById("mLiveActive").textContent = Object.keys(todayPts).length;
+
+      document.getElementById("liveRows").innerHTML = filtered.map(s => {
+        const pts = todayPts[s.cc] || 0;
+        return `<tr>
+          <td><input type="checkbox" value="${esc(s.cc)}" class="live-chk"></td>
+          <td><strong>${esc(s.name)}</strong></td>
+          <td>${esc(s.cc)}</td>
+          <td>${esc(s.grupo || "-")}</td>
+          <td>${pts}</td>
+          <td>${getStudentTotalXP(s.cc)}</td>
+          <td><button class="btn-sm" onclick="giveToStudent('${esc(s.cc)}',1)">+1</button>
+              <button class="btn-sm" onclick="giveToStudent('${esc(s.cc)}',3)">+3</button></td>
+        </tr>`;
+      }).join("");
+    }
+
+    function getStudentTotalXP(cc) {
+      return getHistory()
+        .filter(function(h) { return h.cc === cc; })
+        .reduce(function(sum, h) { return sum + (Number(h.points) || 0); }, 0);
+    }
+
+    async function syncPointsToCloud(entries) {
+      if (typeof GamifSDK === "undefined" || !entries.length) return;
+      var events = entries.map(function(e) {
+        return { cc: e.cc, points: e.points, type: e.type, name: e.name, ts: e.ts };
+      });
+      await GamifSDK.syncParticipation(events);
+    }
+
+    function givePoints(amount) {
+      const checks = document.querySelectorAll(".live-chk:checked");
+      if (!checks.length) { document.getElementById("liveMsg").textContent = "Selecciona al menos un estudiante."; return; }
+      const history = getHistory();
+      const todayPts = getTodayPoints();
+      const label = amount === 1 ? "Asistencia" : amount === 3 ? "Participacion" : "Destacado";
+      const now = nowISO();
+      const batch = [];
+      checks.forEach(cb => {
+        const cc = cb.value;
+        todayPts[cc] = (todayPts[cc] || 0) + amount;
+        const entry = { ts: now, cc, name: findStudentName(cc), type: label, points: amount };
+        history.push(entry);
+        batch.push(entry);
+      });
+      setTodayPoints(todayPts);
+      setHistory(history);
+      syncPointsToCloud(batch);
+      document.getElementById("liveMsg").textContent = `+${amount} pts otorgados a ${checks.length} estudiante(s).`;
+      document.getElementById("liveMsg").className = "msg ok";
+      renderLive();
+    }
+
+    function giveToStudent(cc, amount) {
+      const history = getHistory();
+      const todayPts = getTodayPoints();
+      const label = amount === 1 ? "Asistencia" : amount === 3 ? "Participacion" : "Destacado";
+      todayPts[cc] = (todayPts[cc] || 0) + amount;
+      const entry = { ts: nowISO(), cc, name: findStudentName(cc), type: label, points: amount };
+      history.push(entry);
+      setTodayPoints(todayPts);
+      setHistory(history);
+      syncPointsToCloud([entry]);
+      renderLive();
+    }
+
+    function clearToday() {
+      if (!confirm("Borrar todos los puntos de hoy?")) return;
+      setTodayPoints({});
+      renderLive();
+    }
+
+    function findStudentName(cc) {
+      const students = getStudents();
+      const s = students.find(s => s.cc === cc);
+      return s ? s.name : cc;
+    }
+
+    // ── TAB: Asistencia ─────────────────────────────────────
+    function renderAttendance() {
+      const students = getStudents();
+      const group = document.getElementById("attGroup").value;
+      const q = document.getElementById("attSearch").value.toLowerCase();
+      const date = document.getElementById("attDate").value || todayStr();
+      const att = getAttendance();
+
+      if (!students.length) {
+        document.getElementById("mAttPresent").textContent = "0";
+        document.getElementById("mAttLate").textContent = "0";
+        document.getElementById("mAttAbsent").textContent = "0";
+        document.getElementById("mAttPct").textContent = "0%";
+        document.getElementById("attRows").innerHTML = `<tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--muted)">
+          No hay estudiantes cargados.<br>
+          Ve al tab <strong>Configuracion</strong> y pega el texto del reporte PDF de Academusoft para importar la lista.
+        </td></tr>`;
+        return;
+      }
+
+      let filtered = students;
+      if (group) filtered = filtered.filter(s => s.grupo === group);
+      if (q) filtered = filtered.filter(s => (`${s.name} ${s.cc}`.toLowerCase().includes(q)));
+      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+      const dayKey = date;
+      const dayAtt = att[dayKey] || {};
+      const dayValues = Object.values(dayAtt);
+      const pCount = dayValues.filter(v => v === "P").length;
+      const tCount = dayValues.filter(v => v === "T").length;
+      const fCount = dayValues.filter(v => v === "F").length;
+      const total = filtered.length || 1;
+
+      document.getElementById("mAttPresent").textContent = pCount;
+      document.getElementById("mAttLate").textContent = tCount;
+      document.getElementById("mAttAbsent").textContent = fCount;
+      document.getElementById("mAttPct").textContent = Math.round(pCount / total * 100) + "%";
+
+      document.getElementById("attRows").innerHTML = filtered.map(s => {
+        const state = dayAtt[s.cc] || "-";
+        const pct = calcAttendancePct(s.cc);
+        return `<tr>
+          <td><strong>${esc(s.name)}</strong></td>
+          <td>${esc(s.cc)}</td>
+          <td>${esc(s.grupo || "-")}</td>
+          <td>
+            <button class="att-btn p${state==='P'?' sel':''}" onclick="setAtt('${esc(s.cc)}','P')">Presente</button>
+            <button class="att-btn t${state==='T'?' sel':''}" onclick="setAtt('${esc(s.cc)}','T')">Tarde</button>
+            <button class="att-btn f${state==='F'?' sel':''}" onclick="setAtt('${esc(s.cc)}','F')">Ausente</button>
+          </td>
+          <td>${pct}%</td>
+        </tr>`;
+      }).join("");
+    }
+
+    function setAtt(cc, state) {
+      const date = document.getElementById("attDate").value || todayStr();
+      const att = getAttendance();
+      if (!att[date]) att[date] = {};
+      att[date][cc] = att[date][cc] === state ? "-" : state;
+      setAttendance(att);
+      renderAttendance();
+    }
+
+    function markAllAttendance(state) {
+      const date = document.getElementById("attDate").value || todayStr();
+      const students = getStudents();
+      const group = document.getElementById("attGroup").value;
+      let filtered = students;
+      if (group) filtered = filtered.filter(s => s.grupo === group);
+      const att = getAttendance();
+      if (!att[date]) att[date] = {};
+      filtered.forEach(s => { att[date][s.cc] = state; });
+      setAttendance(att);
+      renderAttendance();
+    }
+
+    function clearTodayAtt() {
+      if (!confirm("Limpiar asistencia de esta fecha?")) return;
+      const date = document.getElementById("attDate").value || todayStr();
+      const att = getAttendance();
+      delete att[date];
+      setAttendance(att);
+      renderAttendance();
+    }
+
+    function calcAttendancePct(cc) {
+      const att = getAttendance();
+      const dates = Object.keys(att);
+      if (!dates.length) return 100;
+      let total = 0, present = 0;
+      for (const d of dates) {
+        if (att[d][cc] !== undefined && att[d][cc] !== "-") {
+          total++;
+          if (att[d][cc] === "P") present++;
+        }
+      }
+      return total ? Math.round(present / total * 100) : 100;
+    }
+
+    function exportAttendanceCSV() {
+      const att = getAttendance();
+      const dates = Object.keys(att).sort();
+      const students = getStudents();
+      if (!dates.length) { alert("No hay datos de asistencia."); return; }
+      const rows = [["Estudiante", "CC", "Grupo", ...dates, "% Asistencia"]];
+      for (const s of students.sort((a,b) => a.name.localeCompare(b.name))) {
+        const row = [s.name, s.cc, s.grupo || ""];
+        let p = 0, t = 0;
+        for (const d of dates) {
+          const v = (att[d] || {})[s.cc] || "-";
+          row.push(v === "P" ? "P" : v === "T" ? "T" : "F");
+          if (v === "P") p++;
+          else if (v !== "-") t++;
+        }
+        row.push(dates.length ? Math.round(p / dates.length * 100) + "%" : "");
+        rows.push(row);
+      }
+      downloadCSV(rows, `Asistencia_ADM18_${todayStr()}.csv`);
+    }
+
+    async function syncAttendanceToSupabase() {
+      const url = localStorage.getItem("adm18_supabase_url");
+      const key = localStorage.getItem("adm18_supabase_key");
+      if (!url || !key) { alert("Supabase no configurado."); return; }
+      const att = getAttendance();
+      const rows = [];
+      for (const [fecha, states] of Object.entries(att)) {
+        for (const [cc, estado] of Object.entries(states)) {
+          if (estado === "-") continue;
+          rows.push({ cc, fecha, estado, grupo: getStudents().find(s => s.cc === cc)?.grupo || "" });
+        }
+      }
+      if (!rows.length) { alert("Sin datos para sincronizar."); return; }
+      document.getElementById("attMsg").textContent = "Sincronizando...";
+      try {
+        for (let i = 0; i < rows.length; i += 200) {
+          const batch = rows.slice(i, i + 200);
+          const res = await fetch(url + "/rest/v1/attendance", {
+            method: "POST",
+            headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+            body: JSON.stringify(batch)
+          });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+        }
+        document.getElementById("attMsg").textContent = "Asistencia sincronizada.";
+        document.getElementById("attMsg").className = "msg ok";
+      } catch(e) {
+        document.getElementById("attMsg").textContent = "Error: " + e.message;
+        document.getElementById("attMsg").className = "msg err";
+      }
+    }
+
+    // ── TAB: Historial ──────────────────────────────────────
+    function renderHistory() {
+      const history = getHistory();
+      const q = document.getElementById("histSearch").value.toLowerCase();
+      let rows = history;
+      if (q) rows = rows.filter(r => (`${r.name} ${r.cc}`.toLowerCase().includes(q)));
+      rows = rows.reverse();
+      document.getElementById("histRows").innerHTML = rows.slice(0, 500).map(r => `<tr>
+        <td>${new Date(r.ts).toLocaleString()}</td>
+        <td>${esc(r.name)}</td>
+        <td>${esc(r.cc)}</td>
+        <td><span class="chip p">${esc(r.type)}</span></td>
+        <td>+${r.points}</td>
+      </tr>`).join("");
+    }
+
+    function exportHistory() {
+      const history = getHistory();
+      if (!history.length) { alert("Sin historial."); return; }
+      const header = "Fecha_Hora\tEstudiante\tCC\tTipo\tPuntos\n";
+      const body = history.map(r => [new Date(r.ts).toISOString(), r.name, r.cc, r.type, r.points].join("\t")).join("\n");
+      const blob = new Blob([header + body], { type: "text/tab-separated-values" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Participacion_ADM18_${todayStr()}.tsv`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    function clearHistory() {
+      if (!confirm("Borrar TODO el historial de participacion?")) return;
+      setHistory([]);
+      renderHistory();
+    }
+
+    // ── TAB: Configuracion ──────────────────────────────────
+    function renderConfig() {
+      const students = getStudents();
+      document.getElementById("configSummary").textContent = `${students.length} estudiantes cargados.`;
+      const groups = [...new Set(students.map(s => s.grupo).filter(Boolean))].sort();
+      document.getElementById("configGroups").innerHTML = groups.map(g => {
+        const count = students.filter(s => s.grupo === g).length;
+        return `<div style="margin-bottom:.3rem"><span class="chip p">${esc(g)}</span> ${count} estudiantes</div>`;
+      }).join("") || "<p style='color:var(--muted)'>Sin grupos definidos.</p>";
+    }
+
+    function studentImporter() {
+      if (!window.IUBImportStudents) throw new Error("El importador aun no termino de cargar. Recarga la pagina e intenta de nuevo.");
+      return window.IUBImportStudents;
+    }
+
+    async function importSelectedFile() {
+      const file = document.getElementById("importFile").files[0];
+      const msg = document.getElementById("importMsg");
+      msg.className = "msg";
+      msg.style.whiteSpace = "";
+      if (!file) { msg.textContent = "Selecciona el PDF, TXT o CSV de Academusoft primero."; return; }
+      msg.textContent = `Leyendo ${file.name}...`;
+      document.getElementById("importPreview").hidden = true;
+      document.getElementById("importActions").hidden = true;
+      try {
+        const text = await studentImporter().extractTextFromStudentFile(file);
+        document.getElementById("importText").value = text;
+        applyImportText(text, file.name);
+      } catch (err) {
+        msg.textContent = `No se pudo importar el archivo: ${err.message}`;
+        msg.className = "msg err";
+      }
+    }
+
+    function parseImportText() {
+      const text = document.getElementById("importText").value.trim();
+      if (!text) { document.getElementById("importMsg").textContent = "Pega el texto del reporte primero."; return; }
+      applyImportText(text, "texto pegado");
+    }
+
+    function applyImportText(text, sourceLabel) {
+      const msg = document.getElementById("importMsg");
+      msg.className = "msg";
+      msg.style.whiteSpace = "";
+      const result = studentImporter().parseAcademusoftStudents(text);
+      const students = result.students;
+
+      if (!students.length) {
+        const hint = result.unmatched.length
+          ? `Lineas no reconocidas (${result.unmatched.length}):\n${result.unmatched.slice(0, 5).join("\n")}`
+          : "Formato esperado: reporte Academusoft con columnas No., Documento, Codigo y Nombre Completo.";
+        msg.textContent = "No se encontraron estudiantes. " + hint;
+        msg.style.whiteSpace = "pre-wrap";
+        msg.className = "msg err";
+        importedData = null;
+        document.getElementById("importPreview").hidden = true;
+        document.getElementById("importActions").hidden = true;
+        return;
+      }
+
+      importedData = students;
+      const groupLabel = result.meta.grupo ? ` (${result.meta.grupo})` : "";
+      msg.textContent = `${students.length} estudiantes detectados${groupLabel} desde ${sourceLabel}.`;
+      msg.className = "msg ok";
+      const preview = document.getElementById("importPreview");
+      preview.hidden = false;
+      preview.textContent = importedData.slice(0, 20).map(s => `${s.name}  ${s.cc}  ${s.grupo || ""}`).join("\n")
+        + (importedData.length > 20 ? `\n... y ${importedData.length - 20} mas` : "");
+      document.getElementById("importActions").hidden = false;
+      document.getElementById("importLoadBtn").textContent = `Cargar ${importedData.length} estudiantes`;
+    }
+
+    function loadImported() {
+      if (!importedData) return;
+      const existing = getStudents();
+      const byCC = new Map(existing.map(s => [s.cc, s]));
+      for (const s of importedData) {
+        byCC.set(s.cc, s);
+      }
+      const final = [...byCC.values()];
+      setStudents(final);
+      importedData = null;
+      document.getElementById("importPreview").hidden = true;
+      document.getElementById("importActions").hidden = true;
+      document.getElementById("importMsg").textContent = `${final.length} estudiantes totales cargados. Sincronizando a la nube...`;
+      document.getElementById("importMsg").className = "msg ok";
+      fillGroupSelect("liveGroup");
+      fillGroupSelect("attGroup");
+      renderConfig();
+      renderLive();
+      syncStudentsToSupabase();
+    }
+
+    function cancelImport() {
+      importedData = null;
+      document.getElementById("importPreview").hidden = true;
+      document.getElementById("importActions").hidden = true;
+      document.getElementById("importMsg").textContent = "Importacion cancelada.";
+    }
+
+    async function syncStudentsToSupabase() {
+      const url = localStorage.getItem("adm18_supabase_url");
+      const key = localStorage.getItem("adm18_supabase_key");
+      if (!url || !key) { alert("Supabase no configurado."); return; }
+      const students = getStudents();
+      if (!students.length) { alert("No hay estudiantes para sincronizar."); return; }
+      document.getElementById("configSummary").textContent = "Sincronizando...";
+      try {
+        for (let i = 0; i < students.length; i += 200) {
+          const batch = students.slice(i, i + 200);
+          const res = await fetch(url + "/rest/v1/students", {
+            method: "POST",
+            headers: { apikey: key, Authorization: "Bearer " + key, "Content-Type": "application/json", Prefer: "resolution=merge-duplicates" },
+            body: JSON.stringify(batch)
+          });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+        }
+        document.getElementById("configSummary").textContent = `${students.length} estudiantes sincronizados a Supabase.`;
+      } catch(e) {
+        document.getElementById("configSummary").textContent = "Error: " + e.message;
+      }
+    }
+
+    function clearAllData() {
+      if (!confirm("BORRAR TODOS los datos de participacion, asistencia e historial? Esta accion no se puede deshacer.")) return;
+      setStudents([]);
+      setHistory([]);
+      setAttendance({});
+      setTodayPoints({});
+      importedData = null;
+      renderConfig();
+      renderLive();
+      renderAttendance();
+      renderHistory();
+      document.getElementById("importPreview").hidden = true;
+      document.getElementById("importActions").hidden = true;
+    }
+
+    // ── Utilidades ──────────────────────────────────────────
+    function downloadCSV(rows, filename) {
+      const csv = rows.map(r => r.map(c => `"${String(c ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    }
+  </script>
+</body>
+</html>

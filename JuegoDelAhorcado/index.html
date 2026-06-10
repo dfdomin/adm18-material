@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ahorcado ADM18 — LatamBox</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root { --iub-navy: #1E2843; --iub-yellow: #FFDF2D; }
+      .iub-topbar {
+        background: var(--iub-navy); color: #fff; padding: .45rem 1.2rem;
+        display: flex; align-items: center; justify-content: space-between;
+        font-family: 'Open Sans', sans-serif; font-size: .8rem; gap: .8rem; flex-wrap: wrap;
+      }
+      .iub-topbar a { color: var(--iub-yellow); text-decoration: none; font-weight: 700; font-size: .78rem; }
+      .student-bar {
+        background: #fff; border-bottom: 2px solid #e0e0e0; padding: .75rem 1.2rem;
+        display: flex; flex-wrap: wrap; gap: .6rem; align-items: center;
+        font-family: 'Open Sans', sans-serif;
+      }
+      .student-bar label { font-size: .78rem; font-weight: 700; color: var(--iub-navy); }
+      .student-bar select {
+        min-width: 220px; padding: .45rem .6rem; border-radius: 8px;
+        border: 1px solid #ccc; font-size: .85rem;
+      }
+      .student-bar button {
+        padding: .45rem .85rem; border-radius: 8px; border: none; cursor: pointer;
+        font-weight: 700; font-size: .78rem;
+      }
+      .btn-navy { background: var(--iub-navy); color: #fff; }
+      .btn-gold { background: var(--iub-yellow); color: var(--iub-navy); }
+      .student-badge {
+        font-size: .78rem; color: #666; padding: .35rem .6rem;
+        background: #f5f5f5; border-radius: 999px;
+      }
+      .student-badge.active { background: #e8f5e9; color: #1b5e20; font-weight: 700; }
+      #word-bank-panel {
+        background: #fff; border-bottom: 2px solid #e0e0e0; padding: .7rem 1.2rem;
+        display: none; flex-wrap: wrap; gap: .5rem; align-items: center;
+        font-family: 'Open Sans', sans-serif;
+      }
+      #word-bank-panel .wb-label {
+        font-size: .78rem; font-weight: 700; color: var(--iub-navy);
+        text-transform: uppercase; letter-spacing: .04em;
+      }
+      .wb-btn {
+        padding: .3rem .8rem; background: var(--iub-navy); color: #fff;
+        border: none; border-radius: 20px; font-size: .78rem; font-weight: 600; cursor: pointer;
+      }
+      .wb-btn.random { background: var(--iub-yellow); color: var(--iub-navy); }
+      .bank-toggle {
+        background: rgba(255,223,45,.18); color: var(--iub-yellow) !important;
+        border: 1px solid rgba(255,223,45,.4) !important; font-weight: 700;
+      }
+      #studentHint { font-size: .72rem; color: #888; width: 100%; margin: 0; }
+    </style>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/gamification-sdk.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <div class="iub-topbar">
+        <span>🏫 IUB · ADM18 · Procesamiento de la Información · LatamBox</span>
+        <span>
+          <a href="../dashboard/participacion.html">Participación</a>
+          &nbsp;·&nbsp;
+          <a href="../profesor.html">Docente</a>
+        </span>
+      </div>
+
+      <div class="student-bar">
+        <label for="studentSelect">Estudiante en juego</label>
+        <select id="studentSelect" aria-label="Elegir estudiante">
+          <option value="">— Elegir estudiante —</option>
+        </select>
+        <button type="button" class="btn-gold" id="randomStudentBtn">🎲 Sorteo</button>
+        <button type="button" class="btn-navy" id="useNameBtn">Usar su nombre</button>
+        <span class="student-badge" id="studentBadge">Ningún estudiante seleccionado</span>
+        <p id="studentHint"></p>
+      </div>
+
+      <div id="word-bank-panel">
+        <span class="wb-label">📚 Banco LatamBox:</span>
+        <button type="button" class="wb-btn" onclick="loadRandomWord('LatamBox')">LatamBox</button>
+        <button type="button" class="wb-btn" onclick="loadRandomWord('Documentos')">Documentos</button>
+        <button type="button" class="wb-btn" onclick="loadRandomWord('Comercio exterior')">Comercio ext.</button>
+        <button type="button" class="wb-btn" onclick="loadRandomWord('Organización')">Organización</button>
+        <button type="button" class="wb-btn random" onclick="loadRandomAny()">🎲 Sorpréndeme</button>
+      </div>
+
+      <header class="topbar" aria-label="Controles principales">
+        <div>
+          <p class="context">Juego en clase</p>
+          <h1>Ahorcado · ADM18</h1>
+        </div>
+        <div class="top-actions">
+          <button class="text-button ghost bank-toggle" type="button" onclick="toggleWordBank()">📚 Banco</button>
+          <button class="icon-button" id="fullscreenButton" type="button" title="Pantalla completa" aria-label="Pantalla completa">
+            <span aria-hidden="true">⛶</span>
+          </button>
+          <button class="text-button ghost" id="clearButton" type="button">Limpiar</button>
+          <button class="text-button" id="startButton" type="button">Iniciar</button>
+        </div>
+      </header>
+
+      <section class="game-grid" aria-label="Tablero del juego">
+        <section class="drawing-panel" aria-label="Dibujo del ahorcado">
+          <div class="panel-heading">
+            <div>
+              <p class="context">Intentos</p>
+              <strong><span id="mistakesCount">0</span> / <span id="maxMistakes">6</span></strong>
+            </div>
+            <div class="status-chip" id="statusChip">Esperando palabra</div>
+          </div>
+          <div class="notebook" aria-live="polite">
+            <svg class="hangman" viewBox="0 0 620 560" role="img" aria-labelledby="drawingTitle">
+              <title id="drawingTitle">Dibujo del ahorcado</title>
+              <g class="paper-lines" aria-hidden="true">
+                <path d="M70 114H550" /><path d="M70 174H550" /><path d="M70 234H550" />
+                <path d="M70 294H550" /><path d="M70 354H550" /><path d="M70 414H550" /><path d="M70 474H550" />
+              </g>
+              <g class="stand" aria-hidden="true">
+                <path d="M126 500C178 486 229 486 285 500" /><path d="M178 500L178 84" />
+                <path d="M178 84C230 70 282 70 333 84" /><path d="M331 84L331 132" />
+              </g>
+              <g class="person" aria-hidden="true">
+                <g class="body-part part-head" data-part="head">
+                  <path d="M331 134C359 134 384 157 384 186C384 218 360 239 331 239C301 239 279 216 279 186C279 157 301 134 331 134Z" />
+                  <path class="strike" d="M284 141L381 234" /><path class="strike" d="M382 142L281 232" />
+                </g>
+                <g class="body-part part-torso" data-part="torso">
+                  <path d="M330 241C320 276 318 315 330 354C343 317 344 276 330 241Z" />
+                  <path class="strike" d="M299 246L363 350" />
+                </g>
+                <g class="body-part part-left-arm" data-part="left-arm">
+                  <path d="M318 276C292 285 269 306 251 333" /><path class="strike" d="M249 283L317 334" />
+                </g>
+                <g class="body-part part-right-arm" data-part="right-arm">
+                  <path d="M343 277C372 286 394 307 413 334" /><path class="strike" d="M346 335L417 283" />
+                </g>
+                <g class="body-part part-left-leg" data-part="left-leg">
+                  <path d="M329 351C305 385 286 424 277 466" /><path class="strike" d="M269 370L321 459" />
+                </g>
+                <g class="body-part part-right-leg" data-part="right-leg">
+                  <path d="M333 351C360 386 379 423 386 467" /><path class="strike" d="M341 458L394 370" />
+                </g>
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        <section class="control-panel" aria-label="Controles del juego">
+          <form class="secret-form" id="secretForm" autocomplete="off">
+            <label for="secretInput">Palabra secreta</label>
+            <div class="secret-row">
+              <input id="secretInput" name="secret" type="password" autocomplete="off" placeholder="Palabra o nombre" />
+              <button class="icon-button" id="toggleSecretButton" type="button" title="Mostrar u ocultar" aria-label="Mostrar u ocultar">
+                <span aria-hidden="true">👁</span>
+              </button>
+            </div>
+            <p id="privacyHint">Oculta la palabra en pantalla compartida.</p>
+          </form>
+          <section class="word-card">
+            <div class="word-display" id="wordDisplay" aria-live="polite"></div>
+            <p id="gameMessage">Elige estudiante, palabra o nombre y presiona Iniciar.</p>
+          </section>
+          <section class="keyboard-area">
+            <div class="section-title">
+              <h2>Letras</h2>
+              <span id="usedLetters">Sin letras usadas</span>
+            </div>
+            <div class="keyboard" id="keyboard"></div>
+          </section>
+          <section class="quick-actions">
+            <button class="text-button muted" id="revealButton" type="button">Revelar</button>
+            <button class="text-button muted" id="newRoundButton" type="button">Nueva ronda</button>
+          </section>
+        </section>
+      </section>
+    </main>
+    <script src="app.js"></script>
+  </body>
+</html>

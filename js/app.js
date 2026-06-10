@@ -87,6 +87,9 @@ const ADM18App = (function() {
         };
         saveState('scores');
         updateProgressUI();
+        if (typeof SupabaseClient !== 'undefined' && SupabaseClient.syncUnsynced) {
+            SupabaseClient.syncUnsynced();
+        }
         return state.scores['week_' + weekNum];
     }
 
@@ -245,6 +248,24 @@ const ADM18App = (function() {
         getQuizScore,
         getProgress: function() { return state.progress; },
         getScores: function() { return state.scores; },
+        getProfile: function() {
+            if (typeof GamifSDK !== 'undefined') return GamifSDK.loadProfile();
+            try {
+                const raw = localStorage.getItem(KEYS.USER);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) {
+                return {};
+            }
+        },
+        saveProfile: function(profile) {
+            if (typeof SupabaseClient !== 'undefined' && SupabaseClient.saveStudentProfile) {
+                SupabaseClient.saveStudentProfile(profile);
+            } else if (typeof GamifSDK !== 'undefined') {
+                GamifSDK.saveProfile(profile);
+            } else {
+                localStorage.setItem(KEYS.USER, JSON.stringify(profile));
+            }
+        },
         STORAGE_KEYS: KEYS
     };
 })();

@@ -215,11 +215,19 @@
    <a href="progreso.html">Mi Progreso</a>
    <a href="profesor.html">Profesor</a>
    <a href="notas.html">Notas</a>
+   <a href="dashboard/participacion.html">Participación</a>
+   <a href="JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
  </nav>
 </header>
 
 <!-- ═══════════ CONTENT ═══════════ -->
 <main class="iub-content">
+
+<div id="adm18-sync-banner" hidden style="background:#fff8e1;border:2px solid var(--gold);border-radius:var(--radius-md);padding:var(--space-md);margin-bottom:var(--space-lg);max-width:900px;margin-left:auto;margin-right:auto;">
+  <strong>☁️ Sincroniza tus puntajes</strong>
+  <p style="margin:0.5rem 0;font-size:var(--font-size-sm);">Tus quizzes están guardados en este navegador. Identifícate con tu cédula para subirlos al sistema de gamificación compartido (sin perder lo que ya hiciste).</p>
+  <button type="button" class="btn btn-gold btn-sm" onclick="adm18IdentifyStudent()">Identificarme</button>
+</div>
 
  <!-- Hero -->
  <div class="hero">
@@ -501,11 +509,14 @@
 </aside>
 
 <script src="js/app.js"></script>
+<script src="js/supabase-config.js"></script>
+<script src="js/gamification-sdk.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var userName = localStorage.getItem('adm18_user') || 'Tu progreso del curso';
+  var profile = ADM18App.getProfile();
+  var userName = profile.nombre || profile.name || 'Tu progreso del curso';
   var progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
   var scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
   var completed = Object.values(progress).filter(function(item) {
@@ -543,6 +554,29 @@ document.addEventListener('DOMContentLoaded', function() {
   if (widgetXp) widgetXp.textContent = sessionXp + ' XP';
   if (sessionXpEl) sessionXpEl.textContent = sessionXp + ' / 100 pts';
   if (widgetName) widgetName.textContent = userName;
+
+  var syncBanner = document.getElementById('adm18-sync-banner');
+  if (syncBanner && !profile.cc) {
+    syncBanner.hidden = false;
+  }
+
+  window.adm18IdentifyStudent = function() {
+    var cc = prompt('Tu número de cédula (para guardar puntajes en la nube):');
+    if (!cc || !cc.trim()) return;
+    var nombre = prompt('Tu nombre completo:', profile.nombre || profile.name || '') || '';
+    var grupo = prompt('Grupo (opcional):', profile.grupo || '') || '';
+    var horario = prompt('Horario (opcional):', profile.horario || '') || '';
+    ADM18App.saveProfile({
+      cc: cc.trim(),
+      id_estudiante: cc.trim(),
+      nombre: nombre.trim(),
+      grupo: grupo.trim(),
+      horario: horario.trim()
+    });
+    if (syncBanner) syncBanner.hidden = true;
+    if (widgetName) widgetName.textContent = nombre.trim() || userName;
+    alert('Listo. Tus puntajes locales se sincronizarán con Supabase.');
+  };
 
   // Build 14 progress pills
   var pillsContainer = document.getElementById('progress-pills');
