@@ -20,20 +20,33 @@
     });
   }
 
+  var MODULE_DEFAULTS = {
+    ADM18: { prefix: "adm18", offering: "ADM18-2026-2", narrative: "LatamBox" },
+    TGA04: { prefix: "tga04", offering: "TGA04-2026-2", narrative: "NeuroBiz S.A.S." },
+    TGA05: { prefix: "tga05", offering: "TGA05-2026-2", narrative: "NeuroBiz S.A.S." },
+    TD: { prefix: "td", offering: "TD-2026-2", narrative: "Mercado360" },
+  };
+
+  function moduleDefaults(moduleCode) {
+    return MODULE_DEFAULTS[moduleCode] || {
+      prefix: String(moduleCode || "ADM18").toLowerCase(),
+      offering: moduleCode + "-2026-2",
+      narrative: moduleCode,
+    };
+  }
+
   function getConfig() {
     var moduleCode = global.MODULE_CODE || localStorage.getItem("gamif_module_code") || "ADM18";
-    var legacyPrefix = moduleCode === "ADM18" ? "adm18" : "tga04";
-    var defaultOffering = moduleCode === "ADM18" ? "ADM18-2026-2" : "TGA04-2026-2";
+    var defs = moduleDefaults(moduleCode);
+    var prefix = global.GAMIF_PREFIX || defs.prefix;
     return {
       moduleCode: moduleCode,
       offeringCode: global.OFFERING_CODE || localStorage.getItem("gamif_offering_code")
-        || localStorage.getItem("adm18_course_code")
-        || localStorage.getItem("tga04_course_code")
-        || defaultOffering,
-      narrative: global.NARRATIVE || localStorage.getItem("gamif_narrative")
-        || (moduleCode === "ADM18" ? "LatamBox" : "NeuroBiz S.A.S."),
-      prefix: global.GAMIF_PREFIX || legacyPrefix,
-      legacyPrefix: legacyPrefix,
+        || localStorage.getItem(prefix + "_course_code")
+        || defs.offering,
+      narrative: global.NARRATIVE || localStorage.getItem("gamif_narrative") || defs.narrative,
+      prefix: prefix,
+      legacyPrefix: prefix,
       useUnified: localStorage.getItem("gamif_use_unified") !== "false",
     };
   }
@@ -42,19 +55,16 @@
     localStorage.setItem("gamif_module_code", cfg.moduleCode);
     localStorage.setItem("gamif_offering_code", cfg.offeringCode);
     localStorage.setItem("gamif_narrative", cfg.narrative);
-    if (cfg.legacyPrefix === "adm18") {
-      localStorage.setItem("adm18_course_code", cfg.offeringCode);
-    } else {
-      localStorage.setItem("tga04_course_code", cfg.offeringCode);
-    }
+    localStorage.setItem(cfg.prefix + "_course_code", cfg.offeringCode);
   }
 
   function progressKey(cfg, semana) {
     return cfg.prefix + "_progress:" + cfg.offeringCode + ":" + semana;
   }
 
-  function legacyProgressKey(semana) {
-    return "tga04_s" + semana;
+  function legacyProgressKey(cfg, semana) {
+    var p = (cfg && cfg.prefix) || "tga04";
+    return p + "_s" + semana;
   }
 
   function profileKey(cfg) {
@@ -62,20 +72,26 @@
   }
 
   function legacyProfileKey(cfg) {
-    return (cfg && cfg.legacyPrefix === "adm18") ? "adm18_user" : "tga04_global";
+    var p = (cfg && cfg.prefix) || "adm18";
+    if (p === "adm18") return "adm18_user";
+    return p + "_global";
   }
 
   function sbUrl() {
-    return localStorage.getItem("adm18_supabase_url")
-      || localStorage.getItem("tga04_supabase_url")
+    var cfg = getConfig();
+    return localStorage.getItem(cfg.prefix + "_supabase_url")
       || global.SUPABASE_URL
+      || localStorage.getItem("adm18_supabase_url")
+      || localStorage.getItem("tga04_supabase_url")
       || "";
   }
 
   function sbKey() {
-    return localStorage.getItem("adm18_supabase_key")
-      || localStorage.getItem("tga04_supabase_key")
+    var cfg = getConfig();
+    return localStorage.getItem(cfg.prefix + "_supabase_key")
       || global.SUPABASE_KEY
+      || localStorage.getItem("adm18_supabase_key")
+      || localStorage.getItem("tga04_supabase_key")
       || "";
   }
 
@@ -116,15 +132,15 @@
       } catch (e) { /* ignore */ }
       return total;
     }
+    var legacyRe = new RegExp("^" + cfgRef.prefix + "_s(\\d+)$");
+    var unifiedRe = new RegExp("^" + cfgRef.prefix + "_progress:[^:]+:(\\d+)$");
     for (var i = 0; i < localStorage.length; i++) {
       var k = localStorage.key(i);
       if (!k) continue;
-      var m = k.match(/^tga04_s(\d+)$/) || k.match(/^gamif_progress:[^:]+:(\d+)$/);
-      if (m) {
-        try {
-          total += Number(JSON.parse(localStorage.getItem(k) || "{}").xp || 0);
-        } catch (e) { /* ignore */ }
-      }
+      if (!legacyRe.test(k) && !unifiedRe.test(k)) continue;
+      try {
+        total += Number(JSON.parse(localStorage.getItem(k) || "{}").xp || 0);
+      } catch (e) { /* ignore */ }
     }
     return total;
   }
@@ -200,7 +216,7 @@
 
   function loadWeekState(cfg, semana) {
     var key = progressKey(cfg, semana);
-    var legacy = legacyProgressKey(semana);
+    var legacy = legacyProgressKey(cfg, semana);
     var raw = localStorage.getItem(key) || localStorage.getItem(legacy);
     var state = {
       semana: semana,
@@ -234,7 +250,7 @@
   function saveWeekState(cfg, semana, state) {
     var json = JSON.stringify(state);
     localStorage.setItem(progressKey(cfg, semana), json);
-    localStorage.setItem(legacyProgressKey(semana), json);
+    localStorage.setItem(legacyProgressKey(cfg, semana), json);
   }
 
   async function syncLegacyProgress(state, cfg) {
@@ -379,7 +395,7 @@
     persistConfig(cfg);
     var semana = options.semana;
     var xpMax = options.xpMax || 80;
-    var visitedKey = options.visitedKey || ("tga04_visited_s" + semana);
+    var visitedKey = options.visitedKey || (cfg.prefix + "_visited_s" + semana);
     var state = loadWeekState(cfg, semana);
 
     function msg(text, color) {
@@ -423,6 +439,19 @@
       state.xp = Math.min((state.xp || 0) + pts, xpMax);
       msg("✨ +" + pts + " XP — " + motivo, "lime");
       save();
+      if (/complet|correct|ganaste|éxito|exito|✅|quiz|actividad|lectura|📖/i.test(String(motivo || ""))) {
+        if (global.IUBCelebrate) global.IUBCelebrate.launch({ message: motivo });
+        try {
+          document.dispatchEvent(new CustomEvent("iub:activity-complete", { detail: { message: motivo } }));
+        } catch (e) { /* ignore */ }
+      }
+    }
+
+    function completeActivity(motivo, pts) {
+      state.actividad_completada = true;
+      state.activity_done = true;
+      addXP(typeof pts === "number" ? pts : Math.min(15, xpMax - (state.xp || 0)), motivo || "Actividad completada ✅");
+      syncCloud();
     }
 
     async function syncCloud() {
@@ -491,6 +520,7 @@
     return {
       init: init,
       addXP: addXP,
+      completeActivity: completeActivity,
       save: save,
       sync: syncCloud,
       export: exportCode,

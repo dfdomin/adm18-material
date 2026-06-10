@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta http-equiv="refresh" content="0;url=dashboard/index.html">
+<link rel="canonical" href="dashboard/index.html">
+<script>location.replace("dashboard/index.html");</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mi Progreso — ADM18 | IUB</title>
@@ -67,10 +70,10 @@
  </div>
  <nav class="header-nav">
    <a href="index.html">Inicio</a>
-   <a href="progreso.html" class="active">Mi Progreso</a>
-   <a href="profesor.html">Profesor</a>
+   <a href="dashboard/index.html" class="active">Mi Progreso</a>
+   <a href="dashboard/profesor.html">Profesor</a>
    <a href="notas.html">Notas</a>
-   <a href="participacion.html">Participacion</a>
+   <a href="dashboard/participacion.html">Participacion</a>
  </nav>
 </header>
 
@@ -182,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
    const statusLabel = isCompleted ? 'completed' : 'pending';
    const evalClass = w.eval ? ' eval-card' : '';
 
-   html += '<a href="semana-' + String(w.n).padStart(2,'0') + '.html" class="week-card-link">';
+   html += '<a href="semana-' + String(w.n).padStart(2,'0') + '/index.html" class="week-card-link">';
    html += '<div class="card ' + statusLabel + evalClass + '" data-week="' + w.n + '">';
    html += '<div class="week-number">' + String(w.n).padStart(2,'0') + ' <span style="font-size:var(--font-size-lg);color:' + (isCompleted ? 'var(--success)' : 'var(--text-secondary)') + '">' + statusIcon + '</span></div>';
    html += '<div class="card-header" style="border-bottom:none;margin-bottom:0">' + w.title + '</div>';

@@ -10,6 +10,10 @@
   <script src="../js/supabase-config.js"></script>
   <script src="../js/gamification-sdk.js"></script>
   <script src="../js/import-students-browser.js"></script>
+  <script src="../js/teacher-auth.js"></script>
+  <script src="../js/academic-rules.js"></script>
+  <script src="../js/student-dashboard.js"></script>
+  <script src="../js/celebration.js"></script>
   <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
@@ -68,7 +72,21 @@
     .preview-box { background:#f5f5f5; border-radius:var(--radius); padding:.8rem; font-family:monospace; font-size:.82rem; white-space:pre-wrap; max-height:200px; overflow-y:auto; }
     .card-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
     @media (max-width:760px) { .card-row { grid-template-columns:1fr; } table { min-width:700px; } .table-wrap { overflow-x:auto; } }
+    .group-layer { display:flex; justify-content:space-between; align-items:center; gap:1rem; background:linear-gradient(135deg,var(--primary),var(--accent)); color:#fff; padding:.75rem 1rem; border-radius:10px; margin-bottom:.8rem; flex-wrap:wrap; }
+    .group-layer span { opacity:.85; font-size:.85rem; }
+    .att-summary-chips { display:flex; flex-wrap:wrap; gap:.5rem; margin:.6rem 0; }
+    .att-chip { display:inline-block; padding:.25rem .65rem; border-radius:999px; font-size:.78rem; font-weight:700; background:#f4f6fa; border:1px solid var(--border); }
+    .att-chip.ok { background:#e8f5e9; color:#1b5e20; }
+    .att-chip.risk { background:#fff8e1; color:#e65100; }
+    .att-chip.lost { background:#ffebee; color:#b71c1c; }
+    .iub-bar { height:10px; background:#E9EAED; border-radius:999px; overflow:hidden; margin-top:.25rem; }
+    .iub-bar-fill { height:100%; border-radius:999px; }
   </style>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/gamification-sdk.js"></script>
+  <script src="../js/academic-rules.js"></script>
+  <script src="../js/academic-status-bar.js"></script>
+  <script src="../js/celebration.js"></script>
 </head>
 <body>
   <header>
@@ -81,7 +99,7 @@
         <a href="../index.html">Inicio</a>
         <a href="#live">Clase en vivo</a>
         <a href="#report">Reporte</a>
-        <a href="../profesor.html">Docente</a>
+        <a href="profesor.html">Docente</a>
         <a href="../JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
         <a href="#importar-estudiantes">Importar estudiantes</a>
       </nav>
@@ -89,12 +107,14 @@
   </header>
   <main class="wrap">
 
-    <!-- PIN login -->
+    <!-- Acceso docente -->
     <section class="login" id="login">
-      <label for="pin">PIN docente</label>
-      <input id="pin" type="password" autocomplete="current-password" placeholder="Ingrese PIN">
-      <button onclick="unlock()">Entrar</button>
-      <p class="msg">PIN local: protege la vista en clase.</p>
+      <label for="teacherUser">Usuario docente</label>
+      <input id="teacherUser" type="text" autocomplete="username" placeholder="Ej: docente">
+      <label for="teacherPass">Contraseña</label>
+      <input id="teacherPass" type="password" autocomplete="current-password" placeholder="Contraseña">
+      <button type="button" id="teacherLoginBtn">Entrar</button>
+      <p class="msg" id="teacherLoginMsg">Acceso verificado en Supabase (cuenta docente IUB).</p>
     </section>
 
     <!-- Main app -->
@@ -198,6 +218,16 @@
       <!-- TAB: Reporte asistencia -->
       <div class="tab-panel" id="tab-report">
         <div class="panel">
+          <strong style="color:var(--primary)">Asistencia reglamentaria por grupo</strong>
+          <p class="msg" style="min-height:auto">Estudiantes en riesgo o con módulo perdido (máx. 10,4 h de inasistencia).</p>
+          <div id="teacherAttendancePanel"></div>
+        </div>
+        <div class="panel">
+          <strong style="color:var(--primary)">Progreso XP por grupo (Supabase)</strong>
+          <p class="msg">Módulo, horario y XP agregado por grupo matriculado.</p>
+          <div id="groupProgressPanel"></div>
+        </div>
+        <div class="panel">
           <p style="color:var(--muted);font-size:.9rem;margin-bottom:.8rem">
             Registro de cada toma de asistencia con fecha y hora exacta (local + nube).
           </p>
@@ -271,14 +301,21 @@
     let lastImportMeta = null;
 
     function unlock() {
-      if (document.getElementById("pin").value.trim() !== "sasadfgh2019") return alert("PIN incorrecto");
-      document.getElementById("login").hidden = true;
-      document.getElementById("app").hidden = false;
-      document.getElementById("attDate").value = classSessionDate();
-      updateAttDateHint();
-      wireLiveActions();
-      init();
-      showTab(tabFromHash());
+      /* Reemplazado por TeacherAuth.bindLoginForm — ver initTeacherGate() */
+    }
+
+    function initTeacherGate() {
+      TeacherAuth.bindLoginForm({
+        onSuccess: function () {
+          document.getElementById("attDate").value = classSessionDate();
+          updateAttDateHint();
+          wireLiveActions();
+          init();
+          showTab(tabFromHash());
+          if (window.IUBStudentDashboard) IUBStudentDashboard.renderGroupProgress("groupProgressPanel");
+          if (window.IUBAcademicRules) IUBAcademicRules.renderTeacherAttendanceReport("teacherAttendancePanel");
+        },
+      });
     }
 
     function todayStr() {
@@ -386,6 +423,7 @@
 
     function setAttendance(obj) {
       localStorage.setItem(STORAGE_ATTENDANCE, JSON.stringify(obj));
+      try { document.dispatchEvent(new CustomEvent("iub:attendance-updated")); } catch (e) { /* ignore */ }
     }
 
     function getTodayPoints() {
@@ -452,7 +490,11 @@
       if (name === "live") renderLive();
       if (name === "attendance") renderAttendance();
       if (name === "history") renderHistory();
-      if (name === "report") renderReport();
+      if (name === "report") {
+        renderReport();
+        if (window.IUBStudentDashboard) IUBStudentDashboard.renderGroupProgress("groupProgressPanel");
+        if (window.IUBAcademicRules) IUBAcademicRules.renderTeacherAttendanceReport("teacherAttendancePanel");
+      }
       if (name === "config") renderConfig();
     }
 
@@ -1219,6 +1261,13 @@
       XLSX.utils.book_append_sheet(wb, ws, sheetName || "Reporte");
       XLSX.writeFile(wb, filename);
     }
+
+    document.addEventListener("DOMContentLoaded", initTeacherGate);
+    document.addEventListener("iub:attendance-updated", function () {
+      if (currentTab === "report" && window.IUBAcademicRules) {
+        IUBAcademicRules.renderTeacherAttendanceReport("teacherAttendancePanel");
+      }
+    });
   </script>
 </body>
 </html>

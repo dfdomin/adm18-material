@@ -198,6 +198,7 @@
    .hero p { font-size: var(--font-size-md); }
  }
 </style>
+  <script src="js/celebration.js"></script>
 </head>
 <body>
 <div class="iub-layout">
@@ -212,8 +213,8 @@
  </div>
  <nav class="header-nav">
    <a href="index.html" class="active">Inicio</a>
-   <a href="progreso.html">Mi Progreso</a>
-   <a href="profesor.html">Profesor</a>
+   <a href="dashboard/index.html">Mi Progreso</a>
+   <a href="dashboard/profesor.html">Profesor</a>
    <a href="notas.html">Notas</a>
    <a href="dashboard/participacion.html">Participación</a>
    <a href="JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
@@ -503,13 +504,15 @@
     <strong id="widget-xp">0 XP</strong>
   </div>
   <div class="progress-widget__actions">
-    <a class="btn btn-gold btn-sm" href="progreso.html">Ver progreso</a>
+    <a class="btn btn-gold btn-sm" href="dashboard/index.html">Ver progreso</a>
     <a class="btn btn-primary btn-sm" href="notas.html">Notas</a>
   </div>
 </aside>
 
 <script src="js/app.js"></script>
 <script src="js/supabase-config.js"></script>
+  <script src="js/academic-rules.js"></script>
+  <script src="js/academic-status-bar.js"></script>
 <script src="js/gamification-sdk.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="js/supabase-client.js"></script>

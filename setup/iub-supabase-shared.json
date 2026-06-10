@@ -1,0 +1,12 @@
+{
+  "project_ref": "nnrgxuzvjtweyzkdrech",
+  "project_name": "adm18-latambox",
+  "supabase_url": "https://nnrgxuzvjtweyzkdrech.supabase.co",
+  "supabase_publishable_key": "sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg",
+  "modules": {
+    "ADM18": { "offering_code": "ADM18-2026-2", "narrative": "LatamBox", "gamif_prefix": "adm18" },
+    "TGA04": { "offering_code": "TGA04-2026-2", "narrative": "NeuroBiz S.A.S.", "gamif_prefix": "tga04" },
+    "TGA05": { "offering_code": "TGA05-2026-2", "narrative": "NeuroBiz S.A.S.", "gamif_prefix": "tga05" },
+    "TD": { "offering_code": "TD-2026-2", "narrative": "Mercado360", "gamif_prefix": "td" }
+  }
+}
