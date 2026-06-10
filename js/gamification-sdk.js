@@ -149,6 +149,37 @@
     return callRpc("upsert_weekly_progress", payload);
   }
 
+  async function teacherValidateWeek(row, cfg) {
+    var config = cfg || getConfig();
+    var teacher = global.TeacherAuth && TeacherAuth.getSession();
+    var semana = row.semana;
+    if (!row || !semana || !row.cc) return { ok: false, reason: "invalid_row" };
+
+    var xp = Number(row.xp);
+    if (isNaN(xp)) xp = 0;
+    xp = Math.max(0, Math.min(100, Math.round(xp)));
+
+    return upsertWeeklyProgress({
+      p_offering_code: config.offeringCode,
+      p_student_id: String(row.cc).trim(),
+      p_student_name: row.name || "",
+      p_grupo: row.grupo || "",
+      p_horario: row.horario || "",
+      p_semana: semana,
+      p_xp: xp,
+      p_quiz_score: Number(row.quizScore || row.quiz_score || 0),
+      p_quiz_answers: Object.assign({}, row.quizAnswers || {}, {
+        teacher_validated: true,
+        teacher_validated_at: new Date().toISOString(),
+        teacher_username: teacher && teacher.username ? teacher.username : "",
+        phone_xp: row.phoneXp != null ? row.phoneXp : xp,
+        teacher_note: row.note || "",
+      }),
+      p_hti_done: !!(row.htiDone || row.hti_done),
+      p_activity_done: !!(row.activityDone || row.activity_done || xp > 0),
+    });
+  }
+
   async function syncWeekProgress(state, cfg, semana) {
     var config = cfg || getConfig();
     var week = semana || (state && state.semana);
@@ -582,6 +613,7 @@
     syncAttendanceRows: syncAttendanceRows,
     upsertWeeklyProgress: upsertWeeklyProgress,
     syncWeekProgress: syncWeekProgress,
+    teacherValidateWeek: teacherValidateWeek,
     syncAdm18Scores: syncAdm18Scores,
     callRpc: callRpc,
     loadProfile: loadProfile,
