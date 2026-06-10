@@ -72,6 +72,14 @@
     });
 
     if (!res.ok) {
+      var bodyText = "";
+      try { bodyText = await res.text(); } catch (e) { /* ignore */ }
+      if (res.status === 404 && /crypt|verify_teacher_login|42883/i.test(bodyText)) {
+        return {
+          ok: false,
+          error: "Login docente no activo en Supabase. Ejecuta setup/migrations/009_fix_teacher_login_pgcrypto.sql en el SQL Editor.",
+        };
+      }
       return { ok: false, error: "Error de servidor (" + res.status + ")" };
     }
 

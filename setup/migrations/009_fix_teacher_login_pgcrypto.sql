@@ -1,4 +1,5 @@
--- Acceso docente (usuario/contraseña) + resumen por grupo
+-- Reparar login docente en Supabase (error 404 / crypt does not exist)
+-- Ejecutar en: Supabase → SQL Editor → New query → Run
 
 create extension if not exists pgcrypto with schema extensions;
 
@@ -64,24 +65,3 @@ end;
 $$;
 
 grant execute on function public.verify_teacher_login(text, text) to anon;
-
-create or replace view public.v_group_progress
-  with (security_invoker = true)
-as
-select
-  co.code as offering_code,
-  m.code as module_code,
-  m.name as module_name,
-  coalesce(nullif(e.grupo, ''), 'Sin grupo') as grupo,
-  coalesce(nullif(e.horario, ''), 'Sin horario') as horario,
-  count(distinct e.id) as estudiantes,
-  coalesce(sum(xl.points), 0) as xp_total,
-  coalesce(avg(xl.points), 0) as xp_promedio,
-  max(xl.created_at) as ultima_actividad
-from public.enrollments e
-join public.course_offerings co on co.id = e.offering_id
-join public.modules m on m.id = co.module_id
-left join public.xp_ledger xl on xl.enrollment_id = e.id
-group by co.code, m.code, m.name, e.grupo, e.horario;
-
-grant select on public.v_group_progress to anon;
