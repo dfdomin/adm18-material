@@ -63,7 +63,11 @@
       count += 1;
       if (sessions[estado] != null) sessions[estado] += 1;
       else sessions.other += 1;
-      hoursLost += hoursLostForState(estado, rules);
+      if (global.IUBGroupSchedules && row.grupo && row.fecha) {
+        hoursLost += IUBGroupSchedules.hoursLostForRow(row, rules);
+      } else {
+        hoursLost += hoursLostForState(estado, rules);
+      }
     });
 
     hoursLost = Math.round(hoursLost * 10) / 10;

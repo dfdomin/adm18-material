@@ -41,6 +41,13 @@
     return { horario: "JUEVES", weekday: 4, dayLabel: "JUEVES" };
   }
 
+  function horarioForStudent(grupo, horario) {
+    if (window.IUBGroupSchedules && IUBGroupSchedules.normalizeHorario) {
+      return IUBGroupSchedules.normalizeHorario(grupo, horario);
+    }
+    return horario;
+  }
+
   function uniqueStudents(students) {
     const byDocument = new Map();
     for (const student of students) {
@@ -71,14 +78,14 @@
     for (const line of lines) {
       const documentMatch = line.match(documentRow);
       if (documentMatch) {
-        students.push({ name: cleanSpaces(documentMatch[3]), cc: documentMatch[2], grupo: meta.grupo, horario: meta.horario });
+        students.push({ name: cleanSpaces(documentMatch[3]), cc: documentMatch[2], grupo: meta.grupo, horario: horarioForStudent(meta.grupo, meta.horario) });
         pendingName = null;
         continue;
       }
 
       const legacyMatch = line.match(legacySameLine);
       if (legacyMatch && !/\b(CC|TI|CE|PA|RC|NUIP)\b/i.test(legacyMatch[1])) {
-        students.push({ name: cleanSpaces(legacyMatch[1]), cc: legacyMatch[2], grupo: meta.grupo, horario: meta.horario });
+        students.push({ name: cleanSpaces(legacyMatch[1]), cc: legacyMatch[2], grupo: meta.grupo, horario: horarioForStudent(meta.grupo, meta.horario) });
         pendingName = null;
         continue;
       }
@@ -86,7 +93,7 @@
       if (pendingName) {
         const documentMatchOnly = line.match(documentOnly);
         if (documentMatchOnly) {
-          students.push({ name: pendingName, cc: documentMatchOnly[0], grupo: meta.grupo, horario: meta.horario });
+          students.push({ name: pendingName, cc: documentMatchOnly[0], grupo: meta.grupo, horario: horarioForStudent(meta.grupo, meta.horario) });
           pendingName = null;
           continue;
         }
