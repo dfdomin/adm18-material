@@ -49,9 +49,15 @@ const ADM18App = (function() {
         }
     }
 
-    function saveState(key) {
+    function saveState(which) {
         try {
-            localStorage.setItem(key, JSON.stringify(state[key === 'progress' ? 'progress' : key === 'scores' ? 'scores' : 'settings']));
+            const storageKey = which === 'progress' ? KEYS.PROGRESS
+                : which === 'scores' ? KEYS.SCORES
+                : KEYS.SETTINGS;
+            const dataKey = which === 'progress' ? 'progress'
+                : which === 'scores' ? 'scores'
+                : 'settings';
+            localStorage.setItem(storageKey, JSON.stringify(state[dataKey]));
         } catch (e) {
             console.warn('Failed to save state:', e.message);
         }
@@ -77,17 +83,20 @@ const ADM18App = (function() {
     }
 
     /* ── Quiz scores ── */
-    function saveQuizScore(weekNum, score, total) {
+    function saveQuizScore(weekNum, score, total, answers) {
         state.scores['week_' + weekNum] = {
             score: score,
             total: total,
             percent: Math.round((score / total) * 100),
             timestamp: Date.now(),
-            synced: false
+            synced: false,
+            answers: answers || {}
         };
         saveState('scores');
         updateProgressUI();
-        if (typeof SupabaseClient !== 'undefined' && SupabaseClient.syncUnsynced) {
+        if (typeof IUBAdm18Reading !== 'undefined' && IUBAdm18Reading.syncCloud) {
+            IUBAdm18Reading.syncCloud(weekNum).catch(function() { /* offline */ });
+        } else if (typeof SupabaseClient !== 'undefined' && SupabaseClient.syncUnsynced) {
             SupabaseClient.syncUnsynced();
         }
         return state.scores['week_' + weekNum];
@@ -106,6 +115,12 @@ const ADM18App = (function() {
         const pct = document.querySelector('.progress-pct');
         if (pct) {
             pct.textContent = getCompletionPercent() + '%';
+        }
+        if (typeof ADM18WeekBoot !== 'undefined' && ADM18WeekBoot.refreshUI) {
+            ADM18WeekBoot.refreshUI(state.currentWeek);
+        }
+        if (typeof document !== 'undefined') {
+            document.dispatchEvent(new CustomEvent('iub:adm18-xp-updated'));
         }
     }
 
@@ -202,9 +217,9 @@ const ADM18App = (function() {
         if (!document.querySelector('.week-progress-widget')) {
             const widget = document.createElement('aside');
             widget.className = 'week-progress-widget';
-            widget.setAttribute('aria-label', 'Mi progreso TGA05');
+            widget.setAttribute('aria-label', 'Mi progreso ADM18');
             widget.innerHTML =
-                '<div class="week-progress-widget__header">📊 Mi Progreso TGA05 <span>▲</span></div>' +
+                '<div class="week-progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>' +
                 '<div class="week-progress-widget__name" id="week-widget-name-auto">' + escapeHtml(userName) + '</div>' +
                 '<div class="progress-bar"><div class="progress-fill" id="week-widget-fill-auto" style="width:' + pct + '%"></div></div>' +
                 '<div class="week-progress-widget__meta"><span>Semana ' + weekNumber + '</span><strong id="week-widget-xp-auto">' + weekXp + ' XP</strong></div>';

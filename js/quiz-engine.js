@@ -114,25 +114,8 @@ const QuizEngine = (function() {
         state.submitted = true;
         const score = calculateScore();
 
-        // Save to localStorage via ADM18App
-        ADM18App.saveQuizScore(state.weekNum, score.correct, score.total);
+        ADM18App.saveQuizScore(state.weekNum, score.correct, score.total, state.answers);
         ADM18App.markWeekComplete(state.weekNum);
-
-        if (typeof IUBAdm18Reading !== 'undefined' && typeof IUBAdm18Reading.syncCloud === 'function') {
-            IUBAdm18Reading.syncCloud(state.weekNum);
-        } else if (typeof SupabaseClient !== 'undefined' && SupabaseClient.syncUnsynced) {
-            SupabaseClient.syncUnsynced();
-        } else if (typeof GamifSDK !== 'undefined') {
-            var profile = ADM18App.getProfile() || {};
-            if (profile.cc || profile.id_estudiante) {
-                GamifSDK.syncAdm18Scores(
-                    ADM18App.getScores(),
-                    ADM18App.getProgress(),
-                    profile
-                ).catch(function () { /* offline */ });
-            }
-        }
-
         render();
     }
 

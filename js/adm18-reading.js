@@ -63,16 +63,17 @@
     else widget.appendChild(div);
   }
 
+  function loadProfile() {
+    var profile = global.GamifSDK ? (GamifSDK.loadProfile() || {}) : {};
+    if (global.ADM18App && typeof ADM18App.getProfile === "function") {
+      profile = Object.assign({}, ADM18App.getProfile() || {}, profile);
+    }
+    return profile;
+  }
+
   async function syncCloud(semana) {
     if (!global.GamifSDK) return;
-    var profile = global.ADM18App ? (ADM18App.getProfile() || {}) : {};
-    try {
-      var raw = localStorage.getItem("adm18_user");
-      if (raw) {
-        var u = JSON.parse(raw);
-        profile = Object.assign({ nombre: u.nombre, cc: u.cc, id_estudiante: u.cc }, profile);
-      }
-    } catch (e) { /* ignore */ }
+    var profile = loadProfile();
 
     var cc = String(profile.cc || profile.id_estudiante || "").trim();
     if (!cc) return;
@@ -82,7 +83,7 @@
     var weekKey = "week_" + semana;
     var activityDone = !!(progress[weekKey] && progress[weekKey].completed) || xp >= 33;
 
-    await GamifSDK.syncWeekProgress({
+    var result = await GamifSDK.syncWeekProgress({
       semana: semana,
       xp: xp,
       nombre: profile.nombre || profile.name || "",
@@ -95,6 +96,25 @@
       activity_done: activityDone,
       quiz_respuestas: { reading_xp: getReadingXp(semana) },
     }, GamifSDK.getConfig(), semana);
+    if (result && result.ok && global.ADM18App) {
+      var scores = ADM18App.getScores();
+      var wk = scores["week_" + semana];
+      if (wk && !wk.synced) {
+        wk.synced = true;
+        try {
+          localStorage.setItem("adm18_scores", JSON.stringify(scores));
+        } catch (e) { /* ignore */ }
+      }
+    }
+    return result;
+  }
+
+  var syncTimer;
+  function scheduleSync(semana) {
+    clearTimeout(syncTimer);
+    syncTimer = setTimeout(function () {
+      syncCloud(semana).catch(function () { /* offline */ });
+    }, 350);
   }
 
   function award(sec) {
@@ -102,7 +122,10 @@
     var next = getReadingXp(semana) + sec.xp;
     localStorage.setItem(readingXpKey(semana), String(next));
     updateSessionUI(semana);
-    setTimeout(function () { syncCloud(semana); }, 900);
+    if (typeof document !== "undefined") {
+      document.dispatchEvent(new CustomEvent("iub:adm18-xp-updated"));
+    }
+    scheduleSync(semana);
   }
 
   function wrapRange(parent, startNode, endBefore, sectionId) {
@@ -181,12 +204,37 @@
 
   async function hydrateFromCloud(semana) {
     if (!global.GamifSDK || !GamifSDK.isCloudDirectMode()) return;
-    var profile = global.ADM18App ? (ADM18App.getProfile() || {}) : {};
+    var profile = loadProfile();
     var cc = String(profile.cc || profile.id_estudiante || "").trim();
     if (!cc) return;
     var row = await GamifSDK.fetchWeekProgressFromCloud(null, semana, cc);
-    if (row && row.quiz_answers && row.quiz_answers.reading_xp != null) {
-      localStorage.setItem(readingXpKey(semana), String(row.quiz_answers.reading_xp));
+    if (!row) return;
+    var localReading = getReadingXp(semana);
+    var cloudReading = row.quiz_answers && row.quiz_answers.reading_xp != null
+      ? Number(row.quiz_answers.reading_xp) || 0
+      : null;
+    if (cloudReading != null && cloudReading > localReading) {
+      localStorage.setItem(readingXpKey(semana), String(cloudReading));
+    }
+    var quizScore = Number(row.quiz_score || 0);
+    if (quizScore > 0 && global.ADM18App) {
+      var scores = ADM18App.getScores();
+      var weekKey = "week_" + semana;
+      var existing = scores[weekKey] || {};
+      var localQuiz = typeof existing.percent === "number" ? existing.percent : 0;
+      if (!existing.synced || quizScore >= localQuiz) {
+        scores[weekKey] = Object.assign(existing, {
+          percent: Math.max(localQuiz, quizScore),
+          score: Math.round(Math.max(localQuiz, quizScore) / 100 * 5),
+          total: 5,
+          synced: true,
+          answers: row.quiz_answers || existing.answers || {},
+          timestamp: row.updated_at ? Date.parse(row.updated_at) : Date.now(),
+        });
+        try {
+          localStorage.setItem("adm18_scores", JSON.stringify(scores));
+        } catch (e) { /* ignore */ }
+      }
     }
   }
 
@@ -210,6 +258,7 @@
     award: award,
     prepareAnchors: prepareAnchors,
     syncCloud: syncCloud,
+    hydrateFromCloud: hydrateFromCloud,
     sessionXp: sessionXp,
     getReadingXp: getReadingXp,
     getQuizPercent: getQuizPercent,

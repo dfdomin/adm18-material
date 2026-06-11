@@ -62,16 +62,21 @@ const SupabaseClient = (function() {
             const quizScore = Number(row.quiz_score || 0);
             const xp = Number(row.xp || 0);
 
-            if (quizScore > 0 || xp > 0) {
-                scores[weekKey] = {
-                    score: Math.round(quizScore),
-                    total: 100,
-                    percent: quizScore,
-                    timestamp: row.updated_at ? Date.parse(row.updated_at) : Date.now(),
-                    synced: true,
-                    answers: row.quiz_answers || {}
-                };
-                changed = true;
+            var existing = scores[weekKey] || {};
+            var localQuiz = typeof existing.percent === 'number' ? existing.percent : 0;
+            var mergedQuiz = Math.max(localQuiz, quizScore);
+            if (mergedQuiz > 0 || xp > 0) {
+                if (!existing.synced || mergedQuiz >= localQuiz) {
+                    scores[weekKey] = Object.assign(existing, {
+                        score: Math.round(mergedQuiz),
+                        total: 100,
+                        percent: mergedQuiz,
+                        timestamp: row.updated_at ? Date.parse(row.updated_at) : Date.now(),
+                        synced: true,
+                        answers: row.quiz_answers || existing.answers || {}
+                    });
+                    changed = true;
+                }
             }
             if (row.activity_done || xp >= 33) {
                 progress[weekKey] = { completed: true, timestamp: Date.now() };
@@ -79,7 +84,11 @@ const SupabaseClient = (function() {
             }
             if (row.quiz_answers && row.quiz_answers.reading_xp != null) {
                 try {
-                    localStorage.setItem('adm18_s' + weekNum + '_reading_xp', String(row.quiz_answers.reading_xp));
+                    var cloudReading = Number(row.quiz_answers.reading_xp) || 0;
+                    var localReading = parseInt(localStorage.getItem('adm18_s' + weekNum + '_reading_xp') || '0', 10) || 0;
+                    if (cloudReading > localReading) {
+                        localStorage.setItem('adm18_s' + weekNum + '_reading_xp', String(cloudReading));
+                    }
                 } catch (e) { /* ignore */ }
             }
         });
@@ -91,6 +100,9 @@ const SupabaseClient = (function() {
             } catch (e) { /* ignore */ }
             if (typeof ADM18App.updateProgressUI === 'function') {
                 ADM18App.updateProgressUI();
+            }
+            if (typeof ADM18WeekBoot !== 'undefined' && ADM18WeekBoot.refreshUI) {
+                ADM18WeekBoot.refreshUI();
             }
         }
     }

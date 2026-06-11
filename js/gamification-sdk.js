@@ -216,6 +216,18 @@
     };
   }
 
+  function adm18ReadingXp(weekNum) {
+    try {
+      return parseInt(localStorage.getItem("adm18_s" + weekNum + "_reading_xp") || "0", 10) || 0;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  function adm18SessionXp(weekNum, quizPercent) {
+    return Math.min(100, adm18ReadingXp(weekNum) + (quizPercent || 0));
+  }
+
   async function syncAdm18Scores(scores, progress, profile) {
     var cfg = getConfig();
     var cc = profile && (profile.cc || profile.id_estudiante);
@@ -234,6 +246,10 @@
       if (!weekNum) continue;
 
       var weekProgress = progress && progress["week_" + weekNum];
+      var quizPercent = value.percent || 0;
+      var readingXp = adm18ReadingXp(weekNum);
+      var sessionXp = adm18SessionXp(weekNum, quizPercent);
+      var answers = Object.assign({}, value.answers || {}, { reading_xp: readingXp });
       var result = await upsertWeeklyProgress({
         p_offering_code: cfg.offeringCode,
         p_student_id: cc,
@@ -241,11 +257,11 @@
         p_grupo: profile.grupo || "",
         p_horario: profile.horario || "",
         p_semana: weekNum,
-        p_xp: value.percent || 0,
-        p_quiz_score: value.percent || 0,
-        p_quiz_answers: value.answers || {},
+        p_xp: sessionXp,
+        p_quiz_score: quizPercent,
+        p_quiz_answers: answers,
         p_hti_done: false,
-        p_activity_done: !!(weekProgress && weekProgress.completed),
+        p_activity_done: !!(weekProgress && weekProgress.completed) || sessionXp >= 33,
       });
 
       if (result.ok) {

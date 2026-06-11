@@ -53,8 +53,37 @@
       var s = pt.state();
       if (s.semana) return s.semana;
     }
-    var m = (global.location && global.location.pathname || "").match(/semana(\d+)/i);
+    var path = global.location && global.location.pathname || "";
+    var adm = path.match(/semana-0?(\d+)/i);
+    if (adm) return parseInt(adm[1], 10);
+    var m = path.match(/semana(\d+)/i);
     return m ? parseInt(m[1], 10) : null;
+  }
+
+  function isAdm18WeekPage() {
+    var path = global.location && global.location.pathname || "";
+    if (!/\/semana-\d+/i.test(path)) return false;
+    if (global.IUBAdm18Reading && IUBAdm18Reading.isAdm18 && IUBAdm18Reading.isAdm18()) return true;
+    if (global.GamifSDK && GamifSDK.getConfig().prefix === "adm18") return true;
+    return /\/adm18-material\//i.test(path);
+  }
+
+  async function hydrateAdm18Week() {
+    if (!isAdm18WeekPage() || !global.IUBAdm18Reading) return;
+    var sem = getSemana();
+    if (!sem) return;
+    if (typeof IUBAdm18Reading.hydrateFromCloud === "function") {
+      await IUBAdm18Reading.hydrateFromCloud(sem);
+    }
+    if (global.ADM18WeekBoot && ADM18WeekBoot.refreshUI) ADM18WeekBoot.refreshUI(sem);
+  }
+
+  async function pushAdm18Week() {
+    if (!isAdm18WeekPage() || !global.IUBAdm18Reading) return { ok: false, reason: "not_adm18" };
+    var sem = getSemana();
+    if (!sem) return { ok: false, reason: "no_semana" };
+    if (!getCc()) return { ok: false, reason: "no_cc" };
+    return IUBAdm18Reading.syncCloud(sem);
   }
 
   async function hydrateFromCloud() {
@@ -189,18 +218,21 @@
     setTimeout(function () {
       exposeAndPatch();
       hydrateFromCloud();
+      hydrateAdm18Week();
     }, 600);
     setTimeout(exposeAndPatch, 1500);
     setTimeout(exposeAndPatch, 3500);
     global.addEventListener("load", function () {
       exposeAndPatch();
       hydrateFromCloud();
+      hydrateAdm18Week();
     });
   }
 
   document.addEventListener("iub:profile-saved", function () {
     exposeAndPatch();
     hydrateFromCloud().then(pushToCloud);
+    hydrateAdm18Week().then(pushAdm18Week);
   });
 
   if (document.readyState === "loading") {
