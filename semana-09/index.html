@@ -105,6 +105,7 @@
   <script src="../js/reading-tracker.js"></script>
   <script src="../js/adm18-reading.js"></script>
   <script src="../js/reading-xp-policy.js"></script>
+  <script src="../js/supabase-client.js"></script>
 </head>
 <body>
 <div class="iub-layout">
@@ -358,28 +359,11 @@
   <div class="week-progress-widget__meta"><span>Semana 9</span><strong id="week-widget-xp">0 XP</strong></div>
 </aside>
 
+<script src="../js/adm18-week-boot.js"></script>
 <script src="../js/app.js"></script>
 <script src="../js/quiz-engine.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
- const progress = JSON.parse(localStorage.getItem('adm18_progress') || '{}');
- const scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
- const userName = localStorage.getItem('adm18_user') || 'Estudiante ADM18';
- const completed = Object.values(progress).filter(function(item) { return item && item.completed; }).length;
- const pct = Math.round((completed / 14) * 100);
- const sessionScore = scores.week_9 && typeof scores.week_9.percent === 'number'
-   ? scores.week_9.percent
-   : Math.min(100, completed * 25);
- const heroFill = document.getElementById('week-hero-fill');
- const widgetFill = document.getElementById('week-widget-fill');
- const heroXp = document.getElementById('week-hero-xp');
- const widgetXp = document.getElementById('week-widget-xp');
- const widgetName = document.getElementById('week-widget-name');
- if (heroFill) heroFill.style.width = pct + '%';
- if (widgetFill) widgetFill.style.width = pct + '%';
- if (heroXp) heroXp.textContent = sessionScore + ' / 100 pts';
- if (widgetXp) widgetXp.textContent = sessionScore + ' XP';
- if (widgetName) widgetName.textContent = userName;
 
  QuizEngine.init(9, [
    {

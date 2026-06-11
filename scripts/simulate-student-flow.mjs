@@ -110,7 +110,15 @@ async function installStudentContext(page) {
       grupo: student.grupo,
       horario: student.horario,
     };
-    localStorage.setItem("adm18_user", JSON.stringify({ nombre: student.nombre, cc: student.cc }));
+    const adm18Profile = {
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+    };
+    localStorage.setItem("adm18_user", JSON.stringify(adm18Profile));
+    localStorage.setItem("adm18_profile", JSON.stringify(adm18Profile));
     localStorage.setItem("tga04_global", JSON.stringify(profile));
     localStorage.setItem("tga05_global", JSON.stringify(profile));
     localStorage.setItem("td_global", JSON.stringify(profile));
@@ -135,7 +143,15 @@ async function setupProfile(page) {
       grupo: student.grupo,
       horario: student.horario,
     };
-    localStorage.setItem("adm18_user", JSON.stringify({ nombre: student.nombre, cc: student.cc }));
+    const adm18Profile = {
+      nombre: student.nombre,
+      cc: student.cc,
+      id_estudiante: student.cc,
+      grupo: student.grupo,
+      horario: student.horario,
+    };
+    localStorage.setItem("adm18_user", JSON.stringify(adm18Profile));
+    localStorage.setItem("adm18_profile", JSON.stringify(adm18Profile));
     localStorage.setItem("tga04_global", JSON.stringify(profile));
     localStorage.setItem("tga05_global", JSON.stringify(profile));
     localStorage.setItem("td_global", JSON.stringify(profile));
