@@ -27,6 +27,12 @@ const WEEK_SETS = {
     { semana: 7, answers: [2, 1, 1, 1, 3], path: "/semana-07/index.html" },
     { semana: 8, answers: [1, 2, 1, 1, 1], path: "/semana-08/index.html" },
   ],
+  "9-12": [
+    { semana: 9, answers: [1, 1, 1, 1, 2], path: "/semana-09/index.html" },
+    { semana: 10, answers: [], path: "/semana-10/index.html", minXp: 30, noQuiz: true },
+    { semana: 11, answers: [1, 0, 1, 1, 2], path: "/semana-11/index.html" },
+    { semana: 12, answers: [2, 1, 2, 1, 1], path: "/semana-12/index.html" },
+  ],
 };
 
 const PAGES_BASE = "https://dfdomin.github.io/adm18-material";
@@ -197,7 +203,11 @@ async function runWeek(page, baseUrl, student, week) {
 
 async function main() {
   const mode = process.argv.includes("--pages") ? "pages" : "local";
-  const weekSetKey = process.argv.includes("--5-8") ? "5-8" : "1-4";
+  const weekSetKey = process.argv.includes("--9-12")
+    ? "9-12"
+    : process.argv.includes("--5-8")
+      ? "5-8"
+      : "1-4";
   const WEEKS = WEEK_SETS[weekSetKey];
   const baseUrl = mode === "pages" ? PAGES_BASE : "http://127.0.0.1:" + LOCAL_PORT;
   const server = mode === "local" ? await startServer() : null;
