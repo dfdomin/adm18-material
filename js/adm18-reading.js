@@ -129,16 +129,17 @@
   }
 
   function wrapRange(parent, startNode, endBefore, sectionId) {
-    if (!startNode) return null;
+    if (!startNode || !startNode.parentNode) return null;
     var existing = document.getElementById(sectionId);
     if (existing && existing.classList.contains(ZONE) && existing.tagName === "SECTION") {
       return existing;
     }
 
+    var actualParent = startNode.parentNode;
     var sec = document.createElement("section");
     sec.id = sectionId;
     sec.className = ZONE;
-    parent.insertBefore(sec, startNode);
+    actualParent.insertBefore(sec, startNode);
 
     if (startNode.id === sectionId) startNode.removeAttribute("id");
     sec.appendChild(startNode);
@@ -163,18 +164,21 @@
       var quiz = document.getElementById("quiz-container");
       card.removeAttribute("id");
 
-      if (contenidoAnchor && !card.querySelector("section#mision")) {
-        var misionSec = document.createElement("section");
-        misionSec.id = "mision";
-        misionSec.className = ZONE;
-        var node = card.firstChild;
-        var before = [];
-        while (node && node !== contenidoAnchor) {
-          before.push(node);
-          node = node.nextSibling;
+      if (contenidoAnchor && !document.getElementById("mision")) {
+        var misionHost = contenidoAnchor.parentNode;
+        if (misionHost) {
+          var misionSec = document.createElement("section");
+          misionSec.id = "mision";
+          misionSec.className = ZONE;
+          var node = misionHost.firstChild;
+          var before = [];
+          while (node && node !== contenidoAnchor) {
+            before.push(node);
+            node = node.nextSibling;
+          }
+          misionHost.insertBefore(misionSec, contenidoAnchor);
+          before.forEach(function (n) { misionSec.appendChild(n); });
         }
-        card.insertBefore(misionSec, contenidoAnchor);
-        before.forEach(function (n) { misionSec.appendChild(n); });
       }
 
       if (contenidoAnchor && contenidoAnchor.tagName === "H2") {
