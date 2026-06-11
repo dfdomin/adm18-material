@@ -49,9 +49,15 @@ const ADM18App = (function() {
         }
     }
 
-    function saveState(key) {
+    function saveState(which) {
         try {
-            localStorage.setItem(key, JSON.stringify(state[key === 'progress' ? 'progress' : key === 'scores' ? 'scores' : 'settings']));
+            const storageKey = which === 'progress' ? KEYS.PROGRESS
+                : which === 'scores' ? KEYS.SCORES
+                : KEYS.SETTINGS;
+            const dataKey = which === 'progress' ? 'progress'
+                : which === 'scores' ? 'scores'
+                : 'settings';
+            localStorage.setItem(storageKey, JSON.stringify(state[dataKey]));
         } catch (e) {
             console.warn('Failed to save state:', e.message);
         }
