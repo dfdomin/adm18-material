@@ -12,6 +12,7 @@
   <script src="../js/import-students-browser.js"></script>
   <script src="../js/teacher-auth.js"></script>
   <script src="../js/teacher-week-validator.js"></script>
+  <script src="../js/adm18-cloud-progress-report.js"></script>
   <script src="../js/academic-rules.js"></script>
   <script src="../js/student-dashboard.js"></script>
   <script src="../js/celebration.js"></script>
@@ -100,6 +101,7 @@
         <a href="../index.html">Inicio</a>
         <a href="#live">Clase en vivo</a>
         <a href="#validar-semana">Validar semana</a>
+        <a href="#progreso-nube">Progreso nube</a>
         <a href="#report">Reporte</a>
         <a href="profesor.html">Docente</a>
         <a href="../JuegoDelAhorcado/index.html">🎮 Ahorcado</a>
@@ -126,6 +128,7 @@
         <button class="tab-btn" onclick="showTab('attendance')">Asistencia</button>
         <button class="tab-btn" onclick="showTab('history')">Historial</button>
         <button class="tab-btn" onclick="showTab('validate')">Validar semana</button>
+        <button class="tab-btn" onclick="showTab('cloud')">Progreso nube</button>
         <button class="tab-btn" onclick="showTab('report')">Reporte</button>
         <button class="tab-btn" onclick="showTab('config')">Configuracion</button>
       </div>
@@ -202,6 +205,17 @@
       <!-- TAB: Validar XP semanal (celular) -->
       <div class="tab-panel" id="tab-validate">
         <div id="teacherWeekValidatorRoot"></div>
+      </div>
+
+      <!-- TAB: Progreso ADM18 en Supabase -->
+      <div class="tab-panel" id="tab-cloud">
+        <div class="panel" style="margin-bottom:.8rem">
+          <strong style="color:var(--primary)">Progreso semanal en nube (lectura + quiz)</strong>
+          <p class="msg" style="min-height:auto">
+            Vista en vivo del roster ADM18 y quién ya guardó XP en Supabase. Los estudiantes deben identificar su cédula en cada semana.
+          </p>
+        </div>
+        <div id="adm18CloudReportRoot"></div>
       </div>
 
       <!-- TAB: Historial -->
@@ -500,6 +514,7 @@
       if (name === "attendance") renderAttendance();
       if (name === "history") renderHistory();
       if (name === "validate" && window.IUBTeacherWeekValidator) IUBTeacherWeekValidator.mount("teacherWeekValidatorRoot");
+      if (name === "cloud" && window.IUBAdm18CloudReport) IUBAdm18CloudReport.mount("adm18CloudReportRoot");
       if (name === "report") {
         renderReport();
         if (window.IUBStudentDashboard) IUBStudentDashboard.renderGroupProgress("groupProgressPanel");
@@ -513,6 +528,7 @@
       if (location.hash === "#report") return "report";
       if (location.hash === "#attendance") return "attendance";
       if (location.hash === "#validar-semana" || location.hash === "#validate") return "validate";
+      if (location.hash === "#progreso-nube" || location.hash === "#cloud") return "cloud";
       if (location.hash === "#history") return "history";
       return "live";
     }
