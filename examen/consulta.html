@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulta de resultados · ADM18</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Open Sans', sans-serif; background: #f4f6f8; padding: 1rem; color: #1a2340; }
+  .card { background: white; border-radius: 12px; padding: 1.5rem; max-width: 600px; margin: 1rem auto; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  h1 { font-size: 1.3rem; color: #1a2a5e; text-align: center; }
+  label { display: block; font-weight: 600; margin: 1rem 0 0.3rem; }
+  input { width: 100%; padding: 0.7rem; font-size: 1rem; border: 2px solid #dde3ea; border-radius: 8px; }
+  button { width: 100%; padding: 0.8rem; background: #1a2a5e; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; margin-top: 0.75rem; cursor: pointer; }
+  button:disabled { background: #aab; cursor: not-allowed; }
+  .error { color: #c62828; margin-top: 0.5rem; font-size: 0.85rem; display: none; }
+  table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.85rem; }
+  th, td { border: 1px solid #dde3ea; padding: 0.4rem 0.5rem; text-align: left; }
+  th { background: #1a2a5e; color: white; }
+  .correcta { color: #1e7a3e; font-weight: 700; }
+  .incorrecta { color: #c62828; font-weight: 700; }
+  .nota { text-align: center; font-size: 1.2rem; font-weight: 800; margin: 1rem 0; }
+  .loading { text-align: center; color: #555; margin: 1rem 0; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📊 Consultar resultados</h1>
+  <p style="text-align:center;color:#555;font-size:0.85rem;">ADM18 · Examen Parcial 1</p>
+  <label for="cc">Número de identificación (cédula):</label>
+  <input type="text" id="cc" inputmode="numeric" placeholder="Ej: 1042856266">
+  <div id="error" class="error"></div>
+  <button id="btn">Consultar</button>
+  <div id="results"></div>
+</div>
+<script>
+const URL = 'https://nnrgxuzvjtweyzkdrech.supabase.co';
+const KEY = 'sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg';
+
+document.getElementById('btn').addEventListener('click', consultar);
+document.getElementById('cc').addEventListener('keydown', e => { if (e.key === 'Enter') consultar(); });
+
+async function consultar() {
+  const cc = document.getElementById('cc').value.trim();
+  const error = document.getElementById('error');
+  const results = document.getElementById('results');
+  const btn = document.getElementById('btn');
+
+  if (!cc) { error.textContent = 'Ingresa la cédula'; error.style.display = 'block'; return; }
+  error.style.display = 'none';
+  btn.disabled = true;
+  btn.textContent = 'Consultando...';
+  results.innerHTML = '<div class="loading">⏳ Cargando resultados...</div>';
+
+  try {
+    // Get attempts
+    const attResp = await fetch(`${URL}/rest/v1/exam_attempts?student_cc=eq.${cc}&exam_type=eq.parcial1&order=started_at.desc&select=id,score,correct_count,tab_switches,status,started_at,finished_at`, {
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }
+    });
+    const attempts = await attResp.json();
+
+    if (!attempts || attempts.length === 0) {
+      results.innerHTML = '<p style="text-align:center;color:#c62828;">No se encontraron intentos para esta cédula.</p>';
+      btn.disabled = false; btn.textContent = 'Consultar';
+      return;
+    }
+
+    const latestId = attempts[0].id;
+
+    // Get answers
+    const ansResp = await fetch(`${URL}/rest/v1/exam_answers?attempt_id=eq.${latestId}&select=step_number,selected_option,is_correct,question_id`, {
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }
+    });
+    let answers = await ansResp.json();
+
+    // Get questions
+    const qIds = answers.map(a => a.question_id).join(',');
+    const qResp = await fetch(`${URL}/rest/v1/exam_questions?id=in.(${qIds})&select=id,category_code,category_name,question_text,correct_option,option_a,option_b,option_c,option_d`, {
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }
+    });
+    const questions = await qResp.json();
+    const qMap = {};
+    questions.forEach(q => { qMap[q.id] = q; });
+
+    // Build table
+    answers.sort((a, b) => a.step_number - b.step_number);
+
+    let html = `<div class="nota">📊 Nota: ${attempts[0].score} / 5.0 (${attempts[0].correct_count}/12 correctas)</div>`;
+    html += `<p style="font-size:0.8rem;color:#555;text-align:center;">Ausencias >10s: ${attempts[0].tab_switches}</p>`;
+    html += '<table><tr><th>#</th><th>Categoría</th><th>Pregunta</th><th>Respondió</th><th>Correcta</th><th>Resultado</th></tr>';
+
+    answers.forEach(a => {
+      const q = qMap[a.question_id];
+      if (!q) return;
+      const correcta = a.is_correct ? '✅' : '❌';
+      const cls = a.is_correct ? 'correcta' : 'incorrecta';
+      html += `<tr class="${cls}">
+        <td>${a.step_number}</td>
+        <td>${q.category_code} - ${q.category_name}</td>
+        <td>${q.question_text}</td>
+        <td>${a.selected_option || '-'}</td>
+        <td>${q.correct_option}</td>
+        <td>${correcta}</td>
+      </tr>`;
+    });
+    html += '</table>';
+
+    // Show correct answer text for incorrect ones
+    html += '<h3 style="margin-top:1rem;font-size:1rem;color:#1a2a5e;">Detalle de respuestas incorrectas:</h3>';
+    let hasIncorrect = false;
+    answers.forEach(a => {
+      if (a.is_correct) return;
+      hasIncorrect = true;
+      const q = qMap[a.question_id];
+      if (!q) return;
+      const optKey = (a.selected_option || '').toLowerCase();
+      const correctKey = q.correct_option.toLowerCase();
+      html += `<div style="background:#fff0f0;border-left:3px solid #c62828;padding:0.5rem;margin:0.3rem 0;border-radius:4px;">
+        <strong>Pregunta ${a.step_number}:</strong> ${q.question_text}<br>
+        <span style="color:#c62828;">❌ Tu respuesta: ${q['option_' + optKey] || a.selected_option}</span><br>
+        <span style="color:#1e7a3e;">✅ Correcta: ${q['option_' + correctKey]}</span>
+      </div>`;
+    });
+    if (!hasIncorrect) html += '<p style="color:#1e7a3e;">✅ ¡Todas las respuestas fueron correctas!</p>';
+
+    results.innerHTML = html;
+  } catch (e) {
+    results.innerHTML = `<p style="color:#c62828;">Error: ${e.message}</p>`;
+  }
+
+  btn.disabled = false;
+  btn.textContent = 'Consultar';
+}
+</script>
+</body>
+</html>
