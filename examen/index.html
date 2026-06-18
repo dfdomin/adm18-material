@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Examen Parcial 1 — ADM18 Procesamiento de la Información">
+  <title>Examen Parcial 1 · ADM18</title>
+
+  <!-- Prevenir zoom en iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Estilos del examen -->
+  <link rel="stylesheet" href="css/exam.css">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📋</text></svg>">
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <div id="exam-app">
+    <div class="exam-loading">
+      Cargando examen...
+    </div>
+  </div>
+
+  <!-- Supabase JS Client (CDN) -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <!-- Examen scripts (orden importa) -->
+  <script src="js/exam-supabase.js"></script>
+  <script src="js/exam-engine.js"></script>
+  <script src="js/exam-visibility.js"></script>
+  <script src="js/exam-ui.js"></script>
+
+  <!-- Inicializar -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Prevenir copiar/pegar en todo el examen
+      document.addEventListener('copy', function (e) { e.preventDefault(); });
+      document.addEventListener('cut', function (e) { e.preventDefault(); });
+      document.addEventListener('contextmenu', function (e) { e.preventDefault(); });
+
+      // Prevenir zoom con pinch en móviles
+      document.addEventListener('gesturestart', function (e) { e.preventDefault(); });
+
+      // Iniciar UI
+      if (typeof ExamUI !== 'undefined') {
+        ExamUI.init();
+      } else {
+        document.getElementById('exam-app').innerHTML =
+          '<div class="exam-card"><p class="exam-error">Error: no se pudo cargar el motor del examen. Recarga la página.</p></div>';
+      }
+    });
+  </script>
+</body>
+</html>

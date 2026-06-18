@@ -1,0 +1,469 @@
+/* ══════════════════════════════════════════════════════════════
+   ADM18 · Examen Parcial 1 — Estilos mobile-first
+   ══════════════════════════════════════════════════════════════ */
+
+:root {
+  --iub-primary: #1a2a5e;
+  --iub-primary-light: #2c4a8f;
+  --iub-accent: #ffdf2d;
+  --iub-success: #1e7a3e;
+  --iub-danger: #c62828;
+  --iub-warning: #e67e22;
+  --iub-bg: #f4f6f8;
+  --iub-card: #ffffff;
+  --iub-text: #1a2340;
+  --iub-text-secondary: #555;
+  --iub-radius: 12px;
+  --iub-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  --iub-font: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--iub-font);
+  background: var(--iub-bg);
+  color: var(--iub-text);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1rem;
+  -webkit-user-select: none;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+#exam-app {
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+}
+
+/* ── Card ──────────────────────────────────────────────────── */
+.exam-card {
+  background: var(--iub-card);
+  border-radius: var(--iub-radius);
+  box-shadow: var(--iub-shadow);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.exam-card-question {
+  padding-top: 1rem;
+}
+
+/* ── Login ─────────────────────────────────────────────────── */
+.exam-logo {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.exam-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--iub-primary);
+  margin-bottom: 0.3rem;
+}
+
+.exam-subtitle {
+  font-size: 0.95rem;
+  text-align: center;
+  color: var(--iub-text-secondary);
+  margin-bottom: 0.3rem;
+}
+
+.exam-weeks {
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--iub-text-secondary);
+  margin-bottom: 1.5rem;
+  padding: 0.4rem 0.8rem;
+  background: #eef2f7;
+  border-radius: 999px;
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.exam-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.exam-form label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--iub-primary);
+}
+
+.exam-form input {
+  font-size: 1.1rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid #dde3ea;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: var(--iub-font);
+}
+
+.exam-form input:focus {
+  border-color: var(--iub-primary-light);
+}
+
+.exam-error {
+  color: var(--iub-danger);
+  font-size: 0.85rem;
+  margin-top: -0.25rem;
+}
+
+.exam-student-name {
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.5rem;
+  background: #e8f5e9;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+/* ── Buttons ────────────────────────────────────────────────── */
+.exam-btn {
+  display: block;
+  width: 100%;
+  padding: 0.85rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+  font-family: var(--iub-font);
+  margin-top: 0.75rem;
+}
+
+.exam-btn:active { transform: scale(0.98); }
+
+.exam-btn-primary {
+  background: var(--iub-primary);
+  color: white;
+}
+
+.exam-btn-primary:hover { background: var(--iub-primary-light); }
+.exam-btn-primary:disabled {
+  background: #aab;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ── Disclaimer ────────────────────────────────────────────── */
+.exam-disclaimer-title {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--iub-danger);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.exam-disclaimer-box {
+  background: #fff8e1;
+  border: 2px solid var(--iub-warning);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.exam-disclaimer-box p {
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.exam-disclaimer-list {
+  margin-left: 1.2rem;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.exam-disclaimer-list li {
+  margin-bottom: 0.5rem;
+}
+
+.exam-formula {
+  background: var(--iub-primary);
+  color: var(--iub-accent);
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0.5rem 0;
+  font-family: monospace;
+}
+
+.exam-formula-note {
+  font-size: 0.82rem;
+  color: var(--iub-text-secondary);
+  text-align: center;
+}
+
+/* ── Question ───────────────────────────────────────────────── */
+.exam-progress-bar {
+  height: 6px;
+  background: #e0e4ea;
+  border-radius: 3px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.exam-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--iub-primary), var(--iub-accent));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+.exam-question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.exam-step-badge {
+  background: var(--iub-primary);
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+}
+
+.exam-category-badge {
+  background: #eef2f7;
+  color: var(--iub-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+}
+
+.exam-question-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  color: var(--iub-text);
+}
+
+/* ── Options ────────────────────────────────────────────────── */
+.exam-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.exam-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: #f7f9fb;
+  border: 2px solid #dde3ea;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+  font-family: var(--iub-font);
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: var(--iub-text);
+}
+
+.exam-option:hover {
+  border-color: var(--iub-primary-light);
+  background: #eef2f7;
+}
+
+.exam-option.selected {
+  border-color: var(--iub-primary);
+  background: #e8edf6;
+  font-weight: 600;
+}
+
+.exam-option-letter {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--iub-primary);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.exam-option.selected .exam-option-letter {
+  background: var(--iub-accent);
+  color: var(--iub-primary);
+}
+
+.exam-option-text {
+  flex: 1;
+}
+
+/* ── Tab counter ────────────────────────────────────────────── */
+.exam-tab-counter {
+  margin-top: 1rem;
+  padding: 0.6rem 0.8rem;
+  background: #fff8e1;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  color: var(--iub-text-secondary);
+  text-align: center;
+}
+
+.exam-tab-counter strong {
+  color: var(--iub-danger);
+}
+
+/* ── Results ─────────────────────────────────────────────────── */
+.exam-card-results {
+  text-align: center;
+}
+
+.exam-result-emoji {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.exam-result-title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--iub-primary);
+  margin-bottom: 1rem;
+}
+
+.exam-result-score {
+  background: linear-gradient(135deg, var(--iub-primary), var(--iub-primary-light));
+  color: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.exam-score-big {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.exam-score-label {
+  font-size: 0.9rem;
+  opacity: 0.85;
+  margin-top: 0.25rem;
+}
+
+.exam-result-details {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.exam-result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #eee;
+  font-size: 0.92rem;
+}
+
+.exam-result-penalty {
+  color: var(--iub-danger);
+}
+
+.exam-result-penalty strong {
+  color: var(--iub-danger);
+}
+
+.exam-result-final {
+  border-bottom: none;
+  border-top: 2px solid var(--iub-primary);
+  font-size: 1rem;
+  font-weight: 700;
+  padding-top: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.exam-result-note {
+  font-size: 0.82rem;
+  color: var(--iub-text-secondary);
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background: #eef2f7;
+  border-radius: 8px;
+}
+
+/* ── Loading / Overlay ─────────────────────────────────────── */
+.exam-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--iub-text-secondary);
+}
+
+.exam-loading::before {
+  content: '⏳';
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ── Prevent selection / copy ──────────────────────────────── */
+#exam-app {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* ── Reconnecting overlay ──────────────────────────────────── */
+.exam-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  color: white;
+  font-size: 1rem;
+  text-align: center;
+  padding: 2rem;
+}
+
+.exam-overlay-content {
+  background: var(--iub-card);
+  color: var(--iub-text);
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 320px;
+}
+
+.exam-overlay-content .exam-spinner {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
