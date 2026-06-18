@@ -92,6 +92,17 @@ var ExamUI = (function () {
       var result = await ExamEngine.lookupStudent(cc);
       ExamEngine._studentCc = cc;
 
+      // Check if exam is closed (admin defined)
+      try {
+        var config = await ExamEngine.getExamConfig();
+        if (config.is_closed) {
+          renderExamClosed(cc, result.name);
+          return;
+        }
+      } catch (e) {
+        // If config fails, proceed normally
+      }
+
       // Show disclaimer
       setTimeout(function () { renderDisclaimer(cc, result.name); }, 500);
     } catch (e) {
@@ -99,6 +110,115 @@ var ExamUI = (function () {
       errorEl.style.display = 'block';
       btn.disabled = false;
       btn.textContent = 'Ingresar';
+    }
+  }
+
+  // ── EXAM CLOSED SCREEN (after admin-defined time) ────────
+  function renderExamClosed(cc, name) {
+    var app = $('#exam-app');
+    app.innerHTML = [
+      '<div class="exam-card">',
+      '  <div class="exam-student-header">',
+      '    <span class="exam-student-avatar">👤</span>',
+      '    <span class="exam-student-name-label"><strong>' + name + '</strong></span>',
+      '  </div>',
+      '  <div class="exam-result-emoji">🔒</div>',
+      '  <h2 class="exam-result-title">Examen cerrado</h2>',
+      '  <p>El período de presentación del examen ha finalizado.</p>',
+      '  <p style="margin: 1rem 0;">Si ya presentaste el examen, puedes consultar tus resultados con las respuestas correctas.</p>',
+      '  <button id="exam-review-btn" class="exam-btn exam-btn-primary">📊 Consultar resultados</button>',
+      '</div>'
+    ].join('\n');
+
+    $('#exam-review-btn').addEventListener('click', function () {
+      renderReviewResults(cc, name);
+    });
+  }
+
+  // ── REVIEW RESULTS ────────────────────────────────────────
+  async function renderReviewResults(cc, name) {
+    var app = $('#exam-app');
+    app.innerHTML = '<div class="exam-loading">Cargando resultados...</div>';
+
+    try {
+      var result = await ExamEngine.rpc('get_student_review', {
+        p_cc: cc,
+        p_exam_type: 'parcial1'
+      });
+
+      if (!result.ok || !result.attempts || result.attempts.length === 0) {
+        app.innerHTML = [
+          '<div class="exam-card">',
+          '  <div class="exam-result-emoji">📭</div>',
+          '  <h2 class="exam-result-title">Sin resultados</h2>',
+          '  <p>' + name + ', no tienes intentos registrados para este examen.</p>',
+          '  <button id="exam-back-btn" class="exam-btn exam-btn-primary">Volver</button>',
+          '</div>'
+        ].join('\n');
+        $('#exam-back-btn').addEventListener('click', function () { renderLogin(); });
+        return;
+      }
+
+      var html = [
+        '<div class="exam-card exam-card-results">',
+        '  <div class="exam-student-header">',
+        '    <span class="exam-student-avatar">👤</span>',
+        '    <span class="exam-student-name-label"><strong>' + name + '</strong></span>',
+        '  </div>',
+        '  <div class="exam-result-emoji">📊</div>',
+        '  <h2 class="exam-result-title">Consulta de resultados</h2>',
+        '  <p class="exam-subtitle">ADM18 · Procesamiento de la Información</p>',
+        '  <p style="font-size:0.9rem;margin-bottom:0.75rem;">Nota definitiva (promedio de intentos): <strong>' + Number(result.average_score).toFixed(2) + ' / 5.0</strong></p>',
+        '</div>'
+      ];
+
+      // Show each attempt
+      for (var i = 0; i < result.attempts.length; i++) {
+        var att = result.attempts[i];
+        var attemptNum = i + 1;
+        var emoji = Number(att.score) >= 3.0 ? '✅' : (Number(att.score) >= 2.0 ? '⚠️' : '❌');
+
+        html.push('<div class="exam-card">');
+        html.push('  <h3 style="font-size:1rem;color:var(--iub-primary);margin-bottom:0.5rem;">' + emoji + ' Intento #' + attemptNum + ' — Nota: ' + Number(att.score).toFixed(2) + '</h3>');
+
+        if (att.answers) {
+          for (var j = 0; j < att.answers.length; j++) {
+            var a = att.answers[j];
+            var correct = a.is_correct;
+            var icon = correct ? '✅' : '❌';
+            var userAns = a.selected_option || '—';
+            var correctAns = a.correct_option;
+
+            html.push('  <div class="exam-review-item" style="padding:0.5rem;margin:0.3rem 0;background:#f7f9fb;border-radius:6px;border-left:3px solid ' + (correct ? '#1e7a3e' : '#c62828') + ';">');
+            html.push('    <div style="font-size:0.85rem;font-weight:600;">' + icon + ' Pregunta ' + a.step_number + ' — ' + (a.category_name || '') + '</div>');
+            html.push('    <div style="font-size:0.82rem;margin-top:0.2rem;">' + a.question_text + '</div>');
+            html.push('    <div style="font-size:0.8rem;margin-top:0.3rem;">');
+            html.push('      Tu respuesta: <strong>' + userAns + '</strong>');
+            if (!correct) {
+              html.push(' | Correcta: <strong style="color:var(--iub-success)">' + correctAns + '</strong>');
+            }
+            html.push('    </div>');
+            html.push('  </div>');
+          }
+        }
+
+        html.push('</div>');
+      }
+
+      html.push('<div class="exam-card"><button id="exam-back-btn" class="exam-btn exam-btn-primary">Volver al inicio</button></div>');
+      app.innerHTML = html.join('\n');
+      $('#exam-back-btn').addEventListener('click', function () { renderLogin(); });
+
+    } catch (e) {
+      app.innerHTML = [
+        '<div class="exam-card">',
+        '  <div class="exam-result-emoji">⚠️</div>',
+        '  <h2 class="exam-result-title">Error</h2>',
+        '  <p>' + e.message + '</p>',
+        '  <button id="exam-back-btn" class="exam-btn exam-btn-primary">Volver</button>',
+        '</div>'
+      ].join('\n');
+      $('#exam-back-btn').addEventListener('click', function () { renderLogin(); });
     }
   }
 

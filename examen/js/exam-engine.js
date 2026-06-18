@@ -166,6 +166,11 @@ var ExamEngine = (function () {
     throw new Error('No se pudo reconectar después de ' + maxAttempts + ' intentos');
   }
 
+  // ── Obtener configuración del examen ──────────────────────
+  async function getExamConfig() {
+    return await rpc('get_exam_config', {});
+  }
+
   // ── Public API ─────────────────────────────────────────────
   return {
     startExam: startExam,
@@ -175,6 +180,8 @@ var ExamEngine = (function () {
     getExamState: getExamState,
     lookupStudent: lookupStudent,
     retryWithBackoff: retryWithBackoff,
+    getExamConfig: getExamConfig,
+    rpc: rpc,
     getAttemptId: function () { return attemptId; },
     getQuestions: function () { return questions; },
     getCurrentStep: function () { return currentStep; },
