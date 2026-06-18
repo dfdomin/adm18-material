@@ -31,6 +31,7 @@
   <input type="text" id="cc" inputmode="numeric" placeholder="Ej: 1042856266">
   <div id="error" class="error"></div>
   <button id="btn">Consultar</button>
+  <button id="btn-todas" style="background:#2c4a8f;margin-top:0.5rem;">📋 Ver todas las notas</button>
   <div id="results"></div>
 </div>
 <script>
@@ -38,7 +39,42 @@ const URL = 'https://nnrgxuzvjtweyzkdrech.supabase.co';
 const KEY = 'sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg';
 
 document.getElementById('btn').addEventListener('click', consultar);
+document.getElementById('btn-todas').addEventListener('click', verTodas);
 document.getElementById('cc').addEventListener('keydown', e => { if (e.key === 'Enter') consultar(); });
+
+async function verTodas() {
+  const results = document.getElementById('results');
+  results.innerHTML = '<div class="loading">⏳ Cargando notas generales...</div>';
+
+  try {
+    // Fetch via view (REST API direct to the view)
+    const resp = await fetch(`${URL}/rest/v1/v_notas_generales?order=definitiva.desc.nullslast,nombre_completo&select=identificacion,nombre_completo,intento1,intento2,intento3,definitiva`, {
+      headers: { apikey: KEY, Authorization: `Bearer ${KEY}` }
+    });
+    const data = await resp.json();
+
+    let html = '<h2 style="margin:1rem 0;font-size:1.1rem;color:#1a2a5e;text-align:center;">📋 Notas generales — Examen Parcial 1</h2>';
+    html += '<table><tr><th>Identificación</th><th>Nombre</th><th>Intento 1</th><th>Intento 2</th><th>Intento 3</th><th>Definitiva</th></tr>';
+
+    data.forEach(row => {
+      const defCls = row.definitiva === 'No lo hizo' ? 'incorrecta' : (parseFloat(row.definitiva) >= 3.0 ? 'correcta' : '');
+      html += `<tr class="${defCls}">
+        <td>${row.identificacion}</td>
+        <td>${row.nombre_completo}</td>
+        <td>${row.intento1}</td>
+        <td>${row.intento2}</td>
+        <td>${row.intento3}</td>
+        <td><strong>${row.definitiva}</strong></td>
+      </tr>`;
+    });
+    html += '</table>';
+    html += '<p style="font-size:0.8rem;color:#555;margin-top:0.5rem;">' + data.length + ' estudiantes · "No aplica" = sin ese intento · "No lo hizo" = no presentó</p>';
+
+    results.innerHTML = html;
+  } catch (e) {
+    results.innerHTML = `<p style="color:#c62828;">Error: ${e.message}</p>`;
+  }
+}
 
 async function consultar() {
   const cc = document.getElementById('cc').value.trim();
