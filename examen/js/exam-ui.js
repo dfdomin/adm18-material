@@ -192,12 +192,17 @@ var ExamUI = (function () {
             html.push('  <div class="exam-review-item" style="padding:0.5rem;margin:0.3rem 0;background:#f7f9fb;border-radius:6px;border-left:3px solid ' + (correct ? '#1e7a3e' : '#c62828') + ';">');
             html.push('    <div style="font-size:0.85rem;font-weight:600;">' + icon + ' Pregunta ' + a.step_number + ' — ' + (a.category_name || '') + '</div>');
             html.push('    <div style="font-size:0.82rem;margin-top:0.2rem;">' + a.question_text + '</div>');
-            html.push('    <div style="font-size:0.8rem;margin-top:0.3rem;">');
-            html.push('      Tu respuesta: <strong>' + userAns + '</strong>');
-            if (!correct) {
-              html.push(' | Correcta: <strong style="color:var(--iub-success)">' + correctAns + '</strong>');
+            if (correct) {
+              html.push('    <div style="font-size:0.8rem;margin-top:0.3rem;color:#1e7a3e;"><strong>✅ Correcta</strong></div>');
+            } else {
+              html.push('    <div style="font-size:0.8rem;margin-top:0.3rem;color:#c62828;"><strong>❌ Incorrecta</strong></div>');
+              html.push('    <div style="font-size:0.78rem;margin-top:0.2rem;padding:0.3rem;background:#e8f5e9;border-radius:4px;">');
+              html.push('      <strong>Respuesta correcta:</strong><br>' + a['option_' + correctAns.toLowerCase()]);
+              html.push('    </div>');
+              html.push('    <div style="font-size:0.78rem;margin-top:0.2rem;padding:0.3rem;background:#fff0f0;border-radius:4px;">');
+              html.push('      <strong>Tu respuesta:</strong><br>' + (a['option_' + userAns.toLowerCase()] || 'Sin responder'));
+              html.push('    </div>');
             }
-            html.push('    </div>');
             html.push('  </div>');
           }
         }
@@ -362,19 +367,15 @@ var ExamUI = (function () {
       '',
       '  <div class="exam-options">',
       '    <button class="exam-option" data-option="A">',
-      '      <span class="exam-option-letter">A</span>',
       '      <span class="exam-option-text">' + q.option_a + '</span>',
       '    </button>',
       '    <button class="exam-option" data-option="B">',
-      '      <span class="exam-option-letter">B</span>',
       '      <span class="exam-option-text">' + q.option_b + '</span>',
       '    </button>',
       '    <button class="exam-option" data-option="C">',
-      '      <span class="exam-option-letter">C</span>',
       '      <span class="exam-option-text">' + q.option_c + '</span>',
       '    </button>',
       '    <button class="exam-option" data-option="D">',
-      '      <span class="exam-option-letter">D</span>',
       '      <span class="exam-option-text">' + q.option_d + '</span>',
       '    </button>',
       '  </div>',
