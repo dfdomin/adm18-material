@@ -103,13 +103,14 @@ var ExamEngine = (function () {
   }
 
   // ── Registrar cambio de ventana ─────────────────────────────
-  async function recordVisibilityEvent(eventType) {
+  async function recordVisibilityEvent(eventType, durationSeconds) {
     if (isFinished) return null;
 
     try {
       var result = await rpc('record_visibility_event', {
         p_attempt_id: attemptId,
-        p_event_type: eventType
+        p_event_type: eventType,
+        p_duration_seconds: durationSeconds || 0
       });
 
       if (result.ok) {

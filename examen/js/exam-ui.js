@@ -1,5 +1,6 @@
 // ══════════════════════════════════════════════════════════════
 //  ADM18 · Examen Parcial 1 — UI (mobile-first, 100% Supabase)
+//  v2: nombre estudiante arriba/abajo, promedio intentos, máx 3
 // ══════════════════════════════════════════════════════════════
 
 var ExamUI = (function () {
@@ -29,7 +30,7 @@ var ExamUI = (function () {
       '3.4': 'Matriz doc-función-decisión',
       '4.1': 'Los 10 criterios GTC 185',
       '4.2': 'Errores documentales',
-      '4.3': 'Checklist como aseguramiento',
+      '4.3': 'Lista de verificación como aseguramiento',
       '4.4': 'Costo del error documental'
     };
     return labels[code] || code;
@@ -61,8 +62,6 @@ var ExamUI = (function () {
       '    <div id="exam-cc-error" class="exam-error" style="display:none"></div>',
       '    <button id="exam-login-btn" class="exam-btn exam-btn-primary">Ingresar</button>',
       '  </div>',
-      '',
-      '  <div id="exam-student-name" class="exam-student-name" style="display:none"></div>',
       '</div>'
     ].join('\n');
 
@@ -91,13 +90,10 @@ var ExamUI = (function () {
 
     try {
       var result = await ExamEngine.lookupStudent(cc);
-      var nameEl = $('#exam-student-name');
-      nameEl.innerHTML = '✅ <strong>' + result.name + '</strong>';
-      nameEl.style.display = 'block';
-
       ExamEngine._studentCc = cc;
 
-      setTimeout(function () { renderDisclaimer(cc, result.name); }, 800);
+      // Show disclaimer
+      setTimeout(function () { renderDisclaimer(cc, result.name); }, 500);
     } catch (e) {
       errorEl.textContent = e.message || 'Cédula no encontrada. Verifica e intenta de nuevo.';
       errorEl.style.display = 'block';
@@ -109,25 +105,36 @@ var ExamUI = (function () {
   // ── DISCLAIMER SCREEN ──────────────────────────────────────
   function renderDisclaimer(cc, name) {
     var app = $('#exam-app');
+
+    // Check if student has previous attempts by trying to get exam state
+    var avgNoteHtml = '';
+    var avgScore = 0;
+
     app.innerHTML = [
       '<div class="exam-card">',
+      '  <div class="exam-student-header">',
+      '    <span class="exam-student-avatar">👤</span>',
+      '    <span class="exam-student-name-label"><strong>' + name + '</strong></span>',
+      '  </div>',
+      '',
       '  <h2 class="exam-disclaimer-title">⚠️ Antes de comenzar</h2>',
       '',
       '  <div class="exam-disclaimer-box">',
-      '    <p><strong>' + name + '</strong>, lee con atención:</p>',
-      '',
       '    <ol class="exam-disclaimer-list">',
       '      <li>Este examen se toma <strong>exclusivamente en celular</strong>.</li>',
       '      <li>Tienes <strong>12 preguntas</strong> (1 por cada categoría de las semanas 1, 3 y 4).</li>',
-      '      <li>Cada vez que <strong>cambies de ventana o aplicación</strong> se detectará automáticamente y se descontarán <strong>-0.5 puntos</strong> del total.</li>',
+      '      <li>Dispones de <strong>máximo 3 intentos</strong>. La <strong>nota definitiva</strong> será el promedio de todos tus intentos.</li>',
+      '      <li>Si cambias de ventana por más de <strong>10 segundos</strong> se descontarán <strong>-0.5 puntos</strong> por cada vez.</li>',
       '      <li>La nota final se calcula así:',
       '        <div class="exam-formula">(correctas / 12 × 5.0) − (cambios de ventana × 0.5)</div>',
-      '        <div class="exam-formula-note">La nota mínima es 0.0 (no puede ser negativa).</div>',
+      '        <div class="exam-formula-note">Mínimo 0.0. Solo cuenta si estás fuera >10s.</div>',
       '      </li>',
       '      <li>Cada respuesta se <strong>guarda inmediatamente</strong>. Si pierdes conexión, tu progreso está seguro en el servidor.</li>',
-      '      <li><strong>No puedes repetir el examen</strong> una vez comenzado.</li>',
+      '      <li>Una vez finalizado el intento, no puedes volver a modificarlo.</li>',
       '    </ol>',
       '  </div>',
+      '',
+      '  <div id="exam-avg-score" class="exam-avg-score" style="display:none"></div>',
       '',
       '  <button id="exam-start-btn" class="exam-btn exam-btn-primary">Entendido, comenzar examen</button>',
       '</div>'
@@ -147,6 +154,23 @@ var ExamUI = (function () {
     try {
       var result = await ExamEngine.startExam(cc);
 
+      if (!result.ok) {
+        if (result.error === 'max_attempts_reached') {
+          renderMaxAttempts(result);
+          return;
+        }
+        throw new Error(result.error || 'No se pudo iniciar el examen');
+      }
+
+      // Show average score if there are previous attempts
+      if (result.previous_attempts > 0) {
+        var avgEl = document.getElementById('exam-avg-score');
+        if (avgEl) {
+          avgEl.style.display = 'block';
+          avgEl.innerHTML = '📊 <strong>Nota promedio de intentos anteriores:</strong> ' + formatScore(result.average_score) + ' / 5.0';
+        }
+      }
+
       if (result.resumed) {
         var resume = confirm(
           'Tienes un examen en progreso (pregunta ' + result.current_step + '/12).\n\n¿Deseas continuar desde donde quedaste?'
@@ -161,10 +185,27 @@ var ExamUI = (function () {
       ExamVisibility.start();
       renderQuestion();
     } catch (e) {
-      alert('Error al iniciar examen: ' + e.message);
+      alert('Error: ' + e.message);
       btn.disabled = false;
       btn.textContent = 'Entendido, comenzar examen';
     }
+  }
+
+  // ── MAX ATTEMPTS REACHED ───────────────────────────────────
+  function renderMaxAttempts(result) {
+    var app = $('#exam-app');
+    app.innerHTML = [
+      '<div class="exam-card">',
+      '  <div class="exam-result-emoji">⛔</div>',
+      '  <h2 class="exam-result-title">Límite de intentos alcanzado</h2>',
+      '  <p>Has realizado los <strong>3 intentos</strong> permitidos para este examen.</p>',
+      '  <div class="exam-result-score">',
+      '    <div class="exam-score-big">' + formatScore(result.average_score) + '</div>',
+      '    <div class="exam-score-label">Nota definitiva (promedio de 3 intentos)</div>',
+      '  </div>',
+      '  <p class="exam-result-note">Tu nota definitiva ya fue registrada. No es necesario enviar capturas de pantalla.</p>',
+      '</div>'
+    ].join('\n');
   }
 
   // ── RENDER QUESTION ────────────────────────────────────────
@@ -181,10 +222,15 @@ var ExamUI = (function () {
     var q = questions[idx];
     selectedOption = null;
     var isLast = (step >= C.TOTAL_QUESTIONS);
+    var studentName = ExamEngine.getStudentName() || '';
 
     var app = $('#exam-app');
     app.innerHTML = [
       '<div class="exam-card exam-card-question">',
+      '  <div class="exam-student-header">',
+      '    <span class="exam-student-avatar">👤</span>',
+      '    <span class="exam-student-name-label"><strong>' + studentName + '</strong></span>',
+      '  </div>',
       '  <div class="exam-progress-bar">',
       '    <div class="exam-progress-fill" style="width:' + ((step / C.TOTAL_QUESTIONS) * 100) + '%"></div>',
       '  </div>',
@@ -218,7 +264,7 @@ var ExamUI = (function () {
       '  </button>',
       '',
       '  <div class="exam-tab-counter">',
-      '    ⚠️ Cambios de ventana: <strong id="exam-switch-count">' + ExamEngine.getTabSwitches() + '</strong>',
+      '    ⚠️ Ausencias >10s: <strong id="exam-switch-count">' + ExamEngine.getTabSwitches() + '</strong>',
       '    <span id="exam-penalty-display">(−' + (ExamEngine.getTabSwitches() * 0.5).toFixed(1) + ' pts)</span>',
       '  </div>',
       '</div>'
@@ -321,18 +367,27 @@ var ExamUI = (function () {
 
   function renderResultsInternal(correct, total, switches, raw, penalty, finalScore) {
     var emoji = Number(finalScore) >= 3.0 ? '✅' : (Number(finalScore) >= 2.0 ? '⚠️' : '❌');
+    var studentName = ExamEngine.getStudentName() || '';
     var app = $('#exam-app');
     app.innerHTML = [
       '<div class="exam-card exam-card-results">',
+      '  <div class="exam-student-header">',
+      '    <span class="exam-student-avatar">👤</span>',
+      '    <span class="exam-student-name-label"><strong>' + studentName + '</strong></span>',
+      '  </div>',
       '  <div class="exam-result-emoji">' + emoji + '</div>',
       '  <h2 class="exam-result-title">Examen finalizado</h2>',
       '',
       '  <div class="exam-result-score">',
       '    <div class="exam-score-big">' + formatScore(finalScore) + '</div>',
-      '    <div class="exam-score-label">Nota final (sobre 5.0)</div>',
+      '    <div class="exam-score-label">Nota del intento (sobre 5.0)</div>',
       '  </div>',
       '',
       '  <div class="exam-result-details">',
+      '    <div class="exam-result-row">',
+      '      <span>' + studentName + '</span>',
+      '      <strong>' + formatScore(finalScore) + '</strong>',
+      '    </div>',
       '    <div class="exam-result-row">',
       '      <span>Respuestas correctas</span>',
       '      <strong>' + correct + ' / ' + total + '</strong>',
@@ -342,16 +397,16 @@ var ExamUI = (function () {
       '      <strong>' + formatScore(raw) + '</strong>',
       '    </div>',
       '    <div class="exam-result-row exam-result-penalty">',
-      '      <span>Descuento por cambios de ventana</span>',
+      '      <span>Descuento por ausencias >10s</span>',
       '      <strong>−' + formatScore(penalty) + '</strong>',
       '    </div>',
       '    <div class="exam-result-row exam-result-final">',
-      '      <span>Nota final</span>',
+      '      <span>Nota del intento</span>',
       '      <strong>' + formatScore(finalScore) + '</strong>',
       '    </div>',
       '  </div>',
       '',
-      '  <p class="exam-result-note">Tu nota ya fue registrada. No es necesario enviar capturas de pantalla.</p>',
+      '  <p class="exam-result-note">Este intento fue registrado. La nota definitiva será el promedio de todos tus intentos.</p>',
       '</div>'
     ].join('\n');
   }

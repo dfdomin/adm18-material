@@ -431,6 +431,38 @@ body {
   50% { opacity: 0.4; }
 }
 
+/* ── Student header ────────────────────────────────────────── */
+.exam-student-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+  margin-bottom: 0.75rem;
+  border-bottom: 2px solid var(--iub-primary);
+  padding-bottom: 0.6rem;
+}
+
+.exam-student-avatar {
+  font-size: 1.4rem;
+}
+
+.exam-student-name-label {
+  font-size: 0.95rem;
+  color: var(--iub-primary);
+  font-weight: 700;
+}
+
+/* ── Average score (disclaimer) ────────────────────────────── */
+.exam-avg-score {
+  text-align: center;
+  font-size: 0.95rem;
+  padding: 0.6rem;
+  background: #e8f5e9;
+  border: 2px solid var(--iub-success);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
 /* ── Prevent selection / copy ──────────────────────────────── */
 #exam-app {
   -webkit-user-select: none;
