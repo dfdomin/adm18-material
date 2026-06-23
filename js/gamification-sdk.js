@@ -145,6 +145,12 @@
     return total;
   }
 
+  /** Calcula nota simple (0-5) basada en XP total acumulado */
+  function calcNotaSimple(xpTotal, xpMaxCurso) {
+    var maximo = xpMaxCurso || 995;
+    return Math.min(5.0, Math.round((xpTotal / maximo) * 5.0 * 100) / 100);
+  }
+
   async function upsertWeeklyProgress(payload) {
     return callRpc("upsert_weekly_progress", payload);
   }
@@ -714,6 +720,7 @@
     rankFor: rankFor,
     riskFor: riskFor,
     calcNotaFormativa: calcNotaFormativa,
+    calcNotaSimple: calcNotaSimple,
     totalXP: totalXP,
     createPT: createPT,
     syncParticipation: syncParticipation,

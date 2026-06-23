@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Revisión de Estudiantes — ADM18</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <script src="../js/student-identicon.js"></script>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/gamification-sdk.js"></script>
+  <script src="../js/teacher-auth.js"></script>
+  <style>
+    :root {
+      --navy:#1E2843; --navy2:#2d3a5e; --yellow:#FFDF2D;
+      --bg:#FAFAFA; --border:#DEDFE4; --gray:#E9EAED;
+      --green:#2e7d32; --red:#c62828; --muted:#546e7a;
+      --radius:12px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Open Sans',Arial,sans-serif;background:var(--bg);color:#212121;line-height:1.6;}
+
+    /* ── LOGIN GATE ── */
+    #login{position:fixed;inset:0;background:var(--navy);display:flex;align-items:center;justify-content:center;z-index:999;}
+    #login[hidden]{display:none;}
+    .gate-box{background:#fff;border-radius:16px;padding:2.5rem;text-align:center;width:320px;}
+    .gate-box h2{color:var(--navy);margin-bottom:.5rem;font-size:1.2rem;}
+    .gate-box p{color:var(--muted);font-size:.85rem;margin-bottom:1.2rem;}
+    .gate-box input{width:100%;padding:.7rem;border:2px solid var(--border);border-radius:8px;font-size:1.1rem;text-align:center;letter-spacing:.3em;outline:none;font-family:inherit;}
+    .gate-box input:focus{border-color:var(--navy);}
+    .gate-box button{margin-top:.8rem;width:100%;padding:.7rem;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;}
+    #gate-err{color:var(--red);font-size:.82rem;margin-top:.5rem;min-height:1.2rem;}
+
+    /* ── HEADER ── */
+    header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.8rem;}
+    header h1{font-size:1.1rem;font-weight:800;}
+    .hdr-right{display:flex;align-items:center;gap:1rem;}
+    .back-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:.35rem .8rem;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;text-decoration:none;}
+
+    /* ── TIMER BAR ── */
+    #timer-bar{background:#fff;border-bottom:1px solid var(--border);padding:.6rem 1.5rem;display:flex;align-items:center;gap:1rem;}
+    #timer-display{font-size:1.4rem;font-weight:800;color:var(--navy);min-width:3.5rem;}
+    #timer-display.urgent{color:var(--red);}
+    .timer-track{flex:1;height:10px;background:var(--gray);border-radius:10px;overflow:hidden;}
+    #timer-fill{height:100%;background:linear-gradient(90deg,var(--navy),var(--yellow));border-radius:10px;transition:width 1s linear;}
+    #timer-label{font-size:.78rem;color:var(--muted);}
+    .btn-sm{padding:.3rem .8rem;border-radius:6px;border:none;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;}
+    .btn-start{background:var(--yellow);color:var(--navy);}
+    .btn-pause{background:var(--gray);color:var(--navy);}
+
+    /* ── MAIN ── */
+    main{max-width:960px;margin:1.5rem auto;padding:0 1rem 4rem;}
+
+    /* ── PROGRESS OVERVIEW ── */
+    .overview{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+    .ov-stat{text-align:center;}
+    .ov-num{font-size:1.8rem;font-weight:800;color:var(--navy);}
+    .ov-num.done{color:var(--green);}
+    .ov-num.risk{color:var(--red);}
+    .ov-lbl{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+    .ov-divider{width:1px;height:50px;background:var(--border);}
+    .session-xp{margin-left:auto;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;border-radius:10px;padding:.6rem 1rem;text-align:center;}
+    .session-xp .xp-num{font-size:1.4rem;font-weight:800;color:var(--yellow);}
+    .session-xp .xp-lbl{font-size:.72rem;opacity:.8;}
+
+    /* ── FILTER TABS ── */
+    .filter-tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;}
+    .ftab{padding:.35rem .9rem;border-radius:20px;border:2px solid var(--border);background:#fff;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;color:var(--muted);transition:all .15s;}
+    .ftab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .ftab.risk-tab.active{background:var(--red);border-color:var(--red);}
+    .ftab .count{display:inline-block;background:rgba(0,0,0,.1);border-radius:10px;padding:0 .4rem;font-size:.7rem;margin-left:.3rem;}
+
+    /* ── STUDENT CARD ── */
+    .student-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);margin-bottom:.8rem;overflow:hidden;transition:box-shadow .2s;}
+    .student-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+    .student-card.at-risk{border-left:4px solid var(--red);}
+    .student-card.reviewed{border-left:4px solid var(--green);opacity:.75;}
+    .card-header{display:flex;align-items:center;gap:.8rem;padding:.9rem 1.1rem;cursor:pointer;user-select:none;}
+    .student-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0;}
+    .student-info{flex:1;}
+    .student-name{font-weight:700;font-size:.95rem;color:var(--navy);}
+    .student-meta{font-size:.78rem;color:var(--muted);margin-top:.1rem;}
+    .student-badges{display:flex;gap:.3rem;align-items:center;flex-wrap:wrap;}
+    .sbadge{display:inline-flex;align-items:center;gap:.2rem;padding:.15rem .5rem;border-radius:10px;font-size:.72rem;font-weight:700;}
+    .sbadge-xp{background:#e8eaf6;color:var(--navy);}
+    .sbadge-risk{background:#ffcdd2;color:var(--red);}
+    .sbadge-ok{background:#c8e6c9;color:var(--green);}
+    .sbadge-week{background:#fff9c4;color:#6d4c00;}
+    .expand-icon{color:var(--muted);font-size:.9rem;transition:transform .2s;}
+    .expanded .expand-icon{transform:rotate(180deg);}
+
+    /* ── CARD BODY ── */
+    .card-body{display:none;padding:0 1.1rem 1.2rem;border-top:1px solid var(--border);}
+    .card-body.open{display:block;}
+    .cb-section{margin-top:.9rem;}
+    .cb-section h4{font-size:.82rem;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem;}
+    .week-pills{display:flex;gap:.3rem;flex-wrap:wrap;}
+    .wpill{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:8px;font-size:.75rem;font-weight:700;border:2px solid var(--border);}
+    .wpill.visited{background:var(--navy);color:#fff;border-color:var(--navy);}
+    .wpill.done{background:var(--green);color:#fff;border-color:var(--green);}
+    .wpill.quiz-ok{background:var(--yellow);color:var(--navy);}
+    .wpill.missing{background:#ffcdd2;color:var(--red);border-color:#ef9a9a;}
+
+    /* QUIZ ANSWERS */
+    .quiz-answers{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.3rem;}
+    .qa-pill{padding:.15rem .5rem;border-radius:6px;font-size:.75rem;font-weight:600;}
+    .qa-correct{background:#c8e6c9;color:var(--green);}
+    .qa-wrong{background:#ffcdd2;color:var(--red);}
+
+    /* REVIEW ACTIONS */
+    .review-actions{margin-top:1rem;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
+    .btn-review{padding:.5rem 1.1rem;border-radius:8px;border:none;font-size:.85rem;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s;}
+    .btn-review:hover{opacity:.85;}
+    .btn-ok{background:var(--green);color:#fff;}
+    .btn-colab{background:#f48024;color:#fff;}
+    .btn-flag{background:#fff9c4;color:#6d4c00;border:1px solid #f9a825;}
+    .btn-done{background:var(--gray);color:var(--muted);}
+    .review-note{flex:1;min-width:200px;}
+    .review-note input{width:100%;padding:.45rem .7rem;border:1.5px solid var(--border);border-radius:8px;font-size:.83rem;font-family:inherit;outline:none;}
+    .review-note input:focus{border-color:var(--navy);}
+
+    /* ── CELEBRATION ── */
+    #celebration{display:none;position:fixed;inset:0;background:rgba(30,40,67,.92);z-index:998;align-items:center;justify-content:center;}
+    #celebration.show{display:flex;}
+    .celeb-box{background:#fff;border-radius:20px;padding:2.5rem;text-align:center;max-width:380px;animation:pop .4s cubic-bezier(.34,1.56,.64,1);}
+    @keyframes pop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+    .celeb-emoji{font-size:4rem;margin-bottom:.5rem;}
+    .celeb-box h2{color:var(--navy);font-size:1.4rem;margin-bottom:.5rem;}
+    .celeb-box p{color:var(--muted);font-size:.9rem;margin-bottom:1.2rem;}
+    .xp-earned{font-size:2rem;font-weight:800;color:var(--yellow);background:var(--navy);border-radius:10px;padding:.4rem 1.2rem;display:inline-block;margin:.5rem 0;}
+    .celeb-box .btn-close{background:var(--navy);color:#fff;border:none;border-radius:8px;padding:.6rem 1.5rem;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;margin-top:.5rem;}
+
+    /* ── EMPTY STATE ── */
+    .empty{text-align:center;padding:3rem;color:var(--muted);}
+    .empty .big{font-size:3rem;}
+
+    @media(max-width:600px){.overview{gap:.8rem;}.ov-divider{display:none;}}
+  </style>
+</head>
+<body>
+
+<!-- LOGIN GATE (TeacherAuth) -->
+<section id="login">
+  <div class="gate-box">
+    <div style="font-size:2rem;margin-bottom:.5rem">📋</div>
+    <h2>Revisión de Estudiantes</h2>
+    <p>ADM18 · LatamBox<br>Ingresa tus credenciales de docente</p>
+    <label for="teacherUser" style="display:block;text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:.25rem">Usuario</label>
+    <input type="text" id="teacherUser" placeholder="docente"
+      style="width:100%;padding:.7rem;border:2px solid var(--border);border-radius:8px;font-size:1rem;text-align:left;letter-spacing:normal;outline:none;font-family:inherit;margin-bottom:.6rem;box-sizing:border-box">
+    <label for="teacherPass" style="display:block;text-align:left;font-size:.78rem;color:var(--muted);font-weight:700;margin-bottom:.25rem">Contraseña</label>
+    <input type="password" id="teacherPass" placeholder="••••••"
+      style="width:100%;padding:.7rem;border:2px solid var(--border);border-radius:8px;font-size:1rem;text-align:left;letter-spacing:normal;outline:none;font-family:inherit;box-sizing:border-box">
+    <button id="teacherLoginBtn" style="margin-top:.8rem;width:100%;padding:.7rem;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;font-family:inherit;">Entrar →</button>
+    <p id="teacherLoginMsg" style="color:var(--red);font-size:.82rem;margin-top:.5rem;min-height:1.2rem;"></p>
+  </div>
+</section>
+
+<!-- APP (visible tras autenticación) -->
+<section id="app" hidden>
+
+<!-- CELEBRATION -->
+<div id="celebration">
+  <div class="celeb-box">
+    <div class="celeb-emoji" id="celeb-emoji">🎉</div>
+    <h2 id="celeb-title">¡Sesión completada!</h2>
+    <p id="celeb-msg">Revisaste a todos los estudiantes pendientes.</p>
+    <div class="xp-earned" id="celeb-xp">+50 XP</div>
+    <p style="font-size:.82rem;color:var(--muted);margin-top:.3rem">Sesión guardada. Puedes cerrar esta ventana.</p>
+    <button class="btn-close" onclick="closeCelebration()">Continuar 🚀</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div>
+    <h1>📋 Revisión de Estudiantes — ADM18</h1>
+    <div style="font-size:.78rem;opacity:.7;margin-top:.2rem">Rutina docente · máx. 15 min · un estudiante a la vez</div>
+  </div>
+  <div class="hdr-right">
+    <a href="profesor.html" class="back-btn">← Dashboard</a>
+  </div>
+</header>
+
+<!-- TIMER BAR -->
+<div id="timer-bar">
+  <div>
+    <div id="timer-display">15:00</div>
+    <div id="timer-label">Tiempo de sesión</div>
+  </div>
+  <div class="timer-track"><div id="timer-fill" style="width:100%"></div></div>
+  <button class="btn-sm btn-start" id="btn-timer" onclick="toggleTimer()">▶ Iniciar</button>
+  <button class="btn-sm btn-pause" onclick="resetTimer()" style="margin-left:.3rem">↺ Reset</button>
+  <div style="font-size:.8rem;color:var(--muted);white-space:nowrap" id="timer-tip">
+    💡 Inicia el timer para mantener el foco
+  </div>
+</div>
+
+<main>
+
+  <!-- OVERVIEW -->
+  <div class="overview">
+    <div class="ov-stat">
+      <div class="ov-num" id="ov-total">—</div>
+      <div class="ov-lbl">Estudiantes</div>
+    </div>
+    <div class="ov-divider"></div>
+    <div class="ov-stat">
+      <div class="ov-num risk" id="ov-risk">—</div>
+      <div class="ov-lbl">⚠️ En riesgo</div>
+    </div>
+    <div class="ov-divider"></div>
+    <div class="ov-stat">
+      <div class="ov-num done" id="ov-reviewed">0</div>
+      <div class="ov-lbl">✅ Revisados hoy</div>
+    </div>
+    <div class="ov-divider"></div>
+    <div class="ov-stat">
+      <div class="ov-num" id="ov-pending" style="color:#f48024">—</div>
+      <div class="ov-lbl">Pendientes</div>
+    </div>
+    <div class="session-xp">
+      <div class="xp-num" id="session-xp-display">0</div>
+      <div class="xp-lbl">XP esta sesión 🏅</div>
+    </div>
+  </div>
+
+  <!-- FILTER TABS -->
+  <div class="filter-tabs">
+    <button class="ftab active" onclick="setFilter('risk')" id="tab-risk">
+      ⚠️ En riesgo primero <span class="count" id="cnt-risk">0</span>
+    </button>
+    <button class="ftab" onclick="setFilter('pending')" id="tab-pending">
+      📋 Pendientes <span class="count" id="cnt-pending">0</span>
+    </button>
+    <button class="ftab" onclick="setFilter('all')" id="tab-all">
+      👥 Todos <span class="count" id="cnt-all">0</span>
+    </button>
+    <button class="ftab" onclick="setFilter('done')" id="tab-done">
+      ✅ Revisados <span class="count" id="cnt-done">0</span>
+    </button>
+  </div>
+
+  <!-- STUDENT LIST -->
+  <div id="student-list">
+    <div class="empty"><div class="big">☁️</div><p>Cargando datos desde Supabase…</p></div>
+  </div>
+
+</main>
+
+</section>
+
+<script>
+// ── CONFIG ──────────────────────────────────────────
+const EXPECTED_WEEKS = 14;
+const RISK_THRESHOLD = 0.30; // < 30% avance = en riesgo
+const SESSION_DURATION = 15 * 60; // 15 minutos
+const XP_PER_REVIEW = 10;
+const XP_SESSION_BONUS = 20;
+
+// ── STATE ───────────────────────────────────────────
+let students = [];
+let reviewedIds = new Set(JSON.parse(localStorage.getItem('adm18_reviewed_today') || '[]'));
+let sessionXP = 0;
+let currentFilter = 'risk';
+let timerInterval = null;
+let timerSeconds = SESSION_DURATION;
+let timerRunning = false;
+
+// ── TEACHER AUTH (reemplaza PIN) ─────────────────────
+(function initAuth() {
+  if (typeof TeacherAuth !== 'undefined' && document.getElementById('teacherUser')) {
+    TeacherAuth.bindLoginForm({
+      onSuccess: function () {
+        loadStudents();
+      },
+    });
+  } else {
+    setTimeout(initAuth, 50);
+  }
+})();
+
+// ── SUPABASE LOAD ────────────────────────────────────
+async function loadStudents() {
+  const url = GamifSDK.sbUrl();
+  const key = GamifSDK.sbKey();
+  const offering = GamifSDK.getOfferingCode();
+
+  if (!url || !key) {
+    renderDemo();
+    return;
+  }
+
+  try {
+    const r = await fetch(url + '/rest/v1/v_legacy_student_progress?select=*&offering_code=eq.' + encodeURIComponent(offering) + '&order=student_name.asc', {
+      headers: { 'apikey': key, 'Authorization': 'Bearer ' + key }
+    });
+    if (!r.ok) throw new Error('API error ' + r.status);
+    const rows = await r.json();
+    processData(rows);
+  } catch(e) {
+    renderDemo();
+  }
+}
+
+function processData(rows) {
+  // Group by student_id
+  const map = {};
+  rows.forEach(row => {
+    if (!map[row.student_id]) {
+      map[row.student_id] = {
+        id: row.student_id,
+        name: row.student_name || 'Sin nombre',
+        grupo: row.grupo || '—',
+        weeks: [],
+        xpTotal: 0,
+        quizScores: [],
+        activitiesDone: 0,
+        lastActivity: null
+      };
+    }
+    const s = map[row.student_id];
+    s.weeks.push(row.semana);
+    s.xpTotal += (row.xp || 0);
+    if (row.quiz_score != null) s.quizScores.push(row.quiz_score);
+    if (row.activity_done) s.activitiesDone++;
+    if (!s.lastActivity || row.updated_at > s.lastActivity) s.lastActivity = row.updated_at;
+  });
+
+  students = Object.values(map);
+  // Sort: at-risk first, then by name
+  students.sort((a, b) => {
+    const ra = a.weeks.length / EXPECTED_WEEKS < RISK_THRESHOLD;
+    const rb = b.weeks.length / EXPECTED_WEEKS < RISK_THRESHOLD;
+    if (ra && !rb) return -1;
+    if (!ra && rb) return 1;
+    return a.name.localeCompare(b.name);
+  });
+
+  updateOverview();
+  renderList();
+}
+
+// ── DEMO DATA (fallback) ─────────────────────────────
+function renderDemo() {
+  const demo = [
+    { id: 'demo1', name: 'María García', grupo: 'A', weeks: [1,2,3], xpTotal: 120, quizScores: [8,7], activitiesDone: 2, lastActivity: '2026-05-29T10:00:00Z' },
+    { id: 'demo2', name: 'Carlos López', grupo: 'A', weeks: [1], xpTotal: 30, quizScores: [4], activitiesDone: 0, lastActivity: '2026-05-20T08:00:00Z' },
+    { id: 'demo3', name: 'Ana Rodríguez', grupo: 'B', weeks: [1,2,3,4,5,6,7,8], xpTotal: 410, quizScores: [9,10,8,9,10,8,9], activitiesDone: 7, lastActivity: '2026-05-28T15:00:00Z' },
+    { id: 'demo4', name: 'Luis Martínez', grupo: 'B', weeks: [1,2], xpTotal: 60, quizScores: [5,6], activitiesDone: 1, lastActivity: '2026-05-25T12:00:00Z' },
+  ];
+  students = demo;
+  students.sort((a,b) => {
+    const ra = a.weeks.length/EXPECTED_WEEKS < RISK_THRESHOLD;
+    const rb = b.weeks.length/EXPECTED_WEEKS < RISK_THRESHOLD;
+    if(ra && !rb) return -1;
+    if(!ra && rb) return 1;
+    return a.name.localeCompare(b.name);
+  });
+  updateOverview();
+  renderList();
+
+  // Show demo notice
+  const notice = document.createElement('div');
+  notice.style.cssText = 'background:#fff3cd;border:1px solid #f9a825;border-radius:8px;padding:.6rem 1rem;font-size:.82rem;color:#6d4c00;margin-bottom:.8rem;';
+  notice.innerHTML = '⚠️ <strong>Modo demo</strong> — Supabase no configurado en este navegador. Configura desde <a href="../setup/CONFIGURAR_SUPABASE.html">CONFIGURAR_SUPABASE.html</a>.';
+  document.getElementById('student-list').prepend(notice);
+}
+
+// ── OVERVIEW ─────────────────────────────────────────
+function updateOverview() {
+  const total = students.length;
+  const atRisk = students.filter(s => s.weeks.length / EXPECTED_WEEKS < RISK_THRESHOLD).length;
+  const reviewed = reviewedIds.size;
+  const pending = total - reviewed;
+
+  document.getElementById('ov-total').textContent = total;
+  document.getElementById('ov-risk').textContent = atRisk;
+  document.getElementById('ov-reviewed').textContent = reviewed;
+  document.getElementById('ov-pending').textContent = pending;
+
+  document.getElementById('cnt-risk').textContent = atRisk;
+  document.getElementById('cnt-pending').textContent = pending;
+  document.getElementById('cnt-all').textContent = total;
+  document.getElementById('cnt-done').textContent = reviewed;
+}
+
+// ── RENDER LIST ───────────────────────────────────────
+function setFilter(f) {
+  currentFilter = f;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + f).classList.add('active');
+  renderList();
+}
+
+function renderList() {
+  let filtered = students;
+  if (currentFilter === 'risk') {
+    filtered = students.filter(s => s.weeks.length / EXPECTED_WEEKS < RISK_THRESHOLD);
+  } else if (currentFilter === 'pending') {
+    filtered = students.filter(s => !reviewedIds.has(s.id));
+  } else if (currentFilter === 'done') {
+    filtered = students.filter(s => reviewedIds.has(s.id));
+  }
+
+  const list = document.getElementById('student-list');
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="empty"><div class="big">✅</div><p>No hay estudiantes en esta categoría.</p></div>';
+    // Check if everything reviewed
+    const pending = students.filter(s => !reviewedIds.has(s.id));
+    if (pending.length === 0 && students.length > 0) showCelebration();
+    return;
+  }
+
+  list.innerHTML = filtered.map(s => buildCard(s)).join('');
+}
+
+function buildCard(s) {
+  const pct = Math.round(s.weeks.length / EXPECTED_WEEKS * 100);
+  const isRisk = pct < 30;
+  const isReviewed = reviewedIds.has(s.id);
+  const avgQuiz = s.quizScores.length ? (s.quizScores.reduce((a,b)=>a+b,0)/s.quizScores.length).toFixed(1) : '—';
+  const lastSeen = s.lastActivity ? new Date(s.lastActivity).toLocaleDateString('es-CO',{month:'short',day:'numeric'}) : '—';
+
+  // Generar SVG identicon inline
+  var identiconSvg = window.renderIdenticonSVG ? window.renderIdenticonSVG(s.id) : '';
+  const firmaName = window.getIdenticonFirmaName ? window.getIdenticonFirmaName(s.id) : '?';
+  const verifCode = window.getIdenticonCode ? window.getIdenticonCode(s.id) : '';
+
+  const weekPills = Array.from({length: Math.min(14,7)}, (_,i) => {
+    const w = i+1;
+    const visited = s.weeks.includes(w);
+    return `<div class="wpill ${visited ? 'visited' : 'missing'}" title="Sem ${w}">${w}</div>`;
+  }).join('') + (EXPECTED_WEEKS > 7 ? `<span style="font-size:.75rem;color:var(--muted);align-self:center;margin-left:.2rem">+${EXPECTED_WEEKS-7} más</span>` : '');
+
+  const savedNote = localStorage.getItem('adm18_note_' + s.id) || '';
+
+  return `
+  <div class="student-card ${isRisk ? 'at-risk' : ''} ${isReviewed ? 'reviewed' : ''}" id="card-${s.id}">
+    <div class="card-header" onclick="toggleCard('${s.id}')">
+      <div class="student-avatar" style="overflow:hidden;border-radius:6px;width:40px;height:40px;background:transparent;display:flex;align-items:center;justify-content:center">${identiconSvg}</div>
+      <div class="student-info">
+        <div class="student-name">${s.name} <span class="identicon-verify" style="font-size:.65rem;color:#7c3aed;font-weight:700;background:rgba(124,58,237,.1);padding:0 4px;border-radius:4px">${verifCode}</span> <span class="identicon-firma" title="Pixel-firma: ${firmaName}" style="font-size:.6rem;color:#546e7a;opacity:.5;margin-left:2px">◇</span></div>
+        <div class="student-meta">📌 ${s.grupo} · Última actividad: ${lastSeen} · ${s.weeks.length}/${EXPECTED_WEEKS} semanas</div>
+      </div>
+      <div class="student-badges">
+        ${isRisk ? '<span class="sbadge sbadge-risk">⚠️ Riesgo</span>' : '<span class="sbadge sbadge-ok">✅ Activo</span>'}
+        <span class="sbadge sbadge-xp">⭐ ${s.xpTotal} XP</span>
+        <span class="sbadge sbadge-week">${pct}% avance</span>
+        ${isReviewed ? '<span class="sbadge sbadge-ok">✔ Revisado</span>' : ''}
+      </div>
+      <span class="expand-icon">▼</span>
+    </div>
+    <div class="card-body" id="body-${s.id}">
+      <div class="cb-section">
+        <h4>📅 Semanas visitadas</h4>
+        <div class="week-pills">${weekPills}</div>
+      </div>
+      <div class="cb-section">
+        <h4>🎯 Quiz promedio: ${avgQuiz}/10 · Actividades completadas: ${s.activitiesDone}</h4>
+        ${s.quizScores.length ? `<div class="quiz-answers">${s.quizScores.map((q,i)=>`<span class="qa-pill ${q>=7?'qa-correct':'qa-wrong'}">S${i+1}: ${q}/10</span>`).join('')}</div>` : '<span style="font-size:.82rem;color:var(--muted)">Sin quizzes completados</span>'}
+      </div>
+      ${isRisk ? `<div style="background:#fff3cd;border-left:3px solid #f9a825;border-radius:6px;padding:.5rem .8rem;font-size:.83rem;color:#6d4c00;margin-top:.8rem;">
+        ⚠️ <strong>Acción sugerida:</strong> Contactar al estudiante. Solo ha visitado ${s.weeks.length} semana(s). Considera enviar un mensaje en el aula virtual.
+      </div>` : ''}
+      <div class="review-actions">
+        <button class="btn-review btn-ok" onclick="markReviewed('${s.id}', 'ok')">✅ Revisado (+${XP_PER_REVIEW} XP)</button>
+        <button class="btn-review btn-colab" onclick="openColab('${s.name}')">📓 Ver Colab</button>
+        <button class="btn-review btn-flag" onclick="markReviewed('${s.id}', 'flag')">🚩 Marcar para seguimiento</button>
+        <div class="review-note">
+          <input type="text" placeholder="Nota rápida (opcional)…" id="note-${s.id}" value="${savedNote}"
+            oninput="localStorage.setItem('adm18_note_${s.id}', this.value)">
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function toggleCard(id) {
+  const body = document.getElementById('body-' + id);
+  const card = document.getElementById('card-' + id);
+  const open = body.classList.toggle('open');
+  card.classList.toggle('expanded', open);
+}
+
+// ── REVIEW ACTIONS ────────────────────────────────────
+function markReviewed(id, type) {
+  reviewedIds.add(id);
+  localStorage.setItem('adm18_reviewed_today', JSON.stringify([...reviewedIds]));
+
+  sessionXP += XP_PER_REVIEW;
+  document.getElementById('session-xp-display').textContent = sessionXP;
+
+  // Animate XP
+  const xpEl = document.getElementById('session-xp-display');
+  xpEl.style.transform = 'scale(1.4)';
+  setTimeout(() => xpEl.style.transform = 'scale(1)', 300);
+
+  updateOverview();
+  renderList();
+
+  // Check if all pending done
+  const stillPending = students.filter(s => !reviewedIds.has(s.id));
+  if (stillPending.length === 0) {
+    setTimeout(showCelebration, 400);
+  }
+}
+
+function openColab(name) {
+  alert(`Colab de ${name}:\n\nBusca la entrega de este estudiante en el aula virtual (Google Colab link) y revísala aquí.\n\nRecuerda: tienes máx. 3 minutos por estudiante para mantener el foco.`);
+}
+
+// ── CELEBRATION ───────────────────────────────────────
+function showCelebration() {
+  const total = reviewedIds.size;
+  sessionXP += XP_SESSION_BONUS;
+  document.getElementById('session-xp-display').textContent = sessionXP;
+
+  const emojis = ['🎉','🏆','⭐','🚀','💪'];
+  document.getElementById('celeb-emoji').textContent = emojis[Math.floor(Math.random()*emojis.length)];
+  document.getElementById('celeb-title').textContent = '¡Sesión completada!';
+  document.getElementById('celeb-msg').textContent = `Revisaste ${total} estudiante${total!==1?'s':''} en esta sesión. ¡Excelente trabajo! Bonus de +${XP_SESSION_BONUS} XP por completar la sesión.`;
+  document.getElementById('celeb-xp').textContent = '+' + sessionXP + ' XP';
+
+  document.getElementById('celebration').classList.add('show');
+  if (timerRunning) toggleTimer();
+
+  // Save session log
+  const log = JSON.parse(localStorage.getItem('adm18_review_log') || '[]');
+  log.push({ date: new Date().toISOString(), reviewed: total, xp: sessionXP });
+  localStorage.setItem('adm18_review_log', JSON.stringify(log.slice(-30)));
+}
+
+function closeCelebration() {
+  document.getElementById('celebration').classList.remove('show');
+}
+
+// ── TIMER ─────────────────────────────────────────────
+function toggleTimer() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('btn-timer').textContent = '▶ Continuar';
+    document.getElementById('btn-timer').className = 'btn-sm btn-start';
+  } else {
+    timerRunning = true;
+    document.getElementById('btn-timer').textContent = '⏸ Pausar';
+    document.getElementById('btn-timer').className = 'btn-sm btn-pause';
+    timerInterval = setInterval(tickTimer, 1000);
+  }
+}
+
+function tickTimer() {
+  timerSeconds--;
+  if (timerSeconds <= 0) {
+    timerSeconds = 0;
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('btn-timer').textContent = '▶ Iniciar';
+    document.getElementById('btn-timer').className = 'btn-sm btn-start';
+    document.getElementById('timer-tip').textContent = '⏰ Tiempo agotado — guarda tu avance';
+    document.getElementById('timer-display').classList.add('urgent');
+    // Gentle alert
+    setTimeout(() => alert('⏰ Los 15 minutos han terminado.\n\n¡Buen trabajo! Guarda las notas y cierra esta pestaña.\nContinúa mañana si quedan pendientes.'), 100);
+    return;
+  }
+  updateTimerDisplay();
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('timer-display').textContent = `${m}:${s.toString().padStart(2,'0')}`;
+  const pct = (timerSeconds / SESSION_DURATION) * 100;
+  document.getElementById('timer-fill').style.width = pct + '%';
+  if (timerSeconds <= 120) {
+    document.getElementById('timer-display').classList.add('urgent');
+    document.getElementById('timer-fill').style.background = 'var(--red)';
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  timerSeconds = SESSION_DURATION;
+  document.getElementById('timer-display').textContent = '15:00';
+  document.getElementById('timer-display').classList.remove('urgent');
+  document.getElementById('timer-fill').style.width = '100%';
+  document.getElementById('timer-fill').style.background = 'linear-gradient(90deg,var(--navy),var(--yellow))';
+  document.getElementById('btn-timer').textContent = '▶ Iniciar';
+  document.getElementById('btn-timer').className = 'btn-sm btn-start';
+  document.getElementById('timer-tip').textContent = '💡 Inicia el timer para mantener el foco';
+}
+
+// ── RESET DAILY (auto-clear if new day) ──────────────
+(function checkDailyReset() {
+  const today = new Date().toDateString();
+  const lastDay = localStorage.getItem('adm18_review_day');
+  if (lastDay !== today) {
+    localStorage.setItem('adm18_review_day', today);
+    reviewedIds = new Set();
+    localStorage.setItem('adm18_reviewed_today', '[]');
+  }
+})();
+</script>
+</body>
+</html>
