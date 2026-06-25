@@ -36,10 +36,18 @@
     if (profile.cc || profile.id_estudiante) return;
     var id = "adm18-week-sync-banner";
     if (document.getElementById(id)) return;
+
+    // Detectar si la barra de estado académico está presente para posicionar debajo
+    var topOffset = 0;
+    var statusBar = document.getElementById("iub-academic-status-bar");
+    if (statusBar) {
+      topOffset = statusBar.offsetHeight || 46;
+    }
+
     var bar = document.createElement("div");
     bar.id = id;
     bar.style.cssText =
-      "position:fixed;top:0;left:0;right:0;z-index:60;background:#fff3cd;color:#5d4037;" +
+      "position:fixed;top:" + topOffset + "px;left:0;right:0;z-index:99989;background:#fff3cd;color:#5d4037;" +
       "padding:.55rem 1rem;text-align:center;font-size:.88rem;border-bottom:1px solid #ffe082;";
     bar.innerHTML =
       '⚠️ Configura tu cédula para guardar tu progreso en la nube. ' +
