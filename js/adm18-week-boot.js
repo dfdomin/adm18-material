@@ -58,28 +58,79 @@
     if (btn) btn.addEventListener("click", identifyStudent);
   }
 
-  function identifyStudent() {
+  async function identifyStudent() {
     var profile = getProfile();
-    var cc = prompt("Tu número de cédula (para guardar puntajes en la nube):");
+    var cc = prompt("Tu número de cédula:");
     if (!cc || !cc.trim()) return;
-    var nombre = prompt("Tu nombre completo:", profile.nombre || profile.name || "") || "";
-    var grupo = prompt("Grupo (opcional):", profile.grupo || "") || "";
-    var horario = prompt("Horario (opcional):", profile.horario || "") || "";
+    cc = cc.trim();
+
+    // Consultar BD para obtener nombre, grupo y horario — NUNCA pedirlos manualmente
+    var nombre = "";
+    var grupo = "";
+    var horario = "";
+
+    if (global.GamifSDK && GamifSDK.isCloudDirectMode && GamifSDK.isCloudDirectMode()) {
+      try {
+        var rows = await GamifSDK.fetchAllProgressFromCloud(null, cc);
+        if (rows && rows.length > 0) {
+          // Extraer datos más recientes (última semana registrada)
+          var latest = rows[rows.length - 1];
+          nombre = (latest.student_name || "").trim();
+          grupo = (latest.grupo || "").trim();
+          horario = (latest.horario || "").trim();
+        }
+      } catch (e) {
+        console.warn("No se pudo consultar la nube:", e);
+      }
+    }
+
+    // Si no se encontró en la nube, usar localStorage local como fallback
+    if (!nombre) nombre = (profile.nombre || profile.name || "").trim();
+    if (!grupo) grupo = (profile.grupo || "").trim();
+    if (!horario) horario = (profile.horario || "").trim();
+
     var next = {
-      cc: cc.trim(),
-      id_estudiante: cc.trim(),
-      nombre: nombre.trim(),
-      grupo: grupo.trim(),
-      horario: horario.trim(),
+      cc: cc,
+      id_estudiante: cc,
+      nombre: nombre,
+      grupo: grupo,
+      horario: horario,
     };
+
     if (global.ADM18App && ADM18App.saveProfile) {
       ADM18App.saveProfile(next);
     } else if (global.GamifSDK) {
       GamifSDK.saveProfile(next);
     }
+
+    // Mostrar advertencia si no se encontraron datos en la nube
+    if (!nombre) {
+      showMissingProfileBanner(cc);
+    }
+
     var banner = document.getElementById("adm18-week-sync-banner");
     if (banner) banner.remove();
     refreshUI();
+  }
+
+  function showMissingProfileBanner(cc) {
+    var id = "adm18-missing-profile-banner";
+    if (document.getElementById(id)) return;
+    var bar = document.createElement("div");
+    bar.id = id;
+    bar.style.cssText =
+      "position:fixed;top:46px;left:0;right:0;z-index:99990;background:#ffebee;color:#b71c1c;" +
+      "padding:.55rem 1rem;text-align:center;font-size:.88rem;border-bottom:1px solid #ef9a9a;";
+    bar.innerHTML =
+      "⚠️ Cédula " + escHtml(cc) + " no encontrada en la base de datos del curso. " +
+      "Verifica que esté correcta o contacta a tu docente.";
+    document.body.appendChild(bar);
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/[&<>\"']/g, function(m) {
+      return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m];
+    });
   }
 
   function refreshUI(semana) {
