@@ -27,11 +27,18 @@
   }
 
   function loadWeekXp(cfg, semana) {
+    // ADM18: leer de adm18_scores (formato nuevo unificado)
+    if (cfg.prefix === "adm18") {
+      try {
+        var scores = JSON.parse(localStorage.getItem("adm18_scores") || "{}");
+        var entry = scores["week_" + semana];
+        if (entry && typeof entry.percent === "number") {
+          return entry.percent;
+        }
+      } catch (e) { /* ignore */ }
+    }
     var key = cfg.prefix + "_progress:" + cfg.offeringCode + ":" + semana;
     var raw = localStorage.getItem(key);
-    if (!raw && cfg.prefix === "adm18") {
-      raw = localStorage.getItem("adm18_scores") ? null : localStorage.getItem("adm18_s" + semana);
-    }
     if (!raw) raw = localStorage.getItem(cfg.prefix + "_s" + semana);
     try {
       var st = JSON.parse(raw || "{}");

@@ -142,7 +142,8 @@
     function ensureGradeDisplay() {
       var container = document.getElementById("pt-grade");
       if (container) return container;
-      var widget = document.getElementById("pt-widget");
+      // Buscar contenedor: pt-widget (TGA) o week-progress-widget (ADM18)
+      var widget = document.getElementById("pt-widget") || document.querySelector(".week-progress-widget");
       if (!widget) return null;
       var body = widget.querySelector("#pt-body, .pt-body, .pt-content");
       if (!body) body = widget;
