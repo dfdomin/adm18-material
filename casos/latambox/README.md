@@ -11,9 +11,9 @@
 | 3 | `03_factura_amazon.md` | Factura comercial | 1 | Soporte de valor |
 | 4 | `04_notificacion_llegada.md` | Correo electrónico | 2 | Comunicación operativa |
 | 5 | `05_declaracion_valor.md` | Declaración aduanera | 2 | Soporte legal |
-| 6 | `06_guia_aerea_awb.md` | Guía aérea (AWB) | 2 | Soporte operativo |
-| 7 | `07_factura_flete.md` | Factura de servicio | 3 | Soporte financiero |
-| 8 | `08_correo_nacionalizacion.md` | Correo electrónico | 2 | Comunicación externa |
+| 6 | `06_guia_aerea_awb.md` | Guía aérea (AWB) | **7** | Soporte operativo — Crisis FL-2847 |
+| 7 | `07_factura_flete.md` | Factura de servicio | **7** | Soporte financiero — Costos contingencia |
+| 8 | `08_correo_nacionalizacion.md` | Correo electrónico | **7** | Comunicación externa — Alerta DIAN |
 | 9 | `09_comprobante_impuestos.md` | Comprobante DIAN | 3 | Soporte financiero |
 | 10 | `10_guia_entrega_local.md` | Guía de entrega (POD) | 2 | Soporte operativo |
 | 11 | `11_correo_confirmacion_entrega.md` | Correo electrónico | 2 | Comunicación externa |
