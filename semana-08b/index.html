@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 8B — Herramientas de mejora continua: Ishikawa, Pareto y 5W+2H | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative;
+   overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: '';
+   position: absolute;
+   left: -8%;
+   right: -8%;
+   bottom: -1px;
+   height: 70px;
+   background: var(--bg-page);
+   border-top-left-radius: 100% 100%;
+   border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block;
+   padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255, 255, 255, 0.28);
+   border-radius: 999px;
+   background: rgba(255, 255, 255, 0.08);
+   color: rgba(255, 255, 255, 0.94);
+   font-size: 0.78rem;
+   font-weight: 700;
+   letter-spacing: 0.08em;
+   text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem, 4.5vw, 3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem, 2vw, 1.35rem); color: rgba(255, 255, 255, 0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255, 255, 255, 0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255, 255, 255, 0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255, 255, 255, 0.98);
+   border-bottom: 1px solid rgba(30, 40, 67, 0.08); box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a {
+   color: var(--primary);
+   text-decoration: none;
+   font-weight: 700;
+   display: inline-flex;
+   align-items: center;
+   gap: 0.35rem;
+ }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block;
+     position: fixed;
+     right: 1.25rem;
+     bottom: 1.25rem;
+     z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg, #2a345a 0%, #1f2744 100%);
+     color: var(--text-on-dark);
+     border-radius: 28px;
+     padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15, 20, 40, 0.35);
+     border: 1px solid rgba(255, 255, 255, 0.08);
+   }
+   .week-progress-widget__header {
+     display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800;
+   }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255, 255, 255, 0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg, #ffdf2d 0%, #ffe873 100%); }
+   .week-progress-widget__name {
+     margin-bottom: 0.7rem;
+     border: 1px solid rgba(255, 255, 255, 0.24);
+     border-radius: 12px;
+     padding: 0.45rem 0.7rem;
+   }
+   .week-progress-widget__meta {
+     display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm);
+   }
+ }
+ .ishikawa-diagram {
+   background: #fafbfc;
+   border: 2px solid #d0d7de;
+   border-radius: 12px;
+   padding: 1.5rem;
+   margin: 1rem 0;
+   font-family: 'Courier New', monospace;
+   font-size: 0.82rem;
+   line-height: 1.4;
+   overflow-x: auto;
+   white-space: pre;
+ }
+ /* ── VOC Drag-and-Drop Quiz ── */
+ .voc-quiz-wrap { margin: 2rem 0; }
+ .voc-quiz-wrap h2 { margin-bottom: 0.5rem; }
+ .voc-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; table-layout: fixed; }
+ .voc-table th { background: #1E2843; color: #fff; padding: 10px 8px; text-align: center; font-size: 0.85rem; width: 33.33%; }
+ .voc-table td { border: 2px dashed #b0b8c4; padding: 8px 6px; min-height: 60px; vertical-align: top; background: #fafbfc; }
+ .voc-drop-zone { min-height: 60px; display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; padding: 4px; transition: background 0.2s; border-radius: 6px; }
+ .voc-drop-zone.highlight { background: #e8f0fe; border: 2px solid #1a73e8; border-radius: 6px; margin: -2px; }
+ .voc-drop-zone.glow-green { background: #e6f4ea; border: 2px solid #1e8e3e; border-radius: 6px; margin: -2px; }
+ .voc-card {
+   display: inline-block;
+   padding: 6px 10px;
+   margin: 2px;
+   background: #fff;
+   border: 1.5px solid #8e9aaf;
+   border-radius: 8px;
+   font-size: 0.78rem;
+   line-height: 1.35;
+   cursor: grab;
+   user-select: none;
+   touch-action: none;
+   max-width: 100%;
+   word-break: break-word;
+   transition: transform 0.12s, box-shadow 0.12s;
+ }
+ .voc-card:active { cursor: grabbing; }
+ .voc-card.selected { border-color: #FFDF2D; box-shadow: 0 0 0 3px rgba(255,223,45,0.4); transform: scale(1.03); }
+ .voc-card.correct { border-color: #1e8e3e; background: #e6f4ea; }
+ .voc-card.wrong { border-color: #c62828; background: #fce8e6; }
+ .voc-card.ghost { position: fixed; z-index: 99999; opacity: 0.9; box-shadow: 0 8px 25px rgba(0,0,0,0.25); pointer-events: none; transform: scale(1.06); }
+ .voc-bags { display: flex; gap: 12px; margin-bottom: 1.5rem; flex-wrap: wrap; }
+ .voc-bag {
+   flex: 1; min-width: 180px;
+   background: #f4f0e6;
+   border: 2px solid #b8a88a;
+   border-radius: 20px 20px 12px 12px;
+   padding: 12px 8px 8px;
+   min-height: 100px;
+   position: relative;
+ }
+ .voc-bag::before {
+   content: "📦"; display: block; text-align: center; font-size: 1.3rem;
+   margin-bottom: 4px; padding-bottom: 4px; border-bottom: 1px dashed #c8b898;
+ }
+ .voc-bag-title { text-align: center; font-size: 0.7rem; color: #8a7a5a; margin-bottom: 6px; font-weight: 600; letter-spacing: 0.04em; }
+ .voc-bag-items { display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; min-height: 40px; }
+ .voc-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 1rem; }
+ .voc-score { padding: 12px 16px; border-radius: 10px; font-weight: 700; text-align: center; font-size: 1.1rem; }
+ .voc-lock-msg { background: #fff3cd; border: 2px solid #f9a825; border-radius: 10px; padding: 1.5rem; text-align: center; margin: 1rem 0; }
+ .voc-lock-msg strong { color: #e65100; }
+ @media (max-width: 600px) {
+   .voc-table { font-size: 0.72rem; }
+   .voc-table th { padding: 8px 4px; font-size: 0.72rem; }
+   .voc-card { font-size: 0.7rem; padding: 5px 7px; }
+   .voc-bag { min-width: 100%; }
+ }
+</style>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/gamification-sdk.js"></script>
+  <script src="../js/academic-rules.js"></script>
+  <script src="../js/academic-status-bar.js"></script>
+  <script src="../js/celebration.js"></script>
+  <script src="../js/student-identicon.js"></script>
+  <script src="../js/week-auto-sync.js"></script>
+  <script src="../js/reading-tracker.js"></script>
+  <script src="../js/adm18-reading.js"></script>
+  <script src="../js/reading-xp-policy.js"></script>
+  <script src="../js/supabase-client.js"></script>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 8B · RA3</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../dashboard/index.html">Mi Progreso</a>
+   <a href="../semana-08b/" class="active">Semana 8B</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 8B</div>
+    <h1 class="week-hero__title">🐟 Ishikawa · 📊 Pareto · 5W+2H</h1>
+    <p class="week-hero__subtitle">Herramientas de Mejora Continua · Causa Raíz · Priorización · Formulación de Problemas</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra3">RA3</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 8B — Herramientas de mejora continua para el análisis de problemas</h1>
+
+ <!-- Memo LatamBox -->
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:1.25rem 1.5rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-size:0.93rem;line-height:1.75">
+   <div style="font-weight:700;color:#1a73e8;font-size:0.95rem;margin-bottom:0.85rem;letter-spacing:0.04em;text-transform:uppercase">📄 Memorando Interno — LatamBox Colombia S.A.S.</div>
+   <table style="border:none;background:transparent;width:100%;font-size:0.88rem;margin-bottom:0.85rem;border-collapse:collapse">
+     <tr><td style="width:90px;font-weight:600;color:#555;padding:3px 0;vertical-align:top">De:</td><td style="color:#222;padding:3px 0">Carlos Mendoza, Gerente General — LatamBox Colombia</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Para:</td><td style="color:#222;padding:3px 0">Equipo ADM18 — Procesamiento de la Información (estudiantes en formación)</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Asunto:</td><td style="color:#222;padding:3px 0">No basta con encontrar hallazgos — necesito que identifiquen causas raíz y prioricen</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Fecha:</td><td style="color:#222;padding:3px 0">Barranquilla, 2 de junio de 2026</td></tr>
+   </table>
+   <hr style="border:none;border-top:1px solid #c8d3dd;margin:0.75rem 0">
+   <p style="margin:0.6rem 0">Equipo:</p>
+   <p style="margin:0.6rem 0">La semana pasada hicieron un excelente trabajo extrayendo hallazgos del dossier de los 47 paquetes retenidos. Identificaron hechos, citaron fuentes y separaron lo verificable de las opiniones. Pero ahora necesito que vayamos más profundo.</p>
+   <p style="margin:0.6rem 0"><strong>Tener una lista de 15 hallazgos no es suficiente para decidir.</strong> Lo que necesito es que me digan: de todas las causas posibles de esta crisis, ¿cuáles son las 3 que más impacto tienen? ¿Cómo se relacionan entre sí? ¿Cuál atacamos primero? Para eso existen herramientas que van más allá del hallazgo: entran al terreno de la mejora continua.</p>
+   <p style="margin:0.6rem 0">Esta semana aprenderán tres herramientas que usan los profesionales de calidad en todo el mundo: el <strong>diagrama de Ishikawa</strong> (causa-efecto) para mapear todas las causas posibles, las <strong>5W+2H</strong> para formular el problema con precisión quirúrgica, y el <strong>diagrama de Pareto</strong> (80/20) para priorizar dónde concentrar los esfuerzos. Como establece la ISO 13053-1:2011 en la metodología DMAIC, antes de mejorar hay que medir y analizar. Eso haremos esta semana.</p>
+   <p style="margin:0.6rem 0">Confío en que al final de esta sesión tendremos un mapa de causas y una priorización clara. Ese será el insumo para que la próxima semana redacten el memo de decisión.</p>
+   <p style="margin:0.75rem 0 0 0;font-weight:700;color:#1a73e8">Carlos Mendoza</p>
+   <p style="margin:0.1rem 0 0 0;font-size:0.85rem;color:#555">Gerente General · LatamBox S.A.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Propósito:</strong> El estudiante aprende tres herramientas de mejora continua —5W+2H, diagrama de Ishikawa y diagrama de Pareto— y las aplica a la crisis de LatamBox para pasar de "tengo hallazgos" a "sé qué causas atacar primero". Estas herramientas satisfacen el criterio SO3.1 del programa de Comercio Exterior: "Identifica las variables significativas del problema y las describe a través de herramientas de mejora continua en la cadena de suministro." <sup><a href="#bib-ishikawa" style="color:inherit">[Ishikawa, 1985]</a></sup> <sup><a href="#bib-juran" style="color:inherit">[Juran, 1999]</a></sup> <sup><a href="#bib-iso13053" style="color:inherit">[ISO 13053-1:2011]</a></sup>
+ </div>
+
+ <!-- ═══════════ CONTENIDO TEÓRICO ═══════════ -->
+ <h2 id="contenido" style="margin-top:var(--space-lg)">📚 Contenido — De los hallazgos al diagnóstico: 3 herramientas para encontrar y priorizar causas</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-lg)">La semana 8 te enseñó a leer documentos para extraer hallazgos. Esta semana aprendes a procesar esos hallazgos con herramientas estructuradas de mejora continua. El flujo es: <strong>formular el problema con precisión (5W+2H) → mapear todas las causas posibles (Ishikawa) → priorizar las que más impacto tienen (Pareto)</strong>. Al final, tendrás un diagnóstico sólido que alimentará el memo de decisión de la semana 9.</p>
+
+ <!-- ▸ HERRAMIENTA 1: 5W+2H -->
+ <div style="background:var(--bg-card);border-left:5px solid #2c5ea8;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#2c5ea8;margin-top:0;font-size:1.05rem">🔍 Herramienta 1 — 5W+2H: formular el problema antes de buscar causas</h3>
+   <p>El error más común al analizar un problema es lanzarse a buscar causas sin haber definido el problema con precisión. "Hay 47 paquetes retrasados" no es un problema bien formulado: es un síntoma. Las 5W+2H son una herramienta de origen periodístico adoptada por la gestión de calidad (Tague, 2005) que obliga a definir siete dimensiones del problema antes de analizarlo. Un problema bien formulado es un problema medio resuelto.</p>
+
+   <p><strong>Las siete preguntas:</strong></p>
+   <table style="width:100%;border-collapse:collapse;margin:0.75rem 0;font-size:0.9rem">
+     <tr style="background:#f0f2f5">
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left;width:18%">Dimensión</th>
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left;width:32%">Pregunta</th>
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left">Ejemplo LatamBox</th>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">What? (¿Qué?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Qué ocurrió exactamente?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">47 paquetes internacionales no fueron despachados en el vuelo FL-2847 del 28 de mayo y permanecen retenidos en bodega del aeropuerto Ernesto Cortissoz</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">Why? (¿Por qué?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Por qué es un problema? ¿Qué consecuencias tiene?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">12 clientes han presentado reclamaciones formales. El costo de almacenamiento crece USD $120/día. 3 clientes corporativos facturan $24,000/año y están en riesgo de fuga</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">Where? (¿Dónde?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Dónde ocurre? ¿Dónde se detecta?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Ocurre en la bodega del aeropuerto Ernesto Cortissoz (Barranquilla). Se detecta en el área de Operaciones de LatamBox al no completarse el ciclo de entrega</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">When? (¿Cuándo?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Cuándo comenzó? ¿Es recurrente?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">28 de mayo de 2026, 10:30 a.m. (cancelación del vuelo). Es el tercer incidente de retención en lo que va del año (enero: 12 paquetes, marzo: 23 paquetes)</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">Who? (¿Quién?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿A quién afecta? ¿Quién está involucrado?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Afecta a 12 clientes (3 corporativos, 9 particulares). Involucra a Operaciones (Diego Ramírez), Atención al Cliente (Lucía Fuentes), Financiero (María Vargas) y al agente aduanero externo</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">How? (¿Cómo?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Cómo se manifiesta? ¿Cómo se detectó?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Se manifestó por la cancelación del vuelo + rechazo de 3 declaraciones de valor por parte de la DIAN + acumulación de llamadas de clientes. Se detectó por el sistema de tracking y por las llamadas de queja</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">How much? (¿Cuánto?)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">¿Cuál es la magnitud? ¿Costo, volumen, frecuencia?</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">47 paquetes (volumen). $4,800 USD (costo de vuelo alternativo). $120/día (costo de almacenamiento). $24,000/año (riesgo de pérdida de 3 clientes corporativos). Frecuencia: 3er incidente en 6 meses</td>
+     </tr>
+   </table>
+
+   <p><strong>Conexión con la semana 8:</strong> Si ya aplicaste la técnica de tabla de hallazgos (hecho → fuente → implicación), tienes la materia prima para llenar las 5W+2H. La diferencia es que la tabla te dice <em>qué hay</em>; las 5W+2H te obligan a estructurarlo. Un problema formulado con 5W+2H es la base para construir el diagrama de Ishikawa y, posteriormente, la sección "Problema" del memo de decisión de la semana 9. <sup><a href="#bib-tague" style="color:inherit">[Tague, 2005]</a></sup></p>
+ </div>
+
+ <!-- ▸ HERRAMIENTA 2: ISHIKAWA -->
+ <div style="background:var(--bg-card);border-left:5px solid #1e7a3e;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#1e7a3e;margin-top:0;font-size:1.05rem">🐟 Herramienta 2 — Diagrama de Ishikawa (causa-efecto / espina de pescado)</h3>
+   <p>El diagrama de Ishikawa, creado por Kaoru Ishikawa en los años 60 en el contexto de los círculos de calidad japoneses, es la herramienta más utilizada en el mundo para el análisis de causa raíz (Ishikawa, 1985). Su potencia radica en que obliga a <strong>agrupar las causas por categorías</strong>, evitando el error de listar causas sueltas sin estructura. La ISO 13053-1:2011 lo incluye como herramienta fundamental de la fase "Analyze" de la metodología DMAIC.</p>
+
+   <p><strong>Anatomía del diagrama:</strong></p>
+   <ul style="margin:0.5rem 0;padding-left:1.5rem;line-height:1.8">
+     <li><strong>La cabeza del pescado:</strong> es el efecto o problema (lo que queremos explicar). Ejemplo: "47 paquetes retenidos en el aeropuerto Ernesto Cortissoz — 28 de mayo de 2026".</li>
+     <li><strong>La espina dorsal:</strong> es la línea horizontal que conecta las causas con el efecto.</li>
+     <li><strong>Las espinas principales (las 6M):</strong> son las categorías de causas. Las 6M clásicas son: <strong>M</strong>ano de obra, <strong>M</strong>étodo, <strong>M</strong>áquina, <strong>M</strong>aterial, <strong>M</strong>edición y <strong>M</strong>edio ambiente. En logística puede agregarse una séptima: <strong>M</strong>oneda/costo.</li>
+     <li><strong>Las espinas secundarias:</strong> son las causas específicas dentro de cada categoría, extraídas de los documentos del dossier.</li>
+   </ul>
+
+   <p><strong>Diagrama de Ishikawa aplicado a LatamBox:</strong></p>
+   <div class="ishikawa-diagram">
+                    🧑 MANO DE OBRA                 📋 MÉTODO                     🏭 MÁQUINA
+                    │                              │                              │
+    Errores en      │   Falta doble                │   No hay checklist           │   Dependencia de
+    declaración     │   verificación               │   pre-vuelo                  │   una sola aerolínea
+    de valor ───────┤   de documentos ─────────────┤   estandarizada ─────────────┤   (solo Avianca) ──────┐
+                    │                              │                              │                        │
+    Personal no     │   Clientes                   │   Procedimiento              │   Sistema de tracking   │
+    capacitado en   │   contactados                 │   de crisis no               │   no actualiza en       │
+    normativa DIAN ─┤   reactivamente ─────────────┤   documentado ───────────────┤   tiempo real ──────────┤
+                    │                              │                              │                        │
+                    │                              │                              │                        │
+   ──────────────────────────────────────────────────────────────────────────────────────────────────────────🟢 47 PAQUETES
+                    │                              │                              │                        │  RETENIDOS
+                    │                              │                              │                        │  Cortissoz
+    Declaraciones   │   Guías aéreas               │   No hay KPI de              │   Congestión en         │  28-may-2026
+    de valor        │   con datos                   │   errores en                 │   aduana por alto       │
+    inconsistentes ─┤   incompletos ───────────────┤   declaraciones ─────────────┤   volumen estacional ───┤
+                    │                              │                              │                        │
+    Facturas de     │   Correos de                 │   No hay indicador           │   Presión de clientes   │
+    flete sin       │   nacionalización              │   de tiempo de               │   corporativos acelera  │
+    desglose ───────┤   sin respuesta ─────────────┤   respuesta a cliente ───────┤   decisiones ───────────┤
+                    │                              │                              │                        │
+                    📄 MATERIAL                    📏 MEDICIÓN                   🌍 MEDIO AMBIENTE
+   </div>
+   <p style="font-size:0.82rem;color:var(--text-secondary);text-align:center;margin-top:0.25rem"><em>Cada causa en el diagrama está respaldada por al menos un documento del dossier de la semana 8 (guía aérea, factura de flete, correo de nacionalización, encuesta de queja, etc.).</em></p>
+
+   <p><strong>Cómo se construye paso a paso:</strong></p>
+   <ol style="margin:0.5rem 0;padding-left:1.8rem;line-height:1.8">
+     <li><strong>Definir el efecto</strong> (la cabeza del pescado) con la formulación 5W+2H del problema. Escribirlo en el extremo derecho.</li>
+     <li><strong>Trazar la espina dorsal</strong> (línea horizontal) y las 6 espinas principales (categorías 6M).</li>
+     <li><strong>Tormenta de ideas estructurada:</strong> para cada M, preguntarse "¿qué pudo causar el efecto desde esta categoría?". Usar los hallazgos del dossier como evidencia.</li>
+     <li><strong>Ubicar cada causa en su espina:</strong> las causas más cercanas a la cabeza son las más directas; las más alejadas son causas raíz más profundas.</li>
+     <li><strong>Verificar:</strong> ¿cada causa está respaldada por al menos un documento del dossier? Si una causa no tiene evidencia documental, marcarla como hipótesis (para investigar después).</li>
+   </ol>
+
+   <p><strong>Conexión con la semana 8:</strong> La tabla de hallazgos (hecho → fuente → implicación) es la materia prima del Ishikawa. Cada fila de la tabla puede convertirse en una espina del diagrama. Pero el Ishikawa añade algo que la tabla no tiene: <strong>estructura causal</strong>. No solo sabes qué pasó, sino que empiezas a ver cómo las causas se relacionan entre sí. <sup><a href="#bib-ishikawa" style="color:inherit">[Ishikawa, 1985]</a></sup> <sup><a href="#bib-evans" style="color:inherit">[Evans & Lindsay, 2020]</a></sup></p>
+ </div>
+
+ <!-- ▸ HERRAMIENTA 3: PARETO -->
+ <div style="background:var(--bg-card);border-left:5px solid #e67e22;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#e67e22;margin-top:0;font-size:1.05rem">📊 Herramienta 3 — Diagrama de Pareto: separar lo vital de lo trivial</h3>
+   <p>El diagrama de Ishikawa te da <em>todas</em> las causas posibles. Pero no puedes atacarlas todas a la vez. El principio de Pareto, formulado por Vilfredo Pareto en 1896 y popularizado por Joseph Juran en gestión de calidad, establece que aproximadamente el <strong>80% de los efectos proviene del 20% de las causas</strong> (Juran & Godfrey, 1999). En gestión de calidad, esto significa: enfócate en las pocas causas que generan la mayoría del problema.</p>
+
+   <p><strong>El diagrama de Pareto es un gráfico de barras ordenado de mayor a menor frecuencia/impacto, combinado con una línea acumulada de porcentaje.</strong> Permite responder visualmente a la pregunta: ¿cuáles son las 3-4 causas que, si las resuelvo, elimino el 80% del problema?</p>
+
+   <p><strong>Aplicación a LatamBox — Priorización de causas:</strong></p>
+   <table style="width:100%;border-collapse:collapse;margin:0.75rem 0;font-size:0.88rem">
+     <tr style="background:#f0f2f5">
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">#</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">Causa (extraída del Ishikawa)</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Categoría 6M</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Paquetes afectados</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">%</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">% Acumulado</th>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">1</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Errores en declaración de valor (8 de 47 paquetes)</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Mano de obra</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">23</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">49%</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">49%</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">2</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Falta de checklist pre-vuelo estandarizada</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Método</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">9</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">19%</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">68%</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">3</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Dependencia de una sola aerolínea (sin plan B)</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Máquina</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">7</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">15%</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">83%</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">4</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Procedimiento de crisis no documentado</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Método</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">4</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">8.5%</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">91.5%</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">5</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Otras causas (guías incompletas, congestión aduana, tracking)</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Varias</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">4</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">8.5%</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">100%</td>
+     </tr>
+   </table>
+
+   <p><strong>Lectura del Pareto de LatamBox:</strong> Las 3 primeras causas (errores en declaración de valor, falta de checklist y dependencia de una sola aerolínea) explican el <strong>83% de los paquetes afectados</strong>. Esto significa que un plan de mejora que ataque estas 3 causas resolverá más del 80% del problema. Las otras 10+ causas del Ishikawa son reales pero su impacto combinado es solo del 17%. ¿Dónde debería LatamBox concentrar sus recursos? En las 3 primeras. <sup><a href="#bib-juran" style="color:inherit">[Juran & Godfrey, 1999]</a></sup></p>
+
+   <p><strong>Conexión con la semana 9:</strong> El Pareto te da la priorización que alimenta directamente la sección "Opciones" del memo de decisión. Las 3 causas principales del Pareto se convierten en los 3 focos del plan de mejora SMART. Sin Pareto, el plan de mejora es una lista de buenas intenciones. Con Pareto, es una estrategia basada en evidencia. <sup><a href="#bib-iso13053" style="color:inherit">[ISO 13053-1:2011]</a></sup></p>
+ </div>
+
+ <!-- ▸ FLUJO COMPLETO -->
+ <div style="background:var(--bg-card);border-left:5px solid #8e44ad;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#8e44ad;margin-top:0;font-size:1.05rem">🔗 El flujo completo: cómo se conectan las 3 herramientas (y las semanas)</h3>
+   <p>Las herramientas no se usan aisladas. Forman un flujo de trabajo que va de lo general a lo específico, de la descripción a la decisión:</p>
+   <ol style="margin:0.5rem 0;padding-left:1.8rem;line-height:2">
+     <li><strong>5W+2H</strong> — Formula el problema con precisión. Producto: un párrafo de problema bien definido.</li>
+     <li><strong>Ishikawa</strong> — Mapea todas las causas posibles agrupadas por categorías (6M). Producto: diagrama de espina de pescado.</li>
+     <li><strong>Pareto</strong> — Prioriza las causas por impacto. Producto: tabla de Pareto con top 3 causas que explican ≥80% del problema.</li>
+     <li><strong>→ Semana 9:</strong> Memo de decisión. El problema (5W+2H) va a la sección "Problema". Las causas priorizadas (Pareto) alimentan "Hallazgos" y "Opciones".</li>
+   </ol>
+   <p style="margin-top:0.75rem"><strong>Integración con semanas 8 y 9:</strong></p>
+   <table style="width:100%;border-collapse:collapse;margin:0.75rem 0;font-size:0.88rem">
+     <tr style="background:#f0f2f5">
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center;width:15%">Semana</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">Qué produce el estudiante</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">Herramientas</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">Criterio SO3</th>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center;font-weight:700">8</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Hallazgos extraídos de documentos (materia prima)</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Subrayado estratégico, tabla hecho→fuente→implicación, hecho vs. opinión</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">SO3.1 (pre-carga)</td>
+     </tr>
+     <tr style="background:#fef9e7">
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center;font-weight:700">8B</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Problema formulado + causas mapeadas + priorización</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de"><strong>5W+2H → Ishikawa → Pareto</strong></td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center"><strong>SO3.1</strong></td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center;font-weight:700">9</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Memo de decisión + plan de mejora SMART</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Estructura del memo, criterios de evaluación, acciones SMART</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;text-align:center">SO3.2 + SO3.3</td>
+     </tr>
+   </table>
+ </div>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripción</th></tr>
+   <tr>
+     <td>0–10</td>
+     <td>Entrada: ¿por qué no basta con hallazgos?</td>
+     <td>El docente proyecta la tabla de hallazgos de la semana 8 (15 hallazgos). Pregunta disparadora: "si tuvieran que elegir SOLO 3 de estos 15 para resolver, ¿cuáles eligen y por qué?" Discusión en parejas. La calidad del análisis no está en la cantidad de hallazgos sino en la capacidad de priorizar (Juran & Godfrey, 1999).</td>
+   </tr>
+   <tr>
+     <td>10–35</td>
+     <td>Input: las 3 herramientas</td>
+     <td>Exposición dialogada con el caso LatamBox: (1) 5W+2H para formular el problema — se construye en vivo con participación de los estudiantes usando los hallazgos del dossier, (2) Ishikawa: se dibuja la espina de pescado en el tablero y los estudiantes ubican causas en las 6M, (3) Pareto: se priorizan las causas con datos reales del caso. La secuencia sigue la metodología DMAIC (ISO 13053-1:2011).</td>
+   </tr>
+   <tr>
+     <td>35–45</td>
+     <td>Pausa activa</td>
+     <td>Cambio de grupos y estiramiento.</td>
+   </tr>
+   <tr>
+     <td>45–95</td>
+     <td>Taller práctico: construir el tríptico de herramientas</td>
+     <td>Cada grupo recibe: (a) la tabla de hallazgos de la semana 8 como insumo, (b) un pliego de papel periódico dividido en 3 secciones, (c) marcadores de colores. Fase 1 (15 min): completan las 5W+2H para el problema LatamBox usando los datos del dossier. Fase 2 (20 min): dibujan el diagrama de Ishikawa con las 6M, ubicando al menos 3 causas por categoría respaldadas en los documentos fuente (ISO 15489-1:2016, §8). Fase 3 (15 min): construyen la tabla de Pareto priorizando las 3 causas con mayor impacto.</td>
+   </tr>
+   <tr>
+     <td>95–115</td>
+     <td>Galería de diagnósticos</td>
+     <td>Los grupos pegan sus trípticos en la pared. Recorrido en silencio (5 min) con post-its para dejar preguntas o comentarios. Luego 2 grupos presentan su flujo completo. El docente señala conexiones entre causas que aparecen en varios grupos — patrones que refuerzan el diagnóstico (Evans & Lindsay, 2020).</td>
+   </tr>
+   <tr>
+     <td>115–130</td>
+     <td>Del Pareto a la decisión</td>
+     <td>Cada grupo escribe en una tarjeta: "Las 3 causas que recomiendo atacar primero son: (1) ___ porque afecta al ___% de los paquetes, (2) ___, (3) ___." Esta tarjeta será el insumo para la sección "Hallazgos" y "Opciones" del memo de decisión de la semana 9.</td>
+   </tr>
+   <tr>
+     <td>130–135</td>
+     <td>Cierre y engrase con semana 9</td>
+     <td>El docente conecta explícitamente: "La semana que viene van a tomar este diagnóstico (5W+2H + Ishikawa + Pareto) y lo convertirán en un memo de decisión ejecutivo. El problema ya está formulado. Las causas ya están priorizadas. Lo que falta es evaluar las opciones de solución y redactar la recomendación."</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> Tríptico grupal (5W+2H + Ishikawa + Pareto) en papel periódico (foto). Tarjeta individual con top 3 causas priorizadas. Rúbrica PI1 (SO3.1).
+ </div>
+
+ <h2 style="margin-top:var(--space-lg)">Documentos del caso — LatamBox</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary)">Se reutilizan los hallazgos extraídos en la semana 8 del dossier de 8 documentos. No se introducen documentos nuevos. Los enlaces son para referencia.</p>
+ <ul class="doc-list">
+   <li class="doc-item" style="font-weight:700">
+     <span class="doc-icon">📝</span>
+     <span class="doc-name" style="font-weight:700">12 — Encuesta de satisfacción y queja ★</span>
+     <span class="doc-format">.docx</span>
+     <a href="../casos/latambox/12_encuesta_y_queja.pdf" class="doc-format" style="text-decoration:none;background:var(--error);color:white">.pdf</a>
+   </li>
+   <li class="doc-item">
+     <span class="doc-icon">📋</span>
+     <span class="doc-name">Tabla de hallazgos — Semana 8 (insumo principal)</span>
+     <span class="doc-format"> referencia</span>
+     <a href="../semana-08/" class="doc-format" style="text-decoration:none;background:var(--info);color:white">web</a>
+   </li>
+ </ul>
+
+ <!-- Quiz -->
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-08/index.html" class="btn btn-outline" style="margin-right:var(--space-sm)">← Semana 8</a>
+ <a href="../semana-09/index.html" class="btn btn-primary">Siguiente: Semana 9 →</a>
+</div>
+
+<!-- Bibliografía -->
+<div class="card" id="bibliografia" style="margin-top:var(--space-lg)">
+ <h2>📚 Bibliografía</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">Fuentes que fundamentan el diseño didáctico de esta semana.</p>
+ <ol style="line-height:1.95;font-size:0.92rem;color:var(--text-secondary);padding-left:1.4rem">
+   <li id="bib-ishikawa">Ishikawa, K. (1985). <em>What is Total Quality Control? The Japanese Way</em>. Prentice-Hall. <span style="color:#888;font-size:0.85em">→ Texto original del creador del diagrama de causa-efecto. Fundamenta la herramienta en el contexto de los círculos de calidad japoneses. Capítulos 3 y 4: métodos estadísticos elementales y diagrama de causa-efecto.</span></li>
+   <li id="bib-juran">Juran, J. M. & Godfrey, A. B. (1999). <em>Juran's Quality Handbook</em> (5.ª ed.). McGraw-Hill. <span style="color:#888;font-size:0.85em">→ Capítulo 5: "The Pareto Principle". Fundamenta el principio 80/20 aplicado a gestión de calidad. Define el diagrama de Pareto como herramienta de priorización.</span></li>
+   <li id="bib-tague">Tague, N. R. (2005). <em>The Quality Toolbox</em> (2.ª ed.). ASQ Quality Press. <span style="color:#888;font-size:0.85em">→ Compendio de herramientas de calidad. Sección "5W2H" (pp. 478–481): método estructurado de formulación de problemas. Incluye ejemplos aplicados y variaciones (5W+2H, 5W+1H).</span></li>
+   <li id="bib-evans">Evans, J. R. & Lindsay, W. M. (2020). <em>Managing for Quality and Performance Excellence</em> (11.ª ed.). Cengage. <span style="color:#888;font-size:0.85em">→ Capítulos 3 y 7: herramientas de mejora continua integradas en el marco de gestión de calidad total (TQM). Diagrama de Ishikawa, Pareto, 5W+2H en contexto organizacional.</span></li>
+   <li id="bib-iso13053">International Organization for Standardization. (2011). <em>ISO 13053-1:2011 — Quantitative methods in process improvement — Six Sigma — Part 1: DMAIC methodology</em>. Ginebra: ISO. <span style="color:#888;font-size:0.85em">→ Marco DMAIC (Define, Measure, Analyze, Improve, Control). La fase "Analyze" incluye Ishikawa, Pareto y 5W+2H como herramientas estándar para identificación y priorización de causas raíz.</span></li>
+   <li id="bib-ohno">Ohno, T. (1988). <em>Toyota Production System: Beyond Large-Scale Production</em>. Productivity Press. <span style="color:#888;font-size:0.85em">→ Complementario: Los 5 Porqués como técnica complementaria de análisis causa raíz en el Sistema de Producción Toyota. Útil para profundizar causas identificadas en el Ishikawa.</span></li>
+ </ol>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Información · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<aside class="week-progress-widget" aria-label="Mi progreso ADM18">
+  <div class="week-progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>
+  <div class="week-progress-widget__name" id="week-widget-name">Estudiante ADM18</div>
+  <div class="progress-bar"><div class="progress-fill" id="week-widget-fill" style="width:0%"></div></div>
+  <div class="week-progress-widget__meta"><span>Semana 8B</span><strong id="week-widget-xp">0 XP</strong></div>
+</aside>
+
+<script src="../js/adm18-week-boot.js"></script>
+<script src="../js/app.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════════════
+ * VOC Drag-and-Drop Quiz — Semana 8B
+ * 3 bolsas no etiquetadas → tabla Hecho | Fuente | Implicación
+ * Mobile-first: tap-to-select + tap-to-place (con drag para desktop)
+ * Grupo restringido: 1_CE_G2
+ * ═══════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+  var WEEK = 8.5;
+  var TARGET_GROUP = '1_CE_G2';
+
+  // ── Datos del quiz: 6 filas del caso VOC ──
+  var ROWS = [
+    { h:'El 20 de marzo de 1602, el gobierno holandés fusionó 6 empresas rivales en la VOC y le otorgó monopolio para comerciar con Asia',
+      f:'Documento fundacional / decreto gubernamental',
+      i:'Decisión estratégica: eliminar competencia interna para concentrar capital y poder de negociación' },
+    { h:'La VOC fue la primera empresa en abrirse al público vendiendo acciones. Acudieron 1.143 inversores y recaudaron 6.4 millones de florines',
+      f:'Registro de suscripción / libro de accionistas (documento contable histórico)',
+      i:'Se crea el mercado de capitales moderno: el capital ya no depende de un solo comerciante ni de un banco' },
+    { h:'Isaac Le Maire organizó una banda en 1607 para difundir rumores falsos sobre la VOC y apostar a la baja; las acciones se desplomaron',
+      f:'Edicto del 27 de febrero de 1610 — primer documento regulatorio bursátil de la historia',
+      i:'La calidad de la información determina la calidad de las decisiones: rumores falsos → pánico → venta masiva → pérdidas' },
+    { h:'La VOC siguió pagando dividendos altísimos incluso en años de pérdidas, financiándolos con deuda',
+      f:'Informes financieros / registros contables de la VOC (documentos contables)',
+      i:'Se priorizó la percepción de los accionistas sobre la realidad financiera. La deuda creció invisiblemente hasta el colapso' },
+    { h:'El gobierno holandés disolvió oficialmente la VOC el 31 de diciembre de 1799, después de 200 años de operación',
+      f:'Acta de disolución (documento legal)',
+      i:'La empresa más grande de la historia colapsó por corrupción, guerras costosas y mala gestión de información financiera' },
+    { h:'La palabra "bolsa" viene de la familia Van der Buerse en Brujas, frente a cuya casa los comerciantes negociaban a gritos',
+      f:'Etimología / registro histórico oral',
+      i:'La información en el mercado pre-moderno era oral y presencial; quien no estaba físicamente presente no tenía acceso' }
+  ];
+
+  // Construir 18 ítems: { text, col: 'h'|'f'|'i' }
+  function buildItems() {
+    var items = [];
+    ROWS.forEach(function(r){
+      items.push({ text: r.h, col: 'h' });
+      items.push({ text: r.f, col: 'f' });
+      items.push({ text: r.i, col: 'i' });
+    });
+    return shuffle(items);
+  }
+
+  function shuffle(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+    }
+    return a;
+  }
+
+  // ── Estado ──
+  var state = { items: [], placements: {}, submitted: false, selectedId: null };
+
+  function getProfile() {
+    if (typeof ADM18App !== 'undefined' && ADM18App.getProfile) return ADM18App.getProfile();
+    if (typeof GamifSDK !== 'undefined') return GamifSDK.loadProfile();
+    return {};
+  }
+
+  function checkGroupAccess() {
+    var p = getProfile();
+    var grupo = (p.grupo || '').trim();
+    if (!grupo) return 'no_profile';
+    if (grupo !== TARGET_GROUP) return 'wrong_group';
+    return 'ok';
+  }
+
+  function getSaved() {
+    try {
+      var scores = JSON.parse(localStorage.getItem('adm18_scores') || '{}');
+      var entry = scores['week_' + WEEK];
+      if (entry && entry.answers && entry.answers.voc_placements) {
+        return { submitted: true, placements: entry.answers.voc_placements, score: entry.score, total: entry.total };
+      }
+    } catch(e) {}
+    return null;
+  }
+
+  // ── Render ──
+  function render() {
+    var c = document.getElementById('quiz-container');
+    if (!c) return;
+
+    // Check group access
+    var access = checkGroupAccess();
+    if (access === 'no_profile') {
+      c.innerHTML = '<div class="voc-lock-msg"><strong>🔒 Identifícate primero</strong><p style="margin:0.5rem 0 0">Configura tu cédula para acceder al quiz. Usa el botón "Identificarme" en la barra superior.</p></div>';
+      return;
+    }
+    if (access === 'wrong_group') {
+      var p = getProfile();
+      c.innerHTML = '<div class="voc-lock-msg"><strong>🔒 Quiz exclusivo para ' + TARGET_GROUP + '</strong><p style="margin:0.5rem 0 0">Estás en el grupo ' + escHtml(p.grupo || 'desconocido') + '. Este quiz solo está habilitado para estudiantes de ' + TARGET_GROUP + '.</p></div>';
+      return;
+    }
+
+    if (!state.items.length) {
+      state.items = buildItems();
+    }
+
+    var html = '';
+    html += '<div class="voc-quiz-wrap">';
+    html += '<h2 style="margin-top:var(--space-lg)">🎮 Quiz · Método hecho → fuente → implicación</h2>';
+    html += '<p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:1rem">Caso: La Compañía Holandesa de las Indias Orientales (VOC, 1602–1799). Arrastra cada tarjeta a la columna que corresponda: <strong>Hecho</strong> (lo que ocurrió), <strong>Fuente</strong> (documento que lo prueba), o <strong>Implicación</strong> (consecuencia para la toma de decisiones).</p>';
+
+    if (state.submitted) {
+      // Score display
+      var correct = 0;
+      state.items.forEach(function(it, id){
+        if (state.placements[id] === it.col) correct++;
+      });
+      html += '<div class="voc-score" style="background:' + (correct === state.items.length ? '#e6f4ea' : '#fce8e6') + '">';
+      html += 'Puntaje: ' + correct + ' / ' + state.items.length;
+      html += ' (' + Math.round(correct / state.items.length * 100) + '%)';
+      html += '</div>';
+      html += '<button class="btn btn-outline btn-sm" onclick="VOCQuiz.reset()" style="margin-top:0.5rem">Intentar de nuevo</button>';
+    }
+
+    // Table
+    html += '<table class="voc-table"><thead><tr>';
+    html += '<th>📋 Hecho</th><th>📄 Fuente</th><th>💡 Implicación</th>';
+    html += '</tr></thead><tbody><tr>';
+    ['h','f','i'].forEach(function(col){
+      html += '<td><div class="voc-drop-zone" data-col="' + col + '" id="voc-zone-' + col + '">';
+      state.items.forEach(function(it, id){
+        if (state.placements[id] === col) {
+          var cls = 'voc-card';
+          if (state.selectedId === id) cls += ' selected';
+          if (state.submitted) cls += (it.col === col ? ' correct' : ' wrong');
+          html += '<div class="' + cls + '" data-id="' + id + '" ' + (state.submitted ? '' : 'onclick="VOCQuiz.tapCard(event,' + id + ')"') + '>';
+          html += escHtml(it.text);
+          html += '</div>';
+        }
+      });
+      html += '</div></td>';
+    });
+    html += '</tr></tbody></table>';
+
+    // Bags (3 bags, each with 6 items)
+    if (!state.submitted) {
+      html += '<div class="voc-bags">';
+      var bagSize = Math.ceil(state.items.length / 3);
+      for (var b = 0; b < 3; b++) {
+        html += '<div class="voc-bag" id="voc-bag-' + b + '">';
+        html += '<div class="voc-bag-title">Bolsa ' + (b + 1) + '</div>';
+        html += '<div class="voc-bag-items" data-bag="' + b + '">';
+        state.items.forEach(function(it, id){
+          if (state.placements[id] === undefined) {
+            // Assign to bag based on id
+            var bagIdx = Math.floor(id / bagSize);
+            if (bagIdx >= 3) bagIdx = 2;
+            if (bagIdx === b) {
+              var bagCls = 'voc-card';
+              if (state.selectedId === id) bagCls += ' selected';
+              html += '<div class="' + bagCls + '" data-id="' + id + '" onclick="VOCQuiz.tapCard(event,' + id + ')">';
+              html += escHtml(it.text);
+              html += '</div>';
+            }
+          }
+        });
+        html += '</div></div>';
+      }
+      html += '</div>';
+
+      // Submit button
+      html += '<div class="voc-actions">';
+      html += '<button class="btn btn-primary" onclick="VOCQuiz.submit()" style="flex:1">✅ Enviar respuestas</button>';
+      html += '<button class="btn btn-outline btn-sm" onclick="VOCQuiz.reset()">🔄 Reiniciar</button>';
+      html += '</div>';
+    }
+
+    html += '</div>';
+    c.innerHTML = html;
+
+    // Attach drag handlers (desktop)
+    if (!state.submitted) {
+      attachDragHandlers();
+    }
+  }
+
+  function escHtml(s) {
+    var div = document.createElement('div');
+    div.textContent = String(s);
+    return div.innerHTML;
+  }
+
+  // ── Tap-to-select / Tap-to-place (mobile + desktop) ──
+  function tapCard(evt, id) {
+    evt.stopPropagation();
+    if (state.submitted) return;
+
+    if (state.selectedId === id) {
+      // Deselect
+      state.selectedId = null;
+      render();
+      return;
+    }
+
+    if (state.selectedId !== null) {
+      // Another card selected — swap or move
+      // Place selected card where tapped card is (or to its column if in a zone)
+      var targetEl = document.querySelector('[data-id="' + id + '"]');
+      var targetZone = targetEl ? targetEl.closest('.voc-drop-zone') : null;
+      if (targetZone) {
+        var col = targetZone.dataset.col;
+        state.placements[state.selectedId] = col;
+        state.selectedId = null;
+        render();
+        return;
+      }
+    }
+
+    // Select this card
+    state.selectedId = id;
+    // Move to its bag if it was placed
+    if (state.placements[id] !== undefined) {
+      delete state.placements[id];
+    }
+    render();
+  }
+
+  // Tap on a drop zone to place selected card
+  document.addEventListener('click', function(evt){
+    if (state.submitted || state.selectedId === null) return;
+    var zone = evt.target.closest('.voc-drop-zone');
+    if (!zone) return;
+    var col = zone.dataset.col;
+    if (!col) return;
+    state.placements[state.selectedId] = col;
+    state.selectedId = null;
+    render();
+  });
+
+  // ── Desktop drag-and-drop ──
+  var ghost = null, dragId = null;
+
+  function attachDragHandlers() {
+    document.querySelectorAll('.voc-card').forEach(function(card){
+      card.addEventListener('mousedown', onDragStart);
+      card.addEventListener('touchstart', onTouchDragStart, {passive: false});
+    });
+    document.querySelectorAll('.voc-drop-zone').forEach(function(zone){
+      zone.addEventListener('dragover', function(e){ e.preventDefault(); zone.classList.add('highlight'); });
+      zone.addEventListener('dragleave', function(){ zone.classList.remove('highlight'); });
+      zone.addEventListener('drop', function(e){
+        e.preventDefault();
+        zone.classList.remove('highlight');
+        if (dragId !== null) {
+          state.placements[dragId] = zone.dataset.col;
+          dragId = null;
+          removeGhost();
+          render();
+        }
+      });
+    });
+  }
+
+  function onDragStart(e) {
+    if (state.submitted) return;
+    dragId = parseInt(this.dataset.id);
+    // Remove placement so it goes back to bag on drop elsewhere
+    if (state.placements[dragId] !== undefined) delete state.placements[dragId];
+    this.style.opacity = '0.4';
+    this.setAttribute('draggable', 'true');
+  }
+
+  function onTouchDragStart(e) {
+    if (state.submitted) return;
+    dragId = parseInt(this.dataset.id);
+    if (state.placements[dragId] !== undefined) delete state.placements[dragId];
+    var touch = e.touches[0];
+    ghost = this.cloneNode(true);
+    ghost.classList.add('ghost');
+    ghost.style.left = (touch.clientX - 50) + 'px';
+    ghost.style.top = (touch.clientY - 20) + 'px';
+    document.body.appendChild(ghost);
+    this.style.opacity = '0.4';
+    document.addEventListener('touchmove', onTouchMove, {passive: false});
+    document.addEventListener('touchend', onTouchEnd);
+    e.preventDefault();
+  }
+
+  function onTouchMove(e) {
+    if (!ghost) return;
+    var t = e.touches[0];
+    ghost.style.left = (t.clientX - 50) + 'px';
+    ghost.style.top = (t.clientY - 20) + 'px';
+    // Highlight zone under finger
+    document.querySelectorAll('.voc-drop-zone').forEach(function(z){ z.classList.remove('highlight'); });
+    var el = document.elementFromPoint(t.clientX, t.clientY);
+    if (el) {
+      var zone = el.closest('.voc-drop-zone');
+      if (zone) zone.classList.add('highlight');
+    }
+    e.preventDefault();
+  }
+
+  function onTouchEnd(e) {
+    document.removeEventListener('touchmove', onTouchMove);
+    document.removeEventListener('touchend', onTouchEnd);
+    document.querySelectorAll('.voc-drop-zone').forEach(function(z){ z.classList.remove('highlight'); });
+    if (ghost && dragId !== null) {
+      var t = e.changedTouches[0];
+      var el = document.elementFromPoint(t.clientX, t.clientY);
+      if (el) {
+        var zone = el.closest('.voc-drop-zone');
+        if (zone) {
+          state.placements[dragId] = zone.dataset.col;
+        }
+      }
+    }
+    dragId = null;
+    removeGhost();
+    render();
+  }
+
+  function removeGhost() {
+    if (ghost) { ghost.remove(); ghost = null; }
+  }
+
+  // ── Submit ──
+  function submit() {
+    if (state.submitted) return;
+    // Check all placed
+    var unplaced = state.items.filter(function(it, id){ return state.placements[id] === undefined; });
+    if (unplaced.length > 0) {
+      alert('Faltan ' + unplaced.length + ' tarjetas por colocar. Todas las tarjetas deben estar en alguna columna.');
+      return;
+    }
+    state.submitted = true;
+    state.selectedId = null;
+
+    var correct = 0;
+    state.items.forEach(function(it, id){
+      if (state.placements[id] === it.col) correct++;
+    });
+    var pct = Math.round(correct / state.items.length * 100);
+
+    // Save via ADM18App
+    if (typeof ADM18App !== 'undefined') {
+      ADM18App.saveQuizScore(WEEK, correct, state.items.length,
+        { voc_placements: state.placements });
+      ADM18App.markWeekComplete(WEEK);
+    }
+
+    // Also sync via gamification SDK
+    if (typeof GamifSDK !== 'undefined' && GamifSDK.isCloudDirectMode && GamifSDK.isCloudDirectMode()) {
+      var profile = GamifSDK.loadProfile();
+      if (profile.cc || profile.id_estudiante) {
+        GamifSDK.syncAdm18Scores(
+          (function(){
+            var s = {}; s['week_' + WEEK] = { score: correct, total: state.items.length, percent: pct, answers: { voc_placements: state.placements }, timestamp: Date.now(), synced: false };
+            return s;
+          })(),
+          (function(){
+            var p = {}; p['week_' + WEEK] = { completed: true, timestamp: Date.now() };
+            return p;
+          })(),
+          profile
+        );
+      }
+    }
+
+    render();
+  }
+
+  function reset() {
+    state.placements = {};
+    state.submitted = false;
+    state.selectedId = null;
+    state.items = buildItems();
+    render();
+  }
+
+  // ── Init ──
+  function init() {
+    var saved = getSaved();
+    if (saved) {
+      state.submitted = saved.submitted;
+      state.placements = saved.placements || {};
+      state.items = buildItems();
+      // Re-sort items so the same cards exist
+      // Use the same seed-based shuffle? No — just use a fresh shuffle for re-attempts
+    } else {
+      state.items = buildItems();
+    }
+    render();
+
+    // Listen for profile changes to re-check access
+    document.addEventListener('iub:profile-saved', function(){
+      render();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+
+  window.VOCQuiz = { tapCard: tapCard, submit: submit, reset: reset };
+})();
+</script>
+</body>
+</html>
