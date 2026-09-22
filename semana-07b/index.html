@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semana 7B — Diseño organizacional: cargos, perfiles y planes de trabajo | ADM18</title>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/iub-tokens.css">
+<style>
+ .week-hero {
+   position: relative; overflow: hidden;
+   background: linear-gradient(180deg, #2b3560 0%, #1f2744 100%);
+   color: var(--text-on-dark);
+   padding: var(--space-2xl) var(--space-md) 5.5rem;
+   text-align: center;
+   margin: calc(var(--space-md) * -1) calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero::after {
+   content: ''; position: absolute; left: -8%; right: -8%; bottom: -1px;
+   height: 70px; background: var(--bg-page);
+   border-top-left-radius: 100% 100%; border-top-right-radius: 100% 100%;
+ }
+ .week-hero__shell { position: relative; z-index: 1; max-width: 980px; margin: 0 auto; }
+ .week-hero__chip {
+   display: inline-block; padding: 0.7rem 1.3rem;
+   border: 1px solid rgba(255,255,255,0.28); border-radius: 999px;
+   background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.94);
+   font-size: 0.78rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+ }
+ .week-hero__title { margin-top: 1.1rem; font-size: clamp(1.9rem,4.5vw,3.4rem); line-height: 1.06; }
+ .week-hero__subtitle { margin-top: 0.75rem; font-size: clamp(1rem,2vw,1.35rem); color: rgba(255,255,255,0.84); }
+ .week-hero__progress { margin: 1.7rem auto 0; max-width: 720px; }
+ .week-hero__progress .progress-bar { height: 16px; background: rgba(255,255,255,0.18); }
+ .week-hero__progress .progress-fill { background: linear-gradient(90deg,#ffdf2d 0%,#ffe873 100%); }
+ .week-hero__xp { margin-top: 0.55rem; font-size: var(--font-size-sm); color: rgba(255,255,255,0.8); }
+ .week-hero-nav {
+   display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-lg);
+   padding: 1rem var(--space-md) 1.1rem; background: rgba(255,255,255,0.98);
+   border-bottom: 1px solid rgba(30,40,67,0.08); box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+   margin: 0 calc(var(--space-md) * -1) var(--space-lg);
+ }
+ .week-hero-nav a { color: var(--primary); text-decoration: none; font-weight: 700; display: inline-flex; align-items: center; gap: 0.35rem; }
+ .week-progress-widget { display: none; }
+ @media (min-width: 768px) {
+   .week-hero { margin: calc(var(--space-lg) * -1) calc(var(--space-xl) * -1) var(--space-lg); }
+   .week-hero-nav { margin: 0 calc(var(--space-xl) * -1) var(--space-lg); }
+ }
+ @media (min-width: 1024px) {
+   .week-progress-widget {
+     display: block; position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: 45;
+     width: min(360px, calc(100vw - 2.5rem));
+     background: linear-gradient(180deg,#2a345a 0%,#1f2744 100%);
+     color: var(--text-on-dark); border-radius: 28px; padding: 1.1rem 1.15rem 1rem;
+     box-shadow: 0 20px 45px rgba(15,20,40,0.35); border: 1px solid rgba(255,255,255,0.08);
+   }
+   .week-progress-widget__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.85rem; font-weight: 800; }
+   .week-progress-widget .progress-bar { height: 10px; background: rgba(255,255,255,0.16); }
+   .week-progress-widget .progress-fill { background: linear-gradient(90deg,#ffdf2d 0%,#ffe873 100%); }
+   .week-progress-widget__name { margin-bottom: 0.7rem; border: 1px solid rgba(255,255,255,0.24); border-radius: 12px; padding: 0.45rem 0.7rem; }
+   .week-progress-widget__meta { display: flex; justify-content: space-between; margin-top: 0.65rem; font-size: var(--font-size-sm); }
+ }
+</style>
+  <script src="../js/supabase-config.js"></script>
+  <script src="../js/gamification-sdk.js"></script>
+  <script src="../js/academic-rules.js"></script>
+  <script src="../js/academic-status-bar.js"></script>
+  <script src="../js/celebration.js"></script>
+  <script src="../js/student-identicon.js"></script>
+  <script src="../js/week-auto-sync.js"></script>
+  <script src="../js/reading-tracker.js"></script>
+  <script src="../js/adm18-reading.js"></script>
+  <script src="../js/reading-xp-policy.js"></script>
+  <script src="../js/supabase-client.js"></script>
+</head>
+<body>
+<div class="iub-layout">
+
+<header class="iub-header">
+ <div class="header-top">
+   <div class="logo-area">
+     <div class="logo-text">ADM18</div>
+     <div class="logo-sub">Semana 7B · RA3</div>
+   </div>
+ </div>
+ <nav class="header-nav">
+   <a href="../index.html">Inicio</a>
+   <a href="../dashboard/index.html">Mi Progreso</a>
+   <a href="../semana-07b/" class="active">Semana 7B</a>
+ </nav>
+</header>
+
+<main class="iub-content">
+
+<section class="week-hero">
+  <div class="week-hero__shell">
+    <div class="week-hero__chip">ADM18 · Procesamiento de la Información · Semana 7B</div>
+    <h1 class="week-hero__title">🏢 Diseño Organizacional</h1>
+    <p class="week-hero__subtitle">Cargos · Perfiles · Planes de Trabajo · Organigrama</p>
+    <div class="week-hero__progress">
+      <div class="progress-bar"><div class="progress-fill" id="week-hero-fill" style="width:0%"></div></div>
+      <div class="week-hero__xp">XP de sesión: <strong id="week-hero-xp">0 / 100 pts</strong></div>
+    </div>
+  </div>
+</section>
+
+<nav class="week-hero-nav">
+  <a href="#mision">🎯 Misión</a>
+  <a href="#contenido">📚 Teoría</a>
+  <a href="#actividades">⚙️ Actividad</a>
+  <a href="#quiz-container">🎮 Quiz</a>
+  <a href="#bibliografia">📖 Bibliografía</a>
+</nav>
+
+<div class="card" id="mision">
+ <span class="badge badge-ra3">RA3</span>
+ <span class="badge badge-eval" style="margin-left:var(--space-sm)">3.5 h</span>
+ <h1 class="card-header" style="margin-top:var(--space-sm)">Semana 7B — Diseño organizacional: cargos, perfiles y planes de trabajo</h1>
+
+ <!-- Memo LatamBox -->
+ <div style="background:#f4f6f8;border-left:5px solid #1a73e8;padding:1.25rem 1.5rem;margin:1.5rem 0;border-radius:0 6px 6px 0;font-size:0.93rem;line-height:1.75">
+   <div style="font-weight:700;color:#1a73e8;font-size:0.95rem;margin-bottom:0.85rem;letter-spacing:0.04em;text-transform:uppercase">📄 Memorando Interno — LatamBox Colombia S.A.S.</div>
+   <table style="border:none;background:transparent;width:100%;font-size:0.88rem;margin-bottom:0.85rem;border-collapse:collapse">
+     <tr><td style="width:90px;font-weight:600;color:#555;padding:3px 0;vertical-align:top">De:</td><td style="color:#222;padding:3px 0">Carlos Mendoza, Gerente General — LatamBox Colombia</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Para:</td><td style="color:#222;padding:3px 0">Equipo ADM18 — Procesamiento de la Información (estudiantes en formación)</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Asunto:</td><td style="color:#222;padding:3px 0">LatamBox creció — necesito formalizar la estructura antes de que el crecimiento la vuelva ingobernable</td></tr>
+     <tr><td style="font-weight:600;color:#555;padding:3px 0;vertical-align:top">Fecha:</td><td style="color:#222;padding:3px 0">Barranquilla, 26 de mayo de 2026</td></tr>
+   </table>
+   <hr style="border:none;border-top:1px solid #c8d3dd;margin:0.75rem 0">
+   <p style="margin:0.6rem 0">Equipo:</p>
+   <p style="margin:0.6rem 0">Cuando fundé LatamBox hace tres años, éramos cinco personas en una oficina prestada. Yo hacía de gerente, operador, vendedor y mensajero. Hoy somos 25 empleados, movemos 300 paquetes al mes entre Colombia, Estados Unidos, Chile y Perú, y la estructura con la que arrancamos ya no da para más.</p>
+   <p style="margin:0.6rem 0"><strong>El crecimiento sin estructura es caos diferido.</strong> La semana pasada un cliente corporativo preguntó quién era su ejecutivo de cuenta asignado y nadie supo responderle. No porque no hubiera alguien haciendo ese trabajo —Lucía lo hace— sino porque nunca documentamos que ese era su rol. Cuando el trabajo existe pero no está documentado, la organización no sabe qué tiene ni qué le falta.</p>
+   <p style="margin:0.6rem 0">Esta semana necesito que me ayuden a hacer tres cosas que toda empresa en crecimiento debe resolver: <strong>(1) crear la descripción formal de un cargo nuevo</strong> —el Coordinador de Calidad Documental— que se encargue de que los errores en declaraciones de valor y guías no se repitan, <strong>(2) diseñar su plan de trabajo para los primeros 90 días</strong> con objetivos, actividades y responsables, y <strong>(3) ubicarlo en el organigrama</strong> definiendo de quién depende y con quién coordina. Finalmente, deberán comunicar esta nueva estructura a todo el personal mediante una circular.</p>
+   <p style="margin:0.6rem 0">Como establece la GTC 185:2009, los documentos de planeación organizacional —perfiles de cargo, planes de trabajo, actas de comité— no son burocracia: son los planos de la empresa. Sin planos, no se puede construir un edificio de 25 pisos. Sin documentos de planeación, no se puede gestionar una empresa de 25 personas.</p>
+   <p style="margin:0.75rem 0 0 0;font-weight:700;color:#1a73e8">Carlos Mendoza</p>
+   <p style="margin:0.1rem 0 0 0;font-size:0.85rem;color:#555">Gerente General · LatamBox S.A.</p>
+ </div>
+
+ <div class="alert alert-info">
+   <strong>Propósito:</strong> El estudiante aplica los principios de diseño organizacional para documentar la estructura de una empresa en crecimiento. Aprende a redactar la descripción de un cargo (perfil, funciones, competencias, dependencia jerárquica), diseñar un plan de trabajo con cronograma e indicadores, interpretar y actualizar un organigrama, y comunicar cambios organizacionales mediante circular. Esta semana cubre el CE1 del RA3 del módulo ADM18: "Interpreta la construcción de planes de trabajo para la estructuración de cargos y perfiles de trabajadores". <sup><a href="#bib-chiavenato" style="color:inherit">[Chiavenato, 2007]</a></sup> <sup><a href="#bib-mintzberg" style="color:inherit">[Mintzberg, 2012]</a></sup>
+ </div>
+
+ <!-- ═══════════ CONTENIDO TEÓRICO ═══════════ -->
+ <h2 id="contenido" style="margin-top:var(--space-lg)">📚 Contenido — Los tres documentos que construyen la estructura de una organización</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-lg)">Toda empresa —desde un casillero virtual como LatamBox hasta una multinacional— se sostiene sobre tres tipos de documentos de planeación: la descripción de cargos (quién hace qué), el plan de trabajo (cómo, cuándo y con qué recursos) y el organigrama (cómo se relacionan las piezas entre sí). Esta semana aprendes a construir esos tres documentos con el rigor de la GTC 185:2009 y los principios de diseño organizacional de Mintzberg (2012) y Chiavenato (2007).</p>
+
+ <!-- ▸ BLOQUE 1: DESCRIPCIÓN DE CARGOS -->
+ <div style="background:var(--bg-card);border-left:5px solid #2c5ea8;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#2c5ea8;margin-top:0;font-size:1.05rem">📋 Bloque 1 — Descripción de cargos: la anatomía de un perfil profesional</h3>
+   <p>Una descripción de cargo no es un título bonito. Es un documento que responde cinco preguntas fundamentales y que, según Chiavenato (2007), constituye la unidad básica del diseño organizacional. Cuando un cargo no está descrito, la organización no sabe qué esperar de esa persona, ni la persona sabe qué esperar de la organización.</p>
+
+   <p><strong>Los 6 componentes de una descripción de cargo según GTC 185:2009:</strong></p>
+   <table style="width:100%;border-collapse:collapse;margin:0.75rem 0;font-size:0.88rem">
+     <tr style="background:#f0f2f5">
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left;width:25%">Componente</th>
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left">Qué responde</th>
+       <th style="padding:8px 12px;border:1px solid #d0d7de;text-align:left">Ejemplo LatamBox</th>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">1. Identificación</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Nombre del cargo, área, nivel jerárquico</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">"Coordinador de Calidad Documental — Área de Operaciones — Nivel: Coordinación"</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">2. Objetivo del cargo</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Para qué existe este cargo en la organización</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">"Garantizar la integridad y trazabilidad de la documentación operativa y aduanera de LatamBox, reduciendo errores en declaraciones de valor, guías y facturación"</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">3. Funciones esenciales</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Qué hace concretamente (verbos de acción, 5-7 funciones)</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">1. Verificar declaraciones de valor antes del envío a aduana. 2. Mantener actualizada la checklist pre-vuelo. 3. Auditar guías aéreas y facturas de flete. 4. Reportar errores documentales al Jefe de Operaciones.</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">4. Competencias</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Conocimientos, habilidades y actitudes requeridas</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Conocimiento en normativa aduanera (DIAN), manejo de Excel avanzado, atención al detalle, capacidad de comunicación con agentes externos</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">5. Dependencia jerárquica</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">A quién reporta y quiénes le reportan</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Reporta a: Jefe de Operaciones. Supervisa a: Auxiliar de Documentación (1 persona). Coordina con: Atención al Cliente y Financiero.</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 12px;border:1px solid #d0d7de;font-weight:700">6. Condiciones</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Horario, ubicación, tipo de contrato</td>
+       <td style="padding:8px 12px;border:1px solid #d0d7de">Tiempo completo, sede Barranquilla, contrato a término indefinido</td>
+     </tr>
+   </table>
+
+   <p><strong>Principio clave de diseño organizacional:</strong> Mintzberg (2012) establece que los cargos no se crean en el vacío: responden a una necesidad de la organización. El Coordinador de Calidad Documental no existe porque "suena bien tener uno", sino porque los errores en las declaraciones de valor están costando dinero, clientes y tiempo. Un cargo bien diseñado ataca una causa raíz del negocio. <sup><a href="#bib-mintzberg" style="color:inherit">[Mintzberg, 2012]</a></sup> <sup><a href="#bib-chiavenato" style="color:inherit">[Chiavenato, 2007]</a></sup></p>
+ </div>
+
+ <!-- ▸ BLOQUE 2: PLAN DE TRABAJO -->
+ <div style="background:var(--bg-card);border-left:5px solid #1e7a3e;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#1e7a3e;margin-top:0;font-size:1.05rem">📅 Bloque 2 — Plan de trabajo: del cargo en papel a la acción en el tiempo</h3>
+   <p>La descripción del cargo dice <em>qué</em> debe hacer la persona. El plan de trabajo dice <em>cómo, cuándo y con qué prioridad</em>. Un cargo sin plan de trabajo es como un mapa sin ruta: sabes el destino pero no el camino. Chiavenato (2007) define el plan de trabajo como el documento que operacionaliza las funciones del cargo en actividades con cronograma, responsables, recursos e indicadores.</p>
+
+   <p><strong>Estructura de un plan de trabajo a 90 días:</strong></p>
+   <table style="width:100%;border-collapse:collapse;margin:0.75rem 0;font-size:0.88rem">
+     <tr style="background:#f0f2f5">
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left;width:25%">Fase</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">Objetivo</th>
+       <th style="padding:8px 10px;border:1px solid #d0d7de;text-align:left">Ejemplo: Coordinador de Calidad Documental</th>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;font-weight:700">Días 1–30<br><small>Diagnóstico</small></td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Conocer el estado actual de los procesos documentales</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Auditar 100% de las declaraciones de valor de los últimos 3 meses. Identificar los 3 tipos de error más frecuentes. Reunirse con Operaciones y Atención al Cliente.</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;font-weight:700">Días 31–60<br><small>Implementación</small></td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Diseñar e implementar controles</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Crear checklist pre-vuelo estandarizada. Implementar doble verificación de documentos. Capacitar al Auxiliar de Documentación en el nuevo procedimiento.</td>
+     </tr>
+     <tr>
+       <td style="padding:8px 10px;border:1px solid #d0d7de;font-weight:700">Días 61–90<br><small>Medición</small></td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Medir resultados y ajustar</td>
+       <td style="padding:8px 10px;border:1px solid #d0d7de">Comparar tasa de error pre y post implementación. Meta: reducir errores en declaraciones de valor en ≥70%. Presentar informe a Gerencia General.</td>
+     </tr>
+   </table>
+
+   <p><strong>Elementos que no pueden faltar en un plan de trabajo:</strong></p>
+   <ul style="margin:0.5rem 0;padding-left:1.5rem;line-height:1.8">
+     <li><strong>Objetivo general:</strong> ¿qué se espera lograr al final del período?</li>
+     <li><strong>Actividades:</strong> tareas concretas, numeradas, con verbo de acción.</li>
+     <li><strong>Cronograma:</strong> fecha de inicio y fecha límite para cada actividad.</li>
+     <li><strong>Responsable:</strong> quién ejecuta cada actividad (puede ser el titular del cargo o alguien de su equipo).</li>
+     <li><strong>Recursos:</strong> qué necesita (acceso a sistemas, presupuesto, capacitación).</li>
+     <li><strong>Indicador de éxito:</strong> ¿cómo sabremos que la actividad se cumplió? Debe ser verificable (ISO 9001:2015, §7.5).</li>
+   </ul>
+
+   <p><strong>Conexión con semanas posteriores:</strong> El plan de trabajo que diseñas aquí no es un ejercicio aislado. En la semana 9, cuando redactes el memo de decisión, las acciones del plan de trabajo se convertirán en la sección de "Próximos Pasos". Y en la semana 8B, cuando uses Pareto para priorizar causas, entenderás por qué la primera fase del plan es "diagnosticar antes de implementar": porque no puedes resolver un problema que no has medido. <sup><a href="#bib-iso9001" style="color:inherit">[ISO 9001:2015]</a></sup></p>
+ </div>
+
+ <!-- ▸ BLOQUE 3: ORGANIGRAMA -->
+ <div style="background:var(--bg-card);border-left:5px solid #e67e22;padding:var(--space-md) var(--space-lg);margin-bottom:var(--space-md);border-radius:0 var(--radius-sm) var(--radius-sm) 0;box-shadow:var(--shadow-sm)">
+   <h3 style="color:#e67e22;margin-top:0;font-size:1.05rem">🏗️ Bloque 3 — Organigrama: el mapa de relaciones de la empresa</h3>
+   <p>El organigrama es la representación gráfica de la estructura organizacional. Mintzberg (2012) lo define como "el esqueleto de la organización": muestra quién depende de quién, cómo se agrupan las funciones y por dónde fluyen las decisiones. No es un adorno de PowerPoint: es un documento de planeación que, cuando está desactualizado, genera confusión sobre quién tiene autoridad para decidir qué.</p>
+
+   <p><strong>Tipos básicos de estructura organizacional:</strong></p>
+   <ul style="margin:0.5rem 0;padding-left:1.5rem;line-height:1.8">
+     <li><strong>Funcional:</strong> se agrupa por especialidades (Operaciones, Financiero, Comercial). Es la más común en empresas pequeñas y medianas. LatamBox usa esta estructura.</li>
+     <li><strong>Matricial:</strong> cada persona reporta a dos jefes (ej. al gerente de proyecto y al gerente funcional). Útil en empresas que manejan múltiples proyectos simultáneos.</li>
+     <li><strong>Plana / Horizontal:</strong> pocos niveles jerárquicos, mucha autonomía. Común en startups tecnológicas.</li>
+   </ul>
+
+   <p><strong>Organigrama actual de LatamBox (antes del nuevo cargo):</strong></p>
+   <div style="background:#fafbfc;border:2px solid #d0d7de;border-radius:12px;padding:1.5rem;margin:1rem 0;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.5;overflow-x:auto;white-space:pre">
+                        ┌──────────────────────┐
+                        │   GERENTE GENERAL     │
+                        │   Carlos Mendoza      │
+                        └──────────┬───────────┘
+                                   │
+           ┌───────────────────────┼───────────────────────┐
+           │                       │                       │
+   ┌───────┴───────┐       ┌───────┴───────┐       ┌───────┴───────┐
+   │  OPERACIONES   │       │ AT. CLIENTE   │       │  FINANCIERO   │
+   │ Diego Ramírez  │       │ Lucía Fuentes │       │ María Vargas  │
+   └───────┬───────┘       └───────────────┘       └───────────────┘
+           │
+   ┌───────┴───────┐
+   │   Auxiliares   │
+   │   (3 personas) │
+   └───────────────┘
+   </div>
+   <p style="font-size:0.82rem;color:var(--text-secondary);text-align:center;margin-top:0.25rem"><em>LatamBox tiene 25 empleados distribuidos en 3 áreas funcionales. El crecimiento reciente ha generado vacíos: no hay un responsable formal de la calidad documental, lo que explica parcialmente los errores en declaraciones de valor.</em></p>
+
+   <p><strong>Organigrama propuesto (con el nuevo cargo):</strong></p>
+   <div style="background:#fafbfc;border:2px solid #d0d7de;border-radius:12px;padding:1.5rem;margin:1rem 0;font-family:'Courier New',monospace;font-size:0.8rem;line-height:1.5;overflow-x:auto;white-space:pre">
+                        ┌──────────────────────┐
+                        │   GERENTE GENERAL     │
+                        │   Carlos Mendoza      │
+                        └──────────┬───────────┘
+                                   │
+           ┌───────────────────────┼───────────────────────┐
+           │                       │                       │
+   ┌───────┴───────┐       ┌───────┴───────┐       ┌───────┴───────┐
+   │  OPERACIONES   │       │ AT. CLIENTE   │       │  FINANCIERO   │
+   │ Diego Ramírez  │       │ Lucía Fuentes │       │ María Vargas  │
+   └───────┬───────┘       └───────────────┘       └───────────────┘
+           │
+   ┌───────┴───────────────────┐
+   │                           │
+   ┌──────────────────┐  ┌─────┴─────────────────────────┐
+   │   Auxiliares      │  │ 🆕 COORDINADOR DE CALIDAD     │
+   │   (3 personas)    │  │     DOCUMENTAL                │
+   └──────────────────┘  │ Reporta a: Jefe Operaciones   │
+                          │ Coordina con: At. Cliente,    │
+                          │ Financiero                    │
+                          └──────────────┬───────────────┘
+                                         │
+                                 ┌───────┴───────┐
+                                 │  Auxiliar de   │
+                                 │ Documentación  │
+                                 └───────────────┘
+   </div>
+
+   <p><strong>Criterios para ubicar un cargo en el organigrama:</strong></p>
+   <ol style="margin:0.5rem 0;padding-left:1.8rem;line-height:1.8">
+     <li><strong>Afinidad funcional:</strong> ¿con qué área comparte más procesos? El Coordinador de Calidad Documental trabaja con documentos operativos → pertenece a Operaciones.</li>
+     <li><strong>Nivel de autoridad:</strong> ¿tiene personal a cargo? ¿toma decisiones o las recomienda? Un coordinador supervisa pero no define la estrategia del área.</li>
+     <li><strong>Coordinación inter-áreas:</strong> ¿necesita interactuar formalmente con otras áreas? El coordinador debe articularse con Atención al Cliente (para retroalimentación de errores) y Financiero (para costos de fletes e impuestos).</li>
+   </ol>
+   <p>Mintzberg (2012) advierte que el organigrama muestra la estructura <em>formal</em>, pero no la <em>informal</em>. En LatamBox, Lucía (Atención al Cliente) probablemente ya está haciendo parte del trabajo de calidad documental sin que nadie lo haya documentado. Un buen diseño organizacional reconoce esas realidades y las formaliza. <sup><a href="#bib-mintzberg" style="color:inherit">[Mintzberg, 2012]</a></sup></p>
+ </div>
+
+ <h2 id="actividades">Actividades</h2>
+ <div class="table-responsive">
+ <table>
+   <tr><th>Min</th><th>Actividad</th><th>Descripción</th></tr>
+   <tr>
+     <td>0–10</td>
+     <td>Entrada: ¿quién hace qué en LatamBox?</td>
+     <td>El docente proyecta el organigrama actual de LatamBox (25 personas, 3 áreas). Pregunta disparadora: "si tuvieran que contratar a UNA persona nueva para LatamBox, ¿qué cargo crearían y por qué?" Discusión en parejas. Introduce el concepto de que los cargos no se crean por capricho sino por necesidad organizacional (Chiavenato, 2007).</td>
+   </tr>
+   <tr>
+     <td>10–35</td>
+     <td>Input: los 3 documentos de planeación organizacional</td>
+     <td>Exposición dialogada: (1) Descripción de cargos: los 6 componentes con ejemplo del Coordinador de Calidad Documental, (2) Plan de trabajo a 90 días: estructura de fases con metas e indicadores, (3) Organigrama: tipos de estructura y criterios de ubicación. Se proyectan los diagramas ASCII y se construye colectivamente la justificación del nuevo cargo.</td>
+   </tr>
+   <tr>
+     <td>35–45</td>
+     <td>Pausa activa</td>
+     <td>Cambio de grupos y estiramiento.</td>
+   </tr>
+   <tr>
+     <td>45–105</td>
+     <td>Role Playing: comité directivo LatamBox</td>
+     <td>Cada grupo de 4 asume roles: Gerente General (modera y decide), Jefe de Operaciones (datos de procesos), Jefe de Atención al Cliente (quejas y retroalimentación), Jefe Financiero (costos y presupuesto). El grupo debe: (a) crear la descripción formal del cargo "Coordinador de Calidad Documental" usando los 6 componentes de la GTC 185:2009, (b) diseñar el plan de trabajo a 90 días con actividades, responsable y cronograma, (c) dibujar el organigrama actualizado con el nuevo cargo. Entregan en papel periódico (30 min).</td>
+   </tr>
+   <tr>
+     <td>105–120</td>
+     <td>Del organigrama a la circular</td>
+     <td>Cada grupo redacta una circular interna (usando lo aprendido en la semana 7) dirigida a todo el personal de LatamBox, anunciando la creación del nuevo cargo, su ubicación en el organigrama y el plan de trabajo para los primeros 90 días. La circular debe seguir la estructura GTC 185:2009: membrete, fecha, destinatario general, asunto, cuerpo informativo, firma.</td>
+   </tr>
+   <tr>
+     <td>120–130</td>
+     <td>Presentación de propuestas</td>
+     <td>2 grupos presentan su propuesta completa (cargo + plan + organigrama + circular). La clase evalúa: ¿el cargo tiene una justificación clara? ¿el plan de trabajo es realista? ¿la ubicación en el organigrama tiene sentido?</td>
+   </tr>
+   <tr>
+     <td>130–135</td>
+     <td>Cierre</td>
+     <td>El docente conecta: "La semana que viene van a enfrentar una crisis con 47 paquetes retenidos. El cargo que diseñaron hoy —Coordinador de Calidad Documental— es exactamente el tipo de solución estructural que evita que esas crisis se repitan. Documentar la estructura no es burocracia: es construir la memoria y la capacidad de la organización."</td>
+   </tr>
+ </table>
+ </div>
+
+ <div class="alert alert-success" style="margin-top:var(--space-md)">
+   <strong>Evidencia:</strong> Descripción de cargo (6 componentes) + plan de trabajo a 90 días + organigrama actualizado + circular. Rúbrica PI4 (RA3 del módulo — CE1).
+ </div>
+
+ <!-- Quiz -->
+ <div class="quiz-container" id="quiz-container"></div>
+</div>
+
+<div style="text-align:center;margin:var(--space-xl) 0">
+ <a href="../semana-07/index.html" class="btn btn-outline" style="margin-right:var(--space-sm)">← Semana 7</a>
+ <a href="../semana-08/index.html" class="btn btn-primary">Siguiente: Semana 8 →</a>
+</div>
+
+<!-- Bibliografía -->
+<div class="card" id="bibliografia" style="margin-top:var(--space-lg)">
+ <h2>📚 Bibliografía</h2>
+ <p style="font-size:var(--font-size-sm);color:var(--text-secondary);margin-bottom:var(--space-md)">Fuentes que fundamentan el diseño didáctico de esta semana.</p>
+ <ol style="line-height:1.95;font-size:0.92rem;color:var(--text-secondary);padding-left:1.4rem">
+   <li id="bib-chiavenato">Chiavenato, I. (2007). <em>Administración de recursos humanos: el capital humano de las organizaciones</em> (8.ª ed.). McGraw-Hill. <span style="color:#888;font-size:0.85em">→ Capítulos 5 y 6: descripción y análisis de cargos. Define los componentes del perfil de cargo, la diferencia entre descripción y especificación, y los métodos de recolección de información para el diseño de cargos. Fuente original del microcurrículo ADM18.</span></li>
+   <li id="bib-mintzberg">Mintzberg, H. (2012). <em>La estructuración de las organizaciones</em>. Ariel. <span style="color:#888;font-size:0.85em">→ Obra clásica sobre diseño organizacional. Define los 5 mecanismos de coordinación, las partes de la organización y los parámetros de diseño. Capítulos 1-4: fundamentos para interpretar y construir organigramas con criterio estratégico.</span></li>
+   <li id="bib-gtc185">Instituto Colombiano de Normas Técnicas y Certificación (ICONTEC). (2009). <em>GTC 185: Documentación organizacional — Guía técnica colombiana para la elaboración de documentos comerciales y empresariales</em>. Bogotá: ICONTEC. <span style="color:#888;font-size:0.85em">→ Formato y estructura de documentos de planeación organizacional: perfiles de cargo, planes de trabajo, actas de comité, circulares. Convenciones de presentación.</span></li>
+   <li id="bib-iso9001">International Organization for Standardization. (2015). <em>ISO 9001:2015 — Quality management systems — Requirements</em> (§7.5 Documented information). Ginebra: ISO. <span style="color:#888;font-size:0.85em">→ Requisitos para la información documentada: disponible, legible, controlada. Aplica a descripciones de cargo y planes de trabajo como documentos controlados del sistema de gestión.</span></li>
+ </ol>
+</div>
+
+</main>
+
+<footer class="iub-footer">
+ <p>ADM18 · Procesamiento de la Información · IUB/Unibarranquilla · 2026</p>
+</footer>
+
+</div>
+
+<aside class="week-progress-widget" aria-label="Mi progreso ADM18">
+  <div class="week-progress-widget__header">📊 Mi Progreso ADM18 <span>▲</span></div>
+  <div class="week-progress-widget__name" id="week-widget-name">Estudiante ADM18</div>
+  <div class="progress-bar"><div class="progress-fill" id="week-widget-fill" style="width:0%"></div></div>
+  <div class="week-progress-widget__meta"><span>Semana 7B</span><strong id="week-widget-xp">0 XP</strong></div>
+</aside>
+
+<script src="../js/adm18-week-boot.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/quiz-engine.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+ QuizEngine.init(7.5, [
+   {
+     question: '¿Cuáles son los 6 componentes de una descripción de cargo según la GTC 185:2009?',
+     options: ['Nombre, salario, horario, vacaciones, beneficios, fecha de ingreso', 'Identificación, objetivo, funciones esenciales, competencias, dependencia jerárquica, condiciones', 'Misión, visión, valores, objetivos, metas, indicadores', 'Título universitario, experiencia, idiomas, referencias, disponibilidad, edad'],
+     correct: 1
+   },
+   {
+     question: 'En el plan de trabajo a 90 días del Coordinador de Calidad Documental, ¿qué se hace en la fase de Diagnóstico (días 1-30)?',
+     options: ['Contratar al Auxiliar de Documentación', 'Auditar declaraciones de valor de los últimos 3 meses e identificar errores frecuentes', 'Redactar la circular de anuncio del nuevo cargo', 'Comprar software de gestión documental'],
+     correct: 1
+   },
+   {
+     question: '¿En qué área del organigrama se ubica el Coordinador de Calidad Documental y por qué?',
+     options: ['En Gerencia General, porque reporta directamente a Carlos Mendoza', 'En Atención al Cliente, porque los errores generan quejas', 'En Operaciones, porque sus funciones son de control de procesos documentales operativos', 'En Financiero, porque los errores impactan los costos'],
+     correct: 2
+   },
+   {
+     question: 'Según Mintzberg, ¿qué muestra y qué NO muestra un organigrama?',
+     options: ['Muestra los salarios pero no los horarios', 'Muestra la estructura informal pero no la formal', 'Muestra la estructura formal de autoridad pero no las relaciones informales ni el poder real', 'Muestra todas las relaciones de la empresa sin excepción'],
+     correct: 2
+   },
+   {
+     question: '¿Qué aprendiste en la semana 7 que aplicas en esta semana para comunicar el nuevo cargo?',
+     options: ['Nada, son semanas independientes', 'La estructura de la circular interna (membrete, fecha, destinatario, asunto, cuerpo, firma)', 'La tabla de hallazgos', 'El diagrama de Ishikawa'],
+     correct: 1
+   }
+ ]);
+});
+</script>
+</body>
+</html>
