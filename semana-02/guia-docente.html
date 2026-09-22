@@ -62,11 +62,10 @@
   }
   .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
   .tg-materials { list-style: none; padding: 0; }
-  .tg-materials li {
-    padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border);
-    display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem;
-  }
-  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  /* Sin flex: en móvil el flex volvía cada tramo de texto un ítem indeformable
+     (no se partía) y desbordaba la página. El ☐ se posiciona absoluto. */
+  .tg-materials li { padding: var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-md) + 1.1rem); border-bottom: 1px dotted var(--border); position: relative; font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; position: absolute; left: var(--space-md); }
   .tg-badge-gold {
     display: inline-block; font-size: 0.7rem; font-weight: 700;
     padding: 0.2rem 0.5rem; border-radius: var(--radius-sm);
