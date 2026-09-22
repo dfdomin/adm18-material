@@ -4,20 +4,33 @@
 **Empresa ficticia:** LatamBox S.A.S. — Casillero virtual Colombia-USA
 **Uso:** Actividades formativas semanales (no calificables directamente, construyen competencia para los parciales)
 
-| # | Documento | Tipo | Semana | Clase documental |
-|---|-----------|------|:------:|------------------|
-| 1 | `01_correo_bienvenida.md` | Correo electrónico | 1 | Comunicación externa |
-| 2 | `02_formulario_registro.md` | Formulario | 1 | Soporte operativo |
-| 3 | `03_factura_amazon.md` | Factura comercial | 1 | Soporte de valor |
-| 4 | `04_notificacion_llegada.md` | Correo electrónico | 2 | Comunicación operativa |
-| 5 | `05_declaracion_valor.md` | Declaración aduanera | 2 | Soporte legal |
-| 6 | `06_guia_aerea_awb.md` (crisis) · `06_guia_aerea_awb_feb.md` (normal) | Guía aérea (AWB) | **7** / 3 | Soporte operativo |
-| 7 | `07_factura_flete.md` (crisis) · `07_factura_flete_feb.md` (normal) | Factura de servicio | **7** / 3 | Soporte financiero |
-| 8 | `08_correo_nacionalizacion.md` (crisis) · `08_correo_nacionalizacion_feb.md` (normal) | Correo electrónico | **7** / 3 | Comunicación / soporte legal |
-| 9 | `09_comprobante_impuestos.md` | Comprobante DIAN | 3 | Soporte financiero |
-| 10 | `10_guia_entrega_local.md` | Guía de entrega (POD) | 2 | Soporte operativo |
-| 11 | `11_correo_confirmacion_entrega.md` | Correo electrónico | 2 | Comunicación externa |
-| 12 | `12_encuesta_y_queja.md` | Encuesta + Queja | 8 | Decisión / mejora |
+| # | Documento | Tipo | Semana | Clase documental (GTC 185) | Función documental |
+|---|-----------|------|:------:|---------------------------|--------------------|
+| 1 | `01_correo_bienvenida.md` | Correo electrónico | 1 | Administrativo | Comunicación externa |
+| 2 | `02_formulario_registro.md` | Formulario | 1 | Administrativo | Soporte operativo |
+| 3 | `03_factura_amazon.md` | Factura comercial | 1 | Comercial | Soporte de valor |
+| 4 | `04_notificacion_llegada.md` | Correo electrónico | 2 | Administrativo | Comunicación operativa |
+| 5 | `05_declaracion_valor.md` | Declaración aduanera | 2 | Legal | Soporte legal |
+| 6 | `06_guia_aerea_awb.md` (crisis) · `06_guia_aerea_awb_feb.md` (normal) | Guía aérea (AWB) | **7** / 3 | Técnico | Soporte operativo |
+| 7 | `07_factura_flete.md` (crisis) · `07_factura_flete_feb.md` (normal) | Factura de servicio | **7** / 3 | Comercial | Soporte financiero |
+| 8 | `08_correo_nacionalizacion.md` (crisis) · `08_correo_nacionalizacion_feb.md` (normal) | Correo electrónico | **7** / 3 | Administrativo | Comunicación interna (crisis) · externa al cliente (normal) |
+| 9 | `09_comprobante_impuestos.md` | Comprobante DIAN | 3 | Legal | Soporte financiero |
+| 10 | `10_guia_entrega_local.md` | Guía de entrega (POD) | 2 | Técnico | Soporte operativo |
+| 11 | `11_correo_confirmacion_entrega.md` | Correo electrónico | 2 | Administrativo | Comunicación externa |
+| 12 | `12_encuesta_y_queja.md` | Encuesta + Queja | 8 | Administrativo | Decisión / mejora |
+
+### Dos ejes distintos: clase ≠ función
+
+- **Clase documental (GTC 185:2009)** — Comercial / Administrativo / Legal / Técnico.
+  Sigue la **naturaleza del documento**, no su tema. Un *correo* sobre aduana es
+  Administrativo (es una comunicación), aunque su contenido sea legal.
+- **Función documental** — comunicación / soporte operativo / soporte financiero /
+  soporte legal / decisión–mejora. Es **para qué sirve** el documento en el proceso.
+
+Flujo de conteo por clase: Comercial 2 · Administrativo 6 · Legal 2 · Técnico 2.
+Fuente de la clase: `semana-03/index.html` (Idea 1) y las claves de
+`semana-05/guia-docente.html`, `semana-14/guia-docente.html` y
+`semana-03/guia-docente.html`.
 
 ## Variantes de los documentos 06, 07 y 08
 

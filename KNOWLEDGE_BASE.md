@@ -74,7 +74,7 @@ comprar productos en USA y recibirlos en Colombia. Atraviesa las 14 semanas del 
 | 5 | Declaración de valor | Uso | Soporte legal/aduanero |
 | 6 | Guía aérea (AWB) | Uso | Soporte operativo |
 | 7 | Factura de flete | Uso | Soporte financiero |
-| 8 | Correo de nacionalización | Uso | Comunicación externa |
+| 8 | Correo de nacionalización | Uso | Comunicación interna (crisis) / externa al cliente (normal) |
 | 9 | Comprobante de pago de impuestos | Uso | Soporte financiero |
 | 10 | Guía de entrega local | Uso | Soporte operativo |
 | 11 | Correo de confirmación de entrega | Archivo | Comunicación externa |
