@@ -743,6 +743,112 @@ DOCS.append(([
  ], [2,3]),
 ], meta('12_encuesta_y_queja','12','ENCUESTA Y QUEJA','Evaluación del servicio y seguimiento','EXPEDIENTE DIDÁCTICO / LBX-2026-00478','2026-02-22')))
 
+
+# ══════════════════════════════════════════════════════════════════════════
+# VERSIONES PARA LA SEMANA 3 (flujo normal de febrero · envío LBX-2026-00478)
+# Los archivos base 06/07/08 quedan como versión crisis FL-2847 (semana 7).
+# ══════════════════════════════════════════════════════════════════════════
+
+# 06-FEB — Guía aérea (AWB) del envío de febrero
+DOCS.append(([
+ ('note','Flujo normal de febrero: guía del envío individual LBX-2026-00478 dentro del consolidado de LatamBox. Versión para la semana 3.'),
+ ('section','Identificación del transporte',[
+   ('Guía aérea (House)','HWB-2847-001'),
+   ('AWB maestro del consolidado','<font backColor="#E7DEF7">420-88472109</font>'),
+   ('Envío LatamBox','<font backColor="#DCEFE0">LBX-2026-00478</font>'),
+   ('ID de cliente','<font backColor="#DCE7F7">LBX-1029</font>'),
+   ('Aerolínea','Avianca Cargo (AV)'),
+   ('Vuelo','AV-2847 — viernes 13 de febrero de 2026'),
+   ('Ruta','Miami (MIA) - Barranquilla (BAQ) — Aeropuerto Ernesto Cortissoz'),
+   ('Estado','Recibido en bodega MIA — programado para el vuelo del 13 de febrero'),
+ ]),
+ ('section','Origen y destino',[
+   ('Remitente','LatamBox S.A.S. — Miami Warehouse · 7850 NW 25th Street, Suite 100, Miami, FL 33122'),
+   ('Destinatario','Carlos Andrés Martínez'),
+   ('Destino final','Barranquilla, Colombia'),
+   ('Servicio','Transporte internacional consolidado'),
+ ]),
+ ('table','Detalles del envío',['Concepto','Valor'],[
+   ['Mercancía','Compra por internet (electrónicos de consumo) — no peligrosa'],
+   ['Bultos','1'],
+   ['Peso bruto','2.3 lb (1.04 kg)'],
+   ['Peso tasable','2.3 lb'],
+   ['Valor declarado para transporte','USD $446.08'],
+   ['Seguro de carga (1% del valor declarado)','USD $4.36'],
+ ], [2,3]),
+ ('section','Instrucciones de manejo',[
+   ('[x]','Mantener temperatura ambiente (15 °C – 25 °C).'),
+   ('[x]','No apilar más de 3 niveles.'),
+   ('[x]','Frágil — el paquete contiene electrónicos (AirPods, cargador, Kindle).'),
+   ('[ ]','Cadena de frío y material peligroso: no aplica.'),
+ ]),
+ ('note','El AWB maestro corresponde al consolidado de LatamBox; la guía hija (HWB-2847-001) identifica este envío individual dentro del conjunto.'),
+ ('barcode','42088472109'),
+ ('sig',['Expedido por: LatamBox S.A.S. — Bodega Miami, 13/02/2026']),
+], meta('06_guia_aerea_awb_feb','06','GUÍA AÉREA CONSOLIDADA (AWB)','Air waybill — referencias del transporte · envío de febrero','EXPEDIENTE DIDÁCTICO / LBX-2026-00478','2026-02-13','LatamBox Cargo')))
+
+# 07-FEB — Factura de flete del envío de febrero
+DOCS.append(([
+ ('section','Datos de facturación',[
+   ('Emisor','LatamBox S.A.S. · NIT 901.234.567-8'),
+   ('Factura','F-2026-00478 · Resolución DIAN 18764029876543 del 15/01/2026'),
+   ('Envío LatamBox','<font backColor="#DCEFE0">LBX-2026-00478</font>'),
+   ('ID de cliente','<font backColor="#DCE7F7">LBX-1029</font>'),
+   ('Fecha de emisión','19 de febrero de 2026'),
+   ('Vuelo','AV-2847 del 13 de febrero de 2026'),
+   ('Ruta','Miami (MIA) - Barranquilla (BAQ) — Aeropuerto Ernesto Cortissoz'),
+ ]),
+ ('table','Servicios facturados (tarifas 2026)',['Código','Descripción','Cant.','Unidad','V. unit.','V. total'],[
+   ['REC-01','Recepción en bodega Miami','1','Paquete','USD $3.00','USD $3.00'],
+   ['FLT-01','Flete aéreo MIA-BAQ','2.3','Libra','USD $2.50','USD $5.75'],
+   ['NAC-01','Nacionalización — trámite DIAN','1','Trámite','USD $8.00','USD $8.00'],
+   ['SEG-01','Seguro de carga (1% del valor declarado)','1','Cargo','USD $4.36','USD $4.36'],
+   ['—','Subtotal servicios','—','—','—','USD $21.11'],
+   ['ENT-01','Entrega local en Colombia','1','Envío','COP $12.000','COP $12.000'],
+ ], [0.8,3,0.7,0.9,1.1,1.1]),
+ ('table','Total a pagar',['Concepto','Valor'],[
+   ['Servicios internacionales (USD)','USD $21.11'],
+   ['Entrega local (COP)','COP $12.000'],
+   ['TRM aplicada (19 de febrero de 2026)','$4,015.32'],
+   ['Total en pesos (servicios convertidos + entrega)','COP $96.763'],
+ ], [3.4,1.6]),
+ ('table','Estado del pago',['Campo','Valor'],[
+   ['Fecha de pago','19 de febrero de 2026'],
+   ['Medio de pago','Transferencia electrónica — Bancolombia'],
+   ['Estado','PAGADO'],
+ ], [2,3]),
+ ('note','Facturación individual por envío. Al no presentarse contingencia, no se aplican sobrecostos de bodegaje ni recargos por vuelo alternativo.'),
+], meta('07_factura_flete_feb','07','FACTURA DE FLETE','Servicios logísticos internacionales — envío de febrero','EXPEDIENTE DIDÁCTICO / LBX-2026-00478','2026-02-19')))
+
+# 08-FEB — Correo de nacionalización al cliente (envío de febrero)
+DOCS.append(([
+ ('section','Encabezado del mensaje',[
+   ('De','Aduanas — LatamBox · aduanas@latambox.com'),
+   ('Para','Carlos Andrés Martínez <carlos.martinez@example.com>'),
+   ('Asunto','Trámite de nacionalización finalizado'),
+   ('Fecha','20 de febrero de 2026'),
+ ]),
+ ('section','Identificación del envío',[
+   ('ID de cliente','<font backColor="#DCE7F7">LBX-1029</font>'),
+   ('Envío LatamBox','<font backColor="#DCEFE0">LBX-2026-00478</font>'),
+   ('AWB maestro','420-88472109'),
+   ('Guía hija','HWB-2847-001'),
+   ('Declaración','23098765432109-8'),
+   ('Soporte de pago','CP-2026-00478'),
+   ('Tributos pagados','COP $365.339'),
+   ('Referencia de levante','LV-2026-0987654'),
+   ('Fecha de levante','20 de febrero de 2026'),
+ ]),
+ ('table','Soportes del trámite',['Documento','Estado'],[
+   ['Factura comercial de Amazon (#114-8395627-0123456)','Recibida'],
+   ['Declaración de valor (DV-2026-00478)','Presentada'],
+   ['Comprobante de impuestos (CP-2026-00478)','Pagado'],
+   ['Autorización de levante (LV-2026-0987654)','Otorgada'],
+ ], [3,2]),
+ ('para','Hola, Carlos: el pago de tributos quedó registrado y el envío cuenta con levante. Continuaremos con su distribución a Barranquilla. Conserva este correo junto con la declaración de valor y el comprobante de impuestos; la guía local permitirá consultar la etapa de entrega.'),
+ ('note','Adaptación didáctica del aviso de nacionalización del envío de febrero. Este correo comunica al cliente el cierre del trámite aduanero.'),
+], meta('08_correo_nacionalizacion_feb','08','NACIONALIZACIÓN','Aviso al cliente — estado del trámite de importación','EXPEDIENTE DIDÁCTICO / LBX-2026-00478','2026-02-20')))
+
 if __name__ == '__main__':
     for data, m in DOCS:
         build(data, m)
