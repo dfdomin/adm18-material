@@ -1,69 +1,50 @@
-# Caso LatamBox — Documento 5 de 12
-## Declaración de Valor para Aduana
+# Caso LatamBox — Documento 05 de 12
+## Declaración De Valor
 
----
-
-**DECLARACIÓN DE VALOR**
-Formulario DV-2026 — LatamBox S.A.S.
-Para efectos de nacionalización ante la DIAN (Resolución 046 de 2019)
-
----
-
-**Tracking LatamBox:** LBX-2026-00478
-**Fecha de declaración:** 12 de febrero de 2026
-**Cliente:** [Nombre del cliente] — LBX-1029
-
----
-
-### 1. Datos del Importador
+### Identificación de la declaración
 
 | Campo | Valor |
 |-------|-------|
-| Nombre completo | [Nombre del cliente] |
-| Tipo y número de documento | CC [Número] |
-| Dirección en Colombia | [Dirección del cliente] |
-| Ciudad | [Ciudad] |
-| Teléfono | [Teléfono] |
-| Correo electrónico | [Correo del cliente] |
+| Referencia del ejercicio | DV-2026-00478 |
+| Declarante | Carlos Andrés Martínez |
+| ID de cliente | LBX-1029 |
+| Envío LatamBox | LBX-2026-00478 |
 
-### 2. Datos de la Mercancía
+### Compra que soporta el valor
 
-| # | Descripción | Cantidad | Valor Unitario (USD) | Valor Total (USD) |
-|---|-------------|:--------:|:--------------------:|:------------------:|
-| 1 | Apple AirPods Pro 2nd Gen — Audífonos inalámbricos | 1 | $249.99 | $249.99 |
-| 2 | Anker USB-C Charger 65W — Cargador compacto | 1 | $35.99 | $35.99 |
-| 3 | Kindle Paperwhite 16GB — Lector electrónico | 1 | $149.99 | $149.99 |
+| Campo | Valor |
+|-------|-------|
+| Proveedor | Amazon |
+| Pedido / soporte | 114-8395627-0123456 (factura del documento 03) |
+| Mercancía | AirPods Pro 2, cargador Anker USB-C 65 W y Kindle Paperwhite 16 GB |
+| Uso declarado | Personal |
 
-| Concepto | Valor |
-|----------|------:|
-| **VALOR FOB TOTAL (USD)** | **$435.97** |
-| Flete aéreo estimado (2.3 lb × $2.50) | $5.75 |
-| Seguro (opcional, 1%) | $4.36 |
-| **VALOR CIF ESTIMADO (USD)** | **$446.08** |
+### Componente de valoración
 
-### 3. Documentos Soporte Adjuntos
+| Concepto | Moneda | Valor |
+|---|---|---|
+| Mercancía / FOB | USD | 435.97 |
+| Flete para valoración (2.3 lb x USD $2.50) | USD | 5.75 |
+| Seguro (1% del valor declarado) | USD | 4.36 |
+| TOTAL CIF | USD | 446.08 |
 
-- [x] Factura comercial de Amazon (#114-8395627-0123456)
-- [x] Documento de transporte — Guía Aérea (se adjuntará al despachar)
-- [x] Certificado de origen (no aplica — bienes de consumo general)
-- [x] Declaración Andina de Valor (no aplica para este monto — franquicia USD $2,000)
+### Clasificación arancelaria
 
-### 4. Clasificación Arancelaria
-
-| Producto | Subpartida Arancelaria | Gravamen General |
-|----------|:----------------------:|:----------------:|
-| AirPods Pro | 8518.30.00.00 | 0% (TLC USA-Colombia) |
+| Producto | Subpartida | Gravamen |
+|---|---|---|
+| AirPods Pro | 8518.30.00.00 | 0% (TLC Colombia–EE. UU.) |
 | Cargador USB-C | 8504.40.90.00 | 0% (TLC) |
-| Kindle | 8543.70.99.00 | 0% (TLC) |
+| Kindle Paperwhite | 8543.70.99.00 | 0% (TLC) |
 
-**Nota:** Todos los productos aplican al 0% de arancel bajo el TLC Colombia-USA. Solo se liquidará IVA del 19% sobre el valor CIF.
+*Todos los productos aplican al 0% de arancel bajo el TLC Colombia–EE. UU.; solo se liquida IVA del 19% sobre el valor CIF. La clasificación y la liquidación tributaria deben revisarse con sus soportes.*
 
-### 5. Declaración del Importador
+### Declaración del importador
 
-Yo, [Nombre del cliente], declaro bajo la gravedad de juramento que la información aquí consignada es veraz y completa. Autorizo a LatamBox S.A.S. a actuar como mi representante ante la DIAN para efectos de este trámite de nacionalización, de conformidad con el Decreto 1165 de 2019.
+| Campo | Valor |
+|-------|-------|
+| Texto | Declaro, para este ejercicio, que los valores corresponden al soporte de compra identificado. Autorizo la gestión documental del envío y la presentación de los soportes de valoración. |
+| Firma del declarante | ________________________________________ |
+| Fecha | 12 de febrero de 2026 |
 
-**Firma:** ________________________ **Fecha:** 12 / 02 / 2026
 
----
-
-*Este documento es parte del caso de estudio LatamBox para el módulo ADM18 — Procesamiento de la Información en la Organización. IUB/Unibarranquilla, 2026.*
+*EXPEDIENTE DIDÁCTICO / LBX-2026-00478* · 

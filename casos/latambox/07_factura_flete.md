@@ -1,71 +1,86 @@
-# Caso LatamBox — Documento 7 de 12
-## Factura de Flete — Servicio de Envío
+# Caso LatamBox — Documento 07 de 12
+## Factura De Flete
 
----
+### Datos de facturación
 
-**LATAMBOX S.A.S.**
-FACTURA DE SERVICIO DE FLETE
-NIT: 901.234.567-8 | Factura No. F-2026-03178
-Resolución DIAN 18764029876543 del 15/01/2026
+| Campo | Valor |
+|-------|-------|
+| Emisor | LatamBox S.A.S. · NIT 901.234.567-8 |
+| Factura | F-2026-05287 · Resolución DIAN 18764029876543 del 15/01/2026 |
+| Consolidado | 47 paquetes · 12 clientes |
+| Tracking maestro | LBX-2026-FL2847 |
+| Fecha de emisión preliminar | 28 de mayo de 2026 |
+| Vuelo contratado | FL-2847 — AV (CANCELADO) |
+| Ruta | Miami (MIA) - Barranquilla (BAQ) — Aeropuerto Ernesto Cortissoz |
 
----
+### Servicios contratados
 
-**Cliente:** [Nombre del cliente] — LBX-1029
-**Tracking:** LBX-2026-00478
-**Fecha de factura:** 16 de febrero de 2026
-**Fecha de vencimiento:** 23 de febrero de 2026
+| Código | Descripción | Cant. | Unidad | V. unit. | V. total |
+|---|---|---|---|---|---|
+| REC-01 | Recepción en bodega Miami | 47 | Paquete | $3.00 | $141.00 |
+| FLT-01 | Flete aéreo MIA-BAQ | 142.3 | Libra | $2.80 | $398.44 |
+| FSC-01 | Recargo por combustible (15%) | 1 | Cargo | $59.77 | $59.77 |
+| HND-01 | Handling — origen (MIA) | 47 | Paquete | $1.00 | $47.00 |
+| SEC-01 | Tarifa de seguridad | 1 | Cargo | $18.00 | $18.00 |
+| NAC-01 | Nacionalización — trámite DIAN (12 declaraciones) | 12 | Trámite | $8.00 | $96.00 |
+| SEG-01 | Seguro de carga (1% del valor declarado) | 1 | Cargo | $182.47 | $182.47 |
+| — | Total servicios contratados | — | — | — | $942.68 |
 
----
+### Sobrecostos por contingencia (no presupuestados)
 
-### Detalle de Servicios
+| Código | Descripción | Cant. | Unidad | V. unit. | V. total |
+|---|---|---|---|---|---|
+| BOD-01 | Bodegaje MIA — día 1 (28 mayo) | 47 | Paquete | $2.55 | $119.85 |
+| BOD-02 | Bodegaje MIA — día 2 (29 mayo) | 47 | Paquete | $2.55 | $119.85 |
+| BOD-03 | Bodegaje MIA — día 3 (30 mayo) | 47 | Paquete | $2.55 | $119.85 |
+| BOD-P | Bodegaje proyectado día 4+ (si no hay vuelo) | 47/día | Paquete/día | $2.55 | $119.85/día |
 
-| Código | Descripción | Cantidad | Unidad | Valor Unitario | Valor Total |
-|:------:|-------------|:--------:|:------:|:--------------:|------------:|
-| REC-01 | Recepción en bodega Miami | 1 | Paquete | USD $3.00 | USD $3.00 |
-| FLT-01 | Flete aéreo MIA→BOG | 2.8 | Libra | USD $2.50 | USD $7.00 |
-| FSC-01 | Fuel surcharge (15%) | 1 | Cargo | USD $1.05 | USD $1.05 |
-| HND-01 | Handling — origen | 1 | Paquete | USD $3.00 | USD $3.00 |
-| SEC-01 | Security fee | 1 | Paquete | USD $0.50 | USD $0.50 |
-| NAC-01 | Nacionalización — trámite DIAN | 1 | Paquete | USD $8.00 | USD $8.00 |
-| SEG-01 | Seguro de carga (1% valor) | 1 | Paquete | USD $4.36 | USD $4.36 |
-| DOM-01 | Domicilio / entrega local | 1 | Envío | COP $12,000 | COP $12,000 |
+### Opciones de vuelo alternativo (cotizadas el 28 de mayo, 10:45 a. m.)
 
----
+| Op. | Aerolínea | Ruta | Costo adicional | Tiempo estimado | Riesgo |
+|---|---|---|---|---|---|
+| A | Esperar Avianca | MIA-BAQ | USD $0.00 | 48–72 horas | Alto — sin fecha confirmada |
+| B | Copa Airlines | MIA-PTY-BAQ | USD $4,800.00 | Entrega 29 mayo | Bajo — cupo confirmado |
+| C | Fraccionado | 20 prioritarios (Copa) + 27 esperan Avianca | USD $2,200.00 | Mixto | Medio — clientes no prioritarios molestos |
 
-### Resumen Financiero
+### Resumen financiero
 
-| Concepto | USD | COP (TRM $4,020) |
-|----------|----:|-----------------:|
-| **Subtotal servicios en USD** | **$26.91** | $108,178 |
-| **Subtotal domicilio en COP** | — | $12,000 |
-| **IVA (19% sobre servicios)** | $5.11 | $20,554 |
-| **TOTAL A PAGAR** | **$32.02** | **$140,732** |
+| Concepto | USD | COP (TRM $4,105) |
+|---|---|---|
+| Servicios contratados | $942.68 | $3,869,701 |
+| Sobrecostos acumulados (3 días de bodegaje) | $359.55 | $1,475,953 |
+| Opción B — vuelo alternativo Copa (si se aprueba) | $4,800.00 | $19,704,000 |
+| Costo total proyectado (con Opción B) | $6,102.23 | $25,049,654 |
+| IVA (19%) | $1,159.42 | $4,759,419 |
+| GRAN TOTAL ESTIMADO (Opción B) | ≈ $7,261.65 | ≈ $29,809,073 |
 
----
+### Impacto por cliente (clientes corporativos en riesgo)
 
-### Instrucciones de Pago
+| Cliente | Paq. | Valor declarado | Facturación anual | Riesgo |
+|---|---|---|---|---|
+| 003 — Ana Martínez | 6 | $3,840 | $8,000/año | ALTO |
+| 005 — Lucía Torres | 5 | $4,100 | $8,000/año | ALTO |
+| 008 — TechImports S.A.S. | 8 | $5,200 | $8,000/año | ALTO |
+| TOTAL 3 corporativos | 19 | $13,140 | $24,000/año | — |
 
-| Método | Detalle |
-|--------|---------|
-| Transferencia | Bancolombia Cuenta Corriente #123-456789-01 a nombre de LatamBox S.A.S. |
-| PSE | www.latambox.com/pagar — Referencia: LBX-2026-00478 |
-| Tarjeta de crédito | www.latambox.com/pagar (hasta 6 cuotas sin interés) |
+*Análisis costo-beneficio: el costo del vuelo alternativo (Opción B: $4,800) es cinco veces menor que la pérdida anual potencial de los tres clientes corporativos ($24,000). Incluso si solo uno se retira, el costo de la inacción supera el costo de la solución.*
 
----
+### Instrucciones de pago
 
-**Observaciones:**
-- Esta factura incluye el servicio de nacionalización. Los impuestos de importación (IVA 19%) se facturarán por separado una vez la DIAN liquide la declaración.
-- Si el paquete permanece más de 5 días hábiles en bodega Bogotá sin pago, se generará un cobro de bodegaje de COP $5,000 por día adicional.
-- Cualquier diferencia en peso o valor declarado detectada por la DIAN será notificada y facturada por separado.
+| Campo | Valor |
+|-------|-------|
+| Transferencia | Bancolombia, cuenta corriente #123-456789-01 a nombre de LatamBox S.A.S. |
+| PSE | www.latambox.com/pagar |
+| Aprobación urgente | María Vargas (Financiero) debe autorizar el gasto extraordinario antes de las 4:00 p. m. del 28 de mayo. |
 
----
+### Observaciones urgentes
 
-Atentamente,
+| Campo | Valor |
+|-------|-------|
+| Costo creciente | El bodegaje se acumula a $119.85 por día. Cada día sin decisión cuesta. |
+| Cupo | La Opción B (Copa Airlines) tiene cupo garantizado solo hasta las 2:00 p. m. del 28 de mayo. |
+| Riesgo estructural | Los tres clientes corporativos representan el 40% de la facturación de LatamBox. |
+| Acción de Operaciones | Diego Ramírez debe confirmar la disponibilidad de cupo con Copa Airlines. |
 
-**Departamento de Facturación**
-LatamBox S.A.S.
-facturacion@latambox.com
 
----
-
-*Este documento es parte del caso de estudio LatamBox para el módulo ADM18 — Procesamiento de la Información en la Organización. IUB/Unibarranquilla, 2026.*
+*EXPEDIENTE DIDÁCTICO / FL-2847* · 
