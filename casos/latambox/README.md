@@ -11,12 +11,26 @@
 | 3 | `03_factura_amazon.md` | Factura comercial | 1 | Soporte de valor |
 | 4 | `04_notificacion_llegada.md` | Correo electrónico | 2 | Comunicación operativa |
 | 5 | `05_declaracion_valor.md` | Declaración aduanera | 2 | Soporte legal |
-| 6 | `06_guia_aerea_awb.md` | Guía aérea (AWB) | **7** | Soporte operativo — Crisis FL-2847 |
-| 7 | `07_factura_flete.md` | Factura de servicio | **7** | Soporte financiero — Costos contingencia |
-| 8 | `08_correo_nacionalizacion.md` | Correo electrónico | **7** | Comunicación externa — Alerta DIAN |
+| 6 | `06_guia_aerea_awb.md` (crisis) · `06_guia_aerea_awb_feb.md` (normal) | Guía aérea (AWB) | **7** / 3 | Soporte operativo |
+| 7 | `07_factura_flete.md` (crisis) · `07_factura_flete_feb.md` (normal) | Factura de servicio | **7** / 3 | Soporte financiero |
+| 8 | `08_correo_nacionalizacion.md` (crisis) · `08_correo_nacionalizacion_feb.md` (normal) | Correo electrónico | **7** / 3 | Comunicación / soporte legal |
 | 9 | `09_comprobante_impuestos.md` | Comprobante DIAN | 3 | Soporte financiero |
 | 10 | `10_guia_entrega_local.md` | Guía de entrega (POD) | 2 | Soporte operativo |
 | 11 | `11_correo_confirmacion_entrega.md` | Correo electrónico | 2 | Comunicación externa |
 | 12 | `12_encuesta_y_queja.md` | Encuesta + Queja | 8 | Decisión / mejora |
 
-**Formato:** Markdown (.md) editable. PDF disponible en misma carpeta para impresión.
+## Variantes de los documentos 06, 07 y 08
+
+Estos tres documentos existen en **dos versiones** porque las semanas 2–4 usan el **flujo normal de
+febrero** y la semana 7 (y 6/8/11/13) usan la **crisis FL-2847 de mayo**:
+
+| Versión | Archivos | Episodio | Semanas |
+|---------|----------|----------|---------|
+| Normal (febrero) | `*_feb.pdf` / `*_feb.md` | Envío individual `LBX-2026-00478` — operación normal | 2, 3 |
+| Crisis (mayo) | `06_guia_aerea_awb`, `07_factura_flete`, `08_correo_nacionalizacion` (sin sufijo) | Consolidado `LBX-2026-FL2847` — 47 bultos, 12 clientes, vuelo cancelado | 6, 7, 8, 11, 12, 13 |
+
+No renombrar los archivos sin sufijo: la semana 7 (simulación de reunión de emergencia) depende de ellos.
+
+**Formato:** Markdown (`.md`) editable + PDF con diseño institucional (banner LatamBox, secciones e
+IDs resaltados). Los 12 documentos base y las 3 variantes `_feb` se regeneran con
+`python3 casos/latambox/_gen_documentos.py` (requiere `reportlab`).
