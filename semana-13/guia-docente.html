@@ -30,8 +30,10 @@
   .tg-warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: var(--space-md); margin-top: var(--space-md); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 0.85rem; }
   .tg-warning-box h3 { color: #e65100; margin: 0 0 var(--space-sm); font-size: 0.9rem; font-weight: 700; }
   .tg-materials { list-style: none; padding: 0; }
-  .tg-materials li { padding: var(--space-sm) var(--space-md); border-bottom: 1px dotted var(--border); display: flex; align-items: flex-start; gap: var(--space-sm); font-size: 0.85rem; }
-  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; flex-shrink: 0; }
+  /* Sin flex: en móvil el flex volvía cada tramo de texto un ítem indeformable
+     (no se partía) y desbordaba la página. El ☐ se posiciona absoluto. */
+  .tg-materials li { padding: var(--space-sm) var(--space-md) var(--space-sm) calc(var(--space-md) + 1.1rem); border-bottom: 1px dotted var(--border); position: relative; font-size: 0.85rem; }
+  .tg-materials li:before { content: "☐"; color: var(--tg-gold); font-weight: bold; position: absolute; left: var(--space-md); }
   .tg-badge-gold { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: var(--radius-sm); text-transform: uppercase; letter-spacing: 0.5px; background: var(--gold); color: var(--text-on-gold); }
   @media print { body { background: white; font-size: 11px; } .tg-section { break-inside: avoid; box-shadow: none; border-left: 3px solid #999; } .tg-header-card { background: #ddd !important; color: black !important; border-left: 3px solid #999; -webkit-print-color-adjust: exact; print-color-adjust: exact; } .tg-header-card h1 { color: black !important; } .tg-header-card .tg-guide-label { color: #666 !important; } .tg-section h2 { color: #666; } .tg-note { background: #eee; color: #333; } .tg-checklist-card { background: #eee; } .tg-award-card { background: #eee; } .tg-warning-box { background: #eee; } }
 </style>
