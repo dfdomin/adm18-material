@@ -31,6 +31,29 @@ febrero** y la semana 7 (y 6/8/11/13) usan la **crisis FL-2847 de mayo**:
 
 No renombrar los archivos sin sufijo: la semana 7 (simulación de reunión de emergencia) depende de ellos.
 
+## Variantes de práctica GTC 185 (detección de errores)
+
+Para las semanas que trabajan la GTC 185 como lista de verificación:
+
+| Archivo | Uso | Contenido |
+|---------|-----|-----------|
+| `01_correo_bienvenida_errores.*` | Semana 4 | Correo con errores inyectados (sin membrete, sin fecha, sin firma, sin datos del casillero, tono informal) |
+| `08_correo_nacionalizacion_errores.*` | Semanas 4 y 6 | Correo con errores inyectados (asunto vago, sin trazabilidad, un solo párrafo, tono acusatorio, mayúsculas, sin firma con cargo, datos erróneos) |
+| `11_correo_confirmacion_entrega_errores.*` | Semana 4 | Correo con errores inyectados (sin asunto, sin fecha, sin datos de entrega, sin firma, tono seco) |
+| `08_correo_nacionalizacion_mejorado.*` | Semana 6 | Versión corregida del doc 08 con la sección "Mejoras aplicadas frente a la versión con errores (GTC 185)" |
+
+Las versiones `_errores` se renderizan en formato simple (pandoc, sin membrete) **a propósito**, para que
+los defectos sean visibles; no "mejorarlas" con la plantilla institucional. Se regeneran con:
+
+```bash
+cd casos/latambox
+for f in 01_correo_bienvenida_errores 08_correo_nacionalizacion_errores 11_correo_confirmacion_entrega_errores; do
+  pandoc "$f.md" -o "$f.pdf" --pdf-engine=xelatex -V geometry:margin=2.5cm -V fontsize=11pt
+done
+```
+
+`08_correo_nacionalizacion_mejorado` sí se genera con `_gen_documentos.py`.
+
 **Formato:** Markdown (`.md`) editable + PDF con diseño institucional (banner LatamBox, secciones e
 IDs resaltados). Los 12 documentos base y las 3 variantes `_feb` se regeneran con
 `python3 casos/latambox/_gen_documentos.py` (requiere `reportlab`).
