@@ -1,60 +1,50 @@
 # Caso LatamBox — Documento 11 de 12
-## Correo de Confirmación de Entrega
+## Confirmación De Entrega
 
----
+### Encabezado del mensaje
 
-**LATAMBOX S.A.S.**
-Servicio al Cliente
+| Campo | Valor |
+|-------|-------|
+| De | Carolina Méndez — Coordinadora de Atención al Cliente · servicio@latambox.com |
+| Para | [Nombre del cliente] — LBX-1029 |
+| Asunto | Entregado — tu paquete LBX-2026-00478 ya está en tus manos |
+| Fecha | 21 de febrero de 2026 |
 
----
+Hola [Nombre]: ¡tu paquete fue entregado exitosamente!
 
-**ASUNTO:** ✅ ¡Entregado! Tu paquete LBX-2026-00478 ya está en tus manos
-
-**FECHA:** 21 de febrero de 2026
-
-**PARA:** [Nombre del cliente] — LBX-1029
-
----
-
-Hola [Nombre],
-
-¡Tu paquete fue entregado exitosamente! 🎉
-
-**Resumen de tu envío:**
+### Resumen del envío
 
 | Etapa | Fecha | Estado |
-|-------|-------|--------|
-| Compra en Amazon | 5 feb 2026 | ✅ |
-| Recepción en Miami | 9 feb 2026 | ✅ |
-| Vuelo MIA → BOG | 13 feb 2026 | ✅ |
-| Nacionalización DIAN | 16-19 feb 2026 | ✅ |
-| Entrega en tu domicilio | 21 feb 2026 | ✅ |
+|---|---|---|
+| Compra en Amazon | 5 feb 2026 | Completado |
+| Recepción en Miami | 9 feb 2026 | Completado |
+| Vuelo MIA - BAQ | 13 feb 2026 | Completado |
+| Nacionalización DIAN | 16–19 feb 2026 | Completado |
+| Entrega en tu domicilio | 21 feb 2026 | Completado |
 
-**Tiempo total del proceso:** 16 días (desde la compra hasta la entrega).
+### Detalles de la entrega
 
-**Tracking:** LBX-2026-00478
-**Entregado por:** Juan Carlos Peña
-**Recibido:** 21 de febrero de 2026, 11:20 AM
+| Campo | Valor |
+|---|---|
+| Tiempo total del proceso | 16 días (desde la compra hasta la entrega) |
+| Seguimiento | LBX-2026-00478 |
+| Guía local | DOM-2026-01543 |
+| Entregado por | Juan Carlos Peña |
+| Recibido | 21 de febrero de 2026, 11:20 a. m. |
 
----
+### ¿Todo en orden?
 
-**¿Todo en orden?** Cuéntanos cómo fue tu experiencia. Tu opinión nos ayuda a mejorar:
+| Campo | Valor |
+|-------|-------|
+| Encuesta | Cuéntanos cómo fue tu experiencia (1 minuto): www.latambox.com/encuesta/LBX-2026-00478 |
+| Novedades | Si algo no salió bien, responde a este correo o escríbenos al WhatsApp +57 300 555 0123. Tenemos 48 horas hábiles para resolver cualquier novedad. |
 
-👉 **Encuesta de satisfacción (1 minuto):** www.latambox.com/encuesta/LBX-2026-00478
-
-**¿Algo no salió bien?** Responde a este correo o escríbenos por WhatsApp al +57 300 555 0123. Tenemos 48 horas hábiles para resolver cualquier novedad.
-
----
-
-Gracias por confiar en LatamBox. Esperamos verte en tu próxima compra.
-
-Atentamente,
+Gracias por confiar en LatamBox. Esperamos acompañarte en tu próxima compra.
 
 **Carolina Méndez**
 Coordinadora de Atención al Cliente
 LatamBox S.A.S.
 servicio@latambox.com
 
----
 
-*Este documento es parte del caso de estudio LatamBox para el módulo ADM18 — Procesamiento de la Información en la Organización. IUB/Unibarranquilla, 2026.*
+*EXPEDIENTE DIDÁCTICO / LBX-2026-00478* · 
