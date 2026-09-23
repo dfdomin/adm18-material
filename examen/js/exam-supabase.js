@@ -7,7 +7,7 @@
 (function () {
   var SUPABASE_URL = "https://nnrgxuzvjtweyzkdrech.supabase.co";
   var SUPABASE_KEY = "sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg";
-  var OFFERING_CODE  = "ADM18-2026-2";
+  var OFFERING_CODE  = "ADM18-2026-3";
   var EXAM_TYPE      = "parcial1";
 
   if (!SUPABASE_URL || !SUPABASE_KEY) {
