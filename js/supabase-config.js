@@ -8,7 +8,7 @@
   var SUPABASE_KEY = "sb_publishable_-101J7EEEhv-C5kjosWGTg_657OtsBg";
 
   var MODULE_CODE   = "ADM18";
-  var OFFERING_CODE = "ADM18-2026-2";
+  var OFFERING_CODE = "ADM18-2026-3";
   var NARRATIVE     = "LatamBox";
   var COURSE_CODE   = OFFERING_CODE;
 

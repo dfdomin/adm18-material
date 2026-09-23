@@ -21,7 +21,7 @@
   }
 
   var MODULE_DEFAULTS = {
-    ADM18: { prefix: "adm18", offering: "ADM18-2026-2", narrative: "LatamBox" },
+    ADM18: { prefix: "adm18", offering: "ADM18-2026-3", narrative: "LatamBox" },
     TGA04: { prefix: "tga04", offering: "TGA04-2026-2", narrative: "NeuroBiz S.A.S." },
     TGA05: { prefix: "tga05", offering: "TGA05-2026-2", narrative: "NeuroBiz S.A.S." },
     TD: { prefix: "td", offering: "TD-2026-2", narrative: "Mercado360" },

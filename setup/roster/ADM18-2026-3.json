@@ -1,0 +1,188 @@
+{
+  "offering_code": "ADM18-2026-3",
+  "module_code": "ADM18",
+  "term": "2026-3",
+  "year": 2026,
+  "grupo": "1_CE_G2",
+  "horario": "",
+  "fuente": "Lista Asistencia 2026-3.xlsx",
+  "actualizado": "2026-09-22",
+  "nota_grupo": "grupo asumido 1_CE_G2 (el mismo del periodo 2026-2); ajustar si en 2026-3 cambio",
+  "estudiantes": [
+    {
+      "cc": "1045716858",
+      "name": "AHUMADA BUSTAMANTE CARLOS FABIAN",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1002156496",
+      "name": "CABALLERO MASCO MAURO ENRIQUE",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1192796559",
+      "name": "CABARCAS DEL CASTILLO MARIAM ELIZABETH",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1143161118",
+      "name": "CARDENAS VELEZ PAULA ANDREA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1044635593",
+      "name": "CASTILLO VASQUEZ CINDY",
+      "tipo_doc": "TI",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1129524754",
+      "name": "CERVANTES ALANDETE KEVIN ANDRES",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1001824919",
+      "name": "DE LA ROSA GONZALEZ KEVIN ANDRES",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1043678174",
+      "name": "DOMINGUEZ GONZALEZ SANTIAGO MIGUEL",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1143261269",
+      "name": "JIMÉNEZ DE LA CRUZ LUIS FERNANDO",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1002036761",
+      "name": "MONTENEGRO GUERRA JESUS ALEXANDER",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1143130606",
+      "name": "MUÑOZ CORREA KATHERINE PAOLA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1193524265",
+      "name": "NATERA FONSECA DILAN ENRIQUE",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1045689173",
+      "name": "ORTEGA BEDOYA LUIS LEONARDO",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1045736960",
+      "name": "ORTEGA OLIVERO BEQUERLEY MARIA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "22740661",
+      "name": "ROLONG NAVARRO KAREN MARGARITA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1192767187",
+      "name": "RUIZ FRANCO CAMILA ANDREA MARIA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "55224455",
+      "name": "SALAS FERNANDEZ TATIANA SIRLE",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1044616859",
+      "name": "SIADO LOZANO DANNA VANESA",
+      "tipo_doc": "CC",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    },
+    {
+      "cc": "1043678634",
+      "name": "VASQUEZ GUZMAN ANDRES CAMILO",
+      "tipo_doc": "TI",
+      "grupo": "1_CE_G2",
+      "horario": ""
+    }
+  ],
+  "pendientes_sin_documento": [
+    {
+      "name": "AGÁMEZ PAEZ JOSÉ DAVID",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "BUELVAS VELASQUEZ GREIDYS",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "CHARRIS CAMARGO JIMMY ANDRÉS",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "CHARRIS MARIMON FRED DE JESUS",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "MARINO GONZÁLEZ LEINER DAVID",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "OSORIO MORELO JOHN SEBASTIAN",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "PAVA CASTILLO DOUGLAS ALEXANDER",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "QUEIPO PÉREZ JUAN DAVID",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "SALAZAR OROZCO YUCELIS",
+      "nota": "sin numero de documento en la lista 2026-3"
+    },
+    {
+      "name": "SAYAS CORONELL YURANYS",
+      "nota": "sin numero de documento en la lista 2026-3"
+    }
+  ]
+}

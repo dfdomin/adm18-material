@@ -13,7 +13,7 @@
 
 | Módulo | `MODULE_CODE` | `OFFERING_CODE` |
 |--------|---------------|-----------------|
-| ADM18 (LatamBox) | `ADM18` | `ADM18-2026-2` |
+| ADM18 (LatamBox) | `ADM18` | `ADM18-2026-3` (2026-2 queda como histórico) |
 | TGA04 (NeuroBiz) | `TGA04` | `TGA04-2026-2` |
 | TGA05 (NeuroBiz) | `TGA05` | `TGA05-2026-2` |
 | TD | `TD` | `TD-2026-2` (cuando se active) |

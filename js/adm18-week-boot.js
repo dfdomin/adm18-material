@@ -89,6 +89,35 @@
     if (!grupo) grupo = (profile.grupo || "").trim();
     if (!horario) horario = (profile.horario || "").trim();
 
+    // Fallback final: el roster del curso (v_legacy_students). Cubre al
+    // estudiante que ya está registrado pero todavía no tiene progreso
+    // guardado, que antes veía "cédula no encontrada".
+    if (!nombre && global.GamifSDK && GamifSDK.isCloudDirectMode && GamifSDK.isCloudDirectMode()) {
+      try {
+        var rUrl = GamifSDK.sbUrl();
+        var rKey = GamifSDK.sbKey();
+        var offering = GamifSDK.getOfferingCode();
+        if (rUrl && rKey && offering) {
+          var rRes = await fetch(
+            rUrl + "/rest/v1/v_legacy_students?select=name,grupo,horario"
+              + "&cc=eq." + encodeURIComponent(cc)
+              + "&offering_code=eq." + encodeURIComponent(offering),
+            { headers: { apikey: rKey, Authorization: "Bearer " + rKey } }
+          );
+          if (rRes.ok) {
+            var rRows = await rRes.json();
+            if (rRows && rRows.length) {
+              nombre = (rRows[0].name || "").trim();
+              grupo = grupo || (rRows[0].grupo || "").trim();
+              horario = horario || (rRows[0].horario || "").trim();
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("No se pudo consultar el roster:", e);
+      }
+    }
+
     var next = {
       cc: cc,
       id_estudiante: cc,
