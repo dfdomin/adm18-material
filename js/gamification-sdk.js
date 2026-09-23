@@ -297,6 +297,16 @@
   }
 
   function saveProfile(cfg, profile) {
+    // Compatibilidad: saveProfile(profile) cuando el perfil viene como único
+    // argumento (así lo llaman ADM18/TD al identificarse). Antes se guardaba
+    // "undefined" y sin cédula, por lo que el perfil no persistía y las
+    // respuestas del estudiante no se sincronizaban.
+    if (profile === undefined && cfg && typeof cfg === "object" &&
+        (cfg.cc || cfg.id_estudiante)) {
+      profile = cfg;
+      cfg = null;
+    }
+    if (!profile || typeof profile !== "object") return;
     var config = cfg || getConfig();
     var json = JSON.stringify(profile);
     localStorage.setItem(profileKey(config), json);
